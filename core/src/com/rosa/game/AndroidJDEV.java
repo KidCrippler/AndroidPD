@@ -1,12 +1,13 @@
 package com.rosa.game;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.rosa.game.screens.PlayScreen;
 
 public class AndroidJDEV extends Game {
+
+    public static final int V_WIDTH = 400;
+    public static final int V_HEIGHT = 208;
 
     public SpriteBatch batch;
 
