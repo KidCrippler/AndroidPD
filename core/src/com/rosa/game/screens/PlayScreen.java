@@ -3,21 +3,15 @@ package com.rosa.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -25,6 +19,8 @@ import com.rosa.game.AndroidJDEV;
 import com.rosa.game.Scenes.Hud;
 import com.rosa.game.Sprites.Player;
 import com.rosa.game.Tools.B2WorldCreator;
+import com.rosa.game.Tools.Controller;
+import com.rosa.game.Tools.WorldContactListener;
 
 public class PlayScreen implements Screen {
 
@@ -45,6 +41,9 @@ public class PlayScreen implements Screen {
     private World world;
     private Box2DDebugRenderer b2dr;
     private Player player;
+    Controller controller;
+
+    //private Music music;
 
     public PlayScreen(AndroidJDEV game) {
 
@@ -71,6 +70,14 @@ public class PlayScreen implements Screen {
 
         //Start the player:
         player = new Player(world, this);
+
+        world.setContactListener(new WorldContactListener());
+
+        /*music = AndroidJDEV.manager.get("sounds/music/jungle.mp3",Music.class);
+        music.setLooping(true);
+        music.play();*/
+
+        controller = new Controller();
     }
 
     public TextureAtlas getAtlas() {
@@ -84,16 +91,28 @@ public class PlayScreen implements Screen {
     }
 
     public void handleInput(float dt) {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
+        if (controller.isUpPressed())
             player.b2body.applyLinearImpulse(new Vector2(0, 4f), player.b2body.getWorldCenter(), true);
 
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2)
+        else if (controller.isRightPressed() && player.b2body.getLinearVelocity().x <= 2 )
             player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
 
 
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2)
+        else if (controller.isLeftPressed() && player.b2body.getLinearVelocity().x <= -2 )
             player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
 
+
+
+/*
+        if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || controller.isUpPressed())
+            player.b2body.applyLinearImpulse(new Vector2(0, 4f), player.b2body.getWorldCenter(), true);
+
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2 || controller.isRightPressed() && player.b2body.getLinearVelocity().x <= 2 )
+            player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
+
+
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2 || controller.isLeftPressed() && player.b2body.getLinearVelocity().x <= 2 )
+            player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);*/
     }
 
     public void update(float dt) {
@@ -102,8 +121,9 @@ public class PlayScreen implements Screen {
 
         world.step(1 / 60f, 6, 2);
 
-        //Draw player:
+        //UPDATE CLASSES:
         player.update(dt);
+        hud.update(dt);
 
         gamecam.position.x = player.b2body.getPosition().x;
 
@@ -134,11 +154,13 @@ public class PlayScreen implements Screen {
         //HUD:
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
+        controller.draw();
     }
 
     @Override
     public void resize(int width, int height) {
         gamePort.update(width, height);
+        controller.resize(width,height);
     }
 
     @Override
