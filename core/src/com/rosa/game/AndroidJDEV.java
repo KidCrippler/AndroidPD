@@ -20,7 +20,7 @@ public class AndroidJDEV extends Game {
     public static final short DESTROYED_BIT = 16;
 
 
-    public SpriteBatch batch;
+    public static SpriteBatch batch;
 
     public static AssetManager manager;
 

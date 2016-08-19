@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -24,6 +25,7 @@ import com.rosa.game.Tools.WorldContactListener;
 
 public class PlayScreen implements Screen {
 
+    public static Batch batch;
     private AndroidJDEV game;
     private TextureAtlas atlas;
 
@@ -84,7 +86,6 @@ public class PlayScreen implements Screen {
         return atlas;
     }
 
-
     @Override
     public void show() {
 
@@ -94,11 +95,11 @@ public class PlayScreen implements Screen {
         if (controller.isUpPressed())
             player.b2body.applyLinearImpulse(new Vector2(0, 4f), player.b2body.getWorldCenter(), true);
 
-        else if (controller.isRightPressed() && player.b2body.getLinearVelocity().x <= 2 )
+        else if (controller.isRightPressed() )
             player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
 
 
-        else if (controller.isLeftPressed() && player.b2body.getLinearVelocity().x <= -2 )
+        else if (controller.isLeftPressed())
             player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
 
 
