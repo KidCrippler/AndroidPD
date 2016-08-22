@@ -13,9 +13,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rosa.game.AndroidJDEV;
 
-/**
- * Created by brentaureli on 10/23/15.
- */
+
 public class Controller {
     Viewport viewport;
     Stage stage;
