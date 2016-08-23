@@ -81,13 +81,12 @@ public class Player extends Sprite {
                 region = playerStand;
                 break;
         }
-        //if mario is running left and the texture isnt facing left... flip it.
+
         if((b2body.getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()){
             region.flip(true, false);
             runningRight = false;
         }
 
-        //if mario is running right and the texture isnt facing right... flip it.
         else if((b2body.getLinearVelocity().x > 0 || runningRight) && region.isFlipX()){
             region.flip(true, false);
             runningRight = true;

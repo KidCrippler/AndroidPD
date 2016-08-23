@@ -19,6 +19,7 @@ import com.rosa.game.Scenes.Hud;
 import com.rosa.game.Sprites.Player;
 import com.rosa.game.Tools.B2WorldCreator;
 import com.rosa.game.Tools.Controller;
+import com.rosa.game.Tools.WorldContactListener;
 
 public class PlayScreen implements Screen {
 
@@ -90,7 +91,7 @@ public class PlayScreen implements Screen {
 
     public void handleInput(float dt) {
         if (controller.isUpPressed())
-            player.b2body.applyLinearImpulse(new Vector2(0, 4f), player.b2body.getWorldCenter(), true);
+            player.b2body.applyLinearImpulse(new Vector2(0, 1f), player.b2body.getWorldCenter(), true);
 
         else if (controller.isRightPressed() )
             player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
