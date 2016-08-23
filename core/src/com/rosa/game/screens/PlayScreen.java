@@ -19,7 +19,6 @@ import com.rosa.game.Scenes.Hud;
 import com.rosa.game.Sprites.Player;
 import com.rosa.game.Tools.B2WorldCreator;
 import com.rosa.game.Tools.Controller;
-import com.rosa.game.Tools.WorldContactListener;
 
 public class PlayScreen implements Screen {
 
