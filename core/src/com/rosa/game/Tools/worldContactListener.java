@@ -7,8 +7,11 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.rosa.game.Sprites.InteractiveTileObject;
 
+
 public class WorldContactListener implements ContactListener{
 
+
+    
     @Override
     public void beginContact(Contact contact) {
         Fixture fixA = contact.getFixtureA();
@@ -20,7 +23,7 @@ public class WorldContactListener implements ContactListener{
 
             if(object.getUserData() instanceof InteractiveTileObject) {
                 ((InteractiveTileObject) object.getUserData()).onHeadHit();
-            }/
+            }
         }
     }
 
