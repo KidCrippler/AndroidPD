@@ -1,6 +1,11 @@
 package com.rosa.game.Sprites;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -11,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.files.FileHandleStream;
 import com.rosa.game.AndroidJDEV;
 import com.rosa.game.screens.PlayScreen;
 
@@ -29,7 +35,7 @@ public class Player extends Sprite {
     private boolean runningRight;
 
     public Player(World world, PlayScreen screen) {
-        super(screen.getAtlas().findRegion("little_mario"));
+        super(screen.getAtlas().findRegion("keen"));
         this.world = world;
         currentState = State.STANDING;
         previousState = State.STANDING;
@@ -41,21 +47,21 @@ public class Player extends Sprite {
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
         for (int i = 1; i < 4; i++)
-            frames.add(new TextureRegion(screen.getAtlas().findRegion("little_mario"), i * 16, 0, 16, 16));
+            frames.add(new TextureRegion(screen.getAtlas().findRegion("keen"), i * 6, 0, 13, 31));
         playerRun = new Animation(0.1f, frames);
         frames.clear();
 
 
         for (int i = 4; i < 6; i++)
-            frames.add(new TextureRegion(screen.getAtlas().findRegion("little_mario"), i * 16, 0, 16, 16));
+            frames.add(new TextureRegion(screen.getAtlas().findRegion("keen"), i * 6, 0, 13, 31));
         playerJump = new Animation(0.1f, frames);
         frames.clear();
 
 
-        playerStand = new TextureRegion(screen.getAtlas().findRegion("little_mario"), 0, 0, 16, 16);
+        playerStand = new TextureRegion(screen.getAtlas().findRegion("keen"), 0, 0, 13, 31);
 
         definePlayer();
-        setBounds(0, 0, 16 / AndroidJDEV.PPM, 16 / AndroidJDEV.PPM);
+        setBounds(0, 0, 13 / AndroidJDEV.PPM, 31 / AndroidJDEV.PPM);
         setRegion(playerStand);
     }
 
@@ -81,7 +87,6 @@ public class Player extends Sprite {
                 region = playerStand;
                 break;
         }
-
         if((b2body.getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()){
             region.flip(true, false);
             runningRight = false;
@@ -118,7 +123,7 @@ public class Player extends Sprite {
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(6 / AndroidJDEV.PPM);
+        shape.setRadius(14 / AndroidJDEV.PPM);
         fdef.filter.categoryBits = AndroidJDEV.PLAYER_BIT;
         fdef.filter.maskBits = AndroidJDEV.DEFAULT_BIT | AndroidJDEV.COIN_BIT | AndroidJDEV.BRICK_BIT;
 
@@ -126,7 +131,7 @@ public class Player extends Sprite {
         b2body.createFixture(fdef);
 
         EdgeShape head = new EdgeShape();
-        head.set(new Vector2(-2 / AndroidJDEV.PPM ,6 / AndroidJDEV.PPM ),new Vector2(2 / AndroidJDEV.PPM ,6 / AndroidJDEV.PPM ));
+        head.set(new Vector2(-2 / AndroidJDEV.PPM ,14 / AndroidJDEV.PPM ),new Vector2(2 / AndroidJDEV.PPM ,14 / AndroidJDEV.PPM ));
         fdef.shape = head;
         fdef.isSensor = true;
 

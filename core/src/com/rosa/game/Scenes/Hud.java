@@ -14,27 +14,15 @@ import com.badlogic.gdx.graphics.Color;
 import com.rosa.game.AndroidJDEV;
 
 
-public class Hud implements Disposable{
+public class Hud implements Disposable {
 
     public Stage stage;
     public Viewport viewport;
 
-    private Integer worldTimer;
-    private float timeCount;
-    private static Integer score;
 
-
-    private Label countDownLabel;
-    private static Label scoreLabel;
-    private Label timeLabel;
     private Label levelLabel;
-    private Label worldLabel;
-    private Label lifeLabel;
 
     public Hud(SpriteBatch sb) {
-        worldTimer = 300;
-        timeCount = 0;
-        score = 0;
         viewport = new FitViewport(AndroidJDEV.V_WIDTH, AndroidJDEV.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, sb);
 
@@ -42,37 +30,19 @@ public class Hud implements Disposable{
         table.top();
         table.setFillParent(true);
 
-        countDownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        scoreLabel = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         levelLabel = new Label("1-1", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        worldLabel = new Label("DoomCa", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        lifeLabel = new Label("Rosa", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
-        table.add(lifeLabel).expandX().padTop(10);
-        table.add(worldLabel).expandX().padTop(10);
-        table.add(timeLabel).expandX().padTop(10);
-        table.row();
-        table.add(scoreLabel).expandX();
-        table.add(levelLabel).expandX();
-        table.add(countDownLabel).expandX();
+        table.add(levelLabel);
+        table.setSize(10,10);
 
         stage.addActor(table);
     }
 
-    public void update(float dt){
-        timeCount += dt;
-        if (timeCount >= 1){
-            worldTimer--;
-            countDownLabel.setText(String.format("%03d", worldTimer));
-            timeCount = 0;
-        }
+    public void update(float dt) {
+
     }
 
-    public static void addScore(int value){
-        score += value;
-        scoreLabel.setText(String.format("%06d", score));
-    }
+
 
     @Override
     public void dispose() {

@@ -13,7 +13,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rosa.game.AndroidJDEV;
 
-
 public class Controller {
     Viewport viewport;
     Stage stage;
@@ -87,21 +86,6 @@ public class Controller {
             }
         });
 
-        Image downImg = new Image(new Texture("controller/jump.png"));
-        downImg.setSize(50, 50);
-        downImg.addListener(new InputListener() {
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                downPressed = true;
-                return true;
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                downPressed = false;
-            }
-        });
 
         Image rightImg = new Image(new Texture("controller/right.png"));
         rightImg.setSize(50, 50);
@@ -143,9 +127,6 @@ public class Controller {
         table.add();
         table.add(rightImg).size(rightImg.getWidth(), rightImg.getHeight());
         table.row().padBottom(5);
-        table.add();
-        table.add(downImg).size(downImg.getWidth(), downImg.getHeight());
-        table.add();
 
         stage.addActor(table);
     }
@@ -156,10 +137,6 @@ public class Controller {
 
     public boolean isUpPressed() {
         return upPressed;
-    }
-
-    public boolean isDownPressed() {
-        return downPressed;
     }
 
     public boolean isLeftPressed() {

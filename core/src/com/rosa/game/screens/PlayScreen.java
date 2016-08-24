@@ -47,11 +47,11 @@ public class PlayScreen implements Screen {
 
     public PlayScreen(AndroidJDEV game) {
 
-        atlas = new TextureAtlas("Mario_and_Enemies.pack");
+        atlas = new TextureAtlas("keen_one.pack");
 
         this.game = game;
         gamecam = new OrthographicCamera();
-        gamePort = new FitViewport(AndroidJDEV.V_WIDTH / AndroidJDEV.PPM, AndroidJDEV.V_HEIGHT / AndroidJDEV.PPM, gamecam);
+        gamePort = new FitViewport(AndroidJDEV.V_WIDTH / AndroidJDEV.PPM , AndroidJDEV.V_HEIGHT / AndroidJDEV.PPM , gamecam);
 
         hud = new Hud(game.batch);
 
@@ -89,34 +89,20 @@ public class PlayScreen implements Screen {
 
     }
 
-    public void handleInput(float dt) {
+    public void handleInput() {
         if (controller.isUpPressed())
-            player.b2body.applyLinearImpulse(new Vector2(0, 1f), player.b2body.getWorldCenter(), true);
+            player.b2body.applyLinearImpulse(new Vector2(0, 0.5f), player.b2body.getWorldCenter(), true);
 
         else if (controller.isRightPressed() )
             player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
 
-
         else if (controller.isLeftPressed())
             player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
-
-
-
-/*
-        if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || controller.isUpPressed())
-            player.b2body.applyLinearImpulse(new Vector2(0, 4f), player.b2body.getWorldCenter(), true);
-
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2 || controller.isRightPressed() && player.b2body.getLinearVelocity().x <= 2 )
-            player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
-
-
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2 || controller.isLeftPressed() && player.b2body.getLinearVelocity().x <= 2 )
-            player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);*/
     }
 
     public void update(float dt) {
         //Hndler user input
-        handleInput(dt);
+        handleInput();
 
         world.step(1 / 60f, 6, 2);
 

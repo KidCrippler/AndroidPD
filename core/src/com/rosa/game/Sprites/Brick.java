@@ -21,7 +21,6 @@ public class Brick extends InteractiveTileObject {
         setCatagoryFilter(AndroidJDEV.DESTROYED_BIT);
         Gdx.app.log("End Brick","");
         getCell().setTile(null);
-        Hud.addScore(200);
         //AndroidJDEV.manager.get("sounds/audio/enemyDeath.wav", Sound.class).play();
 
     }
