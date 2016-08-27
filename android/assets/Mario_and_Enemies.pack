@@ -6,7 +6,7 @@ repeat: none
 big_mario
   rotate: false
   xy: 1, 29
-  size: 336, 32
+  size: 4, 32
   orig: 336, 32
   offset: 0, 0
   index: -1

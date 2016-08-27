@@ -42,27 +42,25 @@ public class Player extends Sprite {
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
-        for (int i = 1; i < 4; i++)
-            frames.add(new TextureRegion(screen.getAtlas().findRegion("keen"), 69, 0, 21, 32));
-
+        for (int i = 1; i < 5; i++)
+            frames.add(new TextureRegion(screen.getAtlas().findRegion("keen"),i * 23, 0, 23, 32));
         playerRun = new Animation(0.1f, frames);
         frames.clear();
 
 
-        for (int i = 4; i < 6; i++)
-            frames.add(new TextureRegion(screen.getAtlas().findRegion("keen"), i * 6, 0, 13, 31));
-
+        for (int i = 4; i < 7; i++)
+            frames.add(new TextureRegion(screen.getAtlas().findRegion("keen"), i * 23, 0, 23, 32));
         playerJump = new Animation(0.1f, frames);
         frames.clear();
 
 
-        playerStand = new TextureRegion(screen.getAtlas().findRegion("keen"), 0, 0, 20, 32);
+        playerStand = new TextureRegion(screen.getAtlas().findRegion("keen"), 0, 0, 23, 32);
 
 
 //        playerStand = new TextureRegion(screen.getAtlas().findRegion("keen"), 32, 0, 19, 30);
 
         definePlayer();
-        setBounds(0, 0, 20 / AndroidJDEV.PPM, 32 / AndroidJDEV.PPM);
+        setBounds(0, 0, 23 / AndroidJDEV.PPM, 32 / AndroidJDEV.PPM);
 //        setBounds(0, 0, 19 / AndroidJDEV.PPM, 30 / AndroidJDEV.PPM);
 
         setRegion(playerStand);
@@ -70,7 +68,7 @@ public class Player extends Sprite {
 
     public void update(float dt) {
         //position of sprite inside shape:
-        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
+        setPosition(b2body.getPosition().x - getWidth() / 2, (float) (b2body.getPosition().y - getHeight() / 1.5));
         setRegion(getFrame(dt));
     }
 
@@ -119,22 +117,26 @@ public class Player extends Sprite {
     public void definePlayer() {
 
         BodyDef bdef = new BodyDef();
-        bdef.position.set(32 / AndroidJDEV.PPM, 32 / AndroidJDEV.PPM);
+        bdef.position.set(64 / AndroidJDEV.PPM, 64 / AndroidJDEV.PPM);
+
 
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(14 / AndroidJDEV.PPM);
+        shape.setRadius(7 / AndroidJDEV.PPM);
         fdef.filter.categoryBits = AndroidJDEV.PLAYER_BIT;
         fdef.filter.maskBits = AndroidJDEV.DEFAULT_BIT | AndroidJDEV.COIN_BIT | AndroidJDEV.BRICK_BIT;
 
         fdef.shape = shape;
-        b2body.createFixture(fdef);
+        b2body.createFixture(fdef).setUserData(this);
+        shape.setPosition(new Vector2(0, -14 / AndroidJDEV.PPM));
+        b2body.createFixture(fdef).setUserData(this);
+
 
         EdgeShape head = new EdgeShape();
-        head.set(new Vector2(-2 / AndroidJDEV.PPM, 14 / AndroidJDEV.PPM), new Vector2(2 / AndroidJDEV.PPM, 14 / AndroidJDEV.PPM));
+        head.set(new Vector2(-2 / AndroidJDEV.PPM, 7 / AndroidJDEV.PPM), new Vector2(2 / AndroidJDEV.PPM, 7 / AndroidJDEV.PPM));
         fdef.shape = head;
         fdef.isSensor = true;
 

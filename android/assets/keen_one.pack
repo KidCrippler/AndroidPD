@@ -5,7 +5,7 @@ repeat: none
 keen
   rotate: false
   xy: 0, 0
-  size: 478, 32
-  orig: 478, 32
+  size: 464, 32
+  orig: 464, 32
   offset: 0, 0
   index: -1

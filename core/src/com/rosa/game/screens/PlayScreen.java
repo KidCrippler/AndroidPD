@@ -2,7 +2,6 @@ package com.rosa.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.files.FileHandleStream;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -21,8 +20,6 @@ import com.rosa.game.Sprites.Player;
 import com.rosa.game.Tools.B2WorldCreator;
 import com.rosa.game.Tools.Controller;
 import com.rosa.game.Tools.WorldContactListener;
-
-import java.rmi.UnexpectedException;
 
 public class PlayScreen implements Screen {
 
