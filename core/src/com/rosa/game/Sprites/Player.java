@@ -3,6 +3,7 @@ package com.rosa.game.Sprites;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -16,7 +17,9 @@ import com.rosa.game.screens.PlayScreen;
 
 public class Player extends Sprite {
 
-    public enum State {FALLING, JUMPING, STANDING, RUNNING};
+    public enum State {FALLING, JUMPING, STANDING, RUNNING}
+
+    ;
 
     public State currentState;
     public State previousState;
@@ -37,29 +40,36 @@ public class Player extends Sprite {
         runningRight = true;
 
 
-
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
         for (int i = 1; i < 4; i++)
-            frames.add(new TextureRegion(screen.getAtlas().findRegion("keen"), i * 6, 0, 13, 31));
+            frames.add(new TextureRegion(screen.getAtlas().findRegion("keen"), 69, 0, 21, 32));
+
         playerRun = new Animation(0.1f, frames);
         frames.clear();
 
 
         for (int i = 4; i < 6; i++)
             frames.add(new TextureRegion(screen.getAtlas().findRegion("keen"), i * 6, 0, 13, 31));
+
         playerJump = new Animation(0.1f, frames);
         frames.clear();
 
 
-        playerStand = new TextureRegion(screen.getAtlas().findRegion("keen"), 0, 0, 13, 31);
+        playerStand = new TextureRegion(screen.getAtlas().findRegion("keen"), 0, 0, 20, 32);
+
+
+//        playerStand = new TextureRegion(screen.getAtlas().findRegion("keen"), 32, 0, 19, 30);
 
         definePlayer();
-        setBounds(0, 0, 13 / AndroidJDEV.PPM, 31 / AndroidJDEV.PPM);
+        setBounds(0, 0, 20 / AndroidJDEV.PPM, 32 / AndroidJDEV.PPM);
+//        setBounds(0, 0, 19 / AndroidJDEV.PPM, 30 / AndroidJDEV.PPM);
+
         setRegion(playerStand);
     }
 
     public void update(float dt) {
+        //position of sprite inside shape:
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         setRegion(getFrame(dt));
     }
@@ -72,7 +82,7 @@ public class Player extends Sprite {
                 region = playerJump.getKeyFrame(stateTimer);
                 break;
             case RUNNING:
-                  region = playerRun.getKeyFrame(stateTimer, true);
+                region = playerRun.getKeyFrame(stateTimer, true);
 
                 break;
             case FALLING:
@@ -81,12 +91,10 @@ public class Player extends Sprite {
                 region = playerStand;
                 break;
         }
-        if((b2body.getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()){
+        if ((b2body.getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()) {
             region.flip(true, false);
             runningRight = false;
-        }
-
-        else if((b2body.getLinearVelocity().x > 0 || runningRight) && region.isFlipX()){
+        } else if ((b2body.getLinearVelocity().x > 0 || runningRight) && region.isFlipX()) {
             region.flip(true, false);
             runningRight = true;
         }
@@ -112,6 +120,7 @@ public class Player extends Sprite {
 
         BodyDef bdef = new BodyDef();
         bdef.position.set(32 / AndroidJDEV.PPM, 32 / AndroidJDEV.PPM);
+
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
@@ -125,7 +134,7 @@ public class Player extends Sprite {
         b2body.createFixture(fdef);
 
         EdgeShape head = new EdgeShape();
-        head.set(new Vector2(-2 / AndroidJDEV.PPM ,14 / AndroidJDEV.PPM ),new Vector2(2 / AndroidJDEV.PPM ,14 / AndroidJDEV.PPM ));
+        head.set(new Vector2(-2 / AndroidJDEV.PPM, 14 / AndroidJDEV.PPM), new Vector2(2 / AndroidJDEV.PPM, 14 / AndroidJDEV.PPM));
         fdef.shape = head;
         fdef.isSensor = true;
 

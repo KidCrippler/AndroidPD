@@ -2,6 +2,7 @@ package com.rosa.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandleStream;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -20,6 +21,8 @@ import com.rosa.game.Sprites.Player;
 import com.rosa.game.Tools.B2WorldCreator;
 import com.rosa.game.Tools.Controller;
 import com.rosa.game.Tools.WorldContactListener;
+
+import java.rmi.UnexpectedException;
 
 public class PlayScreen implements Screen {
 
@@ -48,10 +51,9 @@ public class PlayScreen implements Screen {
     public PlayScreen(AndroidJDEV game) {
 
         atlas = new TextureAtlas("keen_one.pack");
-
         this.game = game;
         gamecam = new OrthographicCamera();
-        gamePort = new FitViewport(AndroidJDEV.V_WIDTH / AndroidJDEV.PPM , AndroidJDEV.V_HEIGHT / AndroidJDEV.PPM , gamecam);
+        gamePort = new FitViewport(AndroidJDEV.V_WIDTH / AndroidJDEV.PPM, AndroidJDEV.V_HEIGHT / AndroidJDEV.PPM, gamecam);
 
         hud = new Hud(game.batch);
 
@@ -93,7 +95,7 @@ public class PlayScreen implements Screen {
         if (controller.isUpPressed())
             player.b2body.applyLinearImpulse(new Vector2(0, 0.5f), player.b2body.getWorldCenter(), true);
 
-        else if (controller.isRightPressed() )
+        else if (controller.isRightPressed())
             player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
 
         else if (controller.isLeftPressed())
@@ -145,7 +147,7 @@ public class PlayScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         gamePort.update(width, height);
-        controller.resize(width,height);
+        controller.resize(width, height);
     }
 
     @Override
