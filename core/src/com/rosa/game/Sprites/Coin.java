@@ -22,6 +22,7 @@ public class Coin extends InteractiveTileObject{
     @Override
     public void onHeadHit() {
         Gdx.app.log("End coin","");
+        setCatagoryFilter(AndroidJDEV.COIN_BIT);
 
       /*  if(getCell().getTile().getId() == BLANK_COIN){
             AndroidJDEV.manager.get("sounds/audio/Laser_Shoot.wav");

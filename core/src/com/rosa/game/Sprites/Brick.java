@@ -2,6 +2,7 @@ package com.rosa.game.Sprites;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
 import com.rosa.game.AndroidJDEV;
@@ -10,6 +11,9 @@ import com.badlogic.gdx.maps.MapObject;
 
 
 public class Brick extends InteractiveTileObject {
+
+    private static TiledMapTileSet tileSet;
+
 
     public Brick(World world, TiledMap map, Rectangle bounds) {
         super(world, map, bounds);
