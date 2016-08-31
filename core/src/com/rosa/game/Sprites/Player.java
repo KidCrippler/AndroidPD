@@ -19,8 +19,6 @@ public class Player extends Sprite {
 
     public enum State {FALLING, JUMPING, STANDING, RUNNING}
 
-    ;
-
     public State currentState;
     public State previousState;
     public World world;
@@ -126,6 +124,7 @@ public class Player extends Sprite {
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(7 / AndroidJDEV.PPM);
+
         fdef.filter.categoryBits = AndroidJDEV.PLAYER_BIT;
         fdef.filter.maskBits = AndroidJDEV.DEFAULT_BIT | AndroidJDEV.COIN_BIT | AndroidJDEV.BRICK_BIT;
 
