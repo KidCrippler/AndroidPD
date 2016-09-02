@@ -1,33 +1,34 @@
 package com.rosa.game.Sprites;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
 import com.rosa.game.AndroidJDEV;
 import com.badlogic.gdx.maps.MapObject;
-
+import com.rosa.game.Scenes.Hud;
+import com.rosa.game.screens.PlayScreen;
 
 
 public class Brick extends InteractiveTileObject {
 
-    private static TiledMapTileSet tileSet;
 
 
-    public Brick(World world, TiledMap map, Rectangle bounds) {
+    public Brick(World world, TiledMap map, Rectangle bounds){
+
         super(world, map, bounds);
         fixture.setUserData(this);
-        setCatagoryFilter(AndroidJDEV.BRICK_BIT);
+        setCategoryFilter(AndroidJDEV.BRICK_BIT );
+
     }
 
     @Override
     public void onHeadHit() {
-        setCatagoryFilter(AndroidJDEV.DESTROYED_BIT);
-       // Gdx.app.log("End Brick","");
-        getCell().setTile(null);
-        System.out.print(AndroidJDEV.DESTROYED_BIT);
-        //AndroidJDEV.manager.get("sounds/audio/enemyDeath.wav", Sound.class).play();
+            setCategoryFilter(AndroidJDEV.DESTROYED_BIT);
+            getCell().setTile(null);
 
     }
+
 }

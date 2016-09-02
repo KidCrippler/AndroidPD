@@ -3,7 +3,6 @@ package com.rosa.game.Sprites;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -55,12 +54,9 @@ public class Player extends Sprite {
         playerStand = new TextureRegion(screen.getAtlas().findRegion("keen"), 0, 0, 23, 32);
 
 
-//        playerStand = new TextureRegion(screen.getAtlas().findRegion("keen"), 32, 0, 19, 30);
 
         definePlayer();
         setBounds(0, 0, 23 / AndroidJDEV.PPM, 32 / AndroidJDEV.PPM);
-//        setBounds(0, 0, 19 / AndroidJDEV.PPM, 30 / AndroidJDEV.PPM);
-
         setRegion(playerStand);
     }
 
@@ -124,12 +120,11 @@ public class Player extends Sprite {
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(7 / AndroidJDEV.PPM);
-
         fdef.filter.categoryBits = AndroidJDEV.PLAYER_BIT;
         fdef.filter.maskBits = AndroidJDEV.DEFAULT_BIT | AndroidJDEV.COIN_BIT | AndroidJDEV.BRICK_BIT;
 
         fdef.shape = shape;
-        b2body.createFixture(fdef).setUserData(this);
+        b2body.createFixture(fdef);
         shape.setPosition(new Vector2(0, -14 / AndroidJDEV.PPM));
         b2body.createFixture(fdef).setUserData(this);
 
