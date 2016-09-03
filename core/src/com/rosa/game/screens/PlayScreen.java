@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rosa.game.AndroidJDEV;
 import com.rosa.game.Scenes.Hud;
+import com.rosa.game.Sprites.Bullet;
 import com.rosa.game.Sprites.Player;
 import com.rosa.game.Tools.B2WorldCreator;
 import com.rosa.game.Tools.Controller;
@@ -95,7 +96,6 @@ public class PlayScreen implements Screen {
 
     public void handleInput() {
 
-
         if (controller.isUpPressed()) {
             player.jump();
 
@@ -103,9 +103,12 @@ public class PlayScreen implements Screen {
             player.goRight();
 
         } else if (controller.isLeftPressed()) {
-
             player.goLeft();
+        } else if (controller.isSpacePressed()) {
+            new Bullet(5, this);
         }
+
+
     }
 
     public void update(float dt) {

@@ -16,7 +16,7 @@ import com.rosa.game.AndroidJDEV;
 public class Controller {
     Viewport viewport;
     Stage stage;
-    boolean upPressed, downPressed, leftPressed, rightPressed;
+    boolean upPressed, downPressed, leftPressed, rightPressed, spacePressed;
     OrthographicCamera cam;
 
     public Controller(){
@@ -41,6 +41,8 @@ public class Controller {
                     case Input.Keys.RIGHT:
                         rightPressed = true;
                         break;
+                    case Input.Keys.SPACE:
+                        spacePressed = true;
                 }
                 return true;
             }
@@ -60,6 +62,8 @@ public class Controller {
                     case Input.Keys.RIGHT:
                         rightPressed = false;
                         break;
+                    case Input.Keys.SPACE:
+                        spacePressed = false;
                 }
                 return true;
             }
@@ -145,6 +149,10 @@ public class Controller {
 
     public boolean isRightPressed() {
         return rightPressed;
+    }
+
+    public boolean isSpacePressed() {
+        return spacePressed;
     }
 
     public void resize(int width, int height){

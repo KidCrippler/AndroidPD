@@ -136,6 +136,9 @@ public class Player extends Sprite {
         b2body.createFixture(fdef).setUserData("head");
     }
 
+
+    //Control area:
+
     public void jump() {
         if (currentState != State.JUMPING) {
             b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
@@ -150,4 +153,5 @@ public class Player extends Sprite {
     public void goLeft() {
         b2body.applyLinearImpulse(new Vector2(-0.1f, 0), b2body.getWorldCenter(), true);
     }
+
 }
