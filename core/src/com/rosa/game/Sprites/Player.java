@@ -40,7 +40,7 @@ public class Player extends Sprite {
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
         for (int i = 1; i < 5; i++)
-            frames.add(new TextureRegion(screen.getAtlas().findRegion("keen"),i * 23, 0, 23, 32));
+            frames.add(new TextureRegion(screen.getAtlas().findRegion("keen"), i * 23, 0, 23, 32));
         playerRun = new Animation(0.1f, frames);
         frames.clear();
 
@@ -52,7 +52,6 @@ public class Player extends Sprite {
 
 
         playerStand = new TextureRegion(screen.getAtlas().findRegion("keen"), 0, 0, 23, 32);
-
 
 
         definePlayer();
@@ -137,10 +136,18 @@ public class Player extends Sprite {
         b2body.createFixture(fdef).setUserData("head");
     }
 
-    public void jump(){
-        if ( currentState != State.JUMPING ) {
+    public void jump() {
+        if (currentState != State.JUMPING) {
             b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
             currentState = State.JUMPING;
         }
+    }
+
+    public void goRight() {
+        b2body.applyLinearImpulse(new Vector2(0.1f, 0), b2body.getWorldCenter(), true);
+    }
+
+    public void goLeft() {
+        b2body.applyLinearImpulse(new Vector2(-0.1f, 0), b2body.getWorldCenter(), true);
     }
 }

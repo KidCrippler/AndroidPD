@@ -97,27 +97,19 @@ public class PlayScreen implements Screen {
 
 
         if (controller.isUpPressed()) {
-            player.b2body.applyLinearImpulse(new Vector2(0, 0.5f), player.b2body.getWorldCenter(), true);
-
             player.jump();
 
-            if (player.b2body.getPosition().y >= 0.6f){
-                System.out.println("high");
-            }
-
         } else if (controller.isRightPressed()) {
-
-            player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
+            player.goRight();
 
         } else if (controller.isLeftPressed()) {
 
-            player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
-
+            player.goLeft();
         }
     }
 
     public void update(float dt) {
-        //Hndler user input
+        //Handler user input
         handleInput();
 
         world.step(1 / 60f, 6, 2);
