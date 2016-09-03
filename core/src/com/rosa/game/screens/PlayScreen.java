@@ -27,6 +27,10 @@ public class PlayScreen implements Screen {
     private AndroidJDEV game;
     private TextureAtlas atlas;
 
+    public static int doubleJump = 0;
+    private int doubleJumpMax = 0;
+
+
     //ScreenPlay:
     private OrthographicCamera gamecam;
     private Viewport gamePort;
@@ -88,15 +92,28 @@ public class PlayScreen implements Screen {
 
     }
 
+
     public void handleInput() {
-        if (controller.isUpPressed())
+
+
+        if (controller.isUpPressed()) {
             player.b2body.applyLinearImpulse(new Vector2(0, 0.5f), player.b2body.getWorldCenter(), true);
 
-        else if (controller.isRightPressed())
+            player.jump();
+
+            if (player.b2body.getPosition().y >= 0.6f){
+                System.out.println("high");
+            }
+
+        } else if (controller.isRightPressed()) {
+
             player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
 
-        else if (controller.isLeftPressed())
+        } else if (controller.isLeftPressed()) {
+
             player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
+
+        }
     }
 
     public void update(float dt) {
