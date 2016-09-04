@@ -24,7 +24,6 @@ public class Bullet extends Sprite{
 
         Rectangle rectangle = new Rectangle();
 
-        rectangle.set(3,3,3,3);
 
         frames.add(new TextureRegion(screen.getAtlas().findRegion("keen"), 1 * 8, 0, 8, 8));
 
