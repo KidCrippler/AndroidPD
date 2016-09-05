@@ -105,7 +105,7 @@ public class PlayScreen implements Screen {
         } else if (controller.isLeftPressed()) {
             player.goLeft();
         } else if (controller.isSpacePressed()) {
-            new Bullet(5,this);
+            player.fire();
         }
 
 

@@ -1,5 +1,6 @@
 package com.rosa.game.Sprites;
 
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -13,6 +14,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.AndroidJDEV;
 import com.rosa.game.screens.PlayScreen;
+import com.rosa.game.Sprites.Bullet;
+
 
 public class Player extends Sprite {
 
@@ -27,10 +30,13 @@ public class Player extends Sprite {
     private Animation playerJump;
     private float stateTimer;
     private boolean runningRight;
+    private Bullet bullet;
+    private PlayScreen screen;
 
     public Player(World world, PlayScreen screen) {
         super(screen.getAtlas().findRegion("keen"));
         this.world = world;
+        this.screen = screen;
         currentState = State.STANDING;
         previousState = State.STANDING;
         stateTimer = 0;
@@ -151,10 +157,20 @@ public class Player extends Sprite {
 
     public void goRight() {
         b2body.applyLinearImpulse(new Vector2(0.1f, 0), b2body.getWorldCenter(), true);
+        System.out.println(getX()+" "+getY());
+
     }
 
     public void goLeft() {
         b2body.applyLinearImpulse(new Vector2(-0.1f, 0), b2body.getWorldCenter(), true);
+        System.out.println(getX()+" "+getY());
+    }
+
+    Bullet v = new Bullet(screen,34,34,true);
+
+    public void fire(){
+        new Bullet(screen,34,34,true);
+        v.update(3);
     }
 
 }
