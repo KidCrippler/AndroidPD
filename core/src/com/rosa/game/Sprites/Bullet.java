@@ -25,8 +25,8 @@ public class Bullet extends Sprite {
     boolean destroyed;
     boolean setToDestroy;
     boolean fireRight;
-
     Body b2body;
+
     public Bullet(PlayScreen screen, float x, float y, boolean fireRight){
         this.fireRight = fireRight;
         this.screen = screen;
