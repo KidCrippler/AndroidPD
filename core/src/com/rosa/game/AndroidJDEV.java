@@ -1,9 +1,6 @@
 package com.rosa.game;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.rosa.game.screens.PlayScreen;
 
@@ -22,19 +19,12 @@ public class AndroidJDEV extends Game {
 
     public static SpriteBatch batch;
 
-    public static AssetManager manager;
 
     @Override
     public void create() {
 
         batch = new SpriteBatch();
-/*
-        manager = new AssetManager();
-        manager.load("sounds/music/jungle.mp3", Music.class);
-        manager.load("sounds/audio/Laser_Shoot.wav", Sound.class);
-        manager.load("sounds/audio/jump.wav", Sound.class);
-        manager.load("sounds/audio/enemyDeath.wav", Sound.class);
-        manager.finishLoading();*/
+
 
 
         setScreen(new PlayScreen(this));
@@ -43,13 +33,11 @@ public class AndroidJDEV extends Game {
     @Override
     public void render() {
         super.render();
-//        manager.update();
     }
 
     @Override
     public void dispose() {
         super.dispose();
-      //  manager.dispose();
         batch.dispose();
     }
 }

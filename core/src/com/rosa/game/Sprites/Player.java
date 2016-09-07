@@ -1,6 +1,5 @@
 package com.rosa.game.Sprites;
 
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -14,7 +13,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.AndroidJDEV;
 import com.rosa.game.screens.PlayScreen;
-import com.rosa.game.Sprites.Bullet;
 
 
 public class Player extends Sprite {
@@ -166,11 +164,11 @@ public class Player extends Sprite {
         System.out.println(getX()+" "+getY());
     }
 
-    Bullet v = new Bullet(screen,34,34,true);
+//    Bullet v = new Bullet(screen,34,34,true);
 
     public void fire(){
-        new Bullet(screen,34,34,true);
-        v.update(3);
+        new Bullet();
+     //   v.update(3);
     }
 
 }

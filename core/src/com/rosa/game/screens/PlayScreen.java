@@ -28,10 +28,6 @@ public class PlayScreen implements Screen {
     private AndroidJDEV game;
     private TextureAtlas atlas;
 
-    public static int doubleJump = 0;
-    private int doubleJumpMax = 0;
-
-
     //ScreenPlay:
     private OrthographicCamera gamecam;
     private Viewport gamePort;
@@ -47,6 +43,9 @@ public class PlayScreen implements Screen {
     private Box2DDebugRenderer b2dr;
     private Player player;
     Controller controller;
+
+    //Items:
+    private Bullet bullet;
 
     //private Music music;
 
@@ -72,16 +71,16 @@ public class PlayScreen implements Screen {
 
         b2dr = new Box2DDebugRenderer();
 
+
+
         //Start the player:
         player = new Player(world, this);
 
         world.setContactListener(new WorldContactListener());
 
-        /*music = AndroidJDEV.manager.get("sounds/music/jungle.mp3",Music.class);
-        music.setLooping(true);
-        music.play();*/
-
         controller = new Controller();
+
+        bullet = new Bullet();
     }
 
     public TextureAtlas getAtlas() {
@@ -119,6 +118,7 @@ public class PlayScreen implements Screen {
 
         //UPDATE CLASSES:
         player.update(dt);
+        bullet.update(dt);
         hud.update(dt);
 
         gamecam.position.x = player.b2body.getPosition().x;
@@ -144,13 +144,23 @@ public class PlayScreen implements Screen {
 
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
+        bullet.draw(game.batch);
         player.draw(game.batch);
+
+        //End Batch
         game.batch.end();
+
 
         //HUD:
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
         controller.draw();
+
+
+
+
+
+
     }
 
     @Override
@@ -181,6 +191,5 @@ public class PlayScreen implements Screen {
         world.dispose();
         b2dr.dispose();
         hud.dispose();
-
     }
 }
