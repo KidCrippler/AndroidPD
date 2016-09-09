@@ -79,8 +79,6 @@ public class PlayScreen implements Screen {
         world.setContactListener(new WorldContactListener());
 
         controller = new Controller();
-
-        bullet = new Bullet();
     }
 
     public TextureAtlas getAtlas() {
@@ -118,8 +116,10 @@ public class PlayScreen implements Screen {
 
         //UPDATE CLASSES:
         player.update(dt);
-        bullet.update(dt);
         hud.update(dt);
+
+        bullet.update(dt);
+
 
         gamecam.position.x = player.b2body.getPosition().x;
 
@@ -144,7 +144,6 @@ public class PlayScreen implements Screen {
 
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
-        bullet.draw(game.batch);
         player.draw(game.batch);
 
         //End Batch

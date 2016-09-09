@@ -19,6 +19,7 @@ public class Player extends Sprite {
 
     public enum State {FALLING, JUMPING, STANDING, RUNNING}
 
+    private AndroidJDEV game;
     public State currentState;
     public State previousState;
     public World world;
@@ -164,11 +165,8 @@ public class Player extends Sprite {
         System.out.println(getX()+" "+getY());
     }
 
-//    Bullet v = new Bullet(screen,34,34,true);
-
     public void fire(){
-        new Bullet();
-     //   v.update(3);
+        new Bullet(world,screen);
     }
 
 }
