@@ -29,8 +29,10 @@ public class Player extends Sprite {
     private Animation playerJump;
     private float stateTimer;
     private boolean runningRight;
-    private Bullet bullet;
     private PlayScreen screen;
+
+    private Array<Bullet> bullets;
+
 
     public Player(World world, PlayScreen screen) {
         super(screen.getAtlas().findRegion("keen"));
@@ -62,12 +64,20 @@ public class Player extends Sprite {
         definePlayer();
         setBounds(0, 0, 23 / AndroidJDEV.PPM, 32 / AndroidJDEV.PPM);
         setRegion(playerStand);
+
+        bullets = new Array<Bullet>();
     }
 
     public void update(float dt) {
         //position of sprite inside shape:
         setPosition(b2body.getPosition().x - getWidth() / 2, (float) (b2body.getPosition().y - getHeight() / 1.5));
         setRegion(getFrame(dt));
+
+        for (Bullet bullet : bullets) {
+            bullet.update(dt);
+            if (bullet.isDestroyed())
+                bullets.removeValue(bullet, true);
+        }
     }
 
     public TextureRegion getFrame(float dt) {
@@ -148,7 +158,7 @@ public class Player extends Sprite {
         if (currentState != State.JUMPING) {
 //            b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
 
-            b2body.applyLinearImpulse(new Vector2(0,5f),b2body.getWorldCenter(),true);
+            b2body.applyLinearImpulse(new Vector2(0, 5f), b2body.getWorldCenter(), true);
 
             currentState = State.JUMPING;
         }
@@ -156,17 +166,17 @@ public class Player extends Sprite {
 
     public void goRight() {
         b2body.applyLinearImpulse(new Vector2(0.1f, 0), b2body.getWorldCenter(), true);
-        System.out.println(getX()+" "+getY());
+        System.out.println(getX() + " " + getY());
 
     }
 
     public void goLeft() {
         b2body.applyLinearImpulse(new Vector2(-0.1f, 0), b2body.getWorldCenter(), true);
-        System.out.println(getX()+" "+getY());
+        System.out.println(getX() + " " + getY());
     }
 
-    public void fire(){
-        new Bullet(world,screen);
+    public void fire() {
+        bullets.add(new Bullet(screen, b2body.getPosition().x, b2body.getPosition().y, runningRight ? true : false));
     }
 
 }

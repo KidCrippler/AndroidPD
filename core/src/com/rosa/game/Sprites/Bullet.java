@@ -19,13 +19,15 @@ public class Bullet extends Sprite {
     private boolean runningRight;
     private Bullet bullet;
     private PlayScreen screen;
+    boolean fireRight;
+    boolean destroyed;
 
 
-    public Bullet(World world, PlayScreen screen) {
+    public Bullet(PlayScreen screen, float x, float y, boolean fireRight) {
 
-        super(screen.getAtlas().findRegion("keen"));
-        System.out.println("Bullet new bullet");
-        this.world = world;
+        this.fireRight = fireRight;
+        this.screen = screen;
+        this.world = screen.getWorld();
         this.screen = screen;
     }
 
@@ -34,5 +36,9 @@ public class Bullet extends Sprite {
         System.out.println("updated");
 //        setPosition(b2body.getPosition().x - getWidth() / 2, (float) (b2body.getPosition().y - getHeight() / 1.5));
 //        setRegion(getFrame(dt));
+    }
+
+    public boolean isDestroyed(){
+        return destroyed;
     }
 }

@@ -118,9 +118,6 @@ public class PlayScreen implements Screen {
         player.update(dt);
         hud.update(dt);
 
-        bullet.update(dt);
-
-
         gamecam.position.x = player.b2body.getPosition().x;
 
         gamecam.update();
@@ -190,5 +187,9 @@ public class PlayScreen implements Screen {
         world.dispose();
         b2dr.dispose();
         hud.dispose();
+    }
+
+    public World getWorld(){
+        return world;
     }
 }
