@@ -152,11 +152,6 @@ public class PlayScreen implements Screen {
         hud.stage.draw();
         controller.draw();
 
-
-
-
-
-
     }
 
     @Override

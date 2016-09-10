@@ -166,13 +166,10 @@ public class Player extends Sprite {
 
     public void goRight() {
         b2body.applyLinearImpulse(new Vector2(0.1f, 0), b2body.getWorldCenter(), true);
-        System.out.println(getX() + " " + getY());
-
     }
 
     public void goLeft() {
         b2body.applyLinearImpulse(new Vector2(-0.1f, 0), b2body.getWorldCenter(), true);
-        System.out.println(getX() + " " + getY());
     }
 
     public void fire() {

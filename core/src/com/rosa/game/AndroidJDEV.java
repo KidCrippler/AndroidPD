@@ -15,6 +15,8 @@ public class AndroidJDEV extends Game {
     public static final short BRICK_BIT = 4;
     public static final short COIN_BIT = 8;
     public static final short DESTROYED_BIT = 16;
+    public static final short FIREBALL_BIT = 16;
+    public static final short GROUND_BIT = 16;
 
 
     public static SpriteBatch batch;
