@@ -20,19 +20,19 @@ public class Controller {
     boolean upPressed, downPressed, leftPressed, rightPressed, spacePressed;
     OrthographicCamera cam;
 
-    public Controller(){
+    public Controller() {
         cam = new OrthographicCamera();
         viewport = new FitViewport(800, 480, cam);
         stage = new Stage(viewport, AndroidJDEV.batch);
 
-        stage.addListener(new InputListener(){
+        stage.addListener(new InputListener() {
 
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
-                switch(keycode){
+                switch (keycode) {
                     case Input.Keys.UP:
                         upPressed = true;
-                        break;
+                    break;
                     case Input.Keys.DOWN:
                         downPressed = true;
                         break;
@@ -44,13 +44,14 @@ public class Controller {
                         break;
                     case Input.Keys.SPACE:
                         spacePressed = true;
+                        break;
                 }
                 return true;
             }
 
             @Override
             public boolean keyUp(InputEvent event, int keycode) {
-                switch(keycode){
+                switch (keycode) {
                     case Input.Keys.UP:
                         upPressed = false;
                         break;
@@ -136,7 +137,7 @@ public class Controller {
         stage.addActor(table);
     }
 
-    public void draw(){
+    public void draw() {
         stage.draw();
     }
 
@@ -156,7 +157,7 @@ public class Controller {
         return spacePressed;
     }
 
-    public void resize(int width, int height){
+    public void resize(int width, int height) {
         viewport.update(width, height);
     }
 }

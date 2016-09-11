@@ -104,8 +104,6 @@ public class PlayScreen implements Screen {
         } else if (controller.isSpacePressed()) {
             player.fire();
         }
-
-
     }
 
     public void update(float dt) {

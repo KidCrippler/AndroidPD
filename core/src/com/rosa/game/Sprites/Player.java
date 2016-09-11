@@ -14,10 +14,12 @@ import com.badlogic.gdx.utils.Array;
 import com.rosa.game.AndroidJDEV;
 import com.rosa.game.screens.PlayScreen;
 
+import static com.rosa.game.Sprites.Player.State.DEAD;
+
 
 public class Player extends Sprite {
 
-    public enum State {FALLING, JUMPING, STANDING, RUNNING}
+    public enum State {FALLING, JUMPING, STANDING, RUNNING, DEAD}
 
     private AndroidJDEV game;
     public State currentState;
@@ -42,6 +44,8 @@ public class Player extends Sprite {
         previousState = State.STANDING;
         stateTimer = 0;
         runningRight = true;
+
+
 
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
@@ -152,14 +156,10 @@ public class Player extends Sprite {
     }
 
 
-    //Control area:
 
-    public void jump() {
-        if (currentState != State.JUMPING) {
-//            b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
-
-            b2body.applyLinearImpulse(new Vector2(0, 5f), b2body.getWorldCenter(), true);
-
+    public void jump(){
+        if ( currentState != State.JUMPING ) {
+            b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
             currentState = State.JUMPING;
         }
     }
