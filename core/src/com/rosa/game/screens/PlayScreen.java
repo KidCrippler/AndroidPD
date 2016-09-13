@@ -1,6 +1,7 @@
 package com.rosa.game.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -72,7 +73,6 @@ public class PlayScreen implements Screen {
         b2dr = new Box2DDebugRenderer();
 
 
-
         //Start the player:
         player = new Player(world, this);
 
@@ -91,11 +91,10 @@ public class PlayScreen implements Screen {
     }
 
 
-    public void handleInput() {
+    public void handleInputControler() {
 
         if (controller.isUpPressed()) {
             player.jump();
-
         } else if (controller.isRightPressed()) {
             player.goRight();
 
@@ -106,9 +105,21 @@ public class PlayScreen implements Screen {
         }
     }
 
+    public void handleInput(float dt) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
+            player.jump();
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2)
+            player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2)
+            player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
+            player.fire();
+    }
+
     public void update(float dt) {
         //Handler user input
-        handleInput();
+        handleInput(dt);
+        handleInputControler();
 
         world.step(1 / 60f, 6, 2);
 
@@ -143,7 +154,6 @@ public class PlayScreen implements Screen {
 
         //End Batch
         game.batch.end();
-
 
         //HUD:
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
@@ -182,7 +192,7 @@ public class PlayScreen implements Screen {
         hud.dispose();
     }
 
-    public World getWorld(){
+    public World getWorld() {
         return world;
     }
 }
