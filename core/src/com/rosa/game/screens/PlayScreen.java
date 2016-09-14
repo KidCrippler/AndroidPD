@@ -21,6 +21,7 @@ import com.rosa.game.Sprites.Bullet;
 import com.rosa.game.Sprites.Player;
 import com.rosa.game.Tools.B2WorldCreator;
 import com.rosa.game.Tools.Controller;
+import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.Tools.WorldContactListener;
 
 public class PlayScreen implements Screen {
@@ -44,6 +45,7 @@ public class PlayScreen implements Screen {
     private Box2DDebugRenderer b2dr;
     private Player player;
     Controller controller;
+    SoundPlayer playsound;
 
     //Items:
     private Bullet bullet;
@@ -58,6 +60,10 @@ public class PlayScreen implements Screen {
         gamePort = new FitViewport(AndroidJDEV.V_WIDTH / AndroidJDEV.PPM, AndroidJDEV.V_HEIGHT / AndroidJDEV.PPM, gamecam);
 
         hud = new Hud(game.batch);
+
+        //Load sounds:
+
+        playsound = new SoundPlayer();
 
         //Create the HUD:
         mapLoader = new TmxMapLoader();

@@ -1,5 +1,6 @@
 package com.rosa.game.Sprites;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -12,15 +13,14 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.AndroidJDEV;
+import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
-
-import static com.rosa.game.Sprites.Player.State.DEAD;
-
 
 public class Player extends Sprite {
 
     public enum State {FALLING, JUMPING, STANDING, RUNNING, DEAD}
 
+    private SoundPlayer playSound;
     private AndroidJDEV game;
     public State currentState;
     public State previousState;
@@ -35,6 +35,7 @@ public class Player extends Sprite {
 
     private Array<Bullet> bullets;
 
+    SoundPlayer soundPlayer = new SoundPlayer();
 
     public Player(World world, PlayScreen screen) {
         super(screen.getAtlas().findRegion("keen"));
@@ -44,8 +45,6 @@ public class Player extends Sprite {
         previousState = State.STANDING;
         stateTimer = 0;
         runningRight = true;
-
-
 
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
@@ -156,10 +155,10 @@ public class Player extends Sprite {
     }
 
 
-
-    public void jump(){
-        if ( currentState != State.JUMPING ) {
+    public void jump() {
+        if (currentState != State.JUMPING) {
             b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
+            soundPlayer.soundPlayer(1);
             currentState = State.JUMPING;
         }
     }
