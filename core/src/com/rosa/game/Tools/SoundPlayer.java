@@ -2,29 +2,24 @@ package com.rosa.game.Tools;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.files.FileHandle;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SoundPlayer {
 
 
-    public SoundPlayer() {
+  /*  public void soundPlayer(int soundNumber) {
 
 
-        System.out.println("test");
-    }
+        List<String> soundString = new ArrayList<String>(10);
 
+        soundString.add(1,"sounds/audio/Laser_Shoot.wav");
 
-    public void soundPlayer(int soundNumber) {
+        Sound soundFXStream = Gdx.audio.newSound(Gdx.files.internal(soundString.get(1)));
 
-        List<InputStream> soundsList = new ArrayList<InputStream>();
-
-//        soundsList.add(1, Gdx.audio.newSound(Gdx.files.internal("sounds/audio/jump.wav")).
-
-
-//todo - add sound list from int in this class
-        // sound.play();
-    }
+        System.out.println(soundFXStream);
+        soundFXStream.play();
+    }*/
 }
