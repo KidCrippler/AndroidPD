@@ -20,8 +20,6 @@ public class Player extends Sprite {
 
     public enum State {FALLING, JUMPING, STANDING, RUNNING, DEAD}
 
-    private SoundPlayer playSound;
-    private AndroidJDEV game;
     public State currentState;
     public State previousState;
     public World world;
@@ -172,8 +170,7 @@ public class Player extends Sprite {
     }
 
     public void fire() {
-        bullets.add(new Bullet(screen, b2body.getPosition().x, b2body.getPosition().y, runningRight ? true : false));
+        bullets.add(new Bullet(screen, b2body.getPosition().x, b2body.getPosition().y, runningRight));
         soundPlayer.playSound(1);
     }
-
 }

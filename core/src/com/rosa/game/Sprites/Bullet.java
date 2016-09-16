@@ -18,13 +18,6 @@ public class Bullet extends Sprite {
 
     public World world;
     public Body b2body;
-    private TextureRegion playerStand;
-    private Animation playerRun;
-    private Animation playerJump;
-    private float stateTimer;
-    private boolean runningRight;
-    private Bullet bullet;
-    private PlayScreen screen;
     boolean fireRight;
     boolean destroyed;
     boolean setToDestroy;
@@ -35,7 +28,6 @@ public class Bullet extends Sprite {
     public Bullet(PlayScreen screen, float x, float y, boolean fireRight) {
 
         this.fireRight = fireRight;
-        this.screen = screen;
         this.world = screen.getWorld();
         bullets = new Array<TextureRegion>();
         for (int i = 0; i < 4; i++) {
@@ -58,17 +50,18 @@ public class Bullet extends Sprite {
         CircleShape shape = new CircleShape();
         shape.setRadius(2 / AndroidJDEV.PPM);
         fdef.filter.categoryBits = AndroidJDEV.FIREBALL_BIT;
-        fdef.filter.maskBits =
-                AndroidJDEV.GROUND_BIT |
-                        AndroidJDEV.COIN_BIT |
-                        AndroidJDEV.BRICK_BIT;
+//        fdef.filter.maskBits ;
 
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
         b2body.setLinearVelocity(new Vector2(fireRight ? 2  : -2 , 0));
         b2body.setBullet(true);
         b2body.setGravityScale(0);
+
+
     }
+
+
 
 
     public void update(float dt) {
@@ -83,6 +76,8 @@ public class Bullet extends Sprite {
             b2body.setLinearVelocity(b2body.getLinearVelocity().x, 2f);
         if ((fireRight && b2body.getLinearVelocity().x < 0) || (!fireRight && b2body.getLinearVelocity().x > 0))
             setToDestroy();
+
+
     }
 
     public boolean setToDestroy() {
