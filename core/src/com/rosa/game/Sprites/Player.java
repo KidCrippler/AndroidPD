@@ -158,7 +158,7 @@ public class Player extends Sprite {
     public void jump() {
         if (currentState != State.JUMPING) {
             b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
-            soundPlayer.soundPlayer(0);
+            soundPlayer.playSound(0);
             currentState = State.JUMPING;
         }
     }
@@ -173,6 +173,7 @@ public class Player extends Sprite {
 
     public void fire() {
         bullets.add(new Bullet(screen, b2body.getPosition().x, b2body.getPosition().y, runningRight ? true : false));
+        soundPlayer.playSound(1);
     }
 
 }

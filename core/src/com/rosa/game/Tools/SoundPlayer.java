@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class SoundPlayer {
 
-    public void soundPlayer(int soundNumber) {
+    public void playSound(int soundNumber) {
 
         ArrayList<String> soundString = new ArrayList();
         soundString.add(0, "sounds/audio/jump.wav");
