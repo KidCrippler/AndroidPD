@@ -10,21 +10,25 @@ import java.util.List;
 
 public class SoundPlayer {
 
-    private Sound soundFXStream;
-
-
     public void soundPlayer(int soundNumber) {
+        try {
 
 
-        ArrayList<String> soundString = new ArrayList();
+            ArrayList<String> soundString = new ArrayList();
 
 
-        soundString.add(1,"sounds/audio/Laser_Shoot.wav");
-
-        soundFXStream = Gdx.audio.newSound(Gdx.files.internal(soundString.get(1)));
-
+            soundString.add(0, "sounds/audio/jump.wav");
+            soundString.add(1, "sounds/audio/Laser_Shoot.wav");
 
 
-        soundFXStream.play();
+            Sound soundFXStream = Gdx.audio.newSound(Gdx.files.internal(soundString.get(soundNumber)));
+
+            soundFXStream.play();
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }
