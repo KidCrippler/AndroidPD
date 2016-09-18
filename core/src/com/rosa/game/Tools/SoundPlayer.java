@@ -15,7 +15,7 @@ public class SoundPlayer {
         try {
 
             Sound soundFXStream = Gdx.audio.newSound(Gdx.files.internal(soundString.get(soundNumber)));
-            soundFXStream.play();
+            soundFXStream.play(0.05f);
 
         } catch (Exception e) {
             e.printStackTrace();
