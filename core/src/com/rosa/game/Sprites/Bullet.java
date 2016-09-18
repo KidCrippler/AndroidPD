@@ -50,16 +50,17 @@ public class Bullet extends Sprite {
         CircleShape shape = new CircleShape();
         shape.setRadius(2 / AndroidJDEV.PPM);
         fdef.filter.categoryBits = AndroidJDEV.FIREBALL_BIT;
-//        fdef.filter.maskBits ;
+
+
 
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
         b2body.setLinearVelocity(new Vector2(fireRight ? 2  : -2 , 0));
         b2body.setBullet(true);
         b2body.setGravityScale(0);
-
-
     }
+
+
 
 
 

@@ -54,6 +54,7 @@ public class PlayScreen implements Screen {
 
     public PlayScreen(AndroidJDEV game) {
 
+
         atlas = new TextureAtlas("keen_one.pack");
         this.game = game;
         gamecam = new OrthographicCamera();
@@ -61,11 +62,9 @@ public class PlayScreen implements Screen {
 
         hud = new Hud(game.batch);
 
-        //Load sounds:
 
         playsound = new SoundPlayer();
 
-        //Create the HUD:
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("tmap.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1 / AndroidJDEV.PPM);
