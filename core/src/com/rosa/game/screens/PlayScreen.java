@@ -70,7 +70,7 @@ public class PlayScreen implements Screen {
         renderer = new OrthogonalTiledMapRenderer(map, 1 / AndroidJDEV.PPM);
 
         //GameCam:
-//            gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
+        gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 
         world = new World(new Vector2(0, -10), true);
         new B2WorldCreator(world, map);
@@ -132,7 +132,11 @@ public class PlayScreen implements Screen {
         player.update(dt);
         hud.update(dt);
 
-        gamecam.position.x = player.b2body.getPosition().x;
+        if(player.b2body.getPosition().x > 2) {
+            gamecam.position.x = player.b2body.getPosition().x;
+        }
+
+        System.out.println(player.b2body.getPosition().x);
 
         gamecam.update();
         renderer.setView(gamecam);
