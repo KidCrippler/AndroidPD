@@ -132,7 +132,7 @@ public class PlayScreen implements Screen {
         player.update(dt);
         hud.update(dt);
 
-        if(player.b2body.getPosition().x > 2) {
+        if((player.b2body.getPosition().x > 2) && (player.b2body.getPosition().x < 36.5)) {
             gamecam.position.x = player.b2body.getPosition().x;
         }
 
