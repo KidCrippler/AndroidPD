@@ -21,7 +21,6 @@ public class Coin extends InteractiveTileObject{
 
     @Override
     public void onHeadHit() {
-        Gdx.app.log("End coin","");
        // setCategoryFilter(AndroidJDEV.COIN_BIT);
 
 
