@@ -19,6 +19,8 @@ public class Coin extends InteractiveTileObject{
         setCategoryFilter(AndroidJDEV.COIN_BIT);
     }
 
+
+
     @Override
     public void onHeadHit() {
        // setCategoryFilter(AndroidJDEV.COIN_BIT);
