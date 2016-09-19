@@ -23,7 +23,6 @@ public class Coin extends InteractiveTileObject{
     public void onHeadHit() {
        // setCategoryFilter(AndroidJDEV.COIN_BIT);
 
-
       /*  if(getCell().getTile().getId() == BLANK_COIN){
             AndroidJDEV.manager.get("sounds/audio/Laser_Shoot.wav");
         }else{
