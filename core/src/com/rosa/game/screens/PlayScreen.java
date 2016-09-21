@@ -144,7 +144,7 @@ public class PlayScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        update(delta);
+        update(delta);;
 
         //Clear screen:
         Gdx.gl.glClearColor(0, 0, 0, 0);

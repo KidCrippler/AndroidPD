@@ -10,12 +10,11 @@ import com.rosa.game.Sprites.InteractiveTileObject;
 
 public class WorldContactListener implements ContactListener{
 
-
-
     @Override
     public void beginContact(Contact contact) {
         Fixture fixA = contact.getFixtureA();
         Fixture fixB = contact.getFixtureB();
+
 
         if (fixA.getUserData() == "head" || fixB.getUserData() == "head"){
             Fixture head = fixA.getUserData() == "head" ? fixA : fixB;

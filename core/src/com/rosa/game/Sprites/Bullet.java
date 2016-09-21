@@ -25,7 +25,7 @@ public class Bullet extends Sprite {
     Animation fireAnimation;
     Array<TextureRegion> bullets;
 
-    public Bullet(PlayScreen screen, float x, float y, boolean fireRight) {
+    public Bullet(PlayScreen screen, float x, float y, boolean fireRight)  {
 
         this.fireRight = fireRight;
         this.world = screen.getWorld();
@@ -37,6 +37,7 @@ public class Bullet extends Sprite {
         setRegion(fireAnimation.getKeyFrame(0));
         setBounds(x, y, 6 / AndroidJDEV.PPM, 6 / AndroidJDEV.PPM);
         defineBullet();
+
     }
 
     public void defineBullet() {
@@ -49,9 +50,7 @@ public class Bullet extends Sprite {
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(2 / AndroidJDEV.PPM);
-        fdef.filter.categoryBits = AndroidJDEV.FIREBALL_BIT;
-
-
+        fdef.filter.categoryBits = AndroidJDEV.FIREBALL_BIT | AndroidJDEV.BRICK_BIT | AndroidJDEV.GROUND_BIT;
 
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
@@ -60,12 +59,8 @@ public class Bullet extends Sprite {
         b2body.setGravityScale(0);
     }
 
-
-
-
-
-
     public void update(float dt) {
+
         stateTime += dt;
         setRegion(fireAnimation.getKeyFrame(stateTime, true));
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
@@ -77,8 +72,6 @@ public class Bullet extends Sprite {
             b2body.setLinearVelocity(b2body.getLinearVelocity().x, 2f);
         if ((fireRight && b2body.getLinearVelocity().x < 0) || (!fireRight && b2body.getLinearVelocity().x > 0))
             setToDestroy();
-
-
     }
 
     public boolean setToDestroy() {
