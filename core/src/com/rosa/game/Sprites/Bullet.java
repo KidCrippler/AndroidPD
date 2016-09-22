@@ -72,6 +72,8 @@ public class Bullet extends Sprite {
             b2body.setLinearVelocity(b2body.getLinearVelocity().x, 2f);
         if ((fireRight && b2body.getLinearVelocity().x < 0) || (!fireRight && b2body.getLinearVelocity().x > 0))
             setToDestroy();
+
+//        if
     }
 
     public boolean setToDestroy() {
