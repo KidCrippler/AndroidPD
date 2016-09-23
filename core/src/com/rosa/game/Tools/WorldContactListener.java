@@ -15,7 +15,6 @@ public class WorldContactListener implements ContactListener{
         Fixture fixA = contact.getFixtureA();
         Fixture fixB = contact.getFixtureB();
 
-
         if (fixA.getUserData() == "head" || fixB.getUserData() == "head"){
             Fixture head = fixA.getUserData() == "head" ? fixA : fixB;
             Fixture object = head == fixA ? fixB : fixA;
@@ -23,8 +22,11 @@ public class WorldContactListener implements ContactListener{
             if(object.getUserData() instanceof InteractiveTileObject) {
                 ((InteractiveTileObject) object.getUserData()).onHeadHit();
             }
+
         }
+
     }
+
 
     @Override
     public void endContact(Contact contact) {
