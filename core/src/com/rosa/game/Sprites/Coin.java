@@ -1,6 +1,5 @@
 package com.rosa.game.Sprites;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.math.Rectangle;
@@ -22,7 +21,7 @@ public class Coin extends InteractiveTileObject{
 
 
     @Override
-    public void onHeadHit() {
+    public void onHeadHit(Player userData) {
        // setCategoryFilter(AndroidJDEV.COIN_BIT);
 
       /*  if(getCell().getTile().getId() == BLANK_COIN){

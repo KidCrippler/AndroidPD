@@ -18,6 +18,9 @@ import com.rosa.game.screens.PlayScreen;
 
 public class Player extends Sprite {
 
+    public void hit(Enemy userData) {
+    }
+
     public enum State {FALLING, JUMPING, STANDING, RUNNING, DEAD}
 
     public State currentState;
@@ -135,8 +138,15 @@ public class Player extends Sprite {
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(7 / AndroidJDEV.PPM);
-        fdef.filter.categoryBits = AndroidJDEV.PLAYER_BIT;
-        fdef.filter.maskBits = AndroidJDEV.DEFAULT_BIT | AndroidJDEV.COIN_BIT | AndroidJDEV.BRICK_BIT;
+        fdef.filter.categoryBits = AndroidJDEV.MARIO_BIT;
+
+        fdef.filter.maskBits = AndroidJDEV.GROUND_BIT |
+                AndroidJDEV.COIN_BIT |
+                AndroidJDEV.BRICK_BIT |
+                AndroidJDEV.ENEMY_BIT |
+                AndroidJDEV.OBJECT_BIT |
+                AndroidJDEV.ENEMY_HEAD_BIT |
+                AndroidJDEV.ITEM_BIT;
 
         fdef.shape = shape;
         b2body.createFixture(fdef);
