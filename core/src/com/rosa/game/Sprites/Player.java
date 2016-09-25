@@ -152,10 +152,14 @@ public class Player extends Sprite {
 
         EdgeShape head = new EdgeShape();
         head.set(new Vector2(-2 / AndroidJDEV.PPM, 7 / AndroidJDEV.PPM), new Vector2(2 / AndroidJDEV.PPM, 7 / AndroidJDEV.PPM));
+        fdef.filter.categoryBits = AndroidJDEV.PLAYER_HEAD_BIT;
+
         fdef.shape = head;
         fdef.isSensor = true;
 
-        b2body.createFixture(fdef).setUserData("head");
+        b2body.createFixture(fdef).setUserData(this);
+
+
     }
 
 
