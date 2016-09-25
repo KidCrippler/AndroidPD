@@ -9,23 +9,31 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.rosa.game.AndroidJDEV;
 import com.rosa.game.Sprites.Brick;
 import com.rosa.game.Sprites.Coin;
+import com.rosa.game.Sprites.Enemy;
+import com.rosa.game.Sprites.Goomba;
+import com.rosa.game.Sprites.Turtle;
+import com.rosa.game.screens.PlayScreen;
 
 
 public class B2WorldCreator {
+    private Array<Goomba> goombas;
+    private Array<Turtle> turtles;
 
-    public B2WorldCreator(World world, TiledMap map) {
 
+    public B2WorldCreator(PlayScreen screen) {
+        World world = screen.getWorld();
+        TiledMap map = screen.getMap();
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
         Body body;
 
 
-
-        //Create body Ground:
+        //create ground bodies/fixtures
         for (MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
@@ -33,12 +41,13 @@ public class B2WorldCreator {
             bdef.position.set((rect.getX() + rect.getWidth() / 2) / AndroidJDEV.PPM, (rect.getY() + rect.getHeight() / 2) / AndroidJDEV.PPM);
 
             body = world.createBody(bdef);
+
             shape.setAsBox(rect.getWidth() / 2 / AndroidJDEV.PPM, rect.getHeight() / 2 / AndroidJDEV.PPM);
             fdef.shape = shape;
             body.createFixture(fdef);
         }
 
-        //Create body pipe:
+        //create pipe bodies/fixtures
         for (MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
@@ -46,21 +55,43 @@ public class B2WorldCreator {
             bdef.position.set((rect.getX() + rect.getWidth() / 2) / AndroidJDEV.PPM, (rect.getY() + rect.getHeight() / 2) / AndroidJDEV.PPM);
 
             body = world.createBody(bdef);
+
             shape.setAsBox(rect.getWidth() / 2 / AndroidJDEV.PPM, rect.getHeight() / 2 / AndroidJDEV.PPM);
             fdef.shape = shape;
+            fdef.filter.categoryBits = AndroidJDEV.OBJECT_BIT;
             body.createFixture(fdef);
         }
 
-        //Create body Brick:
+        //create brick bodies/fixtures
         for (MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            new Brick(world,map,rect);
+            new Brick(screen, object);
         }
 
-        //Create body coin:
+        //create coin bodies/fixtures
         for (MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            new Coin(world,map,rect);
+            new Coin(screen, object);
         }
+       /* //create all goombas
+        goombas = new Array<Goomba>();
+        for(MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            goombas.add(new Goomba(screen, rect.getX() / AndroidJDEV.PPM, rect.getY() / AndroidJDEV.PPM));
+        }
+        turtles = new Array<Turtle>();
+        for(MapObject object : map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            turtles.add(new Turtle(screen, rect.getX() / AndroidJDEV.PPM, rect.getY() / AndroidJDEV.PPM));
+        }
+    }
+
+    public Array<Goomba> getGoombas() {
+        return goombas;
+    }
+    public Array<Enemy> getEnemies(){
+        Array<Enemy> enemies = new Array<Enemy>();
+        enemies.addAll(goombas);
+        enemies.addAll(turtles);
+        return enemies;
+    */
     }
 }

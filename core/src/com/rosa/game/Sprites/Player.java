@@ -127,18 +127,15 @@ public class Player extends Sprite {
     }
 
     public void definePlayer() {
-
         BodyDef bdef = new BodyDef();
-        bdef.position.set(64 / AndroidJDEV.PPM, 64 / AndroidJDEV.PPM);
-
-
+        bdef.position.set(32 / AndroidJDEV.PPM, 32 / AndroidJDEV.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(7 / AndroidJDEV.PPM);
-        fdef.filter.categoryBits = AndroidJDEV.MARIO_BIT;
+        shape.setRadius(6 / AndroidJDEV.PPM);
+        fdef.filter.categoryBits = AndroidJDEV.PLAYER_BIT;
         fdef.filter.maskBits = AndroidJDEV.GROUND_BIT |
                 AndroidJDEV.COIN_BIT |
                 AndroidJDEV.BRICK_BIT |

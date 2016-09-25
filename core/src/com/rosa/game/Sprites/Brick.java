@@ -1,20 +1,19 @@
 package com.rosa.game.Sprites;
 
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.maps.MapObject;
 import com.rosa.game.AndroidJDEV;
+import com.rosa.game.screens.PlayScreen;
 
 public class Brick extends InteractiveTileObject {
 
-    public Brick(World world, TiledMap map, Rectangle bounds){
-        super(world, map, bounds);
+    public Brick(PlayScreen screen, MapObject object){
+        super(screen, object);
         fixture.setUserData(this);
-        setCategoryFilter(AndroidJDEV.BRICK_BIT );
+        setCategoryFilter(AndroidJDEV.BRICK_BIT);
     }
 
     @Override
-    public void onHeadHit(Player userData) {
+    public void onHeadHit(Player player) {
         System.out.println("brick");
             setCategoryFilter(AndroidJDEV.DESTROYED_BIT);
             getCell().setTile(null);
