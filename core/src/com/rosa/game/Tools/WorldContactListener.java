@@ -20,10 +20,10 @@ public class WorldContactListener implements ContactListener{
         Fixture fixA = contact.getFixtureA();
         Fixture fixB = contact.getFixtureB();
 
-        int Cdef = fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
+        int cDef = fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
 
-        switch (Cdef){
-            case AndroidJDEV.MARIO_HEAD_BIT| AndroidJDEV.BRICK_BIT:
+        switch (cDef){
+            case AndroidJDEV.MARIO_HEAD_BIT | AndroidJDEV.BRICK_BIT:
             case AndroidJDEV.MARIO_HEAD_BIT | AndroidJDEV.COIN_BIT:
                 if(fixA.getFilterData().categoryBits == AndroidJDEV.MARIO_HEAD_BIT)
                     ((InteractiveTileObject) fixB.getUserData()).onHeadHit((Player) fixA.getUserData());

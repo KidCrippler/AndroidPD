@@ -139,7 +139,6 @@ public class Player extends Sprite {
         CircleShape shape = new CircleShape();
         shape.setRadius(7 / AndroidJDEV.PPM);
         fdef.filter.categoryBits = AndroidJDEV.MARIO_BIT;
-
         fdef.filter.maskBits = AndroidJDEV.GROUND_BIT |
                 AndroidJDEV.COIN_BIT |
                 AndroidJDEV.BRICK_BIT |
@@ -163,13 +162,13 @@ public class Player extends Sprite {
     }
 
 
-    public void jump() {
-        if (currentState != State.JUMPING) {
-            b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
-            soundPlayer.playSound(0);
-            currentState = State.JUMPING;
+        public void jump() {
+            if (currentState != State.JUMPING) {
+                b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
+                soundPlayer.playSound(0);
+                currentState = State.JUMPING;
+            }
         }
-    }
 
     public void goRight() {
         b2body.applyLinearImpulse(new Vector2(0.1f, 0), b2body.getWorldCenter(), true);
