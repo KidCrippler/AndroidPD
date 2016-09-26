@@ -3,6 +3,7 @@ package com.rosa.game.Sprites;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g3d.environment.AmbientCubemap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -23,17 +24,20 @@ public class Bullet extends Sprite {
     boolean setToDestroy;
     private float stateTime;
     Animation fireAnimation;
-    Array<TextureRegion> bullets;
+    Array<TextureRegion> frames;
+    PlayScreen screen;
 
     public Bullet(PlayScreen screen, float x, float y, boolean fireRight)  {
 
         this.fireRight = fireRight;
         this.world = screen.getWorld();
-        bullets = new Array<TextureRegion>();
+        this.screen = screen;
+
+        frames = new Array<TextureRegion>();
         for (int i = 0; i < 4; i++) {
-            bullets.add(new TextureRegion(screen.getAtlas().findRegion("keen"), i * 8, 0, 8, 8));
+            frames.add(new TextureRegion(screen.getAtlas().findRegion("keen"), i * 8, 0, 8, 8));
         }
-        fireAnimation = new Animation(0.2f, bullets);
+        fireAnimation = new Animation(0.2f, frames);
         setRegion(fireAnimation.getKeyFrame(0));
         setBounds(x, y, 6 / AndroidJDEV.PPM, 6 / AndroidJDEV.PPM);
         defineBullet();
@@ -50,9 +54,14 @@ public class Bullet extends Sprite {
         CircleShape shape = new CircleShape();
         shape.setRadius(2 / AndroidJDEV.PPM);
 
-        fdef.shape = shape;
         fdef.filter.categoryBits = AndroidJDEV.FIREBALL_BIT;
-        fdef.filter.maskBits = AndroidJDEV.BRICK_BIT | AndroidJDEV.GROUND_BIT;
+        fdef.filter.maskBits = AndroidJDEV.BRICK_BIT |
+                AndroidJDEV.COIN_BIT |
+                AndroidJDEV.ENEMY_BIT |
+                AndroidJDEV.GROUND_BIT |
+                AndroidJDEV.OBJECT_BIT;
+
+        fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
 
         b2body.setLinearVelocity(new Vector2(fireRight ? 2  : -2 , 0));
@@ -68,14 +77,15 @@ public class Bullet extends Sprite {
             world.destroyBody(b2body);
             destroyed = true;
         }
+        System.out.println(destroyed);
         if(b2body.getLinearVelocity().y > 2f)
             b2body.setLinearVelocity(b2body.getLinearVelocity().x, 2f);
         if((fireRight && b2body.getLinearVelocity().x < 0) || (!fireRight && b2body.getLinearVelocity().x > 0))
             setToDestroy();
     }
 
-    public boolean setToDestroy() {
-        return setToDestroy;
+    public void setToDestroy() {
+        setToDestroy = true;
     }
 
     public boolean isDestroyed() {
