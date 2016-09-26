@@ -73,16 +73,10 @@ public class Bullet extends Sprite {
             b2body.setLinearVelocity(b2body.getLinearVelocity().x, 2f);
         if ((fireRight && b2body.getLinearVelocity().x < 0) || (!fireRight && b2body.getLinearVelocity().x > 0))
             setToDestroy();
-
-        if(this.bullets.equals(AndroidJDEV.GROUND_BIT)){
-            System.out.println("touchDown");
-        }
-
-
     }
 
     public boolean setToDestroy() {
-
+        System.out.println("down with the bullet");
         return setToDestroy;
     }
 
