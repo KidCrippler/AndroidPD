@@ -1,6 +1,5 @@
 package com.rosa.game.Sprites;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -17,9 +16,6 @@ import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
 
 public class Player extends Sprite {
-
-    public void hit(Enemy userData) {
-    }
 
     public enum State {FALLING, JUMPING, STANDING, RUNNING, DEAD}
 
@@ -46,7 +42,6 @@ public class Player extends Sprite {
         previousState = State.STANDING;
         stateTimer = 0;
         runningRight = true;
-
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
@@ -150,7 +145,6 @@ public class Player extends Sprite {
         shape.setPosition(new Vector2(0, -14 / AndroidJDEV.PPM));
         b2body.createFixture(fdef).setUserData(this);
 
-
         EdgeShape head = new EdgeShape();
         head.set(new Vector2(-2 / AndroidJDEV.PPM, 7 / AndroidJDEV.PPM), new Vector2(2 / AndroidJDEV.PPM, 7 / AndroidJDEV.PPM));
         fdef.filter.categoryBits = AndroidJDEV.PLAYER_HEAD_BIT;
@@ -159,18 +153,16 @@ public class Player extends Sprite {
         fdef.isSensor = true;
 
         b2body.createFixture(fdef).setUserData(this);
-
-
     }
 
 
-        public void jump() {
-            if (currentState != State.JUMPING) {
-                b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
-                soundPlayer.playSound(0);
-                currentState = State.JUMPING;
-            }
+    public void jump() {
+        if (currentState != State.JUMPING) {
+            b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
+            soundPlayer.playSound(0);
+            currentState = State.JUMPING;
         }
+    }
 
     public void goRight() {
         b2body.applyLinearImpulse(new Vector2(0.1f, 0), b2body.getWorldCenter(), true);
@@ -183,5 +175,8 @@ public class Player extends Sprite {
     public void fire() {
         bullets.add(new Bullet(screen, b2body.getPosition().x, b2body.getPosition().y, runningRight));
         soundPlayer.playSound(1);
+    }
+
+    public void hit(Enemy userData) {
     }
 }

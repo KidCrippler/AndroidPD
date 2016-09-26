@@ -51,17 +51,13 @@ public class Bullet extends Sprite {
         shape.setRadius(2 / AndroidJDEV.PPM);
 
         fdef.shape = shape;
-//        fdef.filter.maskBits = AndroidJDEV.FIREBALL_BIT;
-        fdef.filter.maskBits = AndroidJDEV.FIREBALL_BIT | AndroidJDEV.BRICK_BIT | AndroidJDEV.GROUND_BIT;
-
+        fdef.filter.categoryBits = AndroidJDEV.FIREBALL_BIT;
+        fdef.filter.maskBits = AndroidJDEV.BRICK_BIT | AndroidJDEV.GROUND_BIT;
         b2body.createFixture(fdef).setUserData(this);
-
 
         b2body.setLinearVelocity(new Vector2(fireRight ? 2  : -2 , 0));
         b2body.setBullet(true);
         b2body.setGravityScale(0);
-
-
     }
 
     public void update(float dt) {
@@ -86,6 +82,7 @@ public class Bullet extends Sprite {
     }
 
     public boolean setToDestroy() {
+
         return setToDestroy;
     }
 
