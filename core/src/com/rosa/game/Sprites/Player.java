@@ -142,7 +142,8 @@ public class Player extends Sprite {
                 AndroidJDEV.ENEMY_BIT |
                 AndroidJDEV.OBJECT_BIT |
                 AndroidJDEV.ENEMY_HEAD_BIT |
-                AndroidJDEV.ITEM_BIT;
+                AndroidJDEV.ITEM_BIT |
+                AndroidJDEV.FIREBALL_BIT;
 
         fdef.shape = shape;
         b2body.createFixture(fdef);

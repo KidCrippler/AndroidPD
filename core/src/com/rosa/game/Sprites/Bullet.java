@@ -37,7 +37,6 @@ public class Bullet extends Sprite {
         setRegion(fireAnimation.getKeyFrame(0));
         setBounds(x, y, 6 / AndroidJDEV.PPM, 6 / AndroidJDEV.PPM);
         defineBullet();
-
     }
 
     public void defineBullet() {
@@ -50,13 +49,14 @@ public class Bullet extends Sprite {
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(2 / AndroidJDEV.PPM);
-        fdef.filter.maskBits = AndroidJDEV.FIREBALL_BIT | AndroidJDEV.BRICK_BIT | AndroidJDEV.GROUND_BIT;
-
-
 
         fdef.shape = shape;
+//        fdef.filter.maskBits = AndroidJDEV.FIREBALL_BIT;
+        fdef.filter.maskBits = AndroidJDEV.FIREBALL_BIT | AndroidJDEV.BRICK_BIT | AndroidJDEV.GROUND_BIT;
 
         b2body.createFixture(fdef).setUserData(this);
+
+
         b2body.setLinearVelocity(new Vector2(fireRight ? 2  : -2 , 0));
         b2body.setBullet(true);
         b2body.setGravityScale(0);

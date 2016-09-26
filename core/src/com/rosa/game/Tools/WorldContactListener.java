@@ -74,6 +74,13 @@ public class WorldContactListener implements ContactListener {
                 else
                     ((Bullet) fixB.getUserData()).setToDestroy();
                 break;
+            case AndroidJDEV.FIREBALL_BIT | AndroidJDEV.GROUND_BIT:
+                if (fixA.getFilterData().categoryBits == AndroidJDEV.FIREBALL_BIT)
+                    System.out.println("bullet in the wall");
+                else
+                    System.out.println("bullet in the wall");
+                break;
+
         }
     }
 
