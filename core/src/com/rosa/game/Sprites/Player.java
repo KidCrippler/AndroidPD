@@ -1,6 +1,7 @@
 package com.rosa.game.Sprites;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -175,6 +176,12 @@ public class Player extends Sprite {
     public void fire() {
         bullets.add(new Bullet(screen, b2body.getPosition().x, b2body.getPosition().y, runningRight));
         soundPlayer.playSound(1);
+    }
+
+    public void draw(Batch batch){
+        super.draw(batch);
+        for(Bullet  bullet : bullets)
+            bullet.draw(batch);
     }
 
     public void hit(Enemy userData) {

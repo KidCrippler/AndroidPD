@@ -60,23 +60,21 @@ public class Bullet extends Sprite {
         b2body.setGravityScale(0);
     }
 
-    public void update(float dt) {
-
+    public void update(float dt){
         stateTime += dt;
         setRegion(fireAnimation.getKeyFrame(stateTime, true));
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
-        if ((stateTime > 6 || setToDestroy) && !destroyed) {
+        if((stateTime > 3 || setToDestroy) && !destroyed) {
             world.destroyBody(b2body);
             destroyed = true;
         }
-        if (b2body.getLinearVelocity().y > 2f)
+        if(b2body.getLinearVelocity().y > 2f)
             b2body.setLinearVelocity(b2body.getLinearVelocity().x, 2f);
-        if ((fireRight && b2body.getLinearVelocity().x < 0) || (!fireRight && b2body.getLinearVelocity().x > 0))
+        if((fireRight && b2body.getLinearVelocity().x < 0) || (!fireRight && b2body.getLinearVelocity().x > 0))
             setToDestroy();
     }
 
     public boolean setToDestroy() {
-        System.out.println("down with the bullet");
         return setToDestroy;
     }
 

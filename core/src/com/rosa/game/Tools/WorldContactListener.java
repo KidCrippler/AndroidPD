@@ -68,13 +68,19 @@ public class WorldContactListener implements ContactListener {
                 else
                     ((Item) fixB.getUserData()).use((Player) fixA.getUserData());
                 break;
-            case AndroidJDEV.FIREBALL_BIT | AndroidJDEV.OBJECT_BIT | AndroidJDEV.BRICK_BIT:
+           /* case AndroidJDEV.FIREBALL_BIT | AndroidJDEV.GROUND_BIT:
                 if (fixA.getFilterData().categoryBits == AndroidJDEV.FIREBALL_BIT)
                     ((Bullet) fixA.getUserData()).setToDestroy();
                 else
                     ((Bullet) fixB.getUserData()).setToDestroy();
-                break;
+                break;*/
 
+            case AndroidJDEV.FIREBALL_BIT | AndroidJDEV.OBJECT_BIT:
+                if(fixA.getFilterData().categoryBits == AndroidJDEV.FIREBALL_BIT)
+                    ((Bullet)fixA.getUserData()).setToDestroy();
+                else
+                    ((Bullet)fixB.getUserData()).setToDestroy();
+                break;
         }
     }
 
