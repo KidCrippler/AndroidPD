@@ -14,7 +14,6 @@ public class Brick extends InteractiveTileObject {
 
     @Override
     public void onHeadHit(Player player) {
-        System.out.println("brick");
             setCategoryFilter(AndroidJDEV.DESTROYED_BIT);
             getCell().setTile(null);
     }
