@@ -3,7 +3,6 @@ package com.rosa.game.Sprites;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g3d.environment.AmbientCubemap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -54,7 +53,7 @@ public class Bullet extends Sprite {
         CircleShape shape = new CircleShape();
         shape.setRadius(2 / AndroidJDEV.PPM);
 
-        fdef.filter.categoryBits = AndroidJDEV.FIREBALL_BIT;
+        fdef.filter.categoryBits = AndroidJDEV.BULLET_BIT;
         fdef.filter.maskBits = AndroidJDEV.BRICK_BIT |
                 AndroidJDEV.COIN_BIT |
                 AndroidJDEV.ENEMY_BIT |

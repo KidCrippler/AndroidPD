@@ -6,7 +6,6 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.rosa.game.AndroidJDEV;
-import com.rosa.game.Sprites.Brick;
 import com.rosa.game.Sprites.Bullet;
 import com.rosa.game.Sprites.Enemy;
 import com.rosa.game.Sprites.InteractiveTileObject;
@@ -69,15 +68,15 @@ public class WorldContactListener implements ContactListener {
                 else
                     ((Item) fixB.getUserData()).use((Player) fixA.getUserData());
                 break;
-            case AndroidJDEV.FIREBALL_BIT | AndroidJDEV.GROUND_BIT:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.FIREBALL_BIT)
+            case AndroidJDEV.BULLET_BIT | AndroidJDEV.GROUND_BIT:
+                if (fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT)
                     ((Bullet) fixA.getUserData()).setToDestroy();
                 else
                     ((Bullet) fixB.getUserData()).setToDestroy();
                 break;
 
-            case AndroidJDEV.FIREBALL_BIT | AndroidJDEV.OBJECT_BIT | AndroidJDEV.PLAYER_BIT:
-                if(fixA.getFilterData().categoryBits == AndroidJDEV.FIREBALL_BIT)
+            case AndroidJDEV.BULLET_BIT | AndroidJDEV.OBJECT_BIT | AndroidJDEV.PLAYER_BIT:
+                if(fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT)
                     ((Bullet)fixA.getUserData()).setToDestroy();
                 else
                     ((Bullet)fixB.getUserData()).setToDestroy();

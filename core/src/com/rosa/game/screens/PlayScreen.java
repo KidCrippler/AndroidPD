@@ -19,7 +19,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rosa.game.AndroidJDEV;
 import com.rosa.game.Scenes.Hud;
 import com.rosa.game.Sprites.Bullet;
-import com.rosa.game.Sprites.Enemy;
 import com.rosa.game.Sprites.Item;
 import com.rosa.game.Sprites.Player;
 import com.rosa.game.Tools.B2WorldCreator;
@@ -83,8 +82,6 @@ public class PlayScreen implements Screen {
         world = new World(new Vector2(0, -10), true);
 
         creator = new B2WorldCreator(this);
-
-
         b2dr = new Box2DDebugRenderer();
 
 
@@ -104,9 +101,6 @@ public class PlayScreen implements Screen {
     public void show() {
 
     }
-
-
-
 
     public void handleInputControler() {
 
@@ -188,8 +182,6 @@ public class PlayScreen implements Screen {
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
         controller.draw();
-
-
     }
 
     @Override
