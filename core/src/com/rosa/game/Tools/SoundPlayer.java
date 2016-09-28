@@ -10,13 +10,14 @@ public class SoundPlayer {
 
         ArrayList<String> soundString = new ArrayList();
         soundString.add(0, "sounds/audio/jump.wav");
-        soundString.add(1, "sounds/audio/Laser_Shoot.wav");
+        soundString.add(1, "sounds/audio/Laser_Shoot4.wav");
+        soundString.add(2, "sounds/audio/pluckWall.wav");
 
         try {
 
             Sound soundFXStream = Gdx.audio.newSound(Gdx.files.internal(soundString.get(soundNumber)));
             //Volume:
-            soundFXStream.play(0.05f);
+            soundFXStream.play(0.15f);
 
         } catch (Exception e) {
             e.printStackTrace();

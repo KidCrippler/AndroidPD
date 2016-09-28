@@ -63,7 +63,7 @@ public class Bullet extends Sprite {
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
 
-        b2body.setLinearVelocity(new Vector2(fireRight ? 2  : -2 , 0));
+        b2body.setLinearVelocity(new Vector2(fireRight ? 4  : -4 , 0));
         b2body.setBullet(true);
         b2body.setGravityScale(0);
     }
@@ -76,7 +76,6 @@ public class Bullet extends Sprite {
             world.destroyBody(b2body);
             destroyed = true;
         }
-        System.out.println(destroyed);
         if(b2body.getLinearVelocity().y > 2f)
             b2body.setLinearVelocity(b2body.getLinearVelocity().x, 2f);
         if((fireRight && b2body.getLinearVelocity().x < 0) || (!fireRight && b2body.getLinearVelocity().x > 0))

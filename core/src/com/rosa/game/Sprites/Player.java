@@ -30,10 +30,10 @@ public class Player extends Sprite {
     private float stateTimer;
     private boolean runningRight;
     private PlayScreen screen;
+    private SoundPlayer soundPlayer = new SoundPlayer();
 
     private Array<Bullet> bullets;
 
-    SoundPlayer soundPlayer = new SoundPlayer();
 
     public Player(World world, PlayScreen screen) {
         super(screen.getAtlas().findRegion("keen"));
@@ -174,13 +174,16 @@ public class Player extends Sprite {
     }
 
     public void fire() {
+
         bullets.add(new Bullet(screen, b2body.getPosition().x, b2body.getPosition().y, runningRight));
         soundPlayer.playSound(1);
+
+
     }
 
-    public void draw(Batch batch){
+    public void draw(Batch batch) {
         super.draw(batch);
-        for(Bullet  bullet : bullets)
+        for (Bullet bullet : bullets)
             bullet.draw(batch);
     }
 

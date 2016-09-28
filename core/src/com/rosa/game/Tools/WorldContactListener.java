@@ -14,6 +14,8 @@ import com.rosa.game.Sprites.Player;
 
 public class WorldContactListener implements ContactListener {
 
+    private SoundPlayer soundPlayer = new SoundPlayer();
+
     @Override
     public void beginContact(Contact contact) {
         Fixture fixA = contact.getFixtureA();
@@ -69,17 +71,14 @@ public class WorldContactListener implements ContactListener {
                     ((Item) fixB.getUserData()).use((Player) fixA.getUserData());
                 break;
             case AndroidJDEV.BULLET_BIT | AndroidJDEV.GROUND_BIT:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT)
-                    ((Bullet) fixA.getUserData()).setToDestroy();
-                else
-                    ((Bullet) fixB.getUserData()).setToDestroy();
-                break;
+                if (fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT) {
 
-            case AndroidJDEV.BULLET_BIT | AndroidJDEV.OBJECT_BIT | AndroidJDEV.PLAYER_BIT:
-                if(fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT)
-                    ((Bullet)fixA.getUserData()).setToDestroy();
-                else
-                    ((Bullet)fixB.getUserData()).setToDestroy();
+                    ((Bullet) fixA.getUserData()).setToDestroy();
+                    soundPlayer.playSound(2);
+                } else {
+                    ((Bullet) fixB.getUserData()).setToDestroy();
+                    soundPlayer.playSound(2);
+                }
                 break;
         }
     }
