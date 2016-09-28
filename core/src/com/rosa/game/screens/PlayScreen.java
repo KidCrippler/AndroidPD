@@ -125,10 +125,6 @@ public class PlayScreen implements Screen {
             player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE))
             player.fire();
-/*        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
-            player.fire();*/
-
-
     }
 
     public void update(float dt) {

@@ -26,9 +26,6 @@ public class WorldContactListener implements ContactListener {
 
         switch (cDef) {
 
-//            case AndroidJDEV.PLAYER_BIT | AndroidJDEV.COIN_BIT:
-//                System.out.println("touch");
-
             case AndroidJDEV.PLAYER_HEAD_BIT | AndroidJDEV.BRICK_BIT:
             case AndroidJDEV.PLAYER_HEAD_BIT | AndroidJDEV.COIN_BIT:
                 if (fixA.getFilterData().categoryBits == AndroidJDEV.PLAYER_HEAD_BIT)

@@ -30,8 +30,9 @@ public class Player extends Sprite {
     private float stateTimer;
     private boolean runningRight;
     private PlayScreen screen;
+    private static final long FIRE_RATE = 100000000L;
+    private long lastShot;
     private SoundPlayer soundPlayer = new SoundPlayer();
-
     private Array<Bullet> bullets;
 
 
@@ -174,12 +175,14 @@ public class Player extends Sprite {
     }
 
     public void fire() {
+        if (System.nanoTime() - lastShot >= FIRE_RATE) {
+            bullets.add(new Bullet(screen, b2body.getPosition().x, b2body.getPosition().y, runningRight));
+            lastShot = System.nanoTime();
+            soundPlayer.playSound(1);
 
-        bullets.add(new Bullet(screen, b2body.getPosition().x, b2body.getPosition().y, runningRight));
-        soundPlayer.playSound(1);
-
-
+        }
     }
+
 
     public void draw(Batch batch) {
         super.draw(batch);
