@@ -6,7 +6,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.rosa.game.screens.PlayScreen;
 
-
 public abstract class Enemy extends Sprite {
     protected World world;
     protected PlayScreen screen;
