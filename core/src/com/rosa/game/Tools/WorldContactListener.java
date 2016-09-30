@@ -6,11 +6,11 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.rosa.game.AndroidJDEV;
-import com.rosa.game.Sprites.Bullet;
-import com.rosa.game.Sprites.Enemy;
-import com.rosa.game.Sprites.InteractiveTileObject;
-import com.rosa.game.Sprites.Item;
-import com.rosa.game.Sprites.Player;
+import com.rosa.game.Sprites.Bob.Bullet;
+import com.rosa.game.Sprites.Enemies.Enemy;
+import com.rosa.game.Sprites.LevelsCreate.InteractiveTileObject;
+import com.rosa.game.Sprites.LevelsCreate.Item;
+import com.rosa.game.Sprites.Bob.Player;
 
 public class WorldContactListener implements ContactListener {
 

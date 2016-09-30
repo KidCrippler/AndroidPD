@@ -1,4 +1,4 @@
-package com.rosa.game.Sprites;
+package com.rosa.game.Sprites.Enemies;
 
 import com.rosa.game.screens.PlayScreen;
 

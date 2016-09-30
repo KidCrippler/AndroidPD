@@ -1,4 +1,4 @@
-package com.rosa.game.Sprites;
+package com.rosa.game.Sprites.LevelsCreate;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -8,9 +8,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.rosa.game.AndroidJDEV;
 import com.rosa.game.screens.PlayScreen;
 
-/**
- * Created by ROSA on 24/09/2016.
- */
 public abstract class Item extends Sprite {
     protected PlayScreen screen;
     protected World world;
@@ -31,7 +28,7 @@ public abstract class Item extends Sprite {
     }
 
     public abstract void defineItem();
-    public abstract void use(Player player);
+    public abstract void use(com.rosa.game.Sprites.Bob.Player player);
 
     public void update(float dt){
         if(toDestroy && !destroyed){

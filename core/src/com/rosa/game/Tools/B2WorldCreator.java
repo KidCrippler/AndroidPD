@@ -11,10 +11,10 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.AndroidJDEV;
-import com.rosa.game.Sprites.Brick;
-import com.rosa.game.Sprites.Coin;
+import com.rosa.game.Sprites.LevelsCreate.Brick;
+import com.rosa.game.Sprites.LevelsCreate.Coin;
 import com.rosa.game.Sprites.Enemies.BadGuyOne;
-import com.rosa.game.Sprites.Turtle;
+import com.rosa.game.Sprites.Enemies.Turtle;
 import com.rosa.game.screens.PlayScreen;
 
 

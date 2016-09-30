@@ -1,7 +1,8 @@
-package com.rosa.game.Sprites;
+package com.rosa.game.Sprites.LevelsCreate;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.rosa.game.AndroidJDEV;
+import com.rosa.game.Sprites.Bob.Player;
 import com.rosa.game.screens.PlayScreen;
 
 public class Brick extends InteractiveTileObject {

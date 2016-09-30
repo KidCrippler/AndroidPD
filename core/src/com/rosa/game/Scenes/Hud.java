@@ -28,7 +28,7 @@ public class Hud implements Disposable {
         table.right();
         table.setFillParent(true);
 
-        levelLabel = new Label("Health", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        levelLabel = new Label("!!!!!", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         table.add(levelLabel);
         levelLabel.setSize(0.5f,0.5f);
 

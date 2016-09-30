@@ -1,4 +1,4 @@
-package com.rosa.game.Sprites;
+package com.rosa.game.Sprites.Bob;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -15,8 +15,6 @@ import com.badlogic.gdx.utils.Array;
 import com.rosa.game.AndroidJDEV;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
-
-import sun.jvm.hotspot.debugger.ThreadAccess;
 
 public class Player extends Sprite {
 
@@ -192,6 +190,6 @@ public class Player extends Sprite {
             bullet.draw(batch);
     }
 
-    public void hit(Enemy userData) {
+    public void hit(com.rosa.game.Sprites.Enemies.Enemy userData) {
     }
 }
