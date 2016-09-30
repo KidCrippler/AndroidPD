@@ -169,7 +169,7 @@ public class PlayScreen implements Screen {
         renderer.render();
 
         //Render Box2D debug line:
-        b2dr.render(world, gamecam.combined);
+//        b2dr.render(world, gamecam.combined);
 
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();

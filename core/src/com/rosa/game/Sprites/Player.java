@@ -16,6 +16,8 @@ import com.rosa.game.AndroidJDEV;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
 
+import sun.jvm.hotspot.debugger.ThreadAccess;
+
 public class Player extends Sprite {
 
     public enum State {FALLING, JUMPING, STANDING, RUNNING, DEAD}
@@ -175,11 +177,11 @@ public class Player extends Sprite {
     }
 
     public void fire() {
+
         if (System.nanoTime() - lastShot >= FIRE_RATE) {
             bullets.add(new Bullet(screen, b2body.getPosition().x, b2body.getPosition().y, runningRight));
             lastShot = System.nanoTime();
             soundPlayer.playSound(1);
-
         }
     }
 

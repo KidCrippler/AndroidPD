@@ -13,14 +13,13 @@ import com.badlogic.gdx.utils.Array;
 import com.rosa.game.AndroidJDEV;
 import com.rosa.game.Sprites.Brick;
 import com.rosa.game.Sprites.Coin;
-import com.rosa.game.Sprites.Enemy;
-import com.rosa.game.Sprites.Goomba;
+import com.rosa.game.Sprites.Enemies.BadGuyOne;
 import com.rosa.game.Sprites.Turtle;
 import com.rosa.game.screens.PlayScreen;
 
 
 public class B2WorldCreator {
-    private Array<Goomba> goombas;
+    private Array<BadGuyOne> goombas;
     private Array<Turtle> turtles;
 
 
@@ -71,10 +70,10 @@ public class B2WorldCreator {
             new Coin(screen, object);
         }
        /* //create all goombas
-        goombas = new Array<Goomba>();
+        BadGuyOnes = new Array<BadGuyOne>();
         for(MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            goombas.add(new Goomba(screen, rect.getX() / AndroidJDEV.PPM, rect.getY() / AndroidJDEV.PPM));
+            BadGuyOnes.add(new BadGuyOne(screen, rect.getX() / AndroidJDEV.PPM, rect.getY() / AndroidJDEV.PPM));
         }
         turtles = new Array<Turtle>();
         for(MapObject object : map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)){
@@ -83,8 +82,8 @@ public class B2WorldCreator {
         }
     }
 
-    public Array<Goomba> getGoombas() {
-        return goombas;
+    public Array<BadGuyOne> getBadGuyOnes() {
+        return BadGuyOnes;
     }
     public Array<Enemy> getEnemies(){
         Array<Enemy> enemies = new Array<Enemy>();
