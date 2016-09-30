@@ -29,6 +29,7 @@ public class Hud implements Disposable {
         table.setFillParent(true);
 
         levelLabel = new Label("!!!!!", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        System.out.println("s");
         table.add(levelLabel);
         levelLabel.setSize(0.5f,0.5f);
 
@@ -36,7 +37,6 @@ public class Hud implements Disposable {
     }
 
     public void update(float dt) {
-
     }
 
     @Override
