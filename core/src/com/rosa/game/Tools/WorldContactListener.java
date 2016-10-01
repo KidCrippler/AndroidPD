@@ -45,12 +45,12 @@ public class WorldContactListener implements ContactListener {
                 else
                     ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
                 break;
-            case AndroidJDEV.PLAYER_BIT | AndroidJDEV.ENEMY_BIT:
+/*            case AndroidJDEV.PLAYER_BIT | AndroidJDEV.ENEMY_BIT:
                 if (fixA.getFilterData().categoryBits == AndroidJDEV.PLAYER_BIT)
                     ((Player) fixA.getUserData()).hit((Enemy) fixB.getUserData());
                 else
                     ((Player) fixB.getUserData()).hit((Enemy) fixA.getUserData());
-                break;
+                break;*/
             case AndroidJDEV.ENEMY_BIT | AndroidJDEV.ENEMY_BIT:
                 ((Enemy) fixA.getUserData()).hitByEnemy((Enemy) fixB.getUserData());
                 ((Enemy) fixB.getUserData()).hitByEnemy((Enemy) fixA.getUserData());

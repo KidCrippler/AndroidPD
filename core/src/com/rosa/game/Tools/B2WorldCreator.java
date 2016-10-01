@@ -11,15 +11,14 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.AndroidJDEV;
+import com.rosa.game.Sprites.Enemies.Enemy;
 import com.rosa.game.Sprites.LevelsCreate.Brick;
 import com.rosa.game.Sprites.LevelsCreate.Coin;
-import com.rosa.game.Sprites.Enemies.BadGuyOne;
 import com.rosa.game.Sprites.Enemies.Turtle;
 import com.rosa.game.screens.PlayScreen;
 
 
 public class B2WorldCreator {
-    private Array<BadGuyOne> goombas;
     private Array<Turtle> turtles;
 
 
@@ -66,30 +65,22 @@ public class B2WorldCreator {
         }
 
         //create coin bodies/fixtures
-        for (MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
+        for (MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
             new Coin(screen, object);
         }
-       /* //create all goombas
-        BadGuyOnes = new Array<BadGuyOne>();
-        for(MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            BadGuyOnes.add(new BadGuyOne(screen, rect.getX() / AndroidJDEV.PPM, rect.getY() / AndroidJDEV.PPM));
-        }
+
         turtles = new Array<Turtle>();
-        for(MapObject object : map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            turtles.add(new Turtle(screen, rect.getX() / AndroidJDEV.PPM, rect.getY() / AndroidJDEV.PPM));
-        }
+            turtles.add(new Turtle(screen, 2, 1));
+            turtles.add(new Turtle(screen, 5, 1));
+            turtles.add(new Turtle(screen, 1, 1));
+
     }
 
-    public Array<BadGuyOne> getBadGuyOnes() {
-        return BadGuyOnes;
-    }
+
     public Array<Enemy> getEnemies(){
         Array<Enemy> enemies = new Array<Enemy>();
-        enemies.addAll(goombas);
         enemies.addAll(turtles);
         return enemies;
-    */
+
     }
 }

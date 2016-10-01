@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rosa.game.AndroidJDEV;
 import com.rosa.game.Scenes.Hud;
 import com.rosa.game.Sprites.Bob.Bullet;
+import com.rosa.game.Sprites.Enemies.Enemy;
 import com.rosa.game.Sprites.LevelsCreate.Item;
 import com.rosa.game.Sprites.Bob.Player;
 import com.rosa.game.Tools.B2WorldCreator;
@@ -137,12 +138,12 @@ public class PlayScreen implements Screen {
         //UPDATE CLASSES:
         player.update(dt);
 
-        /*for(Enemy enemy : creator.getEnemies()) {
+        for(Enemy enemy : creator.getEnemies()) {
             enemy.update(dt);
             if(enemy.getX() < player.getX() + 224 / AndroidJDEV.PPM) {
                 enemy.b2body.setActive(true);
             }
-        }*/
+        }
 
 
         hud.update(dt);
@@ -169,7 +170,7 @@ public class PlayScreen implements Screen {
         renderer.render();
 
         //Render Box2D debug line:
-//        b2dr.render(world, gamecam.combined);
+        b2dr.render(world, gamecam.combined);
 
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
