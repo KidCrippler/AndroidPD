@@ -14,8 +14,6 @@ import com.rosa.game.Sprites.Bob.Player;
 
 public class WorldContactListener implements ContactListener {
 
-    private SoundPlayer soundPlayer = new SoundPlayer();
-
     @Override
     public void beginContact(Contact contact) {
         Fixture fixA = contact.getFixtureA();
@@ -33,24 +31,12 @@ public class WorldContactListener implements ContactListener {
                 else
                     ((InteractiveTileObject) fixA.getUserData()).onHeadHit((Player) fixB.getUserData());
                 break;
-            case AndroidJDEV.ENEMY_HEAD_BIT | AndroidJDEV.PLAYER_BIT:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.ENEMY_HEAD_BIT)
-                    ((Enemy) fixA.getUserData()).hitOnHead((Player) fixB.getUserData());
-                else
-                    ((Enemy) fixB.getUserData()).hitOnHead((Player) fixA.getUserData());
-                break;
             case AndroidJDEV.ENEMY_BIT | AndroidJDEV.OBJECT_BIT:
                 if (fixA.getFilterData().categoryBits == AndroidJDEV.ENEMY_BIT)
                     ((Enemy) fixA.getUserData()).reverseVelocity(true, false);
                 else
                     ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
                 break;
-/*            case AndroidJDEV.PLAYER_BIT | AndroidJDEV.ENEMY_BIT:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.PLAYER_BIT)
-                    ((Player) fixA.getUserData()).hit((Enemy) fixB.getUserData());
-                else
-                    ((Player) fixB.getUserData()).hit((Enemy) fixA.getUserData());
-                break;*/
             case AndroidJDEV.ENEMY_BIT | AndroidJDEV.ENEMY_BIT:
                 ((Enemy) fixA.getUserData()).hitByEnemy((Enemy) fixB.getUserData());
                 ((Enemy) fixB.getUserData()).hitByEnemy((Enemy) fixA.getUserData());

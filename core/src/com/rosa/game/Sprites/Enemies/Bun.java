@@ -104,28 +104,7 @@ public class Bun extends Enemy {
 
 
     @Override
-    public void hitOnHead(Player player) {
-        if(currentState == State.STANDING_SHELL) {
-            if(player.b2body.getPosition().x > b2body.getPosition().x)
-                velocity.x = -2;
-            else
-                velocity.x = 2;
-            currentState = State.MOVING_SHELL;
-            System.out.println("Set to moving shell");
-        }
-        else {
-            currentState = State.STANDING_SHELL;
-            velocity.x = 0;
-        }
-    }
-
-    @Override
     public void hitByEnemy(Enemy enemy) {
         reverseVelocity(true, false);
-    }
-
-    public void kick(int direction){
-        velocity.x = direction;
-        currentState = State.MOVING_SHELL;
     }
 }
