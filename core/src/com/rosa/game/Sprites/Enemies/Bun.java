@@ -58,7 +58,12 @@ public class Bun extends Enemy {
                 AndroidJDEV.OBJECT_BIT |
                 AndroidJDEV.PLAYER_BIT;
 
+
+
+
         fdef.shape = shape;
+        b2body.createFixture(fdef);
+        shape.setPosition(new Vector2(0, -14 / AndroidJDEV.PPM));
         b2body.createFixture(fdef).setUserData(this);
     }
 
