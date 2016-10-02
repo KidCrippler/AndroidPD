@@ -43,7 +43,6 @@ public class PlayScreen implements Screen {
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
 
-
     private Player player;
     Controller controller;
     SoundPlayer playsound;

@@ -69,12 +69,9 @@ public class WorldContactListener implements ContactListener {
                 break;
             case AndroidJDEV.BULLET_BIT | AndroidJDEV.GROUND_BIT:
                 if (fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT) {
-
                     ((Bullet) fixA.getUserData()).setToDestroy();
-                    soundPlayer.playSound(2);
                 } else {
                     ((Bullet) fixB.getUserData()).setToDestroy();
-                    soundPlayer.playSound(2);
                 }
                 break;
         }

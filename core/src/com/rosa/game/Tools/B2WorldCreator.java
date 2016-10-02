@@ -14,12 +14,12 @@ import com.rosa.game.AndroidJDEV;
 import com.rosa.game.Sprites.Enemies.Enemy;
 import com.rosa.game.Sprites.LevelsCreate.Brick;
 import com.rosa.game.Sprites.LevelsCreate.Coin;
-import com.rosa.game.Sprites.Enemies.Turtle;
+import com.rosa.game.Sprites.Enemies.Bun;
 import com.rosa.game.screens.PlayScreen;
 
 
 public class B2WorldCreator {
-    private Array<Turtle> turtles;
+    private Array<Bun> buns;
 
 
     public B2WorldCreator(PlayScreen screen) {
@@ -69,17 +69,17 @@ public class B2WorldCreator {
             new Coin(screen, object);
         }
 
-        turtles = new Array<Turtle>();
-            turtles.add(new Turtle(screen, 2, 1));
-            turtles.add(new Turtle(screen, 5, 1));
-            turtles.add(new Turtle(screen, 1, 1));
+        buns = new Array<Bun>();
+            buns.add(new Bun(screen, 2, 1));
+            buns.add(new Bun(screen, 5, 1));
+            buns.add(new Bun(screen, 1, 1));
 
     }
 
 
     public Array<Enemy> getEnemies(){
         Array<Enemy> enemies = new Array<Enemy>();
-        enemies.addAll(turtles);
+        enemies.addAll(buns);
         return enemies;
 
     }

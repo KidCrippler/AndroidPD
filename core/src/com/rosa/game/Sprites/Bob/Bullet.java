@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.AndroidJDEV;
+import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
 
 
@@ -25,6 +26,7 @@ public class Bullet extends Sprite {
     Animation fireAnimation;
     Array<TextureRegion> frames;
     PlayScreen screen;
+    private SoundPlayer soundPlayer = new SoundPlayer();
 
     public Bullet(PlayScreen screen, float x, float y, boolean fireRight)  {
 
@@ -84,6 +86,7 @@ public class Bullet extends Sprite {
 
 
     public void setToDestroy() {
+        soundPlayer.playSound(2);
         setToDestroy = true;
     }
 

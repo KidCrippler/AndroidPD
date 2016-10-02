@@ -13,7 +13,7 @@ import com.rosa.game.Sprites.Bob.Player;
 import com.rosa.game.screens.PlayScreen;
 
 
-public class Turtle extends Enemy {
+public class Bun extends Enemy {
     public static final int KICK_LEFT = -2;
     public static final int KICK_RIGHT = 2;
     public enum State {WALKING, MOVING_SHELL, STANDING_SHELL}
@@ -27,7 +27,7 @@ public class Turtle extends Enemy {
     private boolean destroyed;
 
 
-    public Turtle(PlayScreen screen, float x, float y) {
+    public Bun(PlayScreen screen, float x, float y) {
         super(screen, x, y);
         frames = new Array<TextureRegion>();
         frames.add(new TextureRegion(screen.getAtlas().findRegion("keen"), 0, 0, 16, 24));

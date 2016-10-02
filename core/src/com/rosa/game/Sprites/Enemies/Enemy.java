@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.rosa.game.Sprites.Bob.Player;
+import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
 
 public abstract class Enemy extends Sprite {
@@ -12,8 +13,9 @@ public abstract class Enemy extends Sprite {
     protected PlayScreen screen;
     public Body b2body;
     public Vector2 velocity;
+    private SoundPlayer playSound = new SoundPlayer();
 
-    public Enemy(PlayScreen screen, float x, float y){
+    public Enemy(PlayScreen screen, float x, float y) {
         this.world = screen.getWorld();
         this.screen = screen;
         setPosition(x, y);
@@ -23,14 +25,19 @@ public abstract class Enemy extends Sprite {
     }
 
     protected abstract void defineEnemy();
+
     public abstract void update(float dt);
+
     public abstract void hitOnHead(Player player);
+
     public abstract void hitByEnemy(Enemy enemy);
 
-    public void reverseVelocity(boolean x, boolean y){
-        if(x)
+    public void reverseVelocity(boolean x, boolean y) {
+        if (x)
             velocity.x = -velocity.x;
-        if(y)
+        playSound.playSoundBob(0);
+        if (y)
             velocity.y = -velocity.y;
+        playSound.playSoundBob(0);
     }
 }
