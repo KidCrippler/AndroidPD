@@ -41,10 +41,11 @@ public class WorldContactListener implements ContactListener {
                     ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
                 break;
 
-
             case AndroidJDEV.ENEMY_BIT | AndroidJDEV.ENEMY_BIT:
-                    ((Bun) fixA.getUserData()).reverseVelocity(true, false);
-                    ((Bun) fixB.getUserData()).reverseVelocity(true, false);
+                if (fixA.getFilterData().categoryBits == AndroidJDEV.ENEMY_BIT)
+                    ((Enemy) fixA.getUserData()).reverseVelocity(true, false);
+                else
+                    ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
                 break;
 
             case AndroidJDEV.BULLET_BIT | AndroidJDEV.GROUND_BIT:
@@ -54,6 +55,8 @@ public class WorldContactListener implements ContactListener {
                     ((Bullet) fixB.getUserData()).setToDestroy();
                 break;
         }
+
+
     }
 
     @Override

@@ -50,7 +50,8 @@ public class Bun extends Enemy {
         CircleShape shape = new CircleShape();
         shape.setRadius(6 / AndroidJDEV.PPM);
         fdef.filter.categoryBits = AndroidJDEV.ENEMY_BIT;
-        fdef.filter.maskBits = AndroidJDEV.GROUND_BIT |
+        fdef.filter.maskBits =
+                AndroidJDEV.GROUND_BIT |
                 AndroidJDEV.COIN_BIT |
                 AndroidJDEV.BRICK_BIT |
                 AndroidJDEV.ENEMY_BIT |
@@ -58,7 +59,7 @@ public class Bun extends Enemy {
                 AndroidJDEV.PLAYER_BIT;
 
         fdef.shape = shape;
-        b2body.createFixture(fdef);
+//        b2body.createFixture(fdef);
         shape.setPosition(new Vector2(0, -14 / AndroidJDEV.PPM));
         b2body.createFixture(fdef).setUserData(this);
     }
