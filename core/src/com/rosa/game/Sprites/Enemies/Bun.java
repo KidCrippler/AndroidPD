@@ -40,7 +40,6 @@ public class Bun extends Enemy {
 
     }
 
-    @Override
     protected void defineEnemy() {
         BodyDef bdef = new BodyDef();
         bdef.position.set(getX(), getY());
