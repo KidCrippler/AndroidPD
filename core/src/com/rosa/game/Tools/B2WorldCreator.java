@@ -70,10 +70,8 @@ public class B2WorldCreator {
         }
 
         buns = new Array<Bun>();
-            buns.add(new Bun(screen, 1, 2));
+            buns.add(new Bun(screen, 1, 1));
             buns.add(new Bun(screen, 2, 2));
-            buns.add(new Bun(screen, 3, 2));
-
     }
 
 

@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.rosa.game.AndroidJDEV;
 import com.rosa.game.Sprites.Bob.Bullet;
+import com.rosa.game.Sprites.Enemies.Bun;
 import com.rosa.game.Sprites.Enemies.Enemy;
 import com.rosa.game.Sprites.LevelsCreate.InteractiveTileObject;
 import com.rosa.game.Sprites.LevelsCreate.Item;
@@ -24,7 +25,7 @@ public class WorldContactListener implements ContactListener {
 
         switch (cDef) {
 
-//            case AndroidJDEV.PLAYER_HEAD_BIT | AndroidJDEV.BRICK_BIT:
+            case AndroidJDEV.PLAYER_HEAD_BIT | AndroidJDEV.BRICK_BIT:
 
             case AndroidJDEV.PLAYER_HEAD_BIT | AndroidJDEV.COIN_BIT:
                 if (fixA.getFilterData().categoryBits == AndroidJDEV.PLAYER_HEAD_BIT)
@@ -40,11 +41,10 @@ public class WorldContactListener implements ContactListener {
                     ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
                 break;
 
+
             case AndroidJDEV.ENEMY_BIT | AndroidJDEV.ENEMY_BIT:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.ENEMY_BIT)
-                    ((Item) fixA.getUserData()).reverseVelocity(true, false);
-                else
-                    ((Item) fixB.getUserData()).reverseVelocity(true, false);
+                    ((Bun) fixA.getUserData()).reverseVelocity(true, false);
+                    ((Bun) fixB.getUserData()).reverseVelocity(true, false);
                 break;
 
             case AndroidJDEV.BULLET_BIT | AndroidJDEV.GROUND_BIT:

@@ -96,7 +96,6 @@ public class Bun extends Enemy {
         if(currentState == State.STANDING_SHELL && stateTime > 5){
             currentState = State.WALKING;
             velocity.x = 1;
-            System.out.println("WAKE UP SHELL");
         }
 
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - 8 /AndroidJDEV.PPM);
