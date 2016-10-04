@@ -48,31 +48,25 @@ public class WorldContactListener implements ContactListener {
                 break;
 
             case AndroidJDEV.ENEMY_BIT | AndroidJDEV.ENEMY_BIT:
-                ((Enemy)fixA.getUserData()).hitByEnemy((Enemy)fixB.getUserData());
-                ((Enemy)fixB.getUserData()).hitByEnemy((Enemy)fixA.getUserData());
+                ((Enemy) fixA.getUserData()).hitByEnemy((Enemy) fixB.getUserData());
+                ((Enemy) fixB.getUserData()).hitByEnemy((Enemy) fixA.getUserData());
                 break;
 
             case AndroidJDEV.ITEM_BIT | AndroidJDEV.OBJECT_BIT:
-                if(fixA.getFilterData().categoryBits == AndroidJDEV.ITEM_BIT)
-                    ((Item)fixA.getUserData()).reverseVelocity(true, false);
+                if (fixA.getFilterData().categoryBits == AndroidJDEV.ITEM_BIT)
+                    ((Item) fixA.getUserData()).reverseVelocity(true, false);
                 else
-                    ((Item)fixB.getUserData()).reverseVelocity(true, false);
+                    ((Item) fixB.getUserData()).reverseVelocity(true, false);
                 break;
 
 
             case AndroidJDEV.PLAYER_BIT | AndroidJDEV.ENEMY_BIT:
-                if(fixA.getFilterData().categoryBits == AndroidJDEV.PLAYER_BIT)
-                    ((Player) fixA.getUserData()).hit((Enemy)fixB.getUserData());
+                if (fixA.getFilterData().categoryBits == AndroidJDEV.PLAYER_BIT)
+                    ((Player) fixA.getUserData()).hit((Enemy) fixB.getUserData());
                 else
-                    ((Player) fixB.getUserData()).hit((Enemy)fixA.getUserData());
+                    ((Player) fixB.getUserData()).hit((Enemy) fixA.getUserData());
                 break;
-
-
-
-
         }
-
-
     }
 
     @Override
