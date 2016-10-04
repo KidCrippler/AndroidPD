@@ -106,6 +106,7 @@ public class Bun extends Enemy {
 
     @Override
     public void hitByEnemy(Enemy enemy) {
+        System.out.println("touch");
         reverseVelocity(true, false);
     }
 }
