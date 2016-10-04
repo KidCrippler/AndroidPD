@@ -6,10 +6,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.AndroidJDEV;
-import com.rosa.game.Sprites.Bob.Player;
 import com.rosa.game.screens.PlayScreen;
 
 
@@ -25,7 +23,6 @@ public class Bun extends Enemy {
     private TextureRegion shell;
     private boolean setToDestroy;
     private boolean destroyed;
-
 
     public Bun(PlayScreen screen, float x, float y) {
         super(screen, x, y);
@@ -48,7 +45,9 @@ public class Bun extends Enemy {
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(6 / AndroidJDEV.PPM);
+
+        shape.setRadius(12 / AndroidJDEV.PPM);
+
         fdef.filter.categoryBits = AndroidJDEV.ENEMY_BIT;
         fdef.filter.maskBits =
                 AndroidJDEV.GROUND_BIT |
@@ -58,9 +57,8 @@ public class Bun extends Enemy {
                 AndroidJDEV.OBJECT_BIT |
                 AndroidJDEV.PLAYER_BIT;
 
+
         fdef.shape = shape;
-//        b2body.createFixture(fdef);
-        shape.setPosition(new Vector2(0, -14 / AndroidJDEV.PPM));
         b2body.createFixture(fdef).setUserData(this);
     }
 
@@ -87,7 +85,6 @@ public class Bun extends Enemy {
         stateTime = currentState == previousState ? stateTime + dt : 0;
         //update previous state
         previousState = currentState;
-        //return our final adjusted frame
         return region;
     }
 
@@ -106,7 +103,6 @@ public class Bun extends Enemy {
 
     @Override
     public void hitByEnemy(Enemy enemy) {
-        System.out.println("touch");
         reverseVelocity(true, false);
     }
 }
