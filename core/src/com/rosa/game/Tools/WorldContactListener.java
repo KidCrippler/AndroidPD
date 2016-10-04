@@ -33,13 +33,6 @@ public class WorldContactListener implements ContactListener {
                     ((InteractiveTileObject) fixA.getUserData()).onHeadHit((Player) fixB.getUserData());
                 break;
 
-            case AndroidJDEV.ENEMY_BIT | AndroidJDEV.OBJECT_BIT:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.ENEMY_BIT)
-                    ((Enemy) fixA.getUserData()).reverseVelocity(true, false);
-                else
-                    ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
-                break;
-
             case AndroidJDEV.BULLET_BIT | AndroidJDEV.GROUND_BIT:
                 if (fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT)
                     ((Bullet) fixA.getUserData()).setToDestroy();
@@ -52,20 +45,31 @@ public class WorldContactListener implements ContactListener {
                 ((Enemy) fixB.getUserData()).hitByEnemy((Enemy) fixA.getUserData());
                 break;
 
-            case AndroidJDEV.ITEM_BIT | AndroidJDEV.OBJECT_BIT:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.ITEM_BIT)
-                    ((Item) fixA.getUserData()).reverseVelocity(true, false);
+            case AndroidJDEV.ENEMY_BIT | AndroidJDEV.OBJECT_BIT:
+                if (fixA.getFilterData().categoryBits == AndroidJDEV.ENEMY_BIT)
+                    ((Enemy) fixA.getUserData()).reverseVelocity(true, false);
                 else
-                    ((Item) fixB.getUserData()).reverseVelocity(true, false);
+                    ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
                 break;
 
-
-            case AndroidJDEV.PLAYER_BIT | AndroidJDEV.ENEMY_BIT:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.PLAYER_BIT)
-                    ((Player) fixA.getUserData()).hit((Enemy) fixB.getUserData());
+            case AndroidJDEV.ENEMY_BIT | AndroidJDEV.PLAYER_BIT:
+                if (fixA.getFilterData().categoryBits == AndroidJDEV.ENEMY_BIT)
+                    ((Enemy) fixA.getUserData()).reverseVelocity(true, false);
                 else
-                    ((Player) fixB.getUserData()).hit((Enemy) fixA.getUserData());
+                    ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
                 break;
+
+            case AndroidJDEV.BULLET_BIT | AndroidJDEV.BULLET_BIT:
+
+            case AndroidJDEV.BULLET_BIT | AndroidJDEV.ENEMY_BIT:
+                if (fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT)
+                    System.out.println("1");
+//                    ((Bullet) fixA.getUserData()).setToDestroy();
+                else
+                    System.out.println("1");
+//                    ((Bullet) fixB.getUserData()).setToDestroy();
+                break;
+
         }
     }
 
