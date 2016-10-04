@@ -56,7 +56,8 @@ public class Bullet extends Sprite {
         shape.setRadius(2 / AndroidJDEV.PPM);
 
         fdef.filter.categoryBits = AndroidJDEV.BULLET_BIT;
-        fdef.filter.maskBits = AndroidJDEV.BRICK_BIT |
+        fdef.filter.maskBits =
+                AndroidJDEV.BRICK_BIT |
                 AndroidJDEV.COIN_BIT |
                 AndroidJDEV.ENEMY_BIT |
                 AndroidJDEV.GROUND_BIT |
@@ -86,7 +87,6 @@ public class Bullet extends Sprite {
 
 
     public void setToDestroy() {
-        soundPlayer.playSound(2);
         setToDestroy = true;
     }
 

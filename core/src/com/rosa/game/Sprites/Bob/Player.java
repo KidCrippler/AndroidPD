@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.AndroidJDEV;
+import com.rosa.game.Sprites.Enemies.Bun;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
 
@@ -34,6 +35,7 @@ public class Player extends Sprite {
     private long lastShot;
     private SoundPlayer soundPlayer = new SoundPlayer();
     private Array<Bullet> bullets;
+
 
 
     public Player(World world, PlayScreen screen) {
@@ -73,6 +75,8 @@ public class Player extends Sprite {
         //position of sprite inside shape:
         setPosition(b2body.getPosition().x - getWidth() / 2, (float) (b2body.getPosition().y - getHeight() / 1.5));
         setRegion(getFrame(dt));
+
+        //THE END OF LIFE IS HERE.
 
         for (Bullet bullet : bullets) {
             bullet.update(dt);
@@ -188,8 +192,5 @@ public class Player extends Sprite {
         super.draw(batch);
         for (Bullet bullet : bullets)
             bullet.draw(batch);
-    }
-
-    public void hit(com.rosa.game.Sprites.Enemies.Enemy userData) {
     }
 }

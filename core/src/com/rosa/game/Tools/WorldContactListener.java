@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.rosa.game.AndroidJDEV;
 import com.rosa.game.Sprites.Bob.Bullet;
+import com.rosa.game.Sprites.Enemies.Bun;
 import com.rosa.game.Sprites.Enemies.Enemy;
 import com.rosa.game.Sprites.LevelsCreate.InteractiveTileObject;
 import com.rosa.game.Sprites.Bob.Player;
@@ -24,6 +25,7 @@ public class WorldContactListener implements ContactListener {
 
         switch (cDef) {
 
+
             case AndroidJDEV.PLAYER_HEAD_BIT | AndroidJDEV.BRICK_BIT:
 
             case AndroidJDEV.PLAYER_HEAD_BIT | AndroidJDEV.COIN_BIT:
@@ -33,12 +35,6 @@ public class WorldContactListener implements ContactListener {
                     ((InteractiveTileObject) fixA.getUserData()).onHeadHit((Player) fixB.getUserData());
                 break;
 
-            case AndroidJDEV.BULLET_BIT | AndroidJDEV.GROUND_BIT:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT)
-                    ((Bullet) fixA.getUserData()).setToDestroy();
-                else
-                    ((Bullet) fixB.getUserData()).setToDestroy();
-                break;
 
             case AndroidJDEV.ENEMY_BIT | AndroidJDEV.ENEMY_BIT:
                 ((Enemy) fixA.getUserData()).hitByEnemy((Enemy) fixB.getUserData());
@@ -59,16 +55,25 @@ public class WorldContactListener implements ContactListener {
                     ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
                 break;
 
-            case AndroidJDEV.BULLET_BIT | AndroidJDEV.BULLET_BIT:
+            //BULLETS:
+
+            case AndroidJDEV.BULLET_BIT | AndroidJDEV.GROUND_BIT:
+                if (fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT)
+                    ((Bullet) fixA.getUserData()).setToDestroy();
+                else
+                    ((Bullet) fixB.getUserData()).setToDestroy();
+                break;
 
             case AndroidJDEV.BULLET_BIT | AndroidJDEV.ENEMY_BIT:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT)
-                    System.out.println("1");
-//                    ((Bullet) fixA.getUserData()).setToDestroy();
-                else
-                    System.out.println("1");
-//                    ((Bullet) fixB.getUserData()).setToDestroy();
+                if (fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT) {
+                    ((Bullet) fixA.getUserData()).setToDestroy();
+                    ((Bun) fixA.getUserData()).bulletHit();
+                } else {
+                    ((Bullet) fixB.getUserData()).setToDestroy();
+                    ((Bun) fixA.getUserData()).bulletHit();
+                }
                 break;
+
 
         }
     }

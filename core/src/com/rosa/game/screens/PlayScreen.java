@@ -23,6 +23,7 @@ import com.rosa.game.Sprites.Enemies.Enemy;
 import com.rosa.game.Sprites.LevelsCreate.Item;
 import com.rosa.game.Sprites.Bob.Player;
 import com.rosa.game.Tools.B2WorldCreator;
+import com.rosa.game.Tools.B2WorldCreatorDestroy;
 import com.rosa.game.Tools.Controller;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.Tools.WorldContactListener;
@@ -46,6 +47,7 @@ public class PlayScreen implements Screen {
     private Player player;
     Controller controller;
     SoundPlayer playsound;
+    private B2WorldCreatorDestroy b2WorldCreatorDestroy;
 
     //Box2d variables
     private World world;
@@ -87,8 +89,10 @@ public class PlayScreen implements Screen {
 
         //Start the player:
         player = new Player(world, this);
+        b2WorldCreatorDestroy = new B2WorldCreatorDestroy();
 
         world.setContactListener(new WorldContactListener());
+
 
         controller = new Controller();
     }
@@ -136,6 +140,9 @@ public class PlayScreen implements Screen {
 
         //UPDATE CLASSES:
         player.update(dt);
+        b2WorldCreatorDestroy.update(dt);
+
+
 
         for(Enemy enemy : creator.getEnemies()) {
             enemy.update(dt);

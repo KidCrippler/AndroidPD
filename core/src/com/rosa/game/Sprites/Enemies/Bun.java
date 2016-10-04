@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.AndroidJDEV;
+import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
 
 
@@ -20,9 +21,11 @@ public class Bun extends Enemy {
     private float stateTime;
     private Animation walkAnimation;
     private Array<TextureRegion> frames;
+    private SoundPlayer soundPlayer = new SoundPlayer();
     private TextureRegion shell;
     private boolean setToDestroy;
     private boolean destroyed;
+    private int bunHP = 100;
 
     public Bun(PlayScreen screen, float x, float y) {
         super(screen, x, y);
@@ -55,6 +58,7 @@ public class Bun extends Enemy {
                 AndroidJDEV.BRICK_BIT |
                 AndroidJDEV.ENEMY_BIT |
                 AndroidJDEV.OBJECT_BIT |
+                AndroidJDEV.BULLET_BIT |
                 AndroidJDEV.PLAYER_BIT;
 
 
@@ -100,9 +104,31 @@ public class Bun extends Enemy {
         b2body.setLinearVelocity(velocity);
     }
 
+    public void bulletHit(){
+        soundPlayer.playSoundBob(0);
+        bunHP = bunHP - 10;
+        System.out.println("bunHP: " + bunHP);
+
+        if(bunHP <= 0){
+
+            destroyed = true;
+            setToDestroy();
+
+        }
+
+    }
+
 
     @Override
     public void hitByEnemy(Enemy enemy) {
         reverseVelocity(true, false);
+    }
+
+    public void setToDestroy() {
+        setToDestroy = true;
+    }
+
+    public boolean isDestroyed() {
+        return destroyed;
     }
 }
