@@ -79,6 +79,5 @@ public class B2WorldCreator {
         Array<Enemy> enemies = new Array<Enemy>();
         enemies.addAll(buns);
         return enemies;
-
     }
 }

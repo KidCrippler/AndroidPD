@@ -89,10 +89,10 @@ public class PlayScreen implements Screen {
 
         //Start the player:
         player = new Player(world, this);
-        b2WorldCreatorDestroy = new B2WorldCreatorDestroy();
 
         world.setContactListener(new WorldContactListener());
 
+        b2WorldCreatorDestroy = new B2WorldCreatorDestroy();
 
         controller = new Controller();
     }

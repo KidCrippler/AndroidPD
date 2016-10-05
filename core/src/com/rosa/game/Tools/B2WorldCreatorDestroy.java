@@ -17,7 +17,6 @@ public class B2WorldCreatorDestroy {
             if (bun.isDestroyed())
                 buns.removeValue(bun, true);
             System.out.println("dead.");
-
         }*/
     }
 }

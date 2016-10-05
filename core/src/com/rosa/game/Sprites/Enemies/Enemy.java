@@ -37,4 +37,6 @@ public abstract class Enemy extends Sprite {
             velocity.y = -velocity.y;
         playSound.playSoundBob(0);
     }
+
+
 }
