@@ -97,4 +97,8 @@ public class Bullet extends Sprite {
     public boolean isDestroyed() {
         return destroyed;
     }
+
+    public void setToDestroy(Bullet userData){
+        setToDestroy = true;
+    }
 }
