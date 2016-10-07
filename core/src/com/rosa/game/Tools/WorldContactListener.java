@@ -35,29 +35,32 @@ public class WorldContactListener implements ContactListener {
                     ((InteractiveTileObject) fixA.getUserData()).onHeadHit((Player) fixB.getUserData());
                 break;
 
+            case AndroidJDEV.ENEMY_BIT | AndroidJDEV.OBJECT_BIT:
+                if(fixA.getFilterData().categoryBits == AndroidJDEV.ENEMY_BIT)
+                    ((Enemy)fixA.getUserData()).reverseVelocity(true, false);
+                else
+                    ((Enemy)fixB.getUserData()).reverseVelocity(true, false);
+                break;
+
+
 
             case AndroidJDEV.ENEMY_BIT | AndroidJDEV.ENEMY_BIT:
-                ((Enemy) fixA.getUserData()).hitByEnemy((Enemy) fixB.getUserData());
-                ((Enemy) fixB.getUserData()).hitByEnemy((Enemy) fixA.getUserData());
+                ((Enemy)fixA.getUserData()).hitByEnemy((Enemy)fixB.getUserData());
+                ((Enemy)fixB.getUserData()).hitByEnemy((Enemy)fixA.getUserData());
                 break;
-
-            case AndroidJDEV.ENEMY_BIT | AndroidJDEV.OBJECT_BIT:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.ENEMY_BIT)
-                    ((Enemy) fixA.getUserData()).reverseVelocity(true, false);
+            case AndroidJDEV.ITEM_BIT | AndroidJDEV.OBJECT_BIT:
+                if(fixA.getFilterData().categoryBits == AndroidJDEV.ITEM_BIT)
+                    ((Item)fixA.getUserData()).reverseVelocity(true, false);
                 else
-                    ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
-
+                    ((Item)fixB.getUserData()).reverseVelocity(true, false);
                 break;
 
-            case AndroidJDEV.ENEMY_BIT | AndroidJDEV.PLAYER_BIT:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.ENEMY_BIT)
-//                    ((Enemy) fixA.getUserData()).reverseVelocity(true, false);
+
+            case AndroidJDEV.ENEMY_HEAD_BIT | AndroidJDEV.PLAYER_BIT:
+                if (fixA.getFilterData().categoryBits == AndroidJDEV.ENEMY_HEAD_BIT)
                     ((Enemy) fixA.getUserData()).hitOnHead((Player) fixB.getUserData());
-
                 else
-//                    ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
                     ((Enemy) fixB.getUserData()).hitOnHead((Player) fixA.getUserData());
-
                 break;
 
             //BULLETS:
@@ -69,16 +72,29 @@ public class WorldContactListener implements ContactListener {
                     ((Bullet) fixB.getUserData()).setToDestroy();
                 break;
 
-            case AndroidJDEV.BULLET_BIT | AndroidJDEV.ENEMY_BIT:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT) {
-                    ((Bullet) fixA.getUserData()).setToDestroy();
-//                    ((Bun) fixA.getUserData()).bulletHit();
-                } else {
-                    ((Bullet) fixB.getUserData()).setToDestroy();
-//                    ((Bun) fixA.getUserData()).bulletHit();
+
+            case AndroidJDEV.ENEMY_HEAD_BIT | AndroidJDEV.BULLET_BIT:
+                if (fixA.getFilterData().categoryBits == AndroidJDEV.ENEMY_HEAD_BIT)
+                    ((Enemy) fixA.getUserData()).hitOnHead((Bullet) fixB.getUserData());
+                else
+                    ((Enemy) fixB.getUserData()).hitOnHead((Bullet) fixA.getUserData());
+                break;
+
+
+
+           /* case AndroidJDEV.ENEMY_HEAD_BIT| AndroidJDEV.BULLET_BIT:
+                if (fixA.getFilterData().categoryBits == AndroidJDEV.ENEMY_HEAD_BIT) {
+                    System.out.println("1");
+//                    ((Enemy) fixA.getUserData()).hitOnHead((Player) fixB.getUserData());
+//                    ((Bullet) fixA.getUserData()).setToDestroy();
+                }
+                else{
+                    System.out.println("1");
+//                    ((Enemy) fixB.getUserData()).hitOnHead((Player) fixA.getUserData());
+//                    ((Bullet) fixB.getUserData()).setToDestroy();
 
                 }
-                break;
+                break;*/
 
         }
     }

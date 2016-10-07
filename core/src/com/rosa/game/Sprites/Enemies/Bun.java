@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.AndroidJDEV;
+import com.rosa.game.Sprites.Bob.Bullet;
 import com.rosa.game.Sprites.Bob.Player;
 import com.rosa.game.screens.PlayScreen;
 
@@ -64,7 +65,8 @@ public class Bun extends Enemy {
                 AndroidJDEV.BRICK_BIT |
                 AndroidJDEV.ENEMY_BIT |
                 AndroidJDEV.OBJECT_BIT |
-                AndroidJDEV.PLAYER_BIT;
+                AndroidJDEV.PLAYER_BIT |
+                AndroidJDEV.BULLET_BIT;
 
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
@@ -72,8 +74,8 @@ public class Bun extends Enemy {
         //Create the Head here:
         PolygonShape head = new PolygonShape();
         Vector2[] vertice = new Vector2[4];
-        vertice[0] = new Vector2(-5, 8).scl(1 / AndroidJDEV.PPM);
-        vertice[1] = new Vector2(5, 8).scl(1 / AndroidJDEV.PPM);
+        vertice[0] = new Vector2(-5, 24).scl(1 / AndroidJDEV.PPM);
+        vertice[1] = new Vector2(5, 24).scl(1 / AndroidJDEV.PPM);
         vertice[2] = new Vector2(-3, 3).scl(1 / AndroidJDEV.PPM);
         vertice[3] = new Vector2(3, 3).scl(1 / AndroidJDEV.PPM);
         head.set(vertice);
@@ -96,10 +98,16 @@ public class Bun extends Enemy {
     }
 
     @Override
+    public void hitOnHead(Bullet bullet) {
+        setToDestroy = true;
+    }
+
+    @Override
     public void hitByEnemy(Enemy enemy) {
      /*   if(enemy instanceof Turtle && ((Turtle) enemy).currentState == Turtle.State.MOVING_SHELL)
             setToDestroy = true;
         else
             reverseVelocity(true, false);*/
+        reverseVelocity(true, false);
     }
 }

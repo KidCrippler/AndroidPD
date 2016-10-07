@@ -61,7 +61,8 @@ public class Bullet extends Sprite {
                 AndroidJDEV.COIN_BIT |
                 AndroidJDEV.ENEMY_BIT |
                 AndroidJDEV.GROUND_BIT |
-                AndroidJDEV.OBJECT_BIT;
+                AndroidJDEV.OBJECT_BIT |
+                AndroidJDEV.ENEMY_HEAD_BIT;
 
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
