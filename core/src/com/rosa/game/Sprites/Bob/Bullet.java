@@ -75,6 +75,9 @@ public class Bullet extends Sprite {
         stateTime += dt;
         setRegion(fireAnimation.getKeyFrame(stateTime, true));
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
+
+
+        //remove after 3 seconds:
         if((stateTime > 3 || setToDestroy) && !destroyed) {
             world.destroyBody(b2body);
             destroyed = true;

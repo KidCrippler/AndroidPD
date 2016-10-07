@@ -8,13 +8,13 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.AndroidJDEV;
+import com.rosa.game.Tools.B2WorldCreator;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
 
 
 public class Bun extends Enemy {
-    public static final int KICK_LEFT = -2;
-    public static final int KICK_RIGHT = 2;
+
     public enum State {WALKING, MOVING_SHELL, STANDING_SHELL}
     public State currentState;
     public State previousState;
@@ -23,8 +23,8 @@ public class Bun extends Enemy {
     private Array<TextureRegion> frames;
     private SoundPlayer soundPlayer = new SoundPlayer();
     private TextureRegion shell;
-    private boolean setToDestroy;
-    private boolean destroyed;
+    boolean destroyed;
+    boolean setToDestroy;
     private int bunHP = 100;
 
     public Bun(PlayScreen screen, float x, float y) {
@@ -106,16 +106,18 @@ public class Bun extends Enemy {
 
     public void bulletHit(){
         soundPlayer.playSoundBob(0);
-        bunHP = bunHP - 10;
-        System.out.println("bunHP: " + bunHP);
+//        bunHP = bunHP - 10;
+//        System.out.println("bunHP: " + bunHP);
 
-        if(bunHP <= 0){
+        setToDestroy();
+        destroyed = true;
+        System.out.println("ouch");
 
-            destroyed = true;
-            setToDestroy();
 
-        }
-
+//        if(bunHP <= 0){
+//            setToDestroy();
+//            destroyed = true;
+//        }
     }
 
 

@@ -20,7 +20,7 @@ import com.rosa.game.screens.PlayScreen;
 
 public class B2WorldCreator {
 
-    public Array<Bun> buns;
+    public static Array<Bun> buns;
 
     public B2WorldCreator(PlayScreen screen) {
         World world = screen.getWorld();
@@ -69,6 +69,7 @@ public class B2WorldCreator {
             new Coin(screen, object);
         }
 
+        //create buns (enemy)
         buns = new Array<Bun>();
         buns.add(new Bun(screen, 1, 1));
         buns.add(new Bun(screen, 2, 2));

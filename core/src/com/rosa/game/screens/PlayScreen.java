@@ -142,8 +142,6 @@ public class PlayScreen implements Screen {
         player.update(dt);
         b2WorldCreatorDestroy.update(dt);
 
-
-
         for(Enemy enemy : creator.getEnemies()) {
             enemy.update(dt);
             if(enemy.getX() < player.getX() + 224 / AndroidJDEV.PPM) {
