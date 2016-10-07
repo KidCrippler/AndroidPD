@@ -116,7 +116,6 @@ public class PlayScreen implements Screen {
         } else if (controller.isLeftPressed()) {
             player.goLeft();
         } else if (controller.isSpacePressed()) {
-            B2WorldCreator.buns.removeValue(null,true);
             player.fire();
         }
     }
@@ -139,9 +138,7 @@ public class PlayScreen implements Screen {
 
         world.step(1 / 60f, 6, 2);
 
-        //UPDATE CLASSES:
         player.update(dt);
-        b2WorldCreatorDestroy.update(dt);
 
         for(Enemy enemy : creator.getEnemies()) {
             enemy.update(dt);
@@ -149,7 +146,6 @@ public class PlayScreen implements Screen {
                 enemy.b2body.setActive(true);
             }
         }
-
 
         hud.update(dt);
 
