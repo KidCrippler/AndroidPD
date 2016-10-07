@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.rosa.game.Sprites.Bob.Player;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
 
@@ -28,6 +29,9 @@ public abstract class Enemy extends Sprite {
     public abstract void update(float dt);
 
     public abstract void hitByEnemy(Enemy enemy);
+
+    public abstract void hitOnHead(Player player);
+
 
     public void reverseVelocity(boolean x, boolean y) {
         if (x)

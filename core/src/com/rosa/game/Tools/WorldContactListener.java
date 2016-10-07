@@ -46,13 +46,19 @@ public class WorldContactListener implements ContactListener {
                     ((Enemy) fixA.getUserData()).reverseVelocity(true, false);
                 else
                     ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
+
                 break;
 
             case AndroidJDEV.ENEMY_BIT | AndroidJDEV.PLAYER_BIT:
                 if (fixA.getFilterData().categoryBits == AndroidJDEV.ENEMY_BIT)
-                    ((Enemy) fixA.getUserData()).reverseVelocity(true, false);
+//                    ((Enemy) fixA.getUserData()).reverseVelocity(true, false);
+
+                    ((Enemy) fixA.getUserData()).hitOnHead((Player) fixB.getUserData());
+
                 else
-                    ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
+//                    ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
+                    ((Enemy) fixB.getUserData()).hitOnHead((Player) fixA.getUserData());
+
                 break;
 
             //BULLETS:
@@ -71,9 +77,9 @@ public class WorldContactListener implements ContactListener {
                 } else {
                     ((Bullet) fixB.getUserData()).setToDestroy();
                     ((Bun) fixA.getUserData()).bulletHit();
+
                 }
                 break;
-
 
         }
     }

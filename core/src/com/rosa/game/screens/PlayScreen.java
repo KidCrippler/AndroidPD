@@ -116,6 +116,7 @@ public class PlayScreen implements Screen {
         } else if (controller.isLeftPressed()) {
             player.goLeft();
         } else if (controller.isSpacePressed()) {
+            B2WorldCreator.buns.removeValue(null,true);
             player.fire();
         }
     }
