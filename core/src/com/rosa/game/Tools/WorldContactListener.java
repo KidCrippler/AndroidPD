@@ -51,37 +51,45 @@ public class WorldContactListener implements ContactListener {
             //BULLETS:
 
             case AndroidJDEV.BULLET_BIT | AndroidJDEV.GROUND_BIT:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT){
-
-                    ((Bullet) fixA.getUserData()).setToDestroy();
-                    System.out.println("1");
-                }
-                else{
-
-                    ((Bullet) fixB.getUserData()).setToDestroy();
-                    System.out.println("1");
-                }
-                break;
-
-            case AndroidJDEV.BULLET_BIT | AndroidJDEV.ENEMY_HEAD_BIT:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.ENEMY_HEAD_BIT)
+                if (fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT)
                     ((Bullet) fixA.getUserData()).setToDestroy();
                 else
                     ((Bullet) fixB.getUserData()).setToDestroy();
                 break;
-/*
 
-            case AndroidJDEV.ENEMY_HEAD_BIT | AndroidJDEV.BULLET_BIT:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.ENEMY_HEAD_BIT) {
-//                    ((Enemy) fixA.getUserData()).hitOnHead((Bullet) fixB.getUserData());
-//                    ((Bullet) fixA.getUserData()).setToDestroy();
+            case AndroidJDEV.BULLET_BIT | AndroidJDEV.ENEMY_HEAD_BIT:
+                if (fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT) {
+                    ((Bullet) fixA.getUserData()).setToDestroy();
                 } else {
-//                    ((Enemy) fixB.getUserData()).hitOnHead((Bullet) fixA.getUserData());
-//                    ((Bullet) fixB.getUserData()).setToDestroy();
+                    ((Bullet) fixB.getUserData()).setToDestroy();
                 }
                 break;
-        }*/
-    }}
+
+/*
+TODO - Need to adjest the new collision settings,
+TODO - when Enemy get a bullet, the bullet is gone and so is the Enemy.
+TODO - After that is happed, Need to seet the Enemy HP var to 100 and then every shot he get he will lose 10 HP till he dies.
+*/
+
+            /*   case AndroidJDEV.BULLET_BIT | AndroidJDEV.ENEMY_HEAD_BIT:
+                if (fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT)
+                    ((Bullet) fixA.getUserData()).setToDestroy();
+                else
+                    ((Bullet) fixB.getUserData()).setToDestroy();
+                break;
+*/
+/*
+            case AndroidJDEV.ENEMY_HEAD_BIT | AndroidJDEV.BULLET_BIT:
+                if (fixA.getFilterData().categoryBits == AndroidJDEV.ENEMY_HEAD_BIT) {
+                    ((Enemy) fixA.getUserData()).hitOnHead((Bullet) fixB.getUserData());
+                } else {
+                    ((Enemy) fixB.getUserData()).hitOnHead((Bullet) fixA.getUserData());
+                }
+                break;
+        }
+*/
+        }
+    }
 
     @Override
     public void endContact(Contact contact) {
