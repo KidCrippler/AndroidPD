@@ -1,7 +1,6 @@
 package com.rosa.game.Tools;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -17,7 +16,7 @@ import com.rosa.game.AndroidJDEV;
 public class Controller {
     Viewport viewport;
     Stage stage;
-    boolean upPressed, downPressed, leftPressed, rightPressed, spacePressed;
+    boolean upPressed, leftPressed, rightPressed, spacePressed;
     OrthographicCamera cam;
 
     public Controller() {
