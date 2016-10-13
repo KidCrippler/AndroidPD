@@ -36,8 +36,6 @@ public class Player extends Sprite {
     private SoundPlayer soundPlayer = new SoundPlayer();
     private Array<Bullet> bullets;
 
-
-
     public Player(World world, PlayScreen screen) {
         super(screen.getAtlas().findRegion("keen"));
         this.world = world;
@@ -54,15 +52,12 @@ public class Player extends Sprite {
         playerRun = new Animation(0.1f, frames);
         frames.clear();
 
-
         for (int i = 4; i < 7; i++)
             frames.add(new TextureRegion(screen.getAtlas().findRegion("keen"), i * 23, 0, 23, 32));
         playerJump = new Animation(0.1f, frames);
         frames.clear();
 
-
         playerStand = new TextureRegion(screen.getAtlas().findRegion("keen"), 0, 0, 23, 32);
-
 
         definePlayer();
         setBounds(0, 0, 23 / AndroidJDEV.PPM, 32 / AndroidJDEV.PPM);
@@ -177,7 +172,6 @@ public class Player extends Sprite {
             soundPlayer.playSound(1);
         }
     }
-
 
     public void draw(Batch batch) {
         super.draw(batch);
