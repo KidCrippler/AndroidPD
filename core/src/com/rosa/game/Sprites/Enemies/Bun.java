@@ -21,12 +21,13 @@ public class Bun extends Enemy {
     private Array<TextureRegion> frames;
     private boolean setToDestroy;
     private boolean destroyed;
-
+    private int bunHP = 100;
+    private int bulletPowerOne = 10;
 
     public Bun(PlayScreen screen, float x, float y) {
         super(screen, x, y);
         frames = new Array<TextureRegion>();
-        for(int i = 0; i < 2; i++)
+        for (int i = 0; i < 2; i++)
             frames.add(new TextureRegion(screen.getAtlas().findRegion("keen"), i * 16, 0, 16, 16));
         walkAnimation = new Animation(0.4f, frames);
         stateTime = 0;
@@ -35,20 +36,20 @@ public class Bun extends Enemy {
         destroyed = false;
     }
 
-    public void update(float dt){
+    public void update(float dt) {
         stateTime += dt;
-        if(setToDestroy && !destroyed){
+        if (setToDestroy && !destroyed) {
             world.destroyBody(b2body);
             destroyed = true;
             setRegion(new TextureRegion(screen.getAtlas().findRegion("keen"), 32, 0, 16, 16));
             stateTime = 0;
-        }
-        else if(!destroyed) {
+        } else if (!destroyed) {
             b2body.setLinearVelocity(velocity);
             setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
             setRegion(walkAnimation.getKeyFrame(stateTime, true));
         }
     }
+
     @Override
     protected void defineEnemy() {
         BodyDef bdef = new BodyDef();
@@ -84,30 +85,23 @@ public class Bun extends Enemy {
         fdef.restitution = 0.5f;
         fdef.filter.categoryBits = AndroidJDEV.ENEMY_HEAD_BIT;
         b2body.createFixture(fdef).setUserData(this);
-
     }
 
-    public void draw(Batch batch){
-        if(!destroyed || stateTime < 1)
+    public void draw(Batch batch) {
+        if (!destroyed || stateTime < 1)
             super.draw(batch);
     }
 
     @Override
-    public void hitOnHead(Player player) {
-        setToDestroy = true;
-    }
-
-    @Override
     public void hitOnHead(Bullet bullet) {
-        setToDestroy = true;
+        bunHP = bunHP - bulletPowerOne;
+        if (bunHP <= 0) {
+            setToDestroy = true;
+        }
     }
 
     @Override
     public void hitByEnemy(Enemy enemy) {
-     /*   if(enemy instanceof Turtle && ((Turtle) enemy).currentState == Turtle.State.MOVING_SHELL)
-            setToDestroy = true;
-        else
-            reverseVelocity(true, false);*/
         reverseVelocity(true, false);
     }
 }

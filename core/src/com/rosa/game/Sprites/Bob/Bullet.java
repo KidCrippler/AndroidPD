@@ -26,7 +26,6 @@ public class Bullet extends Sprite {
     Animation fireAnimation;
     Array<TextureRegion> frames;
     PlayScreen screen;
-    private SoundPlayer soundPlayer = new SoundPlayer();
 
     public Bullet(PlayScreen screen, float x, float y, boolean fireRight)  {
 
@@ -77,8 +76,7 @@ public class Bullet extends Sprite {
         setRegion(fireAnimation.getKeyFrame(stateTime, true));
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
 
-
-        //remove after 3 seconds:
+        //Remove the bullet after 3 seconds:
         if((stateTime > 3 || setToDestroy) && !destroyed) {
             world.destroyBody(b2body);
             destroyed = true;
