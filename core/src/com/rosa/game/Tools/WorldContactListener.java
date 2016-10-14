@@ -17,7 +17,6 @@ public class WorldContactListener implements ContactListener {
         Fixture fixA = contact.getFixtureA();
         Fixture fixB = contact.getFixtureB();
 
-
         int cDef = fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
 
         switch (cDef) {
@@ -48,8 +47,9 @@ public class WorldContactListener implements ContactListener {
                     ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
                 break;
 
-            //BULLETS:
+            // * * * BULLET_BIT:
 
+            //Remove the bullet everywhere in ground:
             case AndroidJDEV.BULLET_BIT | AndroidJDEV.GROUND_BIT:
                 if (fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT)
                     ((Bullet) fixA.getUserData()).setToDestroy();
@@ -57,37 +57,20 @@ public class WorldContactListener implements ContactListener {
                     ((Bullet) fixB.getUserData()).setToDestroy();
                 break;
 
+            //Remove the bullet with enemy:
             case AndroidJDEV.BULLET_BIT | AndroidJDEV.ENEMY_HEAD_BIT:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT) {
-                    ((Bullet) fixA.getUserData()).setToDestroy();
-                } else {
-                    ((Bullet) fixB.getUserData()).setToDestroy();
-                }
-                break;
-
-/*
-TODO - Need to adjest the new collision settings,
-TODO - when Enemy get a bullet, the bullet is gone and so is the Enemy.
-TODO - After that is happed, Need to seet the Enemy HP var to 100 and then every shot he get he will lose 10 HP till he dies.
-*/
-
-            /*   case AndroidJDEV.BULLET_BIT | AndroidJDEV.ENEMY_HEAD_BIT:
+                //Remove the enemy:
+                if (fixA.getFilterData().categoryBits == AndroidJDEV.ENEMY_HEAD_BIT)
+                    ((Enemy) fixA.getUserData()).hitOnHead((Bullet) fixB.getUserData());
+                else
+                    ((Enemy) fixB.getUserData()).hitOnHead((Bullet) fixA.getUserData());
+                //Remove the bullet:
                 if (fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT)
                     ((Bullet) fixA.getUserData()).setToDestroy();
                 else
                     ((Bullet) fixB.getUserData()).setToDestroy();
+
                 break;
-*/
-/*
-            case AndroidJDEV.ENEMY_HEAD_BIT | AndroidJDEV.BULLET_BIT:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.ENEMY_HEAD_BIT) {
-                    ((Enemy) fixA.getUserData()).hitOnHead((Bullet) fixB.getUserData());
-                } else {
-                    ((Enemy) fixB.getUserData()).hitOnHead((Bullet) fixA.getUserData());
-                }
-                break;
-        }
-*/
         }
     }
 
