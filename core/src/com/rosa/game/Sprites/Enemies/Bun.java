@@ -11,7 +11,6 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.AndroidJDEV;
 import com.rosa.game.Sprites.Bob.Bullet;
-import com.rosa.game.Sprites.Bob.Player;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
 
@@ -58,20 +57,18 @@ public class Bun extends Enemy {
         bdef.position.set(getX(), getY());
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
-
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(6 / AndroidJDEV.PPM);
         fdef.filter.categoryBits = AndroidJDEV.ENEMY_BIT;
         fdef.filter.maskBits =
                 AndroidJDEV.GROUND_BIT |
-                AndroidJDEV.COIN_BIT |
-                AndroidJDEV.BRICK_BIT |
-                AndroidJDEV.ENEMY_BIT |
-                AndroidJDEV.OBJECT_BIT |
-                AndroidJDEV.PLAYER_BIT |
-                AndroidJDEV.BULLET_BIT;
-
+                        AndroidJDEV.COIN_BIT |
+                        AndroidJDEV.BRICK_BIT |
+                        AndroidJDEV.ENEMY_BIT |
+                        AndroidJDEV.OBJECT_BIT |
+                        AndroidJDEV.PLAYER_BIT |
+                        AndroidJDEV.BULLET_BIT;
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
 
@@ -83,7 +80,6 @@ public class Bun extends Enemy {
         vertice[2] = new Vector2(-3, 3).scl(1 / AndroidJDEV.PPM);
         vertice[3] = new Vector2(3, 3).scl(1 / AndroidJDEV.PPM);
         head.set(vertice);
-
         fdef.shape = head;
         fdef.restitution = 0.5f;
         fdef.filter.categoryBits = AndroidJDEV.ENEMY_HEAD_BIT;
@@ -97,8 +93,10 @@ public class Bun extends Enemy {
 
     @Override
     public void hitOnHead(Bullet bullet) {
+        playSound.playSound(3);
         bunHP = bunHP - bulletPowerOne;
         if (bunHP <= 0) {
+            playSound.playSound(4);
             setToDestroy = true;
         }
     }
@@ -106,7 +104,6 @@ public class Bun extends Enemy {
     @Override
     public void hitByEnemy(Enemy enemy) {
         reverseVelocity(true, false);
-        playSound.playSoundBob(0);
-
+        playSound.playSoundRandom();
     }
 }

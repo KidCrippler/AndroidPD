@@ -14,41 +14,34 @@ public class SoundPlayer {
         soundString.add(0, "sounds/audio/jump.wav");
         soundString.add(1, "sounds/audio/Laser_Shoot4.wav");
         soundString.add(2, "sounds/audio/pluckWall.wav");
+        soundString.add(3, "sounds/audio/buns/bun-take-bullet.wav");
+        soundString.add(4, "sounds/audio/buns/bun-die.wav");
 
         try {
-
-            Sound soundFXStream = Gdx.audio.newSound(Gdx.files.internal(soundString.get(soundNumber)));
-            //Volume:
+            Sound soundFXStream = Gdx.audio.newSound(Gdx.files.internal(soundString.get(soundNumber)));//Volume:
             soundFXStream.play(0.15f);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
-    public void playSoundBob(int soundNumber) {
+    public void playSoundRandom() {
 
         Random randomFromArray;
         randomFromArray = new Random();
         int indexSound = randomFromArray.nextInt(3);
+        ArrayList<String> soundStringbunsRandom = new ArrayList();
 
-        ArrayList<String> soundStringbuns = new ArrayList();
-
-        soundStringbuns.add(0, "sounds/audio/buns/bun-ouch1.wav");
-        soundStringbuns.add(1, "sounds/audio/buns/bun-ouch2.wav");
-        soundStringbuns.add(2, "sounds/audio/buns/bun-ouch3.wav");
-        soundStringbuns.add(3, "sounds/audio/buns/bun-ouch4.wav");
+        soundStringbunsRandom.add(0, "sounds/audio/buns/bun-ouch1.wav");
+        soundStringbunsRandom.add(1, "sounds/audio/buns/bun-ouch2.wav");
+        soundStringbunsRandom.add(2, "sounds/audio/buns/bun-ouch3.wav");
+        soundStringbunsRandom.add(3, "sounds/audio/buns/bun-ouch4.wav");
 
         try {
-
-            Sound soundFXStream = Gdx.audio.newSound(Gdx.files.internal(soundStringbuns.get(indexSound)));
-            //Volume:
-            soundFXStream.play(0.20f);
-
+            Sound soundFXStream = Gdx.audio.newSound(Gdx.files.internal(soundStringbunsRandom.get(indexSound)));
+            soundFXStream.play(0.15f);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 }
