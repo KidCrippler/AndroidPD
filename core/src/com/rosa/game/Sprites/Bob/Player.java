@@ -72,8 +72,6 @@ public class Player extends Sprite {
         setPosition(b2body.getPosition().x - getWidth() / 2, (float) (b2body.getPosition().y - getHeight() / 1.5));
         setRegion(getFrame(dt));
 
-        //THE END OF LIFE IS HERE.
-
         for (Bullet bullet : bullets) {
             bullet.update(dt);
             if (bullet.isDestroyed())
