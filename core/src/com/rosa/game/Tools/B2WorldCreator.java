@@ -69,10 +69,12 @@ public class B2WorldCreator {
             new Coin(screen, object);
         }
 
-        //create buns (enemy)
+        //create buns bodies/fixtures
         buns = new Array<Bun>();
-        buns.add(new Bun(screen, 1, 1));
-        buns.add(new Bun(screen, 2, 2));
+        for(MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            buns.add(new Bun(screen, rect.getX() / AndroidJDEV.PPM, rect.getY() / AndroidJDEV.PPM));
+        }
     }
 
 
