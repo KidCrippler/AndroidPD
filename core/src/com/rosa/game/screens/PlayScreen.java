@@ -23,7 +23,6 @@ import com.rosa.game.Sprites.Enemies.Enemy;
 import com.rosa.game.Sprites.LevelsCreate.Item;
 import com.rosa.game.Sprites.Bob.Player;
 import com.rosa.game.Tools.B2WorldCreator;
-import com.rosa.game.Tools.B2WorldCreatorDestroy;
 import com.rosa.game.Tools.Controller;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.Tools.WorldContactListener;
@@ -33,36 +32,22 @@ public class PlayScreen implements Screen {
     public static Batch batch;
     private AndroidJDEV game;
     private TextureAtlas atlas;
-
-    //ScreenPlay:
     private OrthographicCamera gamecam;
     private Viewport gamePort;
     private Hud hud;
-
-    //Map load:
     private TmxMapLoader mapLoader;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
-
     private Player player;
-    Controller controller;
-    SoundPlayer playsound;
-    private B2WorldCreatorDestroy b2WorldCreatorDestroy;
-
-    //Box2d variables
+    private Controller controller;
+    private SoundPlayer playsound;
     private World world;
     private Box2DDebugRenderer b2dr;
     private B2WorldCreator creator;
-
-    //Items:
     private Bullet bullet;
     private Array<Item> items;
-
-
-    //private Music music;
-
+    
     public PlayScreen(AndroidJDEV game) {
-
 
         atlas = new TextureAtlas("keen_one.pack");
         this.game = game;
@@ -91,8 +76,6 @@ public class PlayScreen implements Screen {
         player = new Player(world, this);
 
         world.setContactListener(new WorldContactListener());
-
-        b2WorldCreatorDestroy = new B2WorldCreatorDestroy();
 
         controller = new Controller();
     }

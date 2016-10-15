@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Array;
 import com.rosa.game.AndroidJDEV;
 import com.rosa.game.Sprites.Bob.Bullet;
 import com.rosa.game.Sprites.Bob.Player;
+import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
 
 public class Bun extends Enemy {
@@ -23,6 +24,7 @@ public class Bun extends Enemy {
     private boolean destroyed;
     private int bunHP = 100;
     private int bulletPowerOne = 10;
+    private SoundPlayer playSound = new SoundPlayer();
 
     public Bun(PlayScreen screen, float x, float y) {
         super(screen, x, y);
@@ -104,5 +106,7 @@ public class Bun extends Enemy {
     @Override
     public void hitByEnemy(Enemy enemy) {
         reverseVelocity(true, false);
+        playSound.playSoundBob(0);
+
     }
 }
