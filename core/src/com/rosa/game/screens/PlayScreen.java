@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -13,40 +12,31 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rosa.game.AndroidJDEV;
 import com.rosa.game.Scenes.Hud;
-import com.rosa.game.Sprites.Bob.Bullet;
 import com.rosa.game.Sprites.Enemies.Enemy;
-import com.rosa.game.Sprites.LevelsCreate.Item;
 import com.rosa.game.Sprites.Bob.Player;
 import com.rosa.game.Tools.B2WorldCreator;
 import com.rosa.game.Tools.Controller;
-import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.Tools.WorldContactListener;
 
 public class PlayScreen implements Screen {
 
-    public static Batch batch;
     private AndroidJDEV game;
     private TextureAtlas atlas;
     private OrthographicCamera gamecam;
     private Viewport gamePort;
     private Hud hud;
-    private TmxMapLoader mapLoader;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
     private Player player;
     private Controller controller;
-    private SoundPlayer playsound;
     private World world;
     private Box2DDebugRenderer b2dr;
     private B2WorldCreator creator;
-    private Bullet bullet;
-    private Array<Item> items;
-    
+
     public PlayScreen(AndroidJDEV game) {
 
         atlas = new TextureAtlas("keen_one.pack");
@@ -56,10 +46,7 @@ public class PlayScreen implements Screen {
 
         hud = new Hud(game.batch);
 
-
-        playsound = new SoundPlayer();
-
-        mapLoader = new TmxMapLoader();
+        TmxMapLoader mapLoader = new TmxMapLoader();
         map = mapLoader.load("tmap.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1 / AndroidJDEV.PPM);
 
@@ -70,7 +57,6 @@ public class PlayScreen implements Screen {
 
         creator = new B2WorldCreator(this);
         b2dr = new Box2DDebugRenderer();
-
 
         //Start the player:
         player = new Player(world, this);
@@ -89,13 +75,12 @@ public class PlayScreen implements Screen {
 
     }
 
-    public void handleInputControler() {
+    public void handleInputController() {
 
         if (controller.isUpPressed()) {
             player.jump();
         } else if (controller.isRightPressed()) {
             player.goRight();
-
         } else if (controller.isLeftPressed()) {
             player.goLeft();
         } else if (controller.isSpacePressed()) {
@@ -103,7 +88,7 @@ public class PlayScreen implements Screen {
         }
     }
 
-    public void handleInput(float dt) {
+    public void handleInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
             player.jump();
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2)
@@ -116,8 +101,8 @@ public class PlayScreen implements Screen {
 
     public void update(float dt) {
         //Handler user input
-        handleInput(dt);
-        handleInputControler();
+        handleInput();
+        handleInputController();
 
         world.step(1 / 60f, 6, 2);
 
@@ -153,7 +138,7 @@ public class PlayScreen implements Screen {
         //Map render:
         renderer.render();
 
-        //Render Box2D debug line:
+        //debug line:
         b2dr.render(world, gamecam.combined);
 
         game.batch.setProjectionMatrix(gamecam.combined);
