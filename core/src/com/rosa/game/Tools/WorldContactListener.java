@@ -53,22 +53,25 @@ public class WorldContactListener implements ContactListener {
 
             //Remove the bullet everywhere in ground:
             case AndroidJDEV.BULLET_BIT | AndroidJDEV.GROUND_BIT:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT){
+                if (fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT) {
 
                     ((Bullet) fixA.getUserData()).setToDestroy();
                     soundPlayer.playSoundRandomLazerOneWall();
-                }
-                else{
+                } else {
                     ((Bullet) fixB.getUserData()).setToDestroy();
                     soundPlayer.playSoundRandomLazerOneWall();
                 }
                 break;
 
             case AndroidJDEV.BULLET_BIT | AndroidJDEV.OBJECT_BIT:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT)
+                if (fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT) {
                     ((Bullet) fixA.getUserData()).setToDestroy();
-                else
+                    soundPlayer.playSoundRandomLazerOneWall();
+                } else {
                     ((Bullet) fixB.getUserData()).setToDestroy();
+                    soundPlayer.playSoundRandomLazerOneWall();
+
+                }
                 break;
 
             //Remove the bullet with enemy:
