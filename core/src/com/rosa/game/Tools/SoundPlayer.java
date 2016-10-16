@@ -26,19 +26,19 @@ public class SoundPlayer {
     }
 
     public void playSoundRandom() {
-
+        //Random sounds (for: death, bullet missed, etc...).
         Random randomFromArray;
         randomFromArray = new Random();
         int indexSound = randomFromArray.nextInt(3);
-        ArrayList<String> soundStringbunsRandom = new ArrayList();
+        ArrayList<String> soundStringBunsRandom = new ArrayList();
 
-        soundStringbunsRandom.add(0, "sounds/audio/buns/bun-ouch1.wav");
-        soundStringbunsRandom.add(1, "sounds/audio/buns/bun-ouch2.wav");
-        soundStringbunsRandom.add(2, "sounds/audio/buns/bun-ouch3.wav");
-        soundStringbunsRandom.add(3, "sounds/audio/buns/bun-ouch4.wav");
+        soundStringBunsRandom.add(0, "sounds/audio/buns/bun-ouch1.wav");
+        soundStringBunsRandom.add(1, "sounds/audio/buns/bun-ouch2.wav");
+        soundStringBunsRandom.add(2, "sounds/audio/buns/bun-ouch3.wav");
+        soundStringBunsRandom.add(3, "sounds/audio/buns/bun-ouch4.wav");
 
         try {
-            Sound soundFXStream = Gdx.audio.newSound(Gdx.files.internal(soundStringbunsRandom.get(indexSound)));
+            Sound soundFXStream = Gdx.audio.newSound(Gdx.files.internal(soundStringBunsRandom.get(indexSound)));
             soundFXStream.play(0.15f);
         } catch (Exception e) {
             e.printStackTrace();

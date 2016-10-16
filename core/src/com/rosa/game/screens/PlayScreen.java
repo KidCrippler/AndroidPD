@@ -95,7 +95,7 @@ public class PlayScreen implements Screen {
             player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2)
             player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
-        if(Gdx.input.isKeyPressed(Input.Keys.SPACE))
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE))
             player.fire();
     }
 
@@ -108,19 +108,22 @@ public class PlayScreen implements Screen {
 
         player.update(dt);
 
-        for(Enemy enemy : creator.getEnemies()) {
+        //Update screen around player:
+        for (Enemy enemy : creator.getEnemies()) {
             enemy.update(dt);
-            if(enemy.getX() < player.getX() + 224 / AndroidJDEV.PPM) {
-                enemy.b2body.setActive(true);
-            }
+            if ((enemy.getX() <= (player.getX() + (200 / AndroidJDEV.PPM))))
+                if (((player.getX() - (200 / AndroidJDEV.PPM)) <= enemy.getX())) {
+                    enemy.b2body.setActive(true);
+                } else {
+                    enemy.b2body.setActive(false);
+                }
         }
 
         hud.update(dt);
 
-        if((player.b2body.getPosition().x > 2) && (player.b2body.getPosition().x < 36.5)) {
+        if ((player.b2body.getPosition().x > 2) && (player.b2body.getPosition().x < 36.5)) {
             gamecam.position.x = player.b2body.getPosition().x;
         }
-
 
         gamecam.update();
         renderer.setView(gamecam);
@@ -184,10 +187,11 @@ public class PlayScreen implements Screen {
         hud.dispose();
     }
 
-    public TiledMap getMap(){
+    public TiledMap getMap() {
         return map;
     }
-    public World getWorld(){
+
+    public World getWorld() {
         return world;
     }
 }
