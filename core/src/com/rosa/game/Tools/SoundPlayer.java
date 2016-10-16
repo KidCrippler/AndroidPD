@@ -8,14 +8,14 @@ import java.util.Random;
 
 public class SoundPlayer {
 
-    public void playSound(int soundNumber) {
-
+    float genVolume = 0.50f;
+    
+    public void PlaySoundBob(int soundNumber) {
         ArrayList<String> soundString = new ArrayList();
-        //Bob:
         soundString.add(0, "sounds/audio/bob/jump.wav");
         try {
             Sound soundFXStream = Gdx.audio.newSound(Gdx.files.internal(soundString.get(soundNumber)));//Volume:
-            soundFXStream.play(0.15f);
+            soundFXStream.play(genVolume);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -31,14 +31,14 @@ public class SoundPlayer {
         soundStringBunsRandom.add(2, "sounds/audio/bob/Laser_Shoot3.wav");
         try {
             Sound soundFXStream = Gdx.audio.newSound(Gdx.files.internal(soundStringBunsRandom.get(indexSound)));
-            soundFXStream.play(0.15f);
+            soundFXStream.play(genVolume);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
 
-    public void playSoundRandomLazerOneWall() {
+    public void playSoundRandomLaserOneWall() {
         Random randomFromArray;
         randomFromArray = new Random();
         int indexSound = randomFromArray.nextInt(3);
@@ -48,7 +48,7 @@ public class SoundPlayer {
         soundStringBunsRandom.add(2, "sounds/audio/bob/pluckWall3.wav");
         try {
             Sound soundFXStream = Gdx.audio.newSound(Gdx.files.internal(soundStringBunsRandom.get(indexSound)));
-            soundFXStream.play(0.15f);
+            soundFXStream.play(genVolume);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -65,7 +65,7 @@ public class SoundPlayer {
         soundStringBunsRandom.add(3, "sounds/audio/buns/bun-ouch4.wav");
         try {
             Sound soundFXStream = Gdx.audio.newSound(Gdx.files.internal(soundStringBunsRandom.get(indexSound)));
-            soundFXStream.play(0.25f);
+            soundFXStream.play(genVolume);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -80,7 +80,7 @@ public class SoundPlayer {
         soundStringBunsRandom.add(1, "sounds/audio/buns/bun-die2.wav");
         try {
             Sound soundFXStream = Gdx.audio.newSound(Gdx.files.internal(soundStringBunsRandom.get(indexSound)));
-            soundFXStream.play(0.15f);
+            soundFXStream.play(genVolume);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -147,7 +147,7 @@ public class Player extends Sprite {
     public void jump() {
         if (currentState != State.JUMPING) {
             b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
-            soundPlayer.playSound(0);
+            soundPlayer.PlaySoundBob(0);
             currentState = State.JUMPING;
         }
     }

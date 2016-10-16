@@ -56,20 +56,20 @@ public class WorldContactListener implements ContactListener {
                 if (fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT) {
 
                     ((Bullet) fixA.getUserData()).setToDestroy();
-                    soundPlayer.playSoundRandomLazerOneWall();
+                    soundPlayer.playSoundRandomLaserOneWall();
                 } else {
                     ((Bullet) fixB.getUserData()).setToDestroy();
-                    soundPlayer.playSoundRandomLazerOneWall();
+                    soundPlayer.playSoundRandomLaserOneWall();
                 }
                 break;
 
             case AndroidJDEV.BULLET_BIT | AndroidJDEV.OBJECT_BIT:
                 if (fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT) {
                     ((Bullet) fixA.getUserData()).setToDestroy();
-                    soundPlayer.playSoundRandomLazerOneWall();
+                    soundPlayer.playSoundRandomLaserOneWall();
                 } else {
                     ((Bullet) fixB.getUserData()).setToDestroy();
-                    soundPlayer.playSoundRandomLazerOneWall();
+                    soundPlayer.playSoundRandomLaserOneWall();
 
                 }
                 break;
