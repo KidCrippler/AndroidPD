@@ -93,10 +93,10 @@ public class Bun extends Enemy {
 
     @Override
     public void hitOnHead(Bullet bullet) {
-        playSound.playSound(3);
+        playSound.playSoundRandomBunHurt();
         bunHP = bunHP - bulletPowerOne;
         if (bunHP <= 0) {
-            playSound.playSound(4);
+            playSound.playSoundRandomBunDead();
             setToDestroy = true;
         }
     }
@@ -104,6 +104,6 @@ public class Bun extends Enemy {
     @Override
     public void hitByEnemy(Enemy enemy) {
         reverseVelocity(true, false);
-        playSound.playSoundRandom();
+        playSound.playSoundRandomBunHurt();
     }
 }

@@ -164,7 +164,7 @@ public class Player extends Sprite {
         if (System.nanoTime() - lastShot >= FIRE_RATE) {
             bullets.add(new Bullet(screen, b2body.getPosition().x, b2body.getPosition().y, runningRight));
             lastShot = System.nanoTime();
-            soundPlayer.playSound(1);
+            soundPlayer.playSoundRandomLazerLaserShootOne();
         }
     }
 

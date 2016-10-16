@@ -12,6 +12,8 @@ import com.rosa.game.Sprites.LevelsCreate.Item;
 
 public class WorldContactListener implements ContactListener {
 
+    SoundPlayer soundPlayer = new SoundPlayer();
+
     @Override
     public void beginContact(Contact contact) {
         Fixture fixA = contact.getFixtureA();
@@ -51,10 +53,15 @@ public class WorldContactListener implements ContactListener {
 
             //Remove the bullet everywhere in ground:
             case AndroidJDEV.BULLET_BIT | AndroidJDEV.GROUND_BIT:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT)
+                if (fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT){
+
                     ((Bullet) fixA.getUserData()).setToDestroy();
-                else
+                    soundPlayer.playSoundRandomLazerOneWall();
+                }
+                else{
                     ((Bullet) fixB.getUserData()).setToDestroy();
+                    soundPlayer.playSoundRandomLazerOneWall();
+                }
                 break;
 
             case AndroidJDEV.BULLET_BIT | AndroidJDEV.OBJECT_BIT:
