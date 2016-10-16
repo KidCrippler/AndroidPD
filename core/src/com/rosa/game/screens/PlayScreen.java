@@ -108,7 +108,7 @@ public class PlayScreen implements Screen {
 
         player.update(dt);
 
-        //Update screen around player:
+        //Load objects around the points of player:
         for (Enemy enemy : creator.getEnemies()) {
             enemy.update(dt);
             if ((enemy.getX() <= (player.getX() + (200 / AndroidJDEV.PPM))))
