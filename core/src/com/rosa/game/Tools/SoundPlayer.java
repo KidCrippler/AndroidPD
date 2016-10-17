@@ -74,7 +74,7 @@ public class SoundPlayer {
     public void playSoundRandomBunDead() {
         Random randomFromArray;
         randomFromArray = new Random();
-        int indexSound = randomFromArray.nextInt(3);
+        int indexSound = randomFromArray.nextInt(2);
         ArrayList<String> soundStringBunsRandom = new ArrayList();
         soundStringBunsRandom.add(0, "sounds/audio/buns/bun-die1.wav");
         soundStringBunsRandom.add(1, "sounds/audio/buns/bun-die2.wav");

@@ -61,6 +61,7 @@ public class Bun extends Enemy {
         CircleShape shape = new CircleShape();
         shape.setRadius(6 / AndroidJDEV.PPM);
         fdef.filter.categoryBits = AndroidJDEV.ENEMY_BIT;
+
         fdef.filter.maskBits =
                 AndroidJDEV.GROUND_BIT |
                         AndroidJDEV.COIN_BIT |
@@ -92,9 +93,10 @@ public class Bun extends Enemy {
     }
 
     @Override
-    public void hitOnHead(Bullet bullet) {
+    public void bulletShotOnHead(Bullet bullet) {
         playSound.playSoundRandomBunHurt();
         bunHP = bunHP - bulletPowerOne;
+            System.out.println(bunHP);
         if (bunHP <= 0) {
             playSound.playSoundRandomBunDead();
             setToDestroy = true;

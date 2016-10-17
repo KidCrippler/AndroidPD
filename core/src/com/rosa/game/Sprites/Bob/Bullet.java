@@ -1,5 +1,6 @@
 package com.rosa.game.Sprites.Bob;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -58,7 +59,7 @@ public class Bullet extends Sprite {
         fdef.filter.maskBits =
                 AndroidJDEV.BRICK_BIT |
                 AndroidJDEV.COIN_BIT |
-                AndroidJDEV.ENEMY_BIT |
+                AndroidJDEV.ENEMY_BIT|
                 AndroidJDEV.GROUND_BIT |
                 AndroidJDEV.OBJECT_BIT |
                 AndroidJDEV.ENEMY_HEAD_BIT;
@@ -93,9 +94,5 @@ public class Bullet extends Sprite {
 
     public boolean isDestroyed() {
         return destroyed;
-    }
-
-    public void setToDestroy(Bullet userData){
-        setToDestroy = true;
     }
 }
