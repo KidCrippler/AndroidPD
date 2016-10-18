@@ -100,6 +100,7 @@ public class Bun extends Enemy {
         if (bunHP <= 0) {
             playSound.playSoundRandomBunDead();
             setToDestroy = true;
+
         }
     }
 

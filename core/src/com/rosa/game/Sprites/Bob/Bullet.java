@@ -90,6 +90,7 @@ public class Bullet extends Sprite {
 
     public void setToDestroy() {
         setToDestroy = true;
+
     }
 
     public boolean isDestroyed() {

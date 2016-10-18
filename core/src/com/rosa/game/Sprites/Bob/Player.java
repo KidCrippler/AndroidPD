@@ -71,8 +71,9 @@ public class Player extends Sprite {
 
         for (Bullet bullet : bullets) {
             bullet.update(dt);
-            if (bullet.isDestroyed())
+            if (bullet.isDestroyed()) {
                 bullets.removeValue(bullet, true);
+            }
         }
     }
 
@@ -161,11 +162,11 @@ public class Player extends Sprite {
     }
 
     public void fire() {
-        if (System.nanoTime() - lastShot >= FIRE_RATE) {
-            bullets.add(new Bullet(screen, b2body.getPosition().x, b2body.getPosition().y, runningRight));
-            lastShot = System.nanoTime();
-            soundPlayer.playSoundRandomLazerLaserShootOne();
-        }
+            if (System.nanoTime() - lastShot >= FIRE_RATE) {
+        bullets.add(new Bullet(screen, b2body.getPosition().x, b2body.getPosition().y, runningRight));
+        lastShot = System.nanoTime();
+        soundPlayer.playSoundRandomLazerLaserShootOne();
+          }
     }
 
     public void draw(Batch batch) {
