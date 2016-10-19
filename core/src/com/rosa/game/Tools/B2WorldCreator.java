@@ -1,5 +1,6 @@
 package com.rosa.game.Tools;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.AndroidJDEV;
+import com.rosa.game.Sprites.Bob.Bullet;
 import com.rosa.game.Sprites.Enemies.Enemy;
 import com.rosa.game.Sprites.LevelsCreate.Brick;
 import com.rosa.game.Sprites.LevelsCreate.Coin;
@@ -20,7 +22,8 @@ import com.rosa.game.screens.PlayScreen;
 
 public class B2WorldCreator {
 
-    public Array<Bun> buns;
+    private Array<Bun> buns;
+
 
     public B2WorldCreator(PlayScreen screen) {
         World world = screen.getWorld();
@@ -29,6 +32,8 @@ public class B2WorldCreator {
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
         Body body;
+
+        buns = new Array<Bun>();
 
         //create ground bodies/fixtures
         for (MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
@@ -71,7 +76,7 @@ public class B2WorldCreator {
 
         //create buns bodies/fixtures
         buns = new Array<Bun>();
-        for(MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
+        for (MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             buns.add(new Bun(screen, rect.getX() / AndroidJDEV.PPM, rect.getY() / AndroidJDEV.PPM));
         }
@@ -82,5 +87,16 @@ public class B2WorldCreator {
         Array<Enemy> enemies = new Array<Enemy>();
         enemies.addAll(buns);
         return enemies;
+    }
+
+
+    public void update(float dt) {
+        for (Bun bun : buns) {
+            bun.update(dt);
+            if (bun.isDestroyed()) {
+                buns.removeValue(bun, true);
+                System.out.println("Bun out of list.");
+            }
+        }
     }
 }

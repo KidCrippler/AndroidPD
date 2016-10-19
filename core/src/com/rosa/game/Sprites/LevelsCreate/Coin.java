@@ -17,15 +17,4 @@ public class Coin extends InteractiveTileObject {
         fixture.setUserData(this);
         setCategoryFilter(AndroidJDEV.COIN_BIT);
     }
-
-
-
-    @Override
-    public void onHeadHit(Player userData) {
-        setCategoryFilter(AndroidJDEV.COIN_BIT);
-        if(getCell().getTile().getId() == BLANK_COIN){
-
-        }
-        getCell().setTile(tileSet.getTile(BLANK_COIN));
-    }
 }

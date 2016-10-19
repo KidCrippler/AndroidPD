@@ -73,6 +73,7 @@ public class Player extends Sprite {
             bullet.update(dt);
             if (bullet.isDestroyed()) {
                 bullets.removeValue(bullet, true);
+
             }
         }
     }

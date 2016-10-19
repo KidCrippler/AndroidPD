@@ -29,7 +29,7 @@ public abstract class Enemy extends Sprite {
 
     public abstract void hitByEnemy(Enemy enemy);
 
-    public abstract void bulletShotOnHead(Bullet bullet);
+    public abstract void setToDestroy();
 
     public void reverseVelocity(boolean x, boolean y) {
         if (x)

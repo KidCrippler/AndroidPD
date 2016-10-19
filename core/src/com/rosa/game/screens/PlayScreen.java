@@ -112,6 +112,7 @@ public class PlayScreen implements Screen {
         world.step(1 / 60f, 6, 2);
 
         player.update(dt);
+        creator.update(dt);
 
         //Load objects around the points of player:
         for (Enemy enemy : creator.getEnemies()) {

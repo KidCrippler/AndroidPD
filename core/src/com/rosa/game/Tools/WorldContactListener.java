@@ -8,7 +8,6 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.rosa.game.AndroidJDEV;
 import com.rosa.game.Sprites.Bob.Bullet;
-import com.rosa.game.Sprites.Enemies.Bun;
 import com.rosa.game.Sprites.Enemies.Enemy;
 import com.rosa.game.Sprites.LevelsCreate.Item;
 
@@ -78,11 +77,11 @@ public class WorldContactListener implements ContactListener {
             //Remove the bullet with enemy:
             case AndroidJDEV.BULLET_BIT | AndroidJDEV.ENEMY_HEAD_BIT:
                 //Remove the enemy:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.ENEMY_HEAD_BIT)    
-                    ((Enemy) fixA.getUserData()).bulletShotOnHead((Bullet) fixB.getUserData());
+                if (fixA.getFilterData().categoryBits == AndroidJDEV.ENEMY_HEAD_BIT)
+                    ((Enemy) fixA.getUserData()).setToDestroy();
                 else
-                    ((Enemy) fixB.getUserData()).bulletShotOnHead((Bullet) fixA.getUserData());
-//                Remove the bullet:
+                    ((Enemy) fixB.getUserData()).setToDestroy();
+                //Remove the bullet:
                 if (fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT)
                     ((Bullet) fixA.getUserData()).setToDestroy();
                 else
