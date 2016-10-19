@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.rosa.game.Sprites.Bob.Bullet;
 import com.rosa.game.screens.PlayScreen;
 
 public abstract class Enemy extends Sprite {

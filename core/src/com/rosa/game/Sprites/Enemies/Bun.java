@@ -90,13 +90,8 @@ public class Bun extends Enemy {
     }
 
     public void draw(Batch batch) {
-//        if (!destroyed || stateTime < 1)
-//            super.draw(batch);
-    }
-
-    @Override
-    public void bulletShotOnHead(Bullet bullet) {
-
+        if (!destroyed || stateTime < 1)
+            super.draw(batch);
     }
 
     @Override
