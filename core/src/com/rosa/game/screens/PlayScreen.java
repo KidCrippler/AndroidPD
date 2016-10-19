@@ -105,7 +105,6 @@ public class PlayScreen implements Screen {
     }
 
     public void update(float dt) {
-        //Handler user input
         handleInput();
         handleInputController();
 
@@ -113,6 +112,7 @@ public class PlayScreen implements Screen {
 
         player.update(dt);
         creator.update(dt);
+        hud.update(dt);
 
         //Load objects around the points of player:
         for (Enemy enemy : creator.getEnemies()) {
@@ -125,7 +125,6 @@ public class PlayScreen implements Screen {
                 }
         }
 
-        hud.update(dt);
 
         if ((player.b2body.getPosition().x > 2) && (player.b2body.getPosition().x < 36.5)) {
             gamecam.position.x = player.b2body.getPosition().x;
