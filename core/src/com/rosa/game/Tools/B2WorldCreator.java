@@ -12,8 +12,8 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.AndroidJDEV;
-import com.rosa.game.Sprites.Bob.Bullet;
 import com.rosa.game.Sprites.Enemies.Enemy;
+import com.rosa.game.Sprites.Enemies.YamYam;
 import com.rosa.game.Sprites.LevelsCreate.Brick;
 import com.rosa.game.Sprites.LevelsCreate.Coin;
 import com.rosa.game.Sprites.Enemies.Bun;
@@ -23,6 +23,8 @@ import com.rosa.game.screens.PlayScreen;
 public class B2WorldCreator {
 
     private Array<Bun> buns;
+    private Array<YamYam> yamYams;
+
 
 
     public B2WorldCreator(PlayScreen screen) {
@@ -32,8 +34,6 @@ public class B2WorldCreator {
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
         Body body;
-
-        buns = new Array<Bun>();
 
         //create ground bodies/fixtures
         for (MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
@@ -75,10 +75,21 @@ public class B2WorldCreator {
         }
 
         //create buns bodies/fixtures
+
         buns = new Array<Bun>();
+
         for (MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             buns.add(new Bun(screen, rect.getX() / AndroidJDEV.PPM, rect.getY() / AndroidJDEV.PPM));
+        }
+
+        //create yumYums bodies/fixtures
+
+        yamYams = new Array<YamYam>();
+
+        for (MapObject object : map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            yamYams.add(new YamYam(screen, rect.getX() / AndroidJDEV.PPM, rect.getY() / AndroidJDEV.PPM));
         }
     }
 
@@ -89,13 +100,21 @@ public class B2WorldCreator {
         return enemies;
     }
 
-
     public void update(float dt) {
+        //Remove buns from memory:
         for (Bun bun : buns) {
             bun.update(dt);
             if (bun.isDestroyed()) {
                 buns.removeValue(bun, true);
                 System.out.println("Bun out of list.");
+            }
+        }
+        //Remove yamYams from memory:
+        for (YamYam yam : yamYams) {
+            yam.update(dt);
+            if (yam.isDestroyed()) {
+                yamYams.removeValue(yam, true);
+                System.out.println("yum out of list.");
             }
         }
     }

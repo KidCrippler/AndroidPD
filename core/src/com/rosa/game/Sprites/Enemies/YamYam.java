@@ -14,7 +14,7 @@ import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
 
 
-public class Bun extends Enemy {
+public class YamYam extends Enemy {
 
     private float stateTime;
     private Animation walkAnimation;
@@ -24,7 +24,7 @@ public class Bun extends Enemy {
     private int bunHP = 100;
     private SoundPlayer playSound = new SoundPlayer();
 
-    public Bun(PlayScreen screen, float x, float y) {
+    public YamYam(PlayScreen screen, float x, float y) {
         super(screen, x, y);
         frames = new Array<TextureRegion>();
         for (int i = 0; i < 2; i++)
@@ -114,7 +114,7 @@ public class Bun extends Enemy {
         if (bunHP <= 0) {
             playSound.playSoundRandomBunDead();
             setToDestroy = true;
-          }
+        }
     }
 
     public boolean isDestroyed() {

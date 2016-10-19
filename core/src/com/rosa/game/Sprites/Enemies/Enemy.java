@@ -30,10 +30,6 @@ public abstract class Enemy extends Sprite {
 
     public abstract void setToDestroy();
 
-    public void reverseVelocity(boolean x, boolean y) {
-        if (x)
-            velocity.x = -velocity.x;
-        if (y)
-            velocity.y = -velocity.y;
-    }
+    public abstract void reverseVelocity (boolean x, boolean y);
+
 }
