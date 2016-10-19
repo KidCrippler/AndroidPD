@@ -21,14 +21,14 @@ public class YamYam extends Enemy {
     private Array<TextureRegion> frames;
     private boolean setToDestroy;
     private boolean destroyed;
-    private int bunHP = 100;
+    private int yamyamHP = 100;
     private SoundPlayer playSound = new SoundPlayer();
 
     public YamYam(PlayScreen screen, float x, float y) {
         super(screen, x, y);
         frames = new Array<TextureRegion>();
         for (int i = 0; i < 2; i++)
-            frames.add(new TextureRegion(screen.getAtlas().findRegion("keen"), i * 16, 0, 16, 16));
+            frames.add(new TextureRegion(screen.getAtlas().findRegion("keen"), i * 32, 0, 32, 32));
         walkAnimation = new Animation(0.4f, frames);
         stateTime = 0;
         setBounds(getX(), getY(), 16 / AndroidJDEV.PPM, 16 / AndroidJDEV.PPM);
@@ -41,7 +41,7 @@ public class YamYam extends Enemy {
         if (setToDestroy && !destroyed) {
             world.destroyBody(b2body);
             destroyed = true;
-            setRegion(new TextureRegion(screen.getAtlas().findRegion("keen"), 32, 0, 16, 16));
+            setRegion(new TextureRegion(screen.getAtlas().findRegion("keen"), 11, 0, 22, 12));
             stateTime = 0;
         } else if (!destroyed) {
             b2body.setLinearVelocity(velocity);
@@ -60,7 +60,7 @@ public class YamYam extends Enemy {
         b2body = world.createBody(bodyDef);
         CircleShape shape = new CircleShape();
         shape.setRadius(6 / AndroidJDEV.PPM);
-        fixtureDef.filter.categoryBits = AndroidJDEV.ENEMY_BIT;
+//        fixtureDef.filter.categoryBits = AndroidJDEV.ENEMY_BIT;
 
         fixtureDef.filter.maskBits =
                 AndroidJDEV.GROUND_BIT |
@@ -75,12 +75,12 @@ public class YamYam extends Enemy {
 
         //Create the Head here:
         PolygonShape head = new PolygonShape();
-        Vector2[] vertice = new Vector2[4];
-        vertice[0] = new Vector2(-5, 24).scl(1 / AndroidJDEV.PPM);
-        vertice[1] = new Vector2(5, 24).scl(1 / AndroidJDEV.PPM);
-        vertice[2] = new Vector2(-3, 3).scl(1 / AndroidJDEV.PPM);
-        vertice[3] = new Vector2(3, 3).scl(1 / AndroidJDEV.PPM);
-        head.set(vertice);
+        Vector2[] vector2s = new Vector2[4];
+        vector2s[0] = new Vector2(-5, 34).scl(1 / AndroidJDEV.PPM);
+        vector2s[1] = new Vector2(5, 34).scl(1 / AndroidJDEV.PPM);
+        vector2s[2] = new Vector2(-3, 3).scl(1 / AndroidJDEV.PPM);
+        vector2s[3] = new Vector2(3, 3).scl(1 / AndroidJDEV.PPM);
+        head.set(vector2s);
         fixtureDef.shape = head;
         fixtureDef.restitution = 0.5f;
         fixtureDef.filter.categoryBits = AndroidJDEV.ENEMY_HEAD_BIT;
@@ -109,9 +109,9 @@ public class YamYam extends Enemy {
         isDestroyed();
         playSound.playSoundRandomBunHurt();
         int bulletPowerOne = 10;
-        bunHP = bunHP - bulletPowerOne;
-        System.out.println(bunHP);
-        if (bunHP <= 0) {
+        yamyamHP = yamyamHP - bulletPowerOne;
+        System.out.println(yamyamHP);
+        if (yamyamHP <= 0) {
             playSound.playSoundRandomBunDead();
             setToDestroy = true;
         }

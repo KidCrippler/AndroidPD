@@ -97,6 +97,7 @@ public class B2WorldCreator {
     public Array<Enemy> getEnemies() {
         Array<Enemy> enemies = new Array<Enemy>();
         enemies.addAll(buns);
+        enemies.addAll(yamYams);
         return enemies;
     }
 
