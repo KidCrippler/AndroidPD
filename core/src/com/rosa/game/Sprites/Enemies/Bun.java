@@ -14,6 +14,7 @@ import com.rosa.game.Sprites.Bob.Bullet;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
 
+
 public class Bun extends Enemy {
 
     private float stateTime;
@@ -51,13 +52,14 @@ public class Bun extends Enemy {
         }
     }
 
+
     @Override
     protected void defineEnemy() {
+        FixtureDef fdef = new FixtureDef();
         BodyDef bdef = new BodyDef();
         bdef.position.set(getX(), getY());
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
-        FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(6 / AndroidJDEV.PPM);
         fdef.filter.categoryBits = AndroidJDEV.ENEMY_BIT;
@@ -88,15 +90,15 @@ public class Bun extends Enemy {
     }
 
     public void draw(Batch batch) {
-        if (!destroyed || stateTime < 1)
-            super.draw(batch);
+//        if (!destroyed || stateTime < 1)
+//            super.draw(batch);
     }
 
     @Override
     public void bulletShotOnHead(Bullet bullet) {
         playSound.playSoundRandomBunHurt();
         bunHP = bunHP - bulletPowerOne;
-            System.out.println(bunHP);
+        System.out.println(bunHP);
         if (bunHP <= 0) {
             playSound.playSoundRandomBunDead();
             setToDestroy = true;

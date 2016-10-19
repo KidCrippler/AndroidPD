@@ -78,14 +78,10 @@ public class WorldContactListener implements ContactListener {
             //Remove the bullet with enemy:
             case AndroidJDEV.BULLET_BIT | AndroidJDEV.ENEMY_HEAD_BIT:
                 //Remove the enemy:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.ENEMY_HEAD_BIT)
-
+                if (fixA.getFilterData().categoryBits == AndroidJDEV.ENEMY_HEAD_BIT)    
                     ((Enemy) fixA.getUserData()).bulletShotOnHead((Bullet) fixB.getUserData());
-//                    ((Enemy) fixA.getUserData()).bulletShotOnHead();
-
                 else
-                     ((Enemy) fixB.getUserData()).bulletShotOnHead((Bullet) fixA.getUserData());
-//                    ((Enemy) fixB.getUserData()).bulletShotOnHead();
+                    ((Enemy) fixB.getUserData()).bulletShotOnHead((Bullet) fixA.getUserData());
 //                Remove the bullet:
                 if (fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT)
                     ((Bullet) fixA.getUserData()).setToDestroy();
