@@ -26,7 +26,6 @@ public class B2WorldCreator {
     private Array<YamYam> yamYams;
 
 
-
     public B2WorldCreator(PlayScreen screen) {
         World world = screen.getWorld();
         TiledMap map = screen.getMap();
@@ -46,6 +45,10 @@ public class B2WorldCreator {
 
             shape.setAsBox(rect.getWidth() / 2 / AndroidJDEV.PPM, rect.getHeight() / 2 / AndroidJDEV.PPM);
             fdef.shape = shape;
+//            fdef.filter.categoryBits = AndroidJDEV.GROUND_BIT;
+//            fdef.filter.maskBits =
+//                    AndroidJDEV.BOB_BIT | AndroidJDEV.ENEMY_BIT;
+
             body.createFixture(fdef);
         }
 

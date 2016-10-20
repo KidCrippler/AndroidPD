@@ -129,8 +129,9 @@ public class Player extends Sprite {
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(6 / AndroidJDEV.PPM);
-        fdef.filter.categoryBits = AndroidJDEV.PLAYER_BIT;
-        fdef.filter.maskBits = AndroidJDEV.GROUND_BIT |
+        fdef.filter.categoryBits = AndroidJDEV.BOB_BIT;
+        fdef.filter.maskBits =
+                AndroidJDEV.GROUND_BIT |
                 AndroidJDEV.COIN_BIT |
                 AndroidJDEV.BRICK_BIT |
                 AndroidJDEV.ENEMY_BIT |
@@ -141,8 +142,8 @@ public class Player extends Sprite {
 
         fdef.shape = shape;
         b2body.createFixture(fdef);
-        shape.setPosition(new Vector2(0, -14 / AndroidJDEV.PPM));
-        b2body.createFixture(fdef).setUserData(this);
+/*        shape.setPosition(new Vector2(0, -14 / AndroidJDEV.PPM));
+        b2body.createFixture(fdef).setUserData(this);*/
     }
 
 

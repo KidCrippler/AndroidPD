@@ -60,7 +60,7 @@ public class YamYam extends Enemy {
         b2body = world.createBody(bodyDef);
         CircleShape shape = new CircleShape();
         shape.setRadius(6 / AndroidJDEV.PPM);
-//        fixtureDef.filter.categoryBits = AndroidJDEV.ENEMY_BIT;
+        fixtureDef.filter.categoryBits = AndroidJDEV.ENEMY_BIT;
 
         fixtureDef.filter.maskBits =
                 AndroidJDEV.GROUND_BIT |
@@ -68,7 +68,8 @@ public class YamYam extends Enemy {
                         AndroidJDEV.BRICK_BIT |
                         AndroidJDEV.ENEMY_BIT |
                         AndroidJDEV.OBJECT_BIT |
-                        AndroidJDEV.PLAYER_BIT |
+                        AndroidJDEV.BOB_BIT |
+                        AndroidJDEV.GROUND_BIT |
                         AndroidJDEV.BULLET_BIT;
         fixtureDef.shape = shape;
         b2body.createFixture(fixtureDef).setUserData(this);

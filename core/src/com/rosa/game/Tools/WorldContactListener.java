@@ -42,11 +42,25 @@ public class WorldContactListener implements ContactListener {
                     ((Item) fixB.getUserData()).reverseVelocity(true, false);
                 break;
 
-            case AndroidJDEV.ENEMY_HEAD_BIT | AndroidJDEV.PLAYER_BIT:
+            case AndroidJDEV.ENEMY_HEAD_BIT | AndroidJDEV.BOB_BIT:
                 if (fixA.getFilterData().categoryBits == AndroidJDEV.ENEMY_HEAD_BIT)
                     ((Enemy) fixA.getUserData()).reverseVelocity(true, false);
                 else
                     ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
+                break;
+
+            //Player to level:
+            case AndroidJDEV.BOB_BIT | AndroidJDEV.GROUND_BIT:
+                if (fixA.getFilterData().categoryBits == AndroidJDEV.BOB_BIT)
+                    soundPlayer.PlaySoundBob(1);
+                else
+                    soundPlayer.PlaySoundBob(1);
+                break;
+            case AndroidJDEV.BOB_BIT | AndroidJDEV.OBJECT_BIT:
+                if (fixA.getFilterData().categoryBits == AndroidJDEV.BOB_BIT)
+                    soundPlayer.PlaySoundBob(1);
+                else
+                    soundPlayer.PlaySoundBob(1);
                 break;
 
             // * * * BULLET_BIT:

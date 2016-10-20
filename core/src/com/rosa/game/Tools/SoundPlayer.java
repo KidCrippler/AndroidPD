@@ -13,6 +13,8 @@ public class SoundPlayer {
     public void PlaySoundBob(int soundNumber) {
         ArrayList<String> soundString = new ArrayList();
         soundString.add(0, "sounds/audio/bob/jump.wav");
+        soundString.add(1, "sounds/audio/bob/land.wav");
+
         try {
             Sound soundFXStream = Gdx.audio.newSound(Gdx.files.internal(soundString.get(soundNumber)));//Volume:
             soundFXStream.play(genVolume);

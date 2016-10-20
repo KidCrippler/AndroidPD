@@ -68,7 +68,8 @@ public class Bun extends Enemy {
                         AndroidJDEV.BRICK_BIT |
                         AndroidJDEV.ENEMY_BIT |
                         AndroidJDEV.OBJECT_BIT |
-                        AndroidJDEV.PLAYER_BIT |
+                        AndroidJDEV.BOB_BIT |
+                        AndroidJDEV.GROUND_BIT |
                         AndroidJDEV.BULLET_BIT;
         fixtureDef.shape = shape;
         b2body.createFixture(fixtureDef).setUserData(this);
