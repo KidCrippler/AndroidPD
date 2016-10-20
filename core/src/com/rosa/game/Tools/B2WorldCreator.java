@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.AndroidJDEV;
+import com.rosa.game.Sprites.Bob.Player;
 import com.rosa.game.Sprites.Enemies.Enemy;
 import com.rosa.game.Sprites.Enemies.YamYam;
 import com.rosa.game.Sprites.LevelsCreate.Brick;
@@ -29,6 +30,7 @@ public class B2WorldCreator {
     public B2WorldCreator(PlayScreen screen) {
         World world = screen.getWorld();
         TiledMap map = screen.getMap();
+        Player player = screen.getPlayer();
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
@@ -92,7 +94,7 @@ public class B2WorldCreator {
 
         for (MapObject object : map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            yamYams.add(new YamYam(screen, rect.getX() / AndroidJDEV.PPM, rect.getY() / AndroidJDEV.PPM));
+            yamYams.add(new YamYam(screen, rect.getX() / AndroidJDEV.PPM, rect.getY() / AndroidJDEV.PPM, player));
         }
     }
 

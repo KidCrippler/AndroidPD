@@ -200,4 +200,8 @@ public class PlayScreen implements Screen {
         return world;
     }
 
+    public Player getPlayer(){
+        return player;
+    }
+
 }

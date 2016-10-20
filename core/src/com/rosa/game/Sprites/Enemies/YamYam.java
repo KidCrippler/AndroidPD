@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.AndroidJDEV;
+import com.rosa.game.Sprites.Bob.Player;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
 
@@ -23,8 +24,9 @@ public class YamYam extends Enemy {
     private boolean destroyed;
     private int yamyamHP = 100;
     private SoundPlayer playSound = new SoundPlayer();
+    private Player player;
 
-    public YamYam(PlayScreen screen, float x, float y) {
+    public YamYam(PlayScreen screen, float x, float y,Player player) {
         super(screen, x, y);
         frames = new Array<TextureRegion>();
         for (int i = 0; i < 2; i++)
@@ -34,6 +36,7 @@ public class YamYam extends Enemy {
         setBounds(getX(), getY(), 16 / AndroidJDEV.PPM, 16 / AndroidJDEV.PPM);
         setToDestroy = false;
         destroyed = false;
+        this.player = player;
     }
 
     public void update(float dt) {
@@ -45,7 +48,14 @@ public class YamYam extends Enemy {
             stateTime = 0;
         } else if (!destroyed) {
             b2body.setLinearVelocity(velocity);
-            setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
+            //Sets the position where the sprite will be drawn:
+            //setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
+
+            b2body.setLinearVelocity(0, 0);
+
+            //// TODO: 20/10/2016
+            System.out.println("where? " + player.getX() + " " + player.getY());
+
             setRegion(walkAnimation.getKeyFrame(stateTime, true));
         }
     }
@@ -89,21 +99,21 @@ public class YamYam extends Enemy {
     }
 
     public void draw(Batch batch) {
-        if (!destroyed || stateTime < 1)
-            super.draw(batch);
+       /* if (!destroyed || stateTime < 1)
+            super.draw(batch);*/
     }
 
     @Override
     public void hitByEnemy(Enemy enemy) {
-        reverseVelocity(true, false);
+//        reverseVelocity(true, false);
         playSound.playSoundRandomBunHurt();
     }
 
     public void reverseVelocity(boolean x, boolean y) {
-        if (x)
+/*        if (x)
             velocity.x = -velocity.x;
         if (y)
-            velocity.y = -velocity.y;
+            velocity.y = -velocity.y;*/
     }
 
     public void setToDestroy() {
