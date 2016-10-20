@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.AndroidJDEV;
@@ -66,7 +67,7 @@ public class Player extends Sprite {
 
     public void update(float dt) {
         //position of sprite inside shape:
-        setPosition(b2body.getPosition().x - getWidth() / 2, (float) (b2body.getPosition().y - getHeight() / 1.5));
+        setPosition(b2body.getPosition().x - getWidth() / 2, (float) (b2body.getPosition().y - getHeight() / 300));
         setRegion(getFrame(dt));
 
         for (Bullet bullet : bullets) {
@@ -121,16 +122,24 @@ public class Player extends Sprite {
     }
 
     public void definePlayer() {
-        BodyDef bdef = new BodyDef();
-        bdef.position.set(32 / AndroidJDEV.PPM, 32 / AndroidJDEV.PPM);
-        bdef.type = BodyDef.BodyType.DynamicBody;
-        b2body = world.createBody(bdef);
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.position.set(32 / AndroidJDEV.PPM, 32 / AndroidJDEV.PPM);
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        b2body = world.createBody(bodyDef);
 
-        FixtureDef fdef = new FixtureDef();
-        CircleShape shape = new CircleShape();
-        shape.setRadius(6 / AndroidJDEV.PPM);
-        fdef.filter.categoryBits = AndroidJDEV.BOB_BIT;
-        fdef.filter.maskBits =
+        FixtureDef fixtureDef = new FixtureDef();
+
+        PolygonShape shape = new PolygonShape();
+
+        Vector2[] vector2s = new Vector2[4];
+        vector2s[0] = new Vector2(-3, 30).scl(1 / AndroidJDEV.PPM);
+        vector2s[1] = new Vector2(3, 30).scl(1 / AndroidJDEV.PPM);
+        vector2s[2] = new Vector2(-4, 1).scl(1 / AndroidJDEV.PPM);
+        vector2s[3] = new Vector2(4, 1).scl(1 / AndroidJDEV.PPM);
+        shape.set(vector2s);
+
+        fixtureDef.filter.categoryBits = AndroidJDEV.BOB_BIT;
+        fixtureDef.filter.maskBits =
                 AndroidJDEV.GROUND_BIT |
                 AndroidJDEV.COIN_BIT |
                 AndroidJDEV.BRICK_BIT |
@@ -140,12 +149,9 @@ public class Player extends Sprite {
                 AndroidJDEV.ITEM_BIT |
                 AndroidJDEV.BULLET_BIT;
 
-        fdef.shape = shape;
-        b2body.createFixture(fdef);
-/*        shape.setPosition(new Vector2(0, -14 / AndroidJDEV.PPM));
-        b2body.createFixture(fdef).setUserData(this);*/
+        fixtureDef.shape = shape;
+        b2body.createFixture(fixtureDef);
     }
-
 
     public void jump() {
         if (currentState != State.JUMPING) {
@@ -165,7 +171,7 @@ public class Player extends Sprite {
 
     public void fire() {
             if (System.nanoTime() - lastShot >= FIRE_RATE) {
-        bullets.add(new Bullet(screen, b2body.getPosition().x, b2body.getPosition().y, runningRight));
+        bullets.add(new Bullet(screen, (float) (b2body.getPosition().x -0.1), (float) (b2body.getPosition().y + 0.2), runningRight));
         lastShot = System.nanoTime();
         soundPlayer.playSoundRandomLazerLaserShootOne();
           }
