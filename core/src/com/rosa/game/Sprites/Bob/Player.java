@@ -56,7 +56,7 @@ public class Player extends Sprite {
         playerJump = new Animation(0.1f, frames);
         frames.clear();
 
-        playerStand = new TextureRegion(screen.getAtlas().findRegion("keen"), 0, 0, 23, 32);
+        playerStand = new TextureRegion(screen.getAtlas().findRegion("keen"), -5, 0, 23, 32);
 
         definePlayer();
         setBounds(0, 0, 23 / AndroidJDEV.PPM, 32 / AndroidJDEV.PPM);
@@ -67,7 +67,7 @@ public class Player extends Sprite {
 
     public void update(float dt) {
         //position of sprite inside shape:
-        setPosition(b2body.getPosition().x - getWidth() / 2, (float) (b2body.getPosition().y - getHeight() / 300));
+        setPosition(b2body.getPosition().x - getWidth() / 2, (float) (b2body.getPosition().y - getHeight() / 300.0));
         setRegion(getFrame(dt));
 
         for (Bullet bullet : bullets) {
