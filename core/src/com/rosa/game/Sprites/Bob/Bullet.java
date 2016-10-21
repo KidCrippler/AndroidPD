@@ -1,6 +1,5 @@
 package com.rosa.game.Sprites.Bob;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -12,7 +11,6 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.AndroidJDEV;
-import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
 
 
@@ -45,18 +43,18 @@ public class Bullet extends Sprite {
     }
 
     public void defineBullet() {
-        BodyDef bdef = new BodyDef();
-        bdef.position.set(fireRight ? getX() + 5 / AndroidJDEV.PPM : getX() - 12 / AndroidJDEV.PPM, getY());
-        bdef.type = BodyDef.BodyType.DynamicBody;
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.position.set(fireRight ? getX() + 5 / AndroidJDEV.PPM : getX() - 12 / AndroidJDEV.PPM, getY());
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
         if (!world.isLocked())
-            b2body = world.createBody(bdef);
+            b2body = world.createBody(bodyDef);
 
-        FixtureDef fdef = new FixtureDef();
+        FixtureDef fixtureDef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(2 / AndroidJDEV.PPM);
 
-        fdef.filter.categoryBits = AndroidJDEV.BULLET_BIT;
-        fdef.filter.maskBits =
+        fixtureDef.filter.categoryBits = AndroidJDEV.BULLET_BIT;
+        fixtureDef.filter.maskBits =
                 AndroidJDEV.BRICK_BIT |
                 AndroidJDEV.COIN_BIT |
                 AndroidJDEV.ENEMY_BIT|
@@ -64,8 +62,8 @@ public class Bullet extends Sprite {
                 AndroidJDEV.OBJECT_BIT |
                 AndroidJDEV.ENEMY_HEAD_BIT;
 
-        fdef.shape = shape;
-        b2body.createFixture(fdef).setUserData(this);
+        fixtureDef.shape = shape;
+        b2body.createFixture(fixtureDef).setUserData(this);
 
         b2body.setLinearVelocity(new Vector2(fireRight ? 6  : -6 , 0));
         b2body.setBullet(true);
@@ -74,6 +72,8 @@ public class Bullet extends Sprite {
 
     public void update(float dt){
         stateTime += dt;
+
+        //Bullet anim:
         setRegion(fireAnimation.getKeyFrame(stateTime, true));
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
 
@@ -84,8 +84,6 @@ public class Bullet extends Sprite {
         }
         if(b2body.getLinearVelocity().y > 2f)
             b2body.setLinearVelocity(b2body.getLinearVelocity().x, 2f);
-        if((fireRight && b2body.getLinearVelocity().x < 0) || (!fireRight && b2body.getLinearVelocity().x > 0))
-        {} //setToDestroy();
     }
 
     public void setToDestroy() {

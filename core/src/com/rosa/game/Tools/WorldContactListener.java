@@ -23,12 +23,14 @@ public class WorldContactListener implements ContactListener {
 
         switch (cDef) {
 
+            //Enemy to level:
             case AndroidJDEV.ENEMY_BIT | AndroidJDEV.OBJECT_BIT:
                 if (fixA.getFilterData().categoryBits == AndroidJDEV.ENEMY_BIT)
                     ((Enemy) fixA.getUserData()).reverseVelocity(true, false);
                 else
                     ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
                 break;
+
 
             case AndroidJDEV.ENEMY_BIT | AndroidJDEV.ENEMY_BIT:
                 ((Enemy) fixA.getUserData()).hitByEnemy((Enemy) fixB.getUserData());
@@ -101,7 +103,6 @@ public class WorldContactListener implements ContactListener {
                     ((Bullet) fixB.getUserData()).setToDestroy();
                 break;
         }
-
     }
 
     @Override

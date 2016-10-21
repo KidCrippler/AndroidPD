@@ -22,6 +22,7 @@ public class YamYam extends Enemy {
     private Array<TextureRegion> frames;
     private boolean setToDestroy;
     private boolean destroyed;
+    private boolean touchWall;
     private int yamyamHP = 100;
     private SoundPlayer playSound = new SoundPlayer();
     private Player player;
@@ -51,13 +52,18 @@ public class YamYam extends Enemy {
             //Sets the position where the sprite will be drawn:
             //setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
 
-            b2body.setLinearVelocity(0, 0);
-
-            // TODO: 20/10/2016
-            System.out.println("where? " + Player.BOB_X_POSITION );
-//            System.out.println(getX()+" "+ getY());
-
             setRegion(walkAnimation.getKeyFrame(stateTime, true));
+
+
+            //Follow your ass:
+
+            if (Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x) {
+                b2body.setLinearVelocity((float) 1.6, -2);
+            }else if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x) {
+                b2body.setLinearVelocity((float) -1.6, -2);
+            }else{
+                b2body.setLinearVelocity((float) 0, -2);
+            }
         }
     }
 
@@ -106,15 +112,11 @@ public class YamYam extends Enemy {
 
     @Override
     public void hitByEnemy(Enemy enemy) {
-//        reverseVelocity(true, false);
         playSound.playSoundRandomBunHurt();
     }
 
     public void reverseVelocity(boolean x, boolean y) {
-/*        if (x)
-            velocity.x = -velocity.x;
-        if (y)
-            velocity.y = -velocity.y;*/
+
     }
 
     public void setToDestroy() {
@@ -131,5 +133,9 @@ public class YamYam extends Enemy {
 
     public boolean isDestroyed() {
         return destroyed;
+    }
+
+    public boolean isTouchWall() {
+        return touchWall;
     }
 }
