@@ -22,12 +22,10 @@ public class YamYam extends Enemy {
     private Array<TextureRegion> frames;
     private boolean setToDestroy;
     private boolean destroyed;
-    private boolean touchWall;
     private int yamyamHP = 100;
     private SoundPlayer playSound = new SoundPlayer();
-    private Player player;
     private Array<EnemyFirePowerLas> enemyFirePowerLasArray;
-    private static final long FIRE_RATE = 100000000L;
+    private static final long FIRE_RATE = 600000000L;
     private boolean runningRight;
     private long lastShot;
     private SoundPlayer soundPlayer = new SoundPlayer();
@@ -82,7 +80,6 @@ public class YamYam extends Enemy {
                 enemyFirePowerLas.update(dt);
                 if (enemyFirePowerLas.isDestroyed()) {
                     enemyFirePowerLasArray.removeValue(enemyFirePowerLas, true);
-
                 }
             }
 
@@ -163,7 +160,7 @@ public class YamYam extends Enemy {
         if (System.nanoTime() - lastShot >= FIRE_RATE) {
             enemyFirePowerLasArray.add(new EnemyFirePowerLas(screen, (float) (b2body.getPosition().x - 0.1), (float) (b2body.getPosition().y + 0.2), runningRight));
             lastShot = System.nanoTime();
-            soundPlayer.playSoundRandomLazerLaserShootOne();
+            soundPlayer.playSoundRandomYamYamFirePower();
         }
     }
 

@@ -87,4 +87,18 @@ public class SoundPlayer {
             e.printStackTrace();
         }
     }
+
+    public void playSoundRandomYamYamFirePower() {
+        Random randomFromArray;
+        randomFromArray = new Random();
+        int indexSound = randomFromArray.nextInt(1);
+        ArrayList<String> soundStringBunsRandom = new ArrayList();
+        soundStringBunsRandom.add(0, "sounds/audio/yamyam/yamyam_firepower.wav");
+        try {
+            Sound soundFXStream = Gdx.audio.newSound(Gdx.files.internal(soundStringBunsRandom.get(indexSound)));
+            soundFXStream.play(genVolume);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
