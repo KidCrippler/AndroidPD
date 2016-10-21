@@ -203,5 +203,4 @@ public class PlayScreen implements Screen {
     public Player getPlayer(){
         return player;
     }
-
 }

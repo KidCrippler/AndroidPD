@@ -26,7 +26,7 @@ public class YamYam extends Enemy {
     private SoundPlayer playSound = new SoundPlayer();
     private Player player;
 
-    public YamYam(PlayScreen screen, float x, float y,Player player) {
+    public YamYam(PlayScreen screen, float x, float y) {
         super(screen, x, y);
         frames = new Array<TextureRegion>();
         for (int i = 0; i < 2; i++)
@@ -36,7 +36,6 @@ public class YamYam extends Enemy {
         setBounds(getX(), getY(), 16 / AndroidJDEV.PPM, 16 / AndroidJDEV.PPM);
         setToDestroy = false;
         destroyed = false;
-        this.player = player;
     }
 
     public void update(float dt) {
@@ -48,13 +47,15 @@ public class YamYam extends Enemy {
             stateTime = 0;
         } else if (!destroyed) {
             b2body.setLinearVelocity(velocity);
+
             //Sets the position where the sprite will be drawn:
             //setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
 
             b2body.setLinearVelocity(0, 0);
 
-            //// TODO: 20/10/2016
-            System.out.println("where? " + player.getX() + " " + player.getY());
+            // TODO: 20/10/2016
+            System.out.println("where? " + Player.BOB_X_POSITION );
+//            System.out.println(getX()+" "+ getY());
 
             setRegion(walkAnimation.getKeyFrame(stateTime, true));
         }

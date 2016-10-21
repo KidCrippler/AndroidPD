@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -34,11 +33,14 @@ public class Player extends Sprite {
     private long lastShot;
     private SoundPlayer soundPlayer = new SoundPlayer();
     private Array<Bullet> bullets;
+    public static float BOB_X_POSITION;
+    public static float BOB_Y_POSITION;
 
     public Player(World world, PlayScreen screen) {
         super(screen.getAtlas().findRegion("keen"));
         this.world = world;
         this.screen = screen;
+
         currentState = State.STANDING;
         previousState = State.STANDING;
         stateTimer = 0;
@@ -77,6 +79,8 @@ public class Player extends Sprite {
 
             }
         }
+        BOB_X_POSITION = b2body.getPosition().x;
+        BOB_Y_POSITION = b2body.getPosition().y;
     }
 
     public TextureRegion getFrame(float dt) {
@@ -141,13 +145,13 @@ public class Player extends Sprite {
         fixtureDef.filter.categoryBits = AndroidJDEV.BOB_BIT;
         fixtureDef.filter.maskBits =
                 AndroidJDEV.GROUND_BIT |
-                AndroidJDEV.COIN_BIT |
-                AndroidJDEV.BRICK_BIT |
-                AndroidJDEV.ENEMY_BIT |
-                AndroidJDEV.OBJECT_BIT |
-                AndroidJDEV.ENEMY_HEAD_BIT |
-                AndroidJDEV.ITEM_BIT |
-                AndroidJDEV.BULLET_BIT;
+                        AndroidJDEV.COIN_BIT |
+                        AndroidJDEV.BRICK_BIT |
+                        AndroidJDEV.ENEMY_BIT |
+                        AndroidJDEV.OBJECT_BIT |
+                        AndroidJDEV.ENEMY_HEAD_BIT |
+                        AndroidJDEV.ITEM_BIT |
+                        AndroidJDEV.BULLET_BIT;
 
         fixtureDef.shape = shape;
         b2body.createFixture(fixtureDef);
@@ -170,11 +174,11 @@ public class Player extends Sprite {
     }
 
     public void fire() {
-            if (System.nanoTime() - lastShot >= FIRE_RATE) {
-        bullets.add(new Bullet(screen, (float) (b2body.getPosition().x -0.1), (float) (b2body.getPosition().y + 0.2), runningRight));
-        lastShot = System.nanoTime();
-        soundPlayer.playSoundRandomLazerLaserShootOne();
-          }
+        if (System.nanoTime() - lastShot >= FIRE_RATE) {
+            bullets.add(new Bullet(screen, (float) (b2body.getPosition().x - 0.1), (float) (b2body.getPosition().y + 0.2), runningRight));
+            lastShot = System.nanoTime();
+            soundPlayer.playSoundRandomLazerLaserShootOne();
+        }
     }
 
     public void draw(Batch batch) {
