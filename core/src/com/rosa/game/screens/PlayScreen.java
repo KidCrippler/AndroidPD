@@ -117,13 +117,12 @@ public class PlayScreen implements Screen {
         //Load objects around the points of player:
         for (Enemy enemy : creator.getEnemies()) {
             enemy.update(dt);
-            enemy.b2body.setActive(true);
-            if ((enemy.getX() <= (player.getX() + (200 / AndroidJDEV.PPM))))
-                if (((player.getX() - (200 / AndroidJDEV.PPM)) <= enemy.getX())) {
-                    enemy.b2body.setActive(true);
-                } else {
-                    enemy.b2body.setActive(false);
-                }
+
+            if (((player.getX() - (180 / AndroidJDEV.PPM)) <= enemy.getX()) && ((player.getX() + (180 / AndroidJDEV.PPM)) >= enemy.getX())) {
+                   enemy.b2body.setActive(true);
+            } else {
+                   enemy.b2body.setActive(false);
+            }
         }
 
         if ((player.b2body.getPosition().x > 2) && (player.b2body.getPosition().x < 36.5)) {
@@ -200,7 +199,7 @@ public class PlayScreen implements Screen {
         return world;
     }
 
-    public Player getPlayer(){
+    public Player getPlayer() {
         return player;
     }
 }
