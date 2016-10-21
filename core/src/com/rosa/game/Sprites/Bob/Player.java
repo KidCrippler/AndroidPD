@@ -100,6 +100,7 @@ public class Player extends Sprite {
                 region = playerStand;
                 break;
         }
+
         if ((b2body.getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()) {
             region.flip(true, false);
             runningRight = false;

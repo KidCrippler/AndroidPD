@@ -1,4 +1,4 @@
-package com.rosa.game.Sprites.Bob;
+package com.rosa.game.Sprites.Enemies;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -14,7 +14,7 @@ import com.rosa.game.AndroidJDEV;
 import com.rosa.game.screens.PlayScreen;
 
 
-public class Bullet extends Sprite {
+public class EnemyFirePowerLas extends Sprite {
 
     public World world;
     public Body b2body;
@@ -26,11 +26,12 @@ public class Bullet extends Sprite {
     Array<TextureRegion> frames;
     PlayScreen screen;
 
-    public Bullet(PlayScreen screen, float x, float y, boolean fireRight) {
+    public EnemyFirePowerLas(PlayScreen screen, float x, float y, boolean fireRight) {
 
         this.fireRight = fireRight;
         this.world = screen.getWorld();
         this.screen = screen;
+
 
         frames = new Array<TextureRegion>();
         for (int i = 0; i < 4; i++) {
@@ -53,7 +54,7 @@ public class Bullet extends Sprite {
         CircleShape shape = new CircleShape();
         shape.setRadius(2 / AndroidJDEV.PPM);
 
-        fixtureDef.filter.categoryBits = AndroidJDEV.BULLET_BIT;
+        fixtureDef.filter.categoryBits = AndroidJDEV.ENEMY_FIREPOWER;
         fixtureDef.filter.maskBits =
                 AndroidJDEV.BRICK_BIT |
                         AndroidJDEV.COIN_BIT |

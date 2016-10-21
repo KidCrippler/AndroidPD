@@ -10,10 +10,10 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.AndroidJDEV;
+import com.rosa.game.Sprites.Bob.Bullet;
 import com.rosa.game.Sprites.Bob.Player;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
-
 
 public class YamYam extends Enemy {
 
@@ -26,17 +26,28 @@ public class YamYam extends Enemy {
     private int yamyamHP = 100;
     private SoundPlayer playSound = new SoundPlayer();
     private Player player;
+    private Array<EnemyFirePowerLas> enemyFirePowerLasArray;
+    private static final long FIRE_RATE = 100000000L;
+    private boolean runningRight;
+    private long lastShot;
+    private SoundPlayer soundPlayer = new SoundPlayer();
+
 
     public YamYam(PlayScreen screen, float x, float y) {
         super(screen, x, y);
         frames = new Array<TextureRegion>();
+        runningRight = true;
+
+
         for (int i = 0; i < 2; i++)
             frames.add(new TextureRegion(screen.getAtlas().findRegion("keen"), i * 32, 0, 32, 32));
+
         walkAnimation = new Animation(0.4f, frames);
         stateTime = 0;
         setBounds(getX(), getY(), 16 / AndroidJDEV.PPM, 16 / AndroidJDEV.PPM);
         setToDestroy = false;
         destroyed = false;
+        enemyFirePowerLasArray = new Array<EnemyFirePowerLas>();
     }
 
     public void update(float dt) {
@@ -54,19 +65,36 @@ public class YamYam extends Enemy {
 
             setRegion(walkAnimation.getKeyFrame(stateTime, true));
 
-
             //Follow your ass:
 
             if (Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x) {
                 b2body.setLinearVelocity((float) 1.6, -2);
-            }else if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x) {
+            } else if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x) {
                 b2body.setLinearVelocity((float) -1.6, -2);
-            }else{
+            } else {
                 b2body.setLinearVelocity((float) 0, -2);
+            }
+
+            //Shooting your ass:
+            fire();
+
+            for (EnemyFirePowerLas enemyFirePowerLas : enemyFirePowerLasArray) {
+                enemyFirePowerLas.update(dt);
+                if (enemyFirePowerLas.isDestroyed()) {
+                    enemyFirePowerLasArray.removeValue(enemyFirePowerLas, true);
+
+                }
+            }
+
+            //Where are you looking at?
+
+            if (b2body.getLinearVelocity().x < 0) {
+                runningRight = false;
+            } else if (b2body.getLinearVelocity().x > 0) {
+                runningRight = true;
             }
         }
     }
-
 
     @Override
     protected void defineEnemy() {
@@ -131,11 +159,15 @@ public class YamYam extends Enemy {
         }
     }
 
-    public boolean isDestroyed() {
-        return destroyed;
+    public void fire() {
+        if (System.nanoTime() - lastShot >= FIRE_RATE) {
+            enemyFirePowerLasArray.add(new EnemyFirePowerLas(screen, (float) (b2body.getPosition().x - 0.1), (float) (b2body.getPosition().y + 0.2), runningRight));
+            lastShot = System.nanoTime();
+            soundPlayer.playSoundRandomLazerLaserShootOne();
+        }
     }
 
-    public boolean isTouchWall() {
-        return touchWall;
+    public boolean isDestroyed() {
+        return destroyed;
     }
 }
