@@ -111,16 +111,16 @@ public class PlayScreen implements Screen {
         world.step(1 / 60f, 6, 2);
 
         player.update(dt);
-        creator.update(dt);
         hud.update(dt);
+        creator.update(dt);
 
         //Load objects around the points of player:
         for (Enemy enemy : creator.getEnemies()) {
             enemy.update(dt);
 
-//            if (((player.getX() - (180 / AndroidJDEV.PPM)) <= enemy.getX()) && ((player.getX() + (180 / AndroidJDEV.PPM)) >= enemy.getX())) {
-           if (true){
+            if (((player.getX() - (180 / AndroidJDEV.PPM)) <= enemy.getX()) && ((player.getX() + (180 / AndroidJDEV.PPM)) >= enemy.getX())) {
                    enemy.b2body.setActive(true);
+                //TODO: add here "update" from enemy . . .
             } else {
                    enemy.b2body.setActive(false);
             }
