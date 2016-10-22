@@ -90,6 +90,8 @@ public class YamYam extends Enemy {
                 } else if (b2body.getLinearVelocity().x > 0) {
                     runningRight = true;
                 }
+
+                //If enemy hit the wall he will try to jump:
             }
         }
     }
