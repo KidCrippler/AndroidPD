@@ -119,10 +119,11 @@ public class PlayScreen implements Screen {
             enemy.update(dt);
 
             if (((player.getX() - (180 / AndroidJDEV.PPM)) <= enemy.getX()) && ((player.getX() + (180 / AndroidJDEV.PPM)) >= enemy.getX())) {
-                   enemy.b2body.setActive(true);
                 //TODO: add here "update" from enemy . . .
+                enemy.b2body.setActive(true);
+
             } else {
-                   enemy.b2body.setActive(false);
+                enemy.b2body.setActive(false);
             }
         }
 
