@@ -58,6 +58,7 @@ public class Bullet extends Sprite {
                 AndroidJDEV.BRICK_BIT |
                         AndroidJDEV.COIN_BIT |
                         AndroidJDEV.ENEMY_BIT |
+                        AndroidJDEV.ENEMY_AI |
                         AndroidJDEV.GROUND_BIT |
                         AndroidJDEV.OBJECT_BIT |
                         AndroidJDEV.ENEMY_HEAD_BIT;

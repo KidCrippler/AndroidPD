@@ -149,6 +149,7 @@ public class Player extends Sprite {
                         AndroidJDEV.COIN_BIT |
                         AndroidJDEV.BRICK_BIT |
                         AndroidJDEV.ENEMY_BIT |
+                        AndroidJDEV.ENEMY_AI |
                         AndroidJDEV.OBJECT_BIT |
                         AndroidJDEV.ENEMY_HEAD_BIT |
                         AndroidJDEV.ITEM_BIT |

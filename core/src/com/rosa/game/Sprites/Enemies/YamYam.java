@@ -29,6 +29,11 @@ public class YamYam extends Enemy {
     private long lastShot;
     private SoundPlayer soundPlayer = new SoundPlayer();
 
+    private enum State {JUMPING}
+
+    private State currentState;
+
+
     public YamYam(PlayScreen screen, float x, float y) {
         super(screen, x, y);
         frames = new Array<TextureRegion>();
@@ -47,7 +52,6 @@ public class YamYam extends Enemy {
     }
 
     public void update(float dt) {
-        boolean close_to_player = false;
         stateTime += dt;
         if (setToDestroy && !destroyed) {
             world.destroyBody(b2body);
@@ -63,8 +67,19 @@ public class YamYam extends Enemy {
 
                 setRegion(walkAnimation.getKeyFrame(stateTime, true));
 
-                //Follow your ass:
+/*
+                //Follow you:
+                if (Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x) {
+                    b2body.setLinearVelocity((float) 1.6, -2);
+                } else if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x) {
+                    b2body.setLinearVelocity((float) -1.6, -2);
+                } else {
+                    b2body.setLinearVelocity((float) 0, -2);
+                }
+*/
 
+
+                //Follow you:
                 if (Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x) {
                     b2body.setLinearVelocity((float) 1.6, -2);
                 } else if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x) {
@@ -73,7 +88,10 @@ public class YamYam extends Enemy {
                     b2body.setLinearVelocity((float) 0, -2);
                 }
 
-                //Shooting your ass:
+
+
+
+                //Shooting you:
                 fire();
 
                 for (EnemyFirePowerLas enemyFirePowerLas : enemyFirePowerLasArray) {
@@ -83,15 +101,12 @@ public class YamYam extends Enemy {
                     }
                 }
 
-                //Where are you looking at?
-
+                //looking at you:
                 if (b2body.getLinearVelocity().x < 0) {
                     runningRight = false;
                 } else if (b2body.getLinearVelocity().x > 0) {
                     runningRight = true;
                 }
-
-                //If enemy hit the wall he will try to jump:
             }
         }
     }
@@ -103,23 +118,6 @@ public class YamYam extends Enemy {
         bodyDef.position.set(getX(), getY());
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bodyDef);
-        CircleShape shape = new CircleShape();
-        shape.setRadius(6 / AndroidJDEV.PPM);
-        fixtureDef.filter.categoryBits = AndroidJDEV.ENEMY_BIT;
-
-        fixtureDef.filter.maskBits =
-                AndroidJDEV.GROUND_BIT |
-                        AndroidJDEV.COIN_BIT |
-                        AndroidJDEV.BRICK_BIT |
-                        AndroidJDEV.ENEMY_BIT |
-                        AndroidJDEV.OBJECT_BIT |
-                        AndroidJDEV.BOB_BIT |
-                        AndroidJDEV.GROUND_BIT |
-                        AndroidJDEV.BULLET_BIT;
-        fixtureDef.shape = shape;
-        b2body.createFixture(fixtureDef).setUserData(this);
-
-        //Create the Head here:
         PolygonShape head = new PolygonShape();
         Vector2[] vector2s = new Vector2[4];
         vector2s[0] = new Vector2(-5, 34).scl(1 / AndroidJDEV.PPM);
@@ -129,7 +127,18 @@ public class YamYam extends Enemy {
         head.set(vector2s);
         fixtureDef.shape = head;
         fixtureDef.restitution = 0.5f;
-        fixtureDef.filter.categoryBits = AndroidJDEV.ENEMY_HEAD_BIT;
+        fixtureDef.filter.categoryBits = AndroidJDEV.ENEMY_AI;
+        fixtureDef.filter.maskBits = AndroidJDEV.GROUND_BIT |
+                        AndroidJDEV.ENEMY_AI |
+                        AndroidJDEV.COIN_BIT |
+                        AndroidJDEV.BRICK_BIT |
+                        AndroidJDEV.ENEMY_BIT |
+                        AndroidJDEV.OBJECT_BIT |
+                        AndroidJDEV.BOB_BIT |
+                        AndroidJDEV.GROUND_BIT |
+                        AndroidJDEV.BULLET_BIT;
+
+
         b2body.createFixture(fixtureDef).setUserData(this);
     }
 
@@ -159,12 +168,18 @@ public class YamYam extends Enemy {
         }
     }
 
-    public void fire() {
+    private void fire() {
         if (System.nanoTime() - lastShot >= FIRE_RATE) {
             enemyFirePowerLasArray.add(new EnemyFirePowerLas(screen, (float) (b2body.getPosition().x - 0.1), (float) (b2body.getPosition().y + 0.2), runningRight));
             lastShot = System.nanoTime();
             soundPlayer.playSoundRandomYamYamFirePower();
         }
+    }
+
+    public void jump() {
+        b2body.applyLinearImpulse(new Vector2(0, 50f), b2body.getWorldCenter(), true);
+        soundPlayer.PlaySoundBob(0);
+        currentState = State.JUMPING;
     }
 
     public boolean isDestroyed() {
