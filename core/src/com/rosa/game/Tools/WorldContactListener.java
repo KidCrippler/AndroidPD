@@ -23,25 +23,22 @@ public class WorldContactListener implements ContactListener {
 
         switch (cDef) {
 
-            //Enemy to level:
+
+
+            //TODO: Do i need this?
+           /* case AndroidJDEV.ITEM_BIT | AndroidJDEV.OBJECT_BIT:
+                if (fixA.getFilterData().categoryBits == AndroidJDEV.ITEM_BIT)
+                    ((Item) fixA.getUserData()).reverseVelocity(true, false);
+                else
+                    ((Item) fixB.getUserData()).reverseVelocity(true, false);
+                break;
+*/
+            //      *       *       *       ENEMY     *       *       *       //
             case AndroidJDEV.ENEMY_BIT | AndroidJDEV.OBJECT_BIT:
                 if (fixA.getFilterData().categoryBits == AndroidJDEV.ENEMY_BIT)
                     ((Enemy) fixA.getUserData()).reverseVelocity(true, false);
                 else
                     ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
-                break;
-
-
-            case AndroidJDEV.ENEMY_BIT | AndroidJDEV.ENEMY_BIT:
-                ((Enemy) fixA.getUserData()).hitByEnemy((Enemy) fixB.getUserData());
-                ((Enemy) fixB.getUserData()).hitByEnemy((Enemy) fixA.getUserData());
-                break;
-
-            case AndroidJDEV.ITEM_BIT | AndroidJDEV.OBJECT_BIT:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.ITEM_BIT)
-                    ((Item) fixA.getUserData()).reverseVelocity(true, false);
-                else
-                    ((Item) fixB.getUserData()).reverseVelocity(true, false);
                 break;
 
             case AndroidJDEV.ENEMY_HEAD_BIT | AndroidJDEV.BOB_BIT:
@@ -51,7 +48,12 @@ public class WorldContactListener implements ContactListener {
                     ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
                 break;
 
-            //Player to level:
+            case AndroidJDEV.ENEMY_BIT | AndroidJDEV.ENEMY_BIT:
+                ((Enemy) fixA.getUserData()).hitByEnemy((Enemy) fixB.getUserData());
+                ((Enemy) fixB.getUserData()).hitByEnemy((Enemy) fixA.getUserData());
+                break;
+
+            //      *       *       *       BOB     *       *       *       //
             case AndroidJDEV.BOB_BIT | AndroidJDEV.GROUND_BIT:
                 if (fixA.getFilterData().categoryBits == AndroidJDEV.BOB_BIT)
                     soundPlayer.PlaySoundBob(1);
@@ -65,9 +67,7 @@ public class WorldContactListener implements ContactListener {
                     soundPlayer.PlaySoundBob(1);
                 break;
 
-            // * * * BULLET_BIT:
-
-            //Remove the bullet everywhere in ground:
+            //      *       *       *       BULLETS     *       *       *       //
             case AndroidJDEV.BULLET_BIT | AndroidJDEV.GROUND_BIT:
                 if (fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT) {
                     ((Bullet) fixA.getUserData()).setToDestroy();
@@ -89,7 +89,6 @@ public class WorldContactListener implements ContactListener {
                 }
                 break;
 
-            //Remove the bullet with enemy:
             case AndroidJDEV.BULLET_BIT | AndroidJDEV.ENEMY_HEAD_BIT:
                 //Remove the enemy:
                 if (fixA.getFilterData().categoryBits == AndroidJDEV.ENEMY_HEAD_BIT)
