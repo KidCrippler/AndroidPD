@@ -67,17 +67,6 @@ public class YamYam extends Enemy {
 
                 setRegion(walkAnimation.getKeyFrame(stateTime, true));
 
-/*
-                //Follow you:
-                if (Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x) {
-                    b2body.setLinearVelocity((float) 1.6, -2);
-                } else if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x) {
-                    b2body.setLinearVelocity((float) -1.6, -2);
-                } else {
-                    b2body.setLinearVelocity((float) 0, -2);
-                }
-*/
-
 
                 //Follow you:
                 if (Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x) {
@@ -87,6 +76,17 @@ public class YamYam extends Enemy {
                 } else {
                     b2body.setLinearVelocity((float) 0, -2);
                 }
+
+
+
+/*                //Follow you:
+                if (Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x) {
+                    b2body.setLinearVelocity((float) 1.6, -2);
+                } else if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x) {
+                    b2body.setLinearVelocity((float) -1.6, -2);
+                } else {
+                    b2body.setLinearVelocity((float) 0, -2);
+                }*/
 
 
 
@@ -177,9 +177,9 @@ public class YamYam extends Enemy {
     }
 
     public void jump() {
-        b2body.applyLinearImpulse(new Vector2(0, 50f), b2body.getWorldCenter(), true);
+       /* b2body.applyLinearImpulse(new Vector2(0, 50f), b2body.getWorldCenter(), true);
         soundPlayer.PlaySoundBob(0);
-        currentState = State.JUMPING;
+        currentState = State.JUMPING;*/
     }
 
     public boolean isDestroyed() {
