@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.rosa.game.AndroidJDEV;
+import com.rosa.game.Application;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
 
@@ -61,7 +61,7 @@ public class Player extends Sprite {
         playerStand = new TextureRegion(screen.getAtlas().findRegion("keen"), -5, 0, 23, 32);
 
         definePlayer();
-        setBounds(0, 0, 23 / AndroidJDEV.PPM, 32 / AndroidJDEV.PPM);
+        setBounds(0, 0, 23 / Application.PPM, 32 / Application.PPM);
         setRegion(playerStand);
 
         bullets = new Array<Bullet>();
@@ -128,7 +128,7 @@ public class Player extends Sprite {
 
     public void definePlayer() {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(32 / AndroidJDEV.PPM, 32 / AndroidJDEV.PPM);
+        bodyDef.position.set(32 / Application.PPM, 32 / Application.PPM);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bodyDef);
 
@@ -137,23 +137,23 @@ public class Player extends Sprite {
         PolygonShape shape = new PolygonShape();
 
         Vector2[] vector2s = new Vector2[4];
-        vector2s[0] = new Vector2(-3, 30).scl(1 / AndroidJDEV.PPM);
-        vector2s[1] = new Vector2(3, 30).scl(1 / AndroidJDEV.PPM);
-        vector2s[2] = new Vector2(-4, 1).scl(1 / AndroidJDEV.PPM);
-        vector2s[3] = new Vector2(4, 1).scl(1 / AndroidJDEV.PPM);
+        vector2s[0] = new Vector2(-3, 30).scl(1 / Application.PPM);
+        vector2s[1] = new Vector2(3, 30).scl(1 / Application.PPM);
+        vector2s[2] = new Vector2(-4, 1).scl(1 / Application.PPM);
+        vector2s[3] = new Vector2(4, 1).scl(1 / Application.PPM);
         shape.set(vector2s);
 
-        fixtureDef.filter.categoryBits = AndroidJDEV.BOB_BIT;
+        fixtureDef.filter.categoryBits = Application.BOB_BIT;
         fixtureDef.filter.maskBits =
-                AndroidJDEV.GROUND_BIT |
-                        AndroidJDEV.COIN_BIT |
-                        AndroidJDEV.BRICK_BIT |
-                        AndroidJDEV.ENEMY_BIT |
-                        AndroidJDEV.ENEMY_AI |
-                        AndroidJDEV.OBJECT_BIT |
-                        AndroidJDEV.ENEMY_HEAD_BIT |
-                        AndroidJDEV.ITEM_BIT |
-                        AndroidJDEV.BULLET_BIT;
+                Application.GROUND_BIT |
+                        Application.COIN_BIT |
+                        Application.BRICK_BIT |
+                        Application.ENEMY_BIT |
+                        Application.ENEMY_AI |
+                        Application.OBJECT_BIT |
+                        Application.ENEMY_HEAD_BIT |
+                        Application.ITEM_BIT |
+                        Application.BULLET_BIT;
 
         fixtureDef.shape = shape;
         b2body.createFixture(fixtureDef);

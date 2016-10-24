@@ -12,7 +12,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.rosa.game.AndroidJDEV;
+import com.rosa.game.Application;
 import com.rosa.game.screens.PlayScreen;
 
 public abstract class InteractiveTileObject {
@@ -37,11 +37,11 @@ public abstract class InteractiveTileObject {
         PolygonShape shape = new PolygonShape();
 
         bdef.type = BodyDef.BodyType.StaticBody;
-        bdef.position.set((bounds.getX() + bounds.getWidth() / 2) / AndroidJDEV.PPM, (bounds.getY() + bounds.getHeight() / 2) / AndroidJDEV.PPM);
+        bdef.position.set((bounds.getX() + bounds.getWidth() / 2) / Application.PPM, (bounds.getY() + bounds.getHeight() / 2) / Application.PPM);
 
         body = world.createBody(bdef);
 
-        shape.setAsBox(bounds.getWidth() / 2 / AndroidJDEV.PPM, bounds.getHeight() / 2 / AndroidJDEV.PPM);
+        shape.setAsBox(bounds.getWidth() / 2 / Application.PPM, bounds.getHeight() / 2 / Application.PPM);
         fdef.shape = shape;
         fixture = body.createFixture(fdef);
     }
@@ -54,7 +54,7 @@ public abstract class InteractiveTileObject {
 
     public TiledMapTileLayer.Cell getCell(){
         TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(1);
-        return layer.getCell((int)(body.getPosition().x * AndroidJDEV.PPM / 16),
-                (int)(body.getPosition().y * AndroidJDEV.PPM / 16));
+        return layer.getCell((int)(body.getPosition().x * Application.PPM / 16),
+                (int)(body.getPosition().y * Application.PPM / 16));
     }
 }

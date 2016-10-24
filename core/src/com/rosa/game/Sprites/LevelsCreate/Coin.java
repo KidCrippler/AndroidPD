@@ -2,8 +2,7 @@ package com.rosa.game.Sprites.LevelsCreate;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
-import com.rosa.game.AndroidJDEV;
-import com.rosa.game.Sprites.Bob.Player;
+import com.rosa.game.Application;
 import com.rosa.game.screens.PlayScreen;
 
 public class Coin extends InteractiveTileObject {
@@ -15,6 +14,6 @@ public class Coin extends InteractiveTileObject {
         super(screen,object);
         tileSet = map.getTileSets().getTileSet("tileset_gutter");
         fixture.setUserData(this);
-        setCategoryFilter(AndroidJDEV.COIN_BIT);
+        setCategoryFilter(Application.COIN_BIT);
     }
 }

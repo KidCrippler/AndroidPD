@@ -10,14 +10,11 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.JointEdge;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.rosa.game.AndroidJDEV;
+import com.rosa.game.Application;
 import com.rosa.game.Scenes.Hud;
 import com.rosa.game.Sprites.Enemies.Enemy;
 import com.rosa.game.Sprites.Bob.Player;
@@ -25,11 +22,9 @@ import com.rosa.game.Tools.B2WorldCreator;
 import com.rosa.game.Tools.Controller;
 import com.rosa.game.Tools.WorldContactListener;
 
-import java.util.ArrayList;
-
 public class PlayScreen implements Screen {
 
-    private AndroidJDEV game;
+    private Application game;
     private TextureAtlas atlas;
     private OrthographicCamera gamecam;
     private Viewport gamePort;
@@ -42,18 +37,18 @@ public class PlayScreen implements Screen {
     private Box2DDebugRenderer b2dr;
     private B2WorldCreator creator;
 
-    public PlayScreen(AndroidJDEV game) {
+    public PlayScreen(Application game) {
 
         atlas = new TextureAtlas("keen_one.pack");
         this.game = game;
         gamecam = new OrthographicCamera();
-        gamePort = new FitViewport(AndroidJDEV.V_WIDTH / AndroidJDEV.PPM, AndroidJDEV.V_HEIGHT / AndroidJDEV.PPM, gamecam);
+        gamePort = new FitViewport(Application.V_WIDTH / Application.PPM, Application.V_HEIGHT / Application.PPM, gamecam);
 
         hud = new Hud(game.batch);
 
         TmxMapLoader mapLoader = new TmxMapLoader();
         map = mapLoader.load("tmap.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map, 1 / AndroidJDEV.PPM);
+        renderer = new OrthogonalTiledMapRenderer(map, 1 / Application.PPM);
 
         //GameCam:
         gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
@@ -118,7 +113,7 @@ public class PlayScreen implements Screen {
         for (Enemy enemy : creator.getEnemies()) {
             enemy.update(dt);
 
-            if (((player.getX() - (180 / AndroidJDEV.PPM)) <= enemy.getX()) && ((player.getX() + (180 / AndroidJDEV.PPM)) >= enemy.getX())) {
+            if (((player.getX() - (180 / Application.PPM)) <= enemy.getX()) && ((player.getX() + (180 / Application.PPM)) >= enemy.getX())) {
                 enemy.b2body.setActive(true);
             } else {
                 enemy.b2body.setActive(false);

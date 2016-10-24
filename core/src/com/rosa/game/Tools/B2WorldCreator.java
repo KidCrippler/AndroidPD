@@ -1,6 +1,5 @@
 package com.rosa.game.Tools;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -11,7 +10,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.rosa.game.AndroidJDEV;
+import com.rosa.game.Application;
 import com.rosa.game.Sprites.Bob.Player;
 import com.rosa.game.Sprites.Enemies.Enemy;
 import com.rosa.game.Sprites.Enemies.YamYam;
@@ -41,15 +40,15 @@ public class B2WorldCreator {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             bodyDef.type = BodyDef.BodyType.StaticBody;
-            bodyDef.position.set((rect.getX() + rect.getWidth() / 2) / AndroidJDEV.PPM, (rect.getY() + rect.getHeight() / 2) / AndroidJDEV.PPM);
+            bodyDef.position.set((rect.getX() + rect.getWidth() / 2) / Application.PPM, (rect.getY() + rect.getHeight() / 2) / Application.PPM);
 
             body = world.createBody(bodyDef);
 
-            shape.setAsBox(rect.getWidth() / 2 / AndroidJDEV.PPM, rect.getHeight() / 2 / AndroidJDEV.PPM);
+            shape.setAsBox(rect.getWidth() / 2 / Application.PPM, rect.getHeight() / 2 / Application.PPM);
             fixtureDef.shape = shape;
-//            fdef.filter.categoryBits = AndroidJDEV.GROUND_BIT;
+//            fdef.filter.categoryBits = Application.GROUND_BIT;
 //            fdef.filter.maskBits =
-//                    AndroidJDEV.BOB_BIT | AndroidJDEV.ENEMY_BIT;
+//                    Application.BOB_BIT | Application.ENEMY_BIT;
 
             body.createFixture(fixtureDef);
         }
@@ -59,13 +58,13 @@ public class B2WorldCreator {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             bodyDef.type = BodyDef.BodyType.StaticBody;
-            bodyDef.position.set((rect.getX() + rect.getWidth() / 2) / AndroidJDEV.PPM, (rect.getY() + rect.getHeight() / 2) / AndroidJDEV.PPM);
+            bodyDef.position.set((rect.getX() + rect.getWidth() / 2) / Application.PPM, (rect.getY() + rect.getHeight() / 2) / Application.PPM);
 
             body = world.createBody(bodyDef);
 
-            shape.setAsBox(rect.getWidth() / 2 / AndroidJDEV.PPM, rect.getHeight() / 2 / AndroidJDEV.PPM);
+            shape.setAsBox(rect.getWidth() / 2 / Application.PPM, rect.getHeight() / 2 / Application.PPM);
             fixtureDef.shape = shape;
-            fixtureDef.filter.categoryBits = AndroidJDEV.OBJECT_BIT;
+            fixtureDef.filter.categoryBits = Application.OBJECT_BIT;
             body.createFixture(fixtureDef);
         }
 
@@ -85,7 +84,7 @@ public class B2WorldCreator {
 
         for (MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            buns.add(new Bun(screen, rect.getX() / AndroidJDEV.PPM, rect.getY() / AndroidJDEV.PPM));
+            buns.add(new Bun(screen, rect.getX() / Application.PPM, rect.getY() / Application.PPM));
         }
 
         //create yumYums bodies/fixtures
@@ -94,7 +93,7 @@ public class B2WorldCreator {
 
         for (MapObject object : map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            yamYams.add(new YamYam(screen, rect.getX() / AndroidJDEV.PPM, rect.getY() / AndroidJDEV.PPM));
+            yamYams.add(new YamYam(screen, rect.getX() / Application.PPM, rect.getY() / Application.PPM));
         }
     }
 

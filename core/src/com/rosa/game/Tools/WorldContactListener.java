@@ -5,11 +5,10 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.rosa.game.AndroidJDEV;
+import com.rosa.game.Application;
 import com.rosa.game.Sprites.Bob.Bullet;
 import com.rosa.game.Sprites.Enemies.Enemy;
 import com.rosa.game.Sprites.Enemies.YamYam;
-import com.rosa.game.Sprites.LevelsCreate.Item;
 
 public class WorldContactListener implements ContactListener {
 
@@ -25,21 +24,21 @@ public class WorldContactListener implements ContactListener {
         switch (cDef) {
 
             //      *       *       *       ENEMY     *       *       *       //
-            case AndroidJDEV.ENEMY_BIT | AndroidJDEV.OBJECT_BIT:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.ENEMY_BIT)
+            case Application.ENEMY_BIT | Application.OBJECT_BIT:
+                if (fixA.getFilterData().categoryBits == Application.ENEMY_BIT)
                     ((Enemy) fixA.getUserData()).reverseVelocity(true, false);
                 else
                     ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
                 break;
 
 
-            case AndroidJDEV.ENEMY_BIT | AndroidJDEV.ENEMY_BIT:
+            case Application.ENEMY_BIT | Application.ENEMY_BIT:
                 ((Enemy) fixA.getUserData()).hitByEnemy((Enemy) fixB.getUserData());
                 ((Enemy) fixB.getUserData()).hitByEnemy((Enemy) fixA.getUserData());
                 break;
 
-            case AndroidJDEV.ENEMY_HEAD_BIT | AndroidJDEV.BOB_BIT:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.ENEMY_HEAD_BIT)
+            case Application.ENEMY_HEAD_BIT | Application.BOB_BIT:
+                if (fixA.getFilterData().categoryBits == Application.ENEMY_HEAD_BIT)
                     ((Enemy) fixA.getUserData()).reverseVelocity(true, false);
                 else
                     ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
@@ -49,8 +48,8 @@ public class WorldContactListener implements ContactListener {
             //      *       *       *       ENEMY-AI     *       *       *       //
 
 
-            case AndroidJDEV.ENEMY_AI | AndroidJDEV.OBJECT_BIT:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.ENEMY_AI) {
+            case Application.ENEMY_AI | Application.OBJECT_BIT:
+                if (fixA.getFilterData().categoryBits == Application.ENEMY_AI) {
                     ((YamYam) fixA.getUserData()).jump();
                     System.out.println("jj");
                 } else {
@@ -59,28 +58,28 @@ public class WorldContactListener implements ContactListener {
                 }
                 break;
 
-            case AndroidJDEV.ENEMY_AI | AndroidJDEV.ENEMY_AI:
+            case Application.ENEMY_AI | Application.ENEMY_AI:
                 ((Enemy) fixA.getUserData()).hitByEnemy((Enemy) fixB.getUserData());
                 ((Enemy) fixB.getUserData()).hitByEnemy((Enemy) fixA.getUserData());
                 break;
 
             //      *       *       *       BOB     *       *       *       //
-            case AndroidJDEV.BOB_BIT | AndroidJDEV.GROUND_BIT:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.BOB_BIT)
+            case Application.BOB_BIT | Application.GROUND_BIT:
+                if (fixA.getFilterData().categoryBits == Application.BOB_BIT)
                     soundPlayer.PlaySoundBob(1);
                 else
                     soundPlayer.PlaySoundBob(1);
                 break;
-            case AndroidJDEV.BOB_BIT | AndroidJDEV.OBJECT_BIT:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.BOB_BIT)
+            case Application.BOB_BIT | Application.OBJECT_BIT:
+                if (fixA.getFilterData().categoryBits == Application.BOB_BIT)
                     soundPlayer.PlaySoundBob(1);
                 else
                     soundPlayer.PlaySoundBob(1);
                 break;
 
             //      *       *       *       BULLETS     *       *       *       //
-            case AndroidJDEV.BULLET_BIT | AndroidJDEV.GROUND_BIT:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT) {
+            case Application.BULLET_BIT | Application.GROUND_BIT:
+                if (fixA.getFilterData().categoryBits == Application.BULLET_BIT) {
                     ((Bullet) fixA.getUserData()).setToDestroy();
                     soundPlayer.playSoundRandomLaserOneWall();
                 } else {
@@ -89,8 +88,8 @@ public class WorldContactListener implements ContactListener {
                 }
                 break;
 
-            case AndroidJDEV.BULLET_BIT | AndroidJDEV.OBJECT_BIT:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT) {
+            case Application.BULLET_BIT | Application.OBJECT_BIT:
+                if (fixA.getFilterData().categoryBits == Application.BULLET_BIT) {
                     ((Bullet) fixA.getUserData()).setToDestroy();
                     soundPlayer.playSoundRandomLaserOneWall();
                 } else {
@@ -100,27 +99,27 @@ public class WorldContactListener implements ContactListener {
                 }
                 break;
             //Enemy:
-            case AndroidJDEV.BULLET_BIT | AndroidJDEV.ENEMY_HEAD_BIT:
+            case Application.BULLET_BIT | Application.ENEMY_HEAD_BIT:
                 //Remove the enemy:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.ENEMY_HEAD_BIT)
+                if (fixA.getFilterData().categoryBits == Application.ENEMY_HEAD_BIT)
                     ((Enemy) fixA.getUserData()).setToDestroy();
                 else
                     ((Enemy) fixB.getUserData()).setToDestroy();
                 //Remove the bullet:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT)
+                if (fixA.getFilterData().categoryBits == Application.BULLET_BIT)
                     ((Bullet) fixA.getUserData()).setToDestroy();
                 else
                     ((Bullet) fixB.getUserData()).setToDestroy();
                 break;
             //Enemy AI:
-            case AndroidJDEV.BULLET_BIT | AndroidJDEV.ENEMY_AI:
+            case Application.BULLET_BIT | Application.ENEMY_AI:
                 //Remove the enemy:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.ENEMY_AI)
+                if (fixA.getFilterData().categoryBits == Application.ENEMY_AI)
                     ((Enemy) fixA.getUserData()).setToDestroy();
                 else
                     ((Enemy) fixB.getUserData()).setToDestroy();
                 //Remove the bullet:
-                if (fixA.getFilterData().categoryBits == AndroidJDEV.BULLET_BIT)
+                if (fixA.getFilterData().categoryBits == Application.BULLET_BIT)
                     ((Bullet) fixA.getUserData()).setToDestroy();
                 else
                     ((Bullet) fixB.getUserData()).setToDestroy();

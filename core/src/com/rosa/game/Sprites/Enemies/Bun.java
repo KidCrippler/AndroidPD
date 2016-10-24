@@ -9,7 +9,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
-import com.rosa.game.AndroidJDEV;
+import com.rosa.game.Application;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
 
@@ -31,7 +31,7 @@ public class Bun extends Enemy {
             frames.add(new TextureRegion(screen.getAtlas().findRegion("keen"), i * 16, 0, 16, 16));
         walkAnimation = new Animation(0.4f, frames);
         stateTime = 0;
-        setBounds(getX(), getY(), 16 / AndroidJDEV.PPM, 16 / AndroidJDEV.PPM);
+        setBounds(getX(), getY(), 16 / Application.PPM, 16 / Application.PPM);
         setToDestroy = false;
         destroyed = false;
     }
@@ -59,32 +59,32 @@ public class Bun extends Enemy {
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bodyDef);
         CircleShape shape = new CircleShape();
-        shape.setRadius(6 / AndroidJDEV.PPM);
-        fixtureDef.filter.categoryBits = AndroidJDEV.ENEMY_BIT;
+        shape.setRadius(6 / Application.PPM);
+        fixtureDef.filter.categoryBits = Application.ENEMY_BIT;
 
         fixtureDef.filter.maskBits =
-                AndroidJDEV.GROUND_BIT |
-                        AndroidJDEV.COIN_BIT |
-                        AndroidJDEV.BRICK_BIT |
-                        AndroidJDEV.ENEMY_BIT |
-                        AndroidJDEV.OBJECT_BIT |
-                        AndroidJDEV.BOB_BIT |
-                        AndroidJDEV.GROUND_BIT |
-                        AndroidJDEV.BULLET_BIT;
+                Application.GROUND_BIT |
+                        Application.COIN_BIT |
+                        Application.BRICK_BIT |
+                        Application.ENEMY_BIT |
+                        Application.OBJECT_BIT |
+                        Application.BOB_BIT |
+                        Application.GROUND_BIT |
+                        Application.BULLET_BIT;
         fixtureDef.shape = shape;
         b2body.createFixture(fixtureDef).setUserData(this);
 
         //Create the Head here:
         PolygonShape head = new PolygonShape();
         Vector2[] vertice = new Vector2[4];
-        vertice[0] = new Vector2(-5, 24).scl(1 / AndroidJDEV.PPM);
-        vertice[1] = new Vector2(5, 24).scl(1 / AndroidJDEV.PPM);
-        vertice[2] = new Vector2(-3, 3).scl(1 / AndroidJDEV.PPM);
-        vertice[3] = new Vector2(3, 3).scl(1 / AndroidJDEV.PPM);
+        vertice[0] = new Vector2(-5, 24).scl(1 / Application.PPM);
+        vertice[1] = new Vector2(5, 24).scl(1 / Application.PPM);
+        vertice[2] = new Vector2(-3, 3).scl(1 / Application.PPM);
+        vertice[3] = new Vector2(3, 3).scl(1 / Application.PPM);
         head.set(vertice);
         fixtureDef.shape = head;
         fixtureDef.restitution = 0.5f;
-        fixtureDef.filter.categoryBits = AndroidJDEV.ENEMY_HEAD_BIT;
+        fixtureDef.filter.categoryBits = Application.ENEMY_HEAD_BIT;
         b2body.createFixture(fixtureDef).setUserData(this);
     }
 

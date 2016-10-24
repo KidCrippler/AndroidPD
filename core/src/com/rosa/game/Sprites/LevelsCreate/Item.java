@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.rosa.game.AndroidJDEV;
+import com.rosa.game.Application;
 import com.rosa.game.screens.PlayScreen;
 
 public abstract class Item extends Sprite {
@@ -23,7 +23,7 @@ public abstract class Item extends Sprite {
         destroyed = false;
 
         setPosition(x, y);
-        setBounds(getX(), getY(), 16 / AndroidJDEV.PPM, 16 / AndroidJDEV.PPM);
+        setBounds(getX(), getY(), 16 / Application.PPM, 16 / Application.PPM);
         defineItem();
     }
 

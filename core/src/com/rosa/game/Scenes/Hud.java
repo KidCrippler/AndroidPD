@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.graphics.Color;
-import com.rosa.game.AndroidJDEV;
+import com.rosa.game.Application;
 
 public class Hud implements Disposable {
 
@@ -20,7 +20,7 @@ public class Hud implements Disposable {
     private Label levelLabel;
 
     public Hud(SpriteBatch sb) {
-        viewport = new FitViewport(AndroidJDEV.V_WIDTH, AndroidJDEV.V_HEIGHT, new OrthographicCamera());
+        viewport = new FitViewport(Application.V_WIDTH, Application.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, sb);
 
         Table table = new Table();

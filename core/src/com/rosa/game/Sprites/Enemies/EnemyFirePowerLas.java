@@ -10,7 +10,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.rosa.game.AndroidJDEV;
+import com.rosa.game.Application;
 import com.rosa.game.screens.PlayScreen;
 
 
@@ -39,29 +39,29 @@ public class EnemyFirePowerLas extends Sprite {
         }
         fireAnimation = new Animation(0.2f, frames);
         setRegion(fireAnimation.getKeyFrame(0));
-        setBounds(x, y, 6 / AndroidJDEV.PPM, 6 / AndroidJDEV.PPM);
+        setBounds(x, y, 6 / Application.PPM, 6 / Application.PPM);
         defineBullet();
     }
 
     public void defineBullet() {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(fireRight ? getX() + 5 / AndroidJDEV.PPM : getX() - 12 / AndroidJDEV.PPM, getY());
+        bodyDef.position.set(fireRight ? getX() + 5 / Application.PPM : getX() - 12 / Application.PPM, getY());
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         if (!world.isLocked())
             b2body = world.createBody(bodyDef);
 
         FixtureDef fixtureDef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(2 / AndroidJDEV.PPM);
+        shape.setRadius(2 / Application.PPM);
 
-        fixtureDef.filter.categoryBits = AndroidJDEV.ENEMY_FIREPOWER;
+        fixtureDef.filter.categoryBits = Application.ENEMY_FIREPOWER;
         fixtureDef.filter.maskBits =
-                AndroidJDEV.BRICK_BIT |
-                        AndroidJDEV.COIN_BIT |
-                        AndroidJDEV.ENEMY_BIT |
-                        AndroidJDEV.GROUND_BIT |
-                        AndroidJDEV.OBJECT_BIT |
-                        AndroidJDEV.ENEMY_HEAD_BIT;
+                Application.BRICK_BIT |
+                        Application.COIN_BIT |
+                        Application.ENEMY_BIT |
+                        Application.GROUND_BIT |
+                        Application.OBJECT_BIT |
+                        Application.ENEMY_HEAD_BIT;
 
         fixtureDef.shape = shape;
         b2body.createFixture(fixtureDef).setUserData(this);

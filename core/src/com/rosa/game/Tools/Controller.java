@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.rosa.game.AndroidJDEV;
+import com.rosa.game.Application;
 
 
 public class Controller {
@@ -22,7 +22,7 @@ public class Controller {
     public Controller() {
         cam = new OrthographicCamera();
         viewport = new FitViewport(800, 480, cam);
-        stage = new Stage(viewport, AndroidJDEV.batch);
+        stage = new Stage(viewport, Application.batch);
 
         Gdx.input.setInputProcessor(stage);
 

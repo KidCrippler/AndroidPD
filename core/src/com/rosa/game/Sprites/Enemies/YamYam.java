@@ -5,11 +5,10 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
-import com.rosa.game.AndroidJDEV;
+import com.rosa.game.Application;
 import com.rosa.game.Sprites.Bob.Player;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
@@ -29,11 +28,6 @@ public class YamYam extends Enemy {
     private long lastShot;
     private SoundPlayer soundPlayer = new SoundPlayer();
 
-    private enum State {JUMPING}
-
-    private State currentState;
-
-
     public YamYam(PlayScreen screen, float x, float y) {
         super(screen, x, y);
         frames = new Array<TextureRegion>();
@@ -45,7 +39,7 @@ public class YamYam extends Enemy {
 
         walkAnimation = new Animation(0.4f, frames);
         stateTime = 0;
-        setBounds(getX(), getY(), 16 / AndroidJDEV.PPM, 16 / AndroidJDEV.PPM);
+        setBounds(getX(), getY(), 16 / Application.PPM, 16 / Application.PPM);
         setToDestroy = false;
         destroyed = false;
         enemyFirePowerLasArray = new Array<EnemyFirePowerLas>();
@@ -90,8 +84,7 @@ public class YamYam extends Enemy {
 
 
 
-
-                //Shooting you:
+/*                //Shooting you:
                 fire();
 
                 for (EnemyFirePowerLas enemyFirePowerLas : enemyFirePowerLasArray) {
@@ -99,15 +92,16 @@ public class YamYam extends Enemy {
                     if (enemyFirePowerLas.isDestroyed()) {
                         enemyFirePowerLasArray.removeValue(enemyFirePowerLas, true);
                     }
-                }
+                }*/
 
-                //looking at you:
+
+  /*              //looking at you:
                 if (b2body.getLinearVelocity().x < 0) {
                     runningRight = false;
                 } else if (b2body.getLinearVelocity().x > 0) {
                     runningRight = true;
                 }
-            }
+            */}
         }
     }
 
@@ -120,23 +114,23 @@ public class YamYam extends Enemy {
         b2body = world.createBody(bodyDef);
         PolygonShape head = new PolygonShape();
         Vector2[] vector2s = new Vector2[4];
-        vector2s[0] = new Vector2(-5, 34).scl(1 / AndroidJDEV.PPM);
-        vector2s[1] = new Vector2(5, 34).scl(1 / AndroidJDEV.PPM);
-        vector2s[2] = new Vector2(-3, 3).scl(1 / AndroidJDEV.PPM);
-        vector2s[3] = new Vector2(3, 3).scl(1 / AndroidJDEV.PPM);
+        vector2s[0] = new Vector2(-5, 34).scl(1 / Application.PPM);
+        vector2s[1] = new Vector2(5, 34).scl(1 / Application.PPM);
+        vector2s[2] = new Vector2(-3, 3).scl(1 / Application.PPM);
+        vector2s[3] = new Vector2(3, 3).scl(1 / Application.PPM);
         head.set(vector2s);
         fixtureDef.shape = head;
         fixtureDef.restitution = 0.5f;
-        fixtureDef.filter.categoryBits = AndroidJDEV.ENEMY_AI;
-        fixtureDef.filter.maskBits = AndroidJDEV.GROUND_BIT |
-                        AndroidJDEV.ENEMY_AI |
-                        AndroidJDEV.COIN_BIT |
-                        AndroidJDEV.BRICK_BIT |
-                        AndroidJDEV.ENEMY_BIT |
-                        AndroidJDEV.OBJECT_BIT |
-                        AndroidJDEV.BOB_BIT |
-                        AndroidJDEV.GROUND_BIT |
-                        AndroidJDEV.BULLET_BIT;
+        fixtureDef.filter.categoryBits = Application.ENEMY_AI;
+        fixtureDef.filter.maskBits = Application.GROUND_BIT |
+                        Application.ENEMY_AI |
+                        Application.COIN_BIT |
+                        Application.BRICK_BIT |
+                        Application.ENEMY_BIT |
+                        Application.OBJECT_BIT |
+                        Application.BOB_BIT |
+                        Application.GROUND_BIT |
+                        Application.BULLET_BIT;
 
 
         b2body.createFixture(fixtureDef).setUserData(this);
