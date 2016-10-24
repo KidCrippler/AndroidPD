@@ -1,5 +1,8 @@
 package com.rosa.game.Sprites.Enemies;
 
+import com.badlogic.gdx.ai.steer.SteeringAcceleration;
+import com.badlogic.gdx.ai.steer.SteeringBehavior;
+import com.badlogic.gdx.ai.steer.behaviors.*;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -28,6 +31,18 @@ public class YamYam extends Enemy {
     private long lastShot;
     private SoundPlayer soundPlayer = new SoundPlayer();
 
+
+    //AI:
+    private static final SteeringAcceleration<Vector2> steeringOutput = new SteeringAcceleration<Vector2>(new Vector2());
+    Vector2 position;
+    float orientation;
+    Vector2 linearVelocity;
+    float angularVelocity;
+    float maxSpeed;
+    boolean independentFacing;
+    SteeringBehavior<Vector2> steeringBehavior;
+
+
     public YamYam(PlayScreen screen, float x, float y) {
         super(screen, x, y);
         frames = new Array<TextureRegion>();
@@ -54,56 +69,44 @@ public class YamYam extends Enemy {
             stateTime = 0;
         } else if (!destroyed) {
             if (b2body.isActive()) {
-                b2body.setLinearVelocity(velocity);
+//                b2body.setLinearVelocity(velocity);
 
                 //Sets the position where the sprite will be drawn:
                 //setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
-
-                setRegion(walkAnimation.getKeyFrame(stateTime, true));
-
-
-                //Follow you:
-                if (Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x) {
-                    b2body.setLinearVelocity((float) 1.6, -2);
-                } else if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x) {
-                    b2body.setLinearVelocity((float) -1.6, -2);
-                } else {
-                    b2body.setLinearVelocity((float) 0, -2);
-                }
-
-
-
-/*                //Follow you:
-                if (Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x) {
-                    b2body.setLinearVelocity((float) 1.6, -2);
-                } else if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x) {
-                    b2body.setLinearVelocity((float) -1.6, -2);
-                } else {
-                    b2body.setLinearVelocity((float) 0, -2);
-                }*/
-
-
-
-/*                //Shooting you:
-                fire();
-
-                for (EnemyFirePowerLas enemyFirePowerLas : enemyFirePowerLasArray) {
-                    enemyFirePowerLas.update(dt);
-                    if (enemyFirePowerLas.isDestroyed()) {
-                        enemyFirePowerLasArray.removeValue(enemyFirePowerLas, true);
-                    }
-                }*/
+//
+//                setRegion(walkAnimation.getKeyFrame(stateTime, true));
+//                //Follow you:
+//                if (Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x) {
+//                    b2body.setLinearVelocity((float) 1.6, -2);
+//                } else if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x) {
+//                    b2body.setLinearVelocity((float) -1.6, -2);
+//                } else {
+//                    b2body.setLinearVelocity((float) 0, -2);
+//                }
+//                //Shooting you:
+//                fire();
+//
+//                for (EnemyFirePowerLas enemyFirePowerLas : enemyFirePowerLasArray) {
+//                    enemyFirePowerLas.update(dt);
+//                    if (enemyFirePowerLas.isDestroyed()) {
+//                        enemyFirePowerLasArray.removeValue(enemyFirePowerLas, true);
+//                    }
+//                }
+//                //looking at you:
+//                if (b2body.getLinearVelocity().x < 0) {
+//                    runningRight = false;
+//                } else if (b2body.getLinearVelocity().x > 0) {
+//                    runningRight = true;
+//                }
 
 
-  /*              //looking at you:
-                if (b2body.getLinearVelocity().x < 0) {
-                    runningRight = false;
-                } else if (b2body.getLinearVelocity().x > 0) {
-                    runningRight = true;
-                }
-            */}
+                //TODO: implement gdx-ai movement.
+            }
         }
+
     }
+
+
 
     @Override
     protected void defineEnemy() {
