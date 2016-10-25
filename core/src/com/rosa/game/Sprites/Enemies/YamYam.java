@@ -71,6 +71,9 @@ public class YamYam extends Enemy {
             if (b2body.isActive()) {
 //                b2body.setLinearVelocity(velocity);
 
+
+
+
                 //Sets the position where the sprite will be drawn:
                 //setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
 //
