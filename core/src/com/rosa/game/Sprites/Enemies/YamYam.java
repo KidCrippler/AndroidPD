@@ -18,6 +18,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Bob.Player;
+import com.rosa.game.Sprites.Enemies.EnemyAITool.B2dSteeringEntity;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
 
@@ -35,11 +36,15 @@ public class YamYam extends Enemy {
     private boolean runningRight;
     private long lastShot;
     private SoundPlayer soundPlayer = new SoundPlayer();
+    B2dSteeringEntity entity;
 
     public YamYam(PlayScreen screen, float x, float y) {
         super(screen, x, y);
         frames = new Array<TextureRegion>();
         runningRight = true;
+
+        //AI entity:
+        entity = new B2dSteeringEntity(b2body,30);
 
 
         for (int i = 0; i < 2; i++)

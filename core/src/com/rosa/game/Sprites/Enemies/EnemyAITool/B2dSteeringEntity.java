@@ -31,6 +31,9 @@ public class B2dSteeringEntity implements Steerable<Vector2> {
 
         this.tagged = false;
         this.steeringOutput = new SteeringAcceleration<Vector2>(new Vector2());
+
+
+        //TODO: fix this body for entity and player.
         this.body.setUserData(this);
 
     }

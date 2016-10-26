@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
+import com.rosa.game.Sprites.Enemies.EnemyAITool.B2dSteeringEntity;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
 
@@ -35,11 +36,15 @@ public class Player extends Sprite {
     private Array<Bullet> bullets;
     public static float BOB_X_POSITION;
     public static float BOB_Y_POSITION;
+    B2dSteeringEntity target;
 
     public Player(World world, PlayScreen screen) {
         super(screen.getAtlas().findRegion("keen"));
         this.world = world;
         this.screen = screen;
+
+        //AI target:
+        target = new B2dSteeringEntity(b2body,30);
 
         currentState = State.STANDING;
         previousState = State.STANDING;
