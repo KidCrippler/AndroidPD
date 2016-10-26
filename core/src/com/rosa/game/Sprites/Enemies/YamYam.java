@@ -1,13 +1,18 @@
 package com.rosa.game.Sprites.Enemies;
 
+import com.badlogic.gdx.ai.steer.Steerable;
 import com.badlogic.gdx.ai.steer.SteeringAcceleration;
 import com.badlogic.gdx.ai.steer.SteeringBehavior;
 import com.badlogic.gdx.ai.steer.behaviors.*;
+import com.badlogic.gdx.ai.utils.Location;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
@@ -31,18 +36,6 @@ public class YamYam extends Enemy {
     private long lastShot;
     private SoundPlayer soundPlayer = new SoundPlayer();
 
-
-    //AI:
-    private static final SteeringAcceleration<Vector2> steeringOutput = new SteeringAcceleration<Vector2>(new Vector2());
-    Vector2 position;
-    float orientation;
-    Vector2 linearVelocity;
-    float angularVelocity;
-    float maxSpeed;
-    boolean independentFacing;
-    SteeringBehavior<Vector2> steeringBehavior;
-
-
     public YamYam(PlayScreen screen, float x, float y) {
         super(screen, x, y);
         frames = new Array<TextureRegion>();
@@ -58,6 +51,12 @@ public class YamYam extends Enemy {
         setToDestroy = false;
         destroyed = false;
         enemyFirePowerLasArray = new Array<EnemyFirePowerLas>();
+
+
+
+//        Wander w = new Wander(this).setEnabled(true).setWanderRadius(2f).setWanderRate(MathUtils.PI2 * 4);;
+
+
     }
 
     public void update(float dt) {
@@ -67,8 +66,8 @@ public class YamYam extends Enemy {
             destroyed = true;
             setRegion(new TextureRegion(screen.getAtlas().findRegion("keen"), 11, 0, 22, 12));
             stateTime = 0;
-        } else if (!destroyed) {
-            if (b2body.isActive()) {
+        } else {
+            if (!destroyed) if (b2body.isActive()) {
 //                b2body.setLinearVelocity(velocity);
 
 
@@ -102,11 +101,12 @@ public class YamYam extends Enemy {
 
 
                 //TODO: implement gdx-ai movement.
+
+
             }
+
         }
-
     }
-
 
 
     @Override
@@ -117,24 +117,27 @@ public class YamYam extends Enemy {
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bodyDef);
         PolygonShape head = new PolygonShape();
+
         Vector2[] vector2s = new Vector2[4];
         vector2s[0] = new Vector2(-5, 34).scl(1 / Application.PPM);
         vector2s[1] = new Vector2(5, 34).scl(1 / Application.PPM);
         vector2s[2] = new Vector2(-3, 3).scl(1 / Application.PPM);
         vector2s[3] = new Vector2(3, 3).scl(1 / Application.PPM);
         head.set(vector2s);
+
+
         fixtureDef.shape = head;
         fixtureDef.restitution = 0.5f;
         fixtureDef.filter.categoryBits = Application.ENEMY_AI;
         fixtureDef.filter.maskBits = Application.GROUND_BIT |
-                        Application.ENEMY_AI |
-                        Application.COIN_BIT |
-                        Application.BRICK_BIT |
-                        Application.ENEMY_BIT |
-                        Application.OBJECT_BIT |
-                        Application.BOB_BIT |
-                        Application.GROUND_BIT |
-                        Application.BULLET_BIT;
+                Application.ENEMY_AI |
+                Application.COIN_BIT |
+                Application.BRICK_BIT |
+                Application.ENEMY_BIT |
+                Application.OBJECT_BIT |
+                Application.BOB_BIT |
+                Application.GROUND_BIT |
+                Application.BULLET_BIT;
 
 
         b2body.createFixture(fixtureDef).setUserData(this);
