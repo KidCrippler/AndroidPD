@@ -36,6 +36,7 @@ public class B2dSteeringEntity implements Steerable<Vector2> {
 
     public void update(float dt) {
         if (behavior != null) {
+//            behavior.setEnabled(true);
             behavior.calculateSteering(steeringOutput);
             applySteering(dt);
         }

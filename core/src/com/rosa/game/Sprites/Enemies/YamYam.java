@@ -50,7 +50,7 @@ public class YamYam extends Enemy {
         //AI target:
         entity = new B2dSteeringEntity(b2body, 10);
 
-        Arrive<Vector2> arriveSB = new Arrive<Vector2>(entity, Player.target)
+        Arrive<Vector2> arriveSB = new Arrive<Vector2>(entity)
                 .setTimeToTarget(0.01f)
                 .setArrivalTolerance(2f)
                 .setDecelerationRadius(10);
@@ -70,14 +70,13 @@ public class YamYam extends Enemy {
 
                 if (getX() != 0) {
                     Vector2 vel = Player.target.getBody().getLinearVelocity();
-                    Player.target.getBody().setLinearVelocity((getX() * 10), vel.y);
+                    entity.getBody().setLinearVelocity((getX() * 0.3f), vel.y);
                 }
 
                 if (getY() != 0) {
                     Vector2 vel = Player.target.getBody().getLinearVelocity();
-                    Player.target.getBody().setLinearVelocity(vel.x, (getY() * 10));
+                    entity.getBody().setLinearVelocity(vel.x, (getY() * 0.3f));
                 }
-
                 entity.update(dt);
 
 //                b2body.setLinearVelocity(velocity);
@@ -112,14 +111,6 @@ public class YamYam extends Enemy {
             }
         }
     }
-
-
-
-
-
-
-
-
 
     @Override
     protected void defineEnemy() {
