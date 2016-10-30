@@ -1,5 +1,7 @@
 package com.rosa.game.Sprites.Bob;
 
+import com.badlogic.gdx.ai.steer.behaviors.Arrive;
+import com.badlogic.gdx.ai.utils.Location;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -36,16 +38,14 @@ public class Player extends Sprite {
     private Array<Bullet> bullets;
     public static float BOB_X_POSITION;
     public static float BOB_Y_POSITION;
-    B2dSteeringEntity target;
+    public static Location<Vector2> playerLocation;
+    public static B2dSteeringEntity target;
+
 
     public Player(World world, PlayScreen screen) {
         super(screen.getAtlas().findRegion("keen"));
         this.world = world;
         this.screen = screen;
-
-        //AI target:
-        target = new B2dSteeringEntity(b2body,30);
-
         currentState = State.STANDING;
         previousState = State.STANDING;
         stateTimer = 0;
@@ -70,6 +70,9 @@ public class Player extends Sprite {
         setRegion(playerStand);
 
         bullets = new Array<Bullet>();
+
+        //AI target:
+        target = new B2dSteeringEntity(b2body, 10);
     }
 
     public void update(float dt) {
@@ -162,6 +165,15 @@ public class Player extends Sprite {
 
         fixtureDef.shape = shape;
         b2body.createFixture(fixtureDef);
+
+/*
+        //AI target:
+        target = new B2dSteeringEntity(b2body,10);
+
+        Arrive<Vector2> arrive = new Arrive<Vector2>(target).setTimeToTarget(0.01f).setArrivalTolerance(2f).setDecelerationRadius(10);
+        target.setBehavior(arrive);
+*/
+
     }
 
     public void jump() {

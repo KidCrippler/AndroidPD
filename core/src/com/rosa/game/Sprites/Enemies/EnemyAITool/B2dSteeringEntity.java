@@ -9,18 +9,17 @@ import com.badlogic.gdx.physics.box2d.Body;
 
 public class B2dSteeringEntity implements Steerable<Vector2> {
 
+
     Body body;
     boolean tagged;
     float boundingRadius;
-    float maxLinearSpeed;
-    float maxLinearAcceleration;
-    float maxAngularSpeed;
-    float maxAngularAcceleration;
+    float maxLinearSpeed, maxLinearAcceleration;
+    float maxAngularSpeed, maxAngularAcceleration;
 
     SteeringBehavior<Vector2> behavior;
     SteeringAcceleration<Vector2> steeringOutput;
 
-    public B2dSteeringEntity(Body body,float boundingRadius){
+    public B2dSteeringEntity(Body body, float boundingRadius) {
         this.body = body;
         this.boundingRadius = boundingRadius;
 
@@ -30,35 +29,32 @@ public class B2dSteeringEntity implements Steerable<Vector2> {
         this.maxAngularAcceleration = 5;
 
         this.tagged = false;
+
         this.steeringOutput = new SteeringAcceleration<Vector2>(new Vector2());
-
-
-        //TODO: fix this body for entity and player.
         this.body.setUserData(this);
-
     }
 
-    public void update(float dt){
-        if(behavior != null){
+    public void update(float dt) {
+        if (behavior != null) {
             behavior.calculateSteering(steeringOutput);
             applySteering(dt);
         }
     }
 
-    private void applySteering(float dt){
+    private void applySteering(float dt) {
 
         boolean anyAccelerations = false;
 
-        if(!steeringOutput.linear.isZero()){
+        if (!steeringOutput.linear.isZero()) {
             Vector2 force = steeringOutput.linear.scl(dt);
-            body.applyForceToCenter(force,true);
+            body.applyForceToCenter(force, true);
             anyAccelerations = true;
         }
 
-        if (anyAccelerations){
+        if (anyAccelerations) {
             Vector2 velocity = body.getLinearVelocity();
             float currentSpeedSqure = velocity.len2();
-            if (currentSpeedSqure > maxLinearSpeed * maxLinearSpeed){
+            if (currentSpeedSqure > maxLinearSpeed * maxLinearSpeed) {
                 body.setLinearVelocity(velocity.scl(maxLinearSpeed / (float) Math.sqrt(currentSpeedSqure)));
             }
         }
@@ -72,7 +68,7 @@ public class B2dSteeringEntity implements Steerable<Vector2> {
 
     @Override
     public float getAngularVelocity() {
-        return  body.getAngularVelocity();
+        return body.getAngularVelocity();
     }
 
     @Override
@@ -170,19 +166,20 @@ public class B2dSteeringEntity implements Steerable<Vector2> {
         return null;
     }
 
-    public Vector2 newVector(){
+    public Vector2 newVector() {
         return new Vector2();
     }
 
-    public Body getBody(){
+    public Body getBody() {
         return body;
     }
 
-    public void setBehavior(SteeringBehavior<Vector2> behavior){
+    public void setBehavior(SteeringBehavior<Vector2> behavior) {
         this.behavior = behavior;
     }
 
-    public SteeringBehavior<Vector2> getBehavior(){
+    public SteeringBehavior<Vector2> getBehavior() {
         return behavior;
     }
+
 }

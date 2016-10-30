@@ -1,18 +1,11 @@
 package com.rosa.game.Sprites.Enemies;
 
-import com.badlogic.gdx.ai.steer.Steerable;
-import com.badlogic.gdx.ai.steer.SteeringAcceleration;
-import com.badlogic.gdx.ai.steer.SteeringBehavior;
 import com.badlogic.gdx.ai.steer.behaviors.*;
-import com.badlogic.gdx.ai.utils.Location;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
@@ -36,15 +29,12 @@ public class YamYam extends Enemy {
     private boolean runningRight;
     private long lastShot;
     private SoundPlayer soundPlayer = new SoundPlayer();
-    B2dSteeringEntity entity;
+    public B2dSteeringEntity entity;
 
     public YamYam(PlayScreen screen, float x, float y) {
         super(screen, x, y);
         frames = new Array<TextureRegion>();
         runningRight = true;
-
-        //AI entity:
-        entity = new B2dSteeringEntity(b2body,30);
 
 
         for (int i = 0; i < 2; i++)
@@ -57,11 +47,14 @@ public class YamYam extends Enemy {
         destroyed = false;
         enemyFirePowerLasArray = new Array<EnemyFirePowerLas>();
 
+        //AI target:
+        entity = new B2dSteeringEntity(b2body, 10);
 
-
-//        Wander w = new Wander(this).setEnabled(true).setWanderRadius(2f).setWanderRate(MathUtils.PI2 * 4);;
-
-
+        Arrive<Vector2> arriveSB = new Arrive<Vector2>(entity, Player.target)
+                .setTimeToTarget(0.01f)
+                .setArrivalTolerance(2f)
+                .setDecelerationRadius(10);
+        entity.setBehavior(arriveSB);
     }
 
     public void update(float dt) {
@@ -72,9 +65,22 @@ public class YamYam extends Enemy {
             setRegion(new TextureRegion(screen.getAtlas().findRegion("keen"), 11, 0, 22, 12));
             stateTime = 0;
         } else {
-            if (!destroyed) if (b2body.isActive()) {
-//                b2body.setLinearVelocity(velocity);
+            if (!destroyed && b2body.isActive()) {
+                //TODO: implement gdx-ai movement
 
+                if (getX() != 0) {
+                    Vector2 vel = Player.target.getBody().getLinearVelocity();
+                    Player.target.getBody().setLinearVelocity((getX() * 10), vel.y);
+                }
+
+                if (getY() != 0) {
+                    Vector2 vel = Player.target.getBody().getLinearVelocity();
+                    Player.target.getBody().setLinearVelocity(vel.x, (getY() * 10));
+                }
+
+                entity.update(dt);
+
+//                b2body.setLinearVelocity(velocity);
 
                 //Sets the position where the sprite will be drawn:
                 //setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
@@ -103,15 +109,16 @@ public class YamYam extends Enemy {
 //                } else if (b2body.getLinearVelocity().x > 0) {
 //                    runningRight = true;
 //                }
-
-
-                //TODO: implement gdx-ai movement.
-
-
             }
-
         }
     }
+
+
+
+
+
+
+
 
 
     @Override
@@ -144,8 +151,9 @@ public class YamYam extends Enemy {
                 Application.GROUND_BIT |
                 Application.BULLET_BIT;
 
-
         b2body.createFixture(fixtureDef).setUserData(this);
+
+
     }
 
     public void draw(Batch batch) {

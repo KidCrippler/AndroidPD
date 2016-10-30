@@ -3,6 +3,7 @@ package com.rosa.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.ai.steer.behaviors.Arrive;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -18,6 +19,7 @@ import com.rosa.game.Application;
 import com.rosa.game.Scenes.Hud;
 import com.rosa.game.Sprites.Enemies.Enemy;
 import com.rosa.game.Sprites.Bob.Player;
+import com.rosa.game.Sprites.Enemies.EnemyAITool.B2dSteeringEntity;
 import com.rosa.game.Tools.B2WorldCreator;
 import com.rosa.game.Tools.Controller;
 import com.rosa.game.Tools.WorldContactListener;
@@ -26,7 +28,7 @@ public class PlayScreen implements Screen {
 
     private Application game;
     private TextureAtlas atlas;
-    private OrthographicCamera gamecam;
+    private OrthographicCamera orthographicCamera;
     private Viewport gamePort;
     private Hud hud;
     private TiledMap map;
@@ -41,17 +43,15 @@ public class PlayScreen implements Screen {
 
         atlas = new TextureAtlas("keen_one.pack");
         this.game = game;
-        gamecam = new OrthographicCamera();
-        gamePort = new FitViewport(Application.V_WIDTH / Application.PPM, Application.V_HEIGHT / Application.PPM, gamecam);
-
+        orthographicCamera = new OrthographicCamera();
+        gamePort = new FitViewport(Application.V_WIDTH / Application.PPM, Application.V_HEIGHT / Application.PPM, orthographicCamera);
         hud = new Hud(game.batch);
-
         TmxMapLoader mapLoader = new TmxMapLoader();
         map = mapLoader.load("tmap.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1 / Application.PPM);
 
         //GameCam:
-        gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
+        orthographicCamera.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 
         world = new World(new Vector2(0, -10), true);
 
@@ -60,9 +60,7 @@ public class PlayScreen implements Screen {
 
         //Start the player:
         player = new Player(world, this);
-
         world.setContactListener(new WorldContactListener());
-
         controller = new Controller();
     }
 
@@ -93,8 +91,10 @@ public class PlayScreen implements Screen {
             player.jump();
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2)
             player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
+
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2)
             player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
+
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE))
             player.fire();
     }
@@ -121,11 +121,11 @@ public class PlayScreen implements Screen {
         }
 
         if ((player.b2body.getPosition().x > 2) && (player.b2body.getPosition().x < 36.5)) {
-            gamecam.position.x = player.b2body.getPosition().x;
+            orthographicCamera.position.x = player.b2body.getPosition().x;
         }
 
-        gamecam.update();
-        renderer.setView(gamecam);
+        orthographicCamera.update();
+        renderer.setView(orthographicCamera);
     }
 
 
@@ -141,9 +141,9 @@ public class PlayScreen implements Screen {
         renderer.render();
 
         //debug line:
-        b2dr.render(world, gamecam.combined);
+        b2dr.render(world, orthographicCamera.combined);
 
-        game.batch.setProjectionMatrix(gamecam.combined);
+        game.batch.setProjectionMatrix(orthographicCamera.combined);
         game.batch.begin();
         player.draw(game.batch);
 

@@ -48,7 +48,7 @@ public class WorldContactListener implements ContactListener {
             //      *       *       *       ENEMY-AI     *       *       *       //
 
 
-            case Application.ENEMY_AI | Application.OBJECT_BIT:
+/*            case Application.ENEMY_AI | Application.OBJECT_BIT:
                 if (fixA.getFilterData().categoryBits == Application.ENEMY_AI) {
                     ((YamYam) fixA.getUserData()).jump();
                     System.out.println("jj");
@@ -56,7 +56,7 @@ public class WorldContactListener implements ContactListener {
                     ((YamYam) fixB.getUserData()).jump();
                     System.out.println("jj");
                 }
-                break;
+                break;*/
 
             case Application.ENEMY_AI | Application.ENEMY_AI:
                 ((Enemy) fixA.getUserData()).hitByEnemy((Enemy) fixB.getUserData());
