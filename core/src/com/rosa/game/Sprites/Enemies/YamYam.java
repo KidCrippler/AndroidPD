@@ -29,7 +29,7 @@ public class YamYam extends Enemy {
     private boolean runningRight;
     private long lastShot;
     private SoundPlayer soundPlayer = new SoundPlayer();
-    public B2dSteeringEntity entity;
+    public B2dSteeringEntity entity,target;
 
     public YamYam(PlayScreen screen, float x, float y) {
         super(screen, x, y);
@@ -49,8 +49,9 @@ public class YamYam extends Enemy {
 
         //AI target:
         entity = new B2dSteeringEntity(b2body, 10);
+        target = new B2dSteeringEntity(b2body, 10);
 
-        Arrive<Vector2> arriveSB = new Arrive<Vector2>(entity)
+        Arrive<Vector2> arriveSB = new Arrive<Vector2>(entity,target)
                 .setTimeToTarget(0.01f)
                 .setArrivalTolerance(2f)
                 .setDecelerationRadius(10);
