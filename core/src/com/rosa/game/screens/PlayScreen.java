@@ -113,10 +113,10 @@ public class PlayScreen implements Screen {
         for (Enemy enemy : creator.getEnemies()) {
             enemy.update(dt);
 
-            if (((player.getX() - (180 / Application.PPM)) <= enemy.getX()) && ((player.getX() + (180 / Application.PPM)) >= enemy.getX())) {
+            if (((player.getX() - (380 / Application.PPM)) <= enemy.getX()) && ((player.getX() + (380 / Application.PPM)) >= enemy.getX())) {
                 enemy.b2body.setActive(true);
             } else {
-                enemy.b2body.setActive(false);
+                enemy.b2body.setActive(true);
             }
         }
 

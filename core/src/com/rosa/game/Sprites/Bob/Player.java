@@ -38,7 +38,6 @@ public class Player extends Sprite {
     private Array<Bullet> bullets;
     public static float BOB_X_POSITION;
     public static float BOB_Y_POSITION;
-    public static Location<Vector2> playerLocation;
     public static B2dSteeringEntity target;
 
 
@@ -50,6 +49,11 @@ public class Player extends Sprite {
         previousState = State.STANDING;
         stateTimer = 0;
         runningRight = true;
+
+
+
+
+        //
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
