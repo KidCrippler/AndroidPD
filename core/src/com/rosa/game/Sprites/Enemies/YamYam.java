@@ -67,48 +67,43 @@ public class YamYam extends Enemy {
             stateTime = 0;
         } else {
             if (!destroyed && b2body.isActive()) {
-                //TODO: implement gdx-ai movement
+                //FIXME: implement gdx-ai movement
 
                 if (getX() != 0) {
                     Vector2 vel = Player.target.getBody().getLinearVelocity();
-                    target.getBody().setLinearVelocity((getX() * 0.1f), vel.y);
+                    target.getBody().setLinearVelocity((vel.x / 0.4f),vel.y);
+//                    target.getBody().setLinearVelocity((getX() * 0.5f), vel.y);
                 }
 
                 if (getY() != 0) {
                     Vector2 vel = Player.target.getBody().getLinearVelocity();
-                    target.getBody().setLinearVelocity(vel.x, (getY() * 0.1f));
+                    target.getBody().setLinearVelocity(vel.x,vel.y);
+//                    target.getBody().setLinearVelocity(vel.x, (getY() * 0.23f));
                 }
+
                 entity.update(dt);
 
-//                b2body.setLinearVelocity(velocity);
-
                 //Sets the position where the sprite will be drawn:
-                //setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
-//
-//                setRegion(walkAnimation.getKeyFrame(stateTime, true));
-//                //Follow you:
-//                if (Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x) {
-//                    b2body.setLinearVelocity((float) 1.6, -2);
-//                } else if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x) {
-//                    b2body.setLinearVelocity((float) -1.6, -2);
-//                } else {
-//                    b2body.setLinearVelocity((float) 0, -2);
-//                }
-//                //Shooting you:
-//                fire();
-//
-//                for (EnemyFirePowerLas enemyFirePowerLas : enemyFirePowerLasArray) {
-//                    enemyFirePowerLas.update(dt);
-//                    if (enemyFirePowerLas.isDestroyed()) {
-//                        enemyFirePowerLasArray.removeValue(enemyFirePowerLas, true);
-//                    }
-//                }
-//                //looking at you:
-//                if (b2body.getLinearVelocity().x < 0) {
-//                    runningRight = false;
-//                } else if (b2body.getLinearVelocity().x > 0) {
-//                    runningRight = true;
-//                }
+                setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
+                setRegion(walkAnimation.getKeyFrame(stateTime, true));
+
+                //Shooting you:
+                //fire();
+
+                for (EnemyFirePowerLas enemyFirePowerLas : enemyFirePowerLasArray) {
+                    enemyFirePowerLas.update(dt);
+                    if (enemyFirePowerLas.isDestroyed()) {
+                        enemyFirePowerLasArray.removeValue(enemyFirePowerLas, true);
+                    }
+                }
+
+                //TODO: Fix steering at you and shooting
+                //looking at you:
+                if (b2body.getLinearVelocity().x < 0) {
+                    runningRight = false;
+                } else if (b2body.getLinearVelocity().x > 0) {
+                    runningRight = true;
+                }
             }
         }
     }
@@ -118,11 +113,13 @@ public class YamYam extends Enemy {
         FixtureDef fixtureDef = new FixtureDef();
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(getX(), getY());
+
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bodyDef);
-        PolygonShape head = new PolygonShape();
 
+        PolygonShape head = new PolygonShape();
         Vector2[] vector2s = new Vector2[4];
+
         vector2s[0] = new Vector2(-5, 34).scl(1 / Application.PPM);
         vector2s[1] = new Vector2(5, 34).scl(1 / Application.PPM);
         vector2s[2] = new Vector2(-3, 3).scl(1 / Application.PPM);
@@ -149,8 +146,8 @@ public class YamYam extends Enemy {
     }
 
     public void draw(Batch batch) {
-       /* if (!destroyed || stateTime < 1)
-            super.draw(batch);*/
+        if (!destroyed || stateTime < 1)
+            super.draw(batch);
     }
 
     @Override
@@ -183,12 +180,23 @@ public class YamYam extends Enemy {
     }
 
     public void jump() {
-       /* b2body.applyLinearImpulse(new Vector2(0, 50f), b2body.getWorldCenter(), true);
+        /*b2body.applyLinearImpulse(new Vector2(0, 50f), b2body.getWorldCenter(), true);
         soundPlayer.PlaySoundBob(0);
-        currentState = State.JUMPING;*/
+        currentState = Player.State.JUMPING;*/
     }
 
     public boolean isDestroyed() {
         return destroyed;
     }
 }
+
+
+
+//                //Follow you:
+//                if (Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x) {
+//                    b2body.setLinearVelocity((float) 1.6, -2);
+//                } else if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x) {
+//                    b2body.setLinearVelocity((float) -1.6, -2);
+//                } else {
+//                    b2body.setLinearVelocity((float) 0, -2);
+//                }

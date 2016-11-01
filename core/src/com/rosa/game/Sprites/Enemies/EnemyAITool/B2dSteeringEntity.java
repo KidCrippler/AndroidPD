@@ -52,12 +52,21 @@ public class B2dSteeringEntity implements Steerable<Vector2> {
             anyAccelerations = true;
         }
 
+        if(steeringOutput.angular != 0){
+            body.applyTorque(steeringOutput.angular = dt,true);
+            anyAccelerations = true;
+        }
+
         if (anyAccelerations) {
             Vector2 velocity = body.getLinearVelocity();
             float currentSpeedSqure = velocity.len2();
             if (currentSpeedSqure > maxLinearSpeed * maxLinearSpeed) {
                 body.setLinearVelocity(velocity.scl(maxLinearSpeed / (float) Math.sqrt(currentSpeedSqure)));
             }
+        }
+
+        if (body.getAngularVelocity() > maxAngularSpeed){
+            body.setAngularVelocity(maxAngularSpeed);
         }
     }
 
