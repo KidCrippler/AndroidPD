@@ -71,12 +71,12 @@ public class YamYam extends Enemy {
 
                 if (getX() != 0) {
                     Vector2 vel = Player.target.getBody().getLinearVelocity();
-                    entity.getBody().setLinearVelocity((getX() * 0.1f), vel.y);
+                    target.getBody().setLinearVelocity((getX() * 0.1f), vel.y);
                 }
 
                 if (getY() != 0) {
                     Vector2 vel = Player.target.getBody().getLinearVelocity();
-                    entity.getBody().setLinearVelocity(vel.x, (getY() * 0.1f));
+                    target.getBody().setLinearVelocity(vel.x, (getY() * 0.1f));
                 }
                 entity.update(dt);
 
