@@ -99,16 +99,22 @@ public class YamYam extends Enemy {
 
 
                 //Follow you:
-                b2body.setLinearVelocity((float) 0, -2);
+                b2body.setLinearVelocity((float) 0, 0);
 
                 if (Player.BOB_X_POSITION - 0.4 == b2body.getPosition().x || Player.BOB_X_POSITION + 0.4 == b2body.getPosition().x)
                     b2body.setLinearVelocity((float) 0, 0);
 
                 if (Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x)
-                    b2body.setLinearVelocity((float) 1.6, -2);
+                    b2body.setLinearVelocity((float) 1.6, 0);
 
                 if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x)
-                    b2body.setLinearVelocity((float) -1.6, -2);
+                    b2body.setLinearVelocity((float) -1.6, 0);
+
+                if (PlayScreen.moveY  >= b2body.getPosition().x)
+                    b2body.setLinearVelocity((float) 0, 2);
+
+
+
 
 
                 PlayScreen.moveY = 0;
