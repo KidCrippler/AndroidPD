@@ -3,7 +3,9 @@ package com.rosa.game.Sprites.Enemies.EnemyAITool;
 import com.badlogic.gdx.ai.steer.Steerable;
 import com.badlogic.gdx.ai.steer.SteeringAcceleration;
 import com.badlogic.gdx.ai.steer.SteeringBehavior;
+import com.badlogic.gdx.ai.steer.behaviors.Wander;
 import com.badlogic.gdx.ai.utils.Location;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.rosa.game.Sprites.Enemies.EnemyAITool.SteeringUtils;
@@ -38,9 +40,15 @@ public class B2dSteeringEntity implements Steerable<Vector2> {
     public void update(float dt) {
         if (behavior != null) {
             behavior.calculateSteering(steeringOutput);
-            applySteering(dt);
+            //applySteering(dt);
         }
     }
+
+
+
+
+
+
 
     private void applySteering(float dt) {
 

@@ -4,6 +4,7 @@ import com.badlogic.gdx.ai.steer.behaviors.*;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -12,8 +13,11 @@ import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Bob.Player;
 import com.rosa.game.Sprites.Enemies.EnemyAITool.B2dSteeringEntity;
+import com.rosa.game.Sprites.Enemies.EnemyAITool.SteeringAgent;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
+
+import jdk.nashorn.internal.ir.JumpStatement;
 
 public class YamYam extends Enemy {
 
@@ -29,7 +33,11 @@ public class YamYam extends Enemy {
     private boolean runningRight;
     private long lastShot;
     private SoundPlayer soundPlayer = new SoundPlayer();
-    public B2dSteeringEntity entity,target;
+    public B2dSteeringEntity entity, target;
+
+
+    private Wander wanderBehavior;
+
 
     public YamYam(PlayScreen screen, float x, float y) {
         super(screen, x, y);
@@ -51,12 +59,16 @@ public class YamYam extends Enemy {
         entity = new B2dSteeringEntity(b2body, 10);
         target = new B2dSteeringEntity(b2body, 10);
 
-        Arrive<Vector2> arriveSB = new Arrive<Vector2>(entity,target)
+        Arrive<Vector2> arriveSB = new Arrive<Vector2>(entity, target)
                 .setTimeToTarget(0.01f)
                 .setArrivalTolerance(2f)
                 .setDecelerationRadius(10);
         entity.setBehavior(arriveSB);
+        wanderBehavior = new Wander(this.entity).setEnabled(true).setWanderRadius(2f).setWanderRate(MathUtils.PI2 * 4);
+
+
     }
+
 
     public void update(float dt) {
         stateTime += dt;
@@ -67,15 +79,37 @@ public class YamYam extends Enemy {
             stateTime = 0;
         } else {
             if (!destroyed && b2body.isActive()) {
-                if (PlayScreen.moveX != 0) {
+
+//                entity.getBody().setAngularVelocity(wanderBehavior.getWanderOffset());
+
+
+                /*if (PlayScreen.moveX != 0) {
                     Vector2 vel = Player.target.getBody().getLinearVelocity();
-                    target.getBody().setLinearVelocity((PlayScreen.moveX * 7f), vel.y);
+                    target.getBody().setLinearVelocity((Player.BOB_X_POSITION * 7f), vel.y);
                 }
 
                 if (PlayScreen.moveY != 0) {
                     Vector2 vel = Player.target.getBody().getLinearVelocity();
-                    target.getBody().setLinearVelocity(vel.x, (PlayScreen.moveY * 0.7f));
+                    target.getBody().setLinearVelocity(vel.x, (Player.BOB_Y_POSITION * 0.7f));
                 }
+
+
+
+                */
+
+
+                //Follow you:
+                b2body.setLinearVelocity((float) 0, -2);
+
+                if (Player.BOB_X_POSITION - 0.4 == b2body.getPosition().x || Player.BOB_X_POSITION + 0.4 == b2body.getPosition().x)
+                    b2body.setLinearVelocity((float) 0, 0);
+
+                if (Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x)
+                    b2body.setLinearVelocity((float) 1.6, -2);
+
+                if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x)
+                    b2body.setLinearVelocity((float) -1.6, -2);
+
 
                 PlayScreen.moveY = 0;
                 entity.update(dt);
@@ -114,8 +148,6 @@ public class YamYam extends Enemy {
 
         PolygonShape head = new PolygonShape();
         Vector2[] vector2s = new Vector2[4];
-
-
 
 
         vector2s[0] = new Vector2(-5, 34).scl(1 / Application.PPM);
@@ -184,8 +216,9 @@ public class YamYam extends Enemy {
     public boolean isDestroyed() {
         return destroyed;
     }
-}
 
+
+}
 
 
 //                //Follow you:
