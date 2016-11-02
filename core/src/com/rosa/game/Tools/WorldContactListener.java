@@ -48,15 +48,30 @@ public class WorldContactListener implements ContactListener {
             //      *       *       *       ENEMY-AI     *       *       *       //
 
 
-/*            case Application.ENEMY_AI | Application.OBJECT_BIT:
+            case Application.ENEMY_AI | Application.OBJECT_BIT:
                 if (fixA.getFilterData().categoryBits == Application.ENEMY_AI) {
-                    ((YamYam) fixA.getUserData()).jump();
-                    System.out.println("jj");
+//                    ((YamYam) fixA.getUserData()).jump();
+
+                    if (YamYam.wallIntact = true) {
+                        YamYam.wallIntact = false;
+                    } else {
+                        YamYam.wallIntact = true;
+                    }
+
+                    System.out.println("wall interact.");
                 } else {
-                    ((YamYam) fixB.getUserData()).jump();
-                    System.out.println("jj");
+
+//                    ((YamYam) fixB.getUserData()).jump();
+
+                    if (YamYam.wallIntact = true) {
+                        YamYam.wallIntact = false;
+                    } else {
+                        YamYam.wallIntact = true;
+                    }
+
+                    System.out.println("wall interact.");
                 }
-                break;*/
+                break;
 
             case Application.ENEMY_AI | Application.ENEMY_AI:
                 ((Enemy) fixA.getUserData()).hitByEnemy((Enemy) fixB.getUserData());
