@@ -67,29 +67,24 @@ public class YamYam extends Enemy {
             stateTime = 0;
         } else {
             if (!destroyed && b2body.isActive()) {
-                //FIXME: implement gdx-ai movement
-
-                if (getX() != 0) {
+                if (PlayScreen.moveX != 0) {
                     Vector2 vel = Player.target.getBody().getLinearVelocity();
-                    target.getBody().setLinearVelocity((vel.x / 0.4f),vel.y);
-//                    target.getBody().setLinearVelocity((getX() * 0.5f), vel.y);
+                    target.getBody().setLinearVelocity((PlayScreen.moveX * 7f), vel.y);
                 }
 
-                if (getY() != 0) {
+                if (PlayScreen.moveY != 0) {
                     Vector2 vel = Player.target.getBody().getLinearVelocity();
-                    target.getBody().setLinearVelocity(vel.x,vel.y);
-//                    target.getBody().setLinearVelocity(vel.x, (getY() * 0.23f));
+                    target.getBody().setLinearVelocity(vel.x, (PlayScreen.moveY * 0.7f));
                 }
 
+                PlayScreen.moveY = 0;
                 entity.update(dt);
 
-                //Sets the position where the sprite will be drawn:
+                //Draw:
                 setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
                 setRegion(walkAnimation.getKeyFrame(stateTime, true));
 
-                //Shooting you:
                 //fire();
-
                 for (EnemyFirePowerLas enemyFirePowerLas : enemyFirePowerLasArray) {
                     enemyFirePowerLas.update(dt);
                     if (enemyFirePowerLas.isDestroyed()) {
@@ -120,12 +115,14 @@ public class YamYam extends Enemy {
         PolygonShape head = new PolygonShape();
         Vector2[] vector2s = new Vector2[4];
 
+
+
+
         vector2s[0] = new Vector2(-5, 34).scl(1 / Application.PPM);
         vector2s[1] = new Vector2(5, 34).scl(1 / Application.PPM);
         vector2s[2] = new Vector2(-3, 3).scl(1 / Application.PPM);
         vector2s[3] = new Vector2(3, 3).scl(1 / Application.PPM);
         head.set(vector2s);
-
 
         fixtureDef.shape = head;
         fixtureDef.restitution = 0.5f;
@@ -141,7 +138,6 @@ public class YamYam extends Enemy {
                 Application.BULLET_BIT;
 
         b2body.createFixture(fixtureDef).setUserData(this);
-
 
     }
 

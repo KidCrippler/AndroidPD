@@ -96,7 +96,6 @@ public class B2WorldCreator {
 
         yamYams = new Array<YamYam>();
 
-
         for (MapObject object : map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             yamYams.add(new YamYam(screen, rect.getX() / Application.PPM, rect.getY() / Application.PPM));
@@ -117,7 +116,6 @@ public class B2WorldCreator {
             bun.update(dt);
             if (bun.isDestroyed()) {
                 buns.removeValue(bun, true);
-                System.out.println("Bun out of list.");
             }
         }
         //Remove yamYams from memory:
@@ -125,7 +123,6 @@ public class B2WorldCreator {
             yam.update(dt);
             if (yam.isDestroyed()) {
                 yamYams.removeValue(yam, true);
-                System.out.println("yum out of list.");
             }
         }
     }

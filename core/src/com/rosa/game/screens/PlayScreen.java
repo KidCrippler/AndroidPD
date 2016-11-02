@@ -37,6 +37,9 @@ public class PlayScreen implements Screen {
     private Box2DDebugRenderer b2dr;
     private B2WorldCreator creator;
 
+    public static float moveX;
+    public static float moveY;
+
 
     public PlayScreen(Application game) {
 
@@ -92,12 +95,19 @@ public class PlayScreen implements Screen {
 
 
     public void handleInput() {
+        moveX = 0;
+
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
             player.jump();
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2)
-            player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2)
-            player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
+
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2){
+            moveX = 0.1f;
+            player.b2body.applyLinearImpulse(new Vector2(moveX, 0), player.b2body.getWorldCenter(), true);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2){
+            moveX = -0.1f;
+            player.b2body.applyLinearImpulse(new Vector2(moveX, 0), player.b2body.getWorldCenter(), true);
+        }
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE))
             player.fire();
     }

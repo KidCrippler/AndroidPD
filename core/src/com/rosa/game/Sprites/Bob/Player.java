@@ -176,8 +176,12 @@ public class Player extends Sprite {
     }
 
     public void jump() {
+            PlayScreen.moveY = 0;
+
         if (currentState != State.JUMPING) {
-            b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
+            PlayScreen.moveY = 4f;
+
+            b2body.applyLinearImpulse(new Vector2(0, PlayScreen.moveY), b2body.getWorldCenter(), true);
             soundPlayer.PlaySoundBob(0);
             currentState = State.JUMPING;
         }
