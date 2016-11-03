@@ -52,22 +52,22 @@ public class WorldContactListener implements ContactListener {
                 if (fixA.getFilterData().categoryBits == Application.ENEMY_AI) {
 //                    ((YamYam) fixA.getUserData()).jump();
 
-                    if (YamYam.wallIntact = true) {
-                        YamYam.wallIntact = false;
-                    } else {
+//                    if (YamYam.wallIntact = true) {
+//                        YamYam.wallIntact = false;
+//                    } else {
                         YamYam.wallIntact = true;
-                    }
+//                    }
 
                     System.out.println("wall interact.");
                 } else {
 
 //                    ((YamYam) fixB.getUserData()).jump();
 
-                    if (YamYam.wallIntact = true) {
-                        YamYam.wallIntact = false;
-                    } else {
+//                    if (YamYam.wallIntact = true) {
+//                        YamYam.wallIntact = false;
+//                    } else {
                         YamYam.wallIntact = true;
-                    }
+//                    }
 
                     System.out.println("wall interact.");
                 }
