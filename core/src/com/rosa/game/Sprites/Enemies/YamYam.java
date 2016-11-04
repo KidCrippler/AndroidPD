@@ -17,6 +17,7 @@ import com.rosa.game.Sprites.Enemies.EnemyAITool.B2dSteeringEntity;
 import com.rosa.game.Sprites.Enemies.EnemyAITool.SteeringAgent;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
+import com.sun.javafx.geom.Vec2d;
 
 public class YamYam extends Enemy {
 
@@ -70,6 +71,7 @@ public class YamYam extends Enemy {
 
 
     }
+
 
 
     public void update(float dt) {
