@@ -21,6 +21,7 @@ public class Application extends Game {
     public static final short ITEM_BIT = 256;
     public static final short BULLET_BIT = 512;
     public static final short ENEMY_FIREPOWER = 1024;
+    public static final short RAY = 2048;
 
     public static SpriteBatch batch;
 

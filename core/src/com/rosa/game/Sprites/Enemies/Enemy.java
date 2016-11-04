@@ -12,6 +12,7 @@ public abstract class Enemy extends Sprite {
     protected World world;
     protected PlayScreen screen;
     public Body b2body;
+    public Body b2bodyRay;
     public Vector2 velocity;
 
     public Enemy(PlayScreen screen, float x, float y) {

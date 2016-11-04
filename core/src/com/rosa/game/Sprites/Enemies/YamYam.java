@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
@@ -72,8 +73,6 @@ public class YamYam extends Enemy {
 
     }
 
-
-
     public void update(float dt) {
         stateTime += dt;
         if (setToDestroy && !destroyed) {
@@ -81,6 +80,7 @@ public class YamYam extends Enemy {
             destroyed = true;
             setRegion(new TextureRegion(screen.getAtlas().findRegion("keen"), 11, 0, 22, 12));
             stateTime = 0;
+
         } else {
             if (!destroyed && b2body.isActive()) {
 
@@ -159,6 +159,7 @@ public class YamYam extends Enemy {
 
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bodyDef);
+        b2bodyRay = world.createBody(bodyDef);
 
         PolygonShape head = new PolygonShape();
         Vector2[] vector2s = new Vector2[4];
@@ -184,6 +185,19 @@ public class YamYam extends Enemy {
                 Application.BULLET_BIT;
 
         b2body.createFixture(fixtureDef).setUserData(this);
+
+
+        //RAY:
+        FixtureDef fixtureDefRay = new FixtureDef();
+        CircleShape shape = new CircleShape();
+        shape.setRadius(6 / Application.PPM);
+        fixtureDefRay.filter.categoryBits = Application.RAY;
+        fixtureDefRay.filter.maskBits =
+                Application.BOB_BIT;
+
+        fixtureDefRay.shape = shape;
+
+        b2bodyRay.createFixture(fixtureDefRay).setUserData(this);
 
     }
 
