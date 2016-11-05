@@ -157,7 +157,7 @@ public class Player extends Sprite {
                         Application.BRICK_BIT |
                         Application.ENEMY_BIT |
                         Application.ENEMY_AI |
-                        Application.OBJECT_BIT |
+                        Application.WALL_BIT |
                         Application.ENEMY_HEAD_BIT |
                         Application.ITEM_BIT |
                         Application.BULLET_BIT;

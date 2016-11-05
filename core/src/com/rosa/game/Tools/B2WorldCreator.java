@@ -1,11 +1,9 @@
 package com.rosa.game.Tools;
 
-import com.badlogic.gdx.ai.steer.behaviors.Arrive;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -69,7 +67,7 @@ public class B2WorldCreator {
 
             shape.setAsBox(rect.getWidth() / 2 / Application.PPM, rect.getHeight() / 2 / Application.PPM);
             fixtureDef.shape = shape;
-            fixtureDef.filter.categoryBits = Application.OBJECT_BIT;
+            fixtureDef.filter.categoryBits = Application.WALL_BIT;
             body.createFixture(fixtureDef);
         }
 

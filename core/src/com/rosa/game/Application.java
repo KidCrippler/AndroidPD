@@ -15,7 +15,7 @@ public class Application extends Game {
     public static final short BRICK_BIT = 4;
     public static final short COIN_BIT = 8;
     public static final short ENEMY_AI = 16;
-    public static final short OBJECT_BIT = 32;
+    public static final short WALL_BIT = 32;
     public static final short ENEMY_BIT = 64;
     public static final short ENEMY_HEAD_BIT = 128;
     public static final short ITEM_BIT = 256;

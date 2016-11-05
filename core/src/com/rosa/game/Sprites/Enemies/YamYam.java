@@ -53,7 +53,6 @@ public class YamYam extends Enemy {
         stateTime += dt;
         if (setToDestroy && !destroyed) {
             world.destroyBody(b2body);
-            world.destroyBody(b2bodyRay);
             destroyed = true;
             setRegion(new TextureRegion(screen.getAtlas().findRegion("keen"), 11, 0, 22, 12));
             stateTime = 0;
@@ -64,8 +63,6 @@ public class YamYam extends Enemy {
                 if (!wallIntact || wallIntact) {
 
                     b2body.setLinearVelocity(0, 0);
-                    b2bodyRay.setLinearVelocity(0, 0);
-
 
 
                     if (Player.BOB_X_POSITION - 0.4 == b2body.getPosition().x || Player.BOB_X_POSITION + 0.4 == b2body.getPosition().x)
@@ -78,9 +75,8 @@ public class YamYam extends Enemy {
                         b2body.setLinearVelocity(-1.5f, 0);
 
                     if (PlayScreen.moveY >= b2body.getPosition().x)
-                        b2body.setLinearVelocity( 0, 2);
+                        b2body.setLinearVelocity(0, 2);
                     //RAY:
-
 
 
                     //TODO: fix ai jump
@@ -136,7 +132,6 @@ public class YamYam extends Enemy {
 
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bodyDef);
-        b2bodyRay = world.createBody(bodyDef);
 
         PolygonShape head = new PolygonShape();
         Vector2[] vector2s = new Vector2[4];
@@ -148,7 +143,6 @@ public class YamYam extends Enemy {
         head.set(vector2s);
 
         fixtureDef.shape = head;
-        fixtureDef.restitution = 0.5f;
         fixtureDef.filter.categoryBits = Application.ENEMY_AI;
         fixtureDef.filter.maskBits =
                 Application.GROUND_BIT |
@@ -156,7 +150,7 @@ public class YamYam extends Enemy {
                         Application.COIN_BIT |
                         Application.BRICK_BIT |
                         Application.ENEMY_BIT |
-                        Application.OBJECT_BIT |
+                        Application.WALL_BIT |
                         Application.BOB_BIT |
                         Application.GROUND_BIT |
                         Application.BULLET_BIT;
@@ -170,15 +164,7 @@ public class YamYam extends Enemy {
         rayShape.setRadius(6 / Application.PPM);
         fixtureDefRay.filter.categoryBits = Application.RAY;
         fixtureDefRay.filter.maskBits =
-              /*  Application.GROUND_BIT |
-                        Application.ENEMY_AI |
-                        Application.COIN_BIT |
-                        Application.BRICK_BIT |
-                        Application.ENEMY_BIT |
-                        Application.OBJECT_BIT |
-                        Application.BOB_BIT |
-                        Application.GROUND_BIT |
-              */          Application.BULLET_BIT;
+                        Application.WALL_BIT;
 
         fixtureDefRay.shape = rayShape;
         rayShape.setPosition(new Vector2(0.5f, 0 / Application.PPM));

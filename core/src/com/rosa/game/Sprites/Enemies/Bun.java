@@ -68,7 +68,7 @@ public class Bun extends Enemy {
                         Application.COIN_BIT |
                         Application.BRICK_BIT |
                         Application.ENEMY_BIT |
-                        Application.OBJECT_BIT |
+                        Application.WALL_BIT |
                         Application.BOB_BIT |
                         Application.GROUND_BIT |
                         Application.BULLET_BIT;

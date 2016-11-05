@@ -60,7 +60,7 @@ public class EnemyFirePowerLas extends Sprite {
                         Application.COIN_BIT |
                         Application.ENEMY_BIT |
                         Application.GROUND_BIT |
-                        Application.OBJECT_BIT |
+                        Application.WALL_BIT |
                         Application.ENEMY_HEAD_BIT;
 
         fixtureDef.shape = shape;

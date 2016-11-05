@@ -8,7 +8,6 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Bob.Bullet;
 import com.rosa.game.Sprites.Enemies.Enemy;
-import com.rosa.game.Sprites.Enemies.YamYam;
 
 public class WorldContactListener implements ContactListener {
 
@@ -24,7 +23,7 @@ public class WorldContactListener implements ContactListener {
         switch (cDef) {
 
             //      *       *       *       ENEMY     *       *       *       //
-            case Application.ENEMY_BIT | Application.OBJECT_BIT:
+            case Application.ENEMY_BIT | Application.WALL_BIT:
                 if (fixA.getFilterData().categoryBits == Application.ENEMY_BIT)
                     ((Enemy) fixA.getUserData()).reverseVelocity(true, false);
                 else
@@ -48,30 +47,7 @@ public class WorldContactListener implements ContactListener {
             //      *       *       *       ENEMY-AI     *       *       *       //
 
 
-            case Application.ENEMY_AI | Application.OBJECT_BIT:
-                if (fixA.getFilterData().categoryBits == Application.ENEMY_AI) {
-//                    ((YamYam) fixA.getUserData()).jump();
 
-//                    if (YamYam.wallIntact = true) {
-//                        YamYam.wallIntact = false;
-//                    } else {
-                        YamYam.wallIntact = true;
-//                    }
-
-                    System.out.println("wall interact.");
-                } else {
-
-//                    ((YamYam) fixB.getUserData()).jump();
-
-//                    if (YamYam.wallIntact = true) {
-//                        YamYam.wallIntact = false;
-//                    } else {
-                        YamYam.wallIntact = true;
-//                    }
-
-                    System.out.println("wall interact.");
-                }
-                break;
 
             case Application.ENEMY_AI | Application.ENEMY_AI:
                 ((Enemy) fixA.getUserData()).hitByEnemy((Enemy) fixB.getUserData());
@@ -85,7 +61,7 @@ public class WorldContactListener implements ContactListener {
                 else
                     soundPlayer.PlaySoundBob(1);
                 break;
-            case Application.BOB_BIT | Application.OBJECT_BIT:
+            case Application.BOB_BIT | Application.WALL_BIT:
                 if (fixA.getFilterData().categoryBits == Application.BOB_BIT)
                     soundPlayer.PlaySoundBob(1);
                 else
@@ -103,7 +79,7 @@ public class WorldContactListener implements ContactListener {
                 }
                 break;
 
-            case Application.BULLET_BIT | Application.OBJECT_BIT:
+            case Application.BULLET_BIT | Application.WALL_BIT:
                 if (fixA.getFilterData().categoryBits == Application.BULLET_BIT) {
                     ((Bullet) fixA.getUserData()).setToDestroy();
                     soundPlayer.playSoundRandomLaserOneWall();
@@ -139,6 +115,20 @@ public class WorldContactListener implements ContactListener {
                 else
                     ((Bullet) fixB.getUserData()).setToDestroy();
                 break;
+
+            //      *       *       *       RAY     *       *       *       //
+            case Application.RAY | Application.WALL_BIT:
+                if (fixA.getFilterData().categoryBits == Application.RAY) {
+//                    ((YamYam) fixA.getUserData()).jump();
+//                    YamYam.wallIntact = true;
+                    System.out.println("wall interact!");
+                } else {
+//                    ((YamYam) fixB.getUserData()).jump();
+//                    YamYam.wallIntact = true;
+                    System.out.println("wall interact!");
+                }
+                break;
+
         }
     }
 

@@ -60,7 +60,7 @@ public class Bullet extends Sprite {
                         Application.ENEMY_BIT |
                         Application.ENEMY_AI |
                         Application.GROUND_BIT |
-                        Application.OBJECT_BIT |
+                        Application.WALL_BIT |
                         Application.ENEMY_HEAD_BIT;
 
         fixtureDef.shape = shape;
