@@ -91,7 +91,6 @@ public class B2WorldCreator {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             buns.add(new Bun(screen, rect.getX() / Application.PPM, rect.getY() / Application.PPM));
         }
-
         //create yumYums bodies/fixtures
 
         yamYams = new Array<YamYam>();

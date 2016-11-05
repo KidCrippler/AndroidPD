@@ -88,12 +88,6 @@ public class PlayScreen implements Screen {
         }
     }
 
-
-
-
-
-
-
     public void handleInput() {
         moveX = 0;
 
@@ -129,8 +123,10 @@ public class PlayScreen implements Screen {
 
             if (((player.getX() - (380 / Application.PPM)) <= enemy.getX()) && ((player.getX() + (380 / Application.PPM)) >= enemy.getX())) {
                 enemy.b2body.setActive(true);
+//                enemy.b2bodyRay.setActive(true);
             } else {
                 enemy.b2body.setActive(true);
+//                enemy.b2bodyRay.setActive(true);
             }
         }
 

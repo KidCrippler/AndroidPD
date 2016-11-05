@@ -1,11 +1,8 @@
 package com.rosa.game.Sprites.Enemies;
 
-import com.badlogic.gdx.ai.steer.behaviors.*;
-import com.badlogic.gdx.ai.steer.utils.Ray;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -14,15 +11,13 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Bob.Player;
-import com.rosa.game.Sprites.Enemies.EnemyAITool.B2dSteeringEntity;
-import com.rosa.game.Sprites.Enemies.EnemyAITool.SteeringAgent;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
-import com.sun.javafx.geom.Vec2d;
 
 public class YamYam extends Enemy {
 
-    private enum State {FALLING, JUMPING, STANDING, RUNNING, DEAD}
+    private enum State {JUMPING}
+
     public State currentState;
     private float stateTime;
     private Animation walkAnimation;
@@ -36,18 +31,12 @@ public class YamYam extends Enemy {
     private boolean runningRight;
     private long lastShot;
     private SoundPlayer soundPlayer = new SoundPlayer();
-    public B2dSteeringEntity entity, target;
     public static boolean wallIntact = false;
-
-
-    private Wander wanderBehavior;
-
 
     public YamYam(PlayScreen screen, float x, float y) {
         super(screen, x, y);
         frames = new Array<TextureRegion>();
         runningRight = true;
-
 
         for (int i = 0; i < 2; i++)
             frames.add(new TextureRegion(screen.getAtlas().findRegion("keen"), i * 32, 0, 32, 32));
@@ -58,25 +47,13 @@ public class YamYam extends Enemy {
         setToDestroy = false;
         destroyed = false;
         enemyFirePowerLasArray = new Array<EnemyFirePowerLas>();
-
-        //AI target:
-        entity = new B2dSteeringEntity(b2body, 10);
-        target = new B2dSteeringEntity(b2body, 10);
-
-        Arrive<Vector2> arriveSB = new Arrive<Vector2>(entity, target)
-                .setTimeToTarget(0.01f)
-                .setArrivalTolerance(2f)
-                .setDecelerationRadius(10);
-        entity.setBehavior(arriveSB);
-        wanderBehavior = new Wander(this.entity).setEnabled(true).setWanderRadius(2f).setWanderRate(MathUtils.PI2 * 4);
-
-
     }
 
     public void update(float dt) {
         stateTime += dt;
         if (setToDestroy && !destroyed) {
             world.destroyBody(b2body);
+            world.destroyBody(b2bodyRay);
             destroyed = true;
             setRegion(new TextureRegion(screen.getAtlas().findRegion("keen"), 11, 0, 22, 12));
             stateTime = 0;
@@ -86,36 +63,37 @@ public class YamYam extends Enemy {
 
                 if (!wallIntact || wallIntact) {
 
-                    b2body.setLinearVelocity((float) 0, 0);
+                    b2body.setLinearVelocity(0, 0);
+                    b2bodyRay.setLinearVelocity(0, 0);
+
+
 
                     if (Player.BOB_X_POSITION - 0.4 == b2body.getPosition().x || Player.BOB_X_POSITION + 0.4 == b2body.getPosition().x)
-                        b2body.setLinearVelocity((float) 0, 0);
+                        b2body.setLinearVelocity(0, 0);
 
                     if (Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x)
-                        b2body.setLinearVelocity((float) 1.5, 0);
+                        b2body.setLinearVelocity(1.5f, 0);
 
                     if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x)
-                        b2body.setLinearVelocity((float) -1.5, 0);
+                        b2body.setLinearVelocity(-1.5f, 0);
 
                     if (PlayScreen.moveY >= b2body.getPosition().x)
-                        b2body.setLinearVelocity((float) 0, 2);
+                        b2body.setLinearVelocity( 0, 2);
+                    //RAY:
 
-//TODO: fix ai jump
-                    //test up
+
+
+                    //TODO: fix ai jump
 //                    if (Player.BOB_Y_POSITION - 0.4 >= b2body.getPosition().y)
 //                        b2body.setLinearVelocity(0, 1.5f);
-
+/*
                     if (currentState != State.JUMPING) {
                         b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
                         soundPlayer.PlaySoundBob(0);
                         currentState = State.JUMPING;
-                    }
-
-
-
+                    }*/
 
                 }
-
 
 /*
                 if (wallIntact) {
@@ -125,7 +103,6 @@ public class YamYam extends Enemy {
 
 
                 PlayScreen.moveY = 0;
-                entity.update(dt);
 
                 //Draw:
                 setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
@@ -164,7 +141,6 @@ public class YamYam extends Enemy {
         PolygonShape head = new PolygonShape();
         Vector2[] vector2s = new Vector2[4];
 
-
         vector2s[0] = new Vector2(-5, 34).scl(1 / Application.PPM);
         vector2s[1] = new Vector2(5, 34).scl(1 / Application.PPM);
         vector2s[2] = new Vector2(-3, 3).scl(1 / Application.PPM);
@@ -174,30 +150,42 @@ public class YamYam extends Enemy {
         fixtureDef.shape = head;
         fixtureDef.restitution = 0.5f;
         fixtureDef.filter.categoryBits = Application.ENEMY_AI;
-        fixtureDef.filter.maskBits = Application.GROUND_BIT |
-                Application.ENEMY_AI |
-                Application.COIN_BIT |
-                Application.BRICK_BIT |
-                Application.ENEMY_BIT |
-                Application.OBJECT_BIT |
-                Application.BOB_BIT |
+        fixtureDef.filter.maskBits =
                 Application.GROUND_BIT |
-                Application.BULLET_BIT;
+                        Application.ENEMY_AI |
+                        Application.COIN_BIT |
+                        Application.BRICK_BIT |
+                        Application.ENEMY_BIT |
+                        Application.OBJECT_BIT |
+                        Application.BOB_BIT |
+                        Application.GROUND_BIT |
+                        Application.BULLET_BIT;
 
         b2body.createFixture(fixtureDef).setUserData(this);
 
 
         //RAY:
         FixtureDef fixtureDefRay = new FixtureDef();
-        CircleShape shape = new CircleShape();
-        shape.setRadius(6 / Application.PPM);
+        CircleShape rayShape = new CircleShape();
+        rayShape.setRadius(6 / Application.PPM);
         fixtureDefRay.filter.categoryBits = Application.RAY;
         fixtureDefRay.filter.maskBits =
-                Application.BOB_BIT;
+              /*  Application.GROUND_BIT |
+                        Application.ENEMY_AI |
+                        Application.COIN_BIT |
+                        Application.BRICK_BIT |
+                        Application.ENEMY_BIT |
+                        Application.OBJECT_BIT |
+                        Application.BOB_BIT |
+                        Application.GROUND_BIT |
+              */          Application.BULLET_BIT;
 
-        fixtureDefRay.shape = shape;
+        fixtureDefRay.shape = rayShape;
+        rayShape.setPosition(new Vector2(0.5f, 0 / Application.PPM));
+        b2body.createFixture(fixtureDefRay).setUserData(this);
+        rayShape.setPosition(new Vector2(-0.5f, 0 / Application.PPM));
+        b2body.createFixture(fixtureDefRay).setUserData(this);
 
-        b2bodyRay.createFixture(fixtureDefRay).setUserData(this);
 
     }
 
