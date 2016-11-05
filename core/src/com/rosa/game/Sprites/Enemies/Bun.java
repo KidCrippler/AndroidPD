@@ -75,7 +75,14 @@ public class Bun extends Enemy {
         fixtureDef.shape = shape;
         b2body.createFixture(fixtureDef).setUserData(this);
 
+        //
+
+        //TODO: fix the body shape (i don't need the head / body. just the body.)
+
         //Create the Head here:
+
+        //
+
         PolygonShape head = new PolygonShape();
         Vector2[] vertice = new Vector2[4];
         vertice[0] = new Vector2(-5, 24).scl(1 / Application.PPM);

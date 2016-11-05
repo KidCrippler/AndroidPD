@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Bob.Bullet;
 import com.rosa.game.Sprites.Enemies.Enemy;
+import com.rosa.game.Sprites.Enemies.YamYam;
 
 public class WorldContactListener implements ContactListener {
 
@@ -45,8 +46,6 @@ public class WorldContactListener implements ContactListener {
 
 
             //      *       *       *       ENEMY-AI     *       *       *       //
-
-
 
 
             case Application.ENEMY_AI | Application.ENEMY_AI:
@@ -125,15 +124,10 @@ public class WorldContactListener implements ContactListener {
 
 
             case Application.RAY | Application.WALL_BIT:
-                if (fixA.getFilterData().categoryBits == Application.RAY) {
-//                    ((YamYam) fixA.getUserData()).jump();
-//                    YamYam.wallIntact = true;
-                    System.out.println("wall interact!");
-                } else {
-//                    ((YamYam) fixB.getUserData()).jump();
-//                    YamYam.wallIntact = true;
-                    System.out.println("wall interact!");
-                }
+                if (fixA.getFilterData().categoryBits == Application.RAY)
+                    ((YamYam) fixA.getUserData()).jump();
+                else
+                    ((YamYam) fixB.getUserData()).jump();
                 break;
         }
     }

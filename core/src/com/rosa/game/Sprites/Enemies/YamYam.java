@@ -16,9 +16,10 @@ import com.rosa.game.screens.PlayScreen;
 
 public class YamYam extends Enemy {
 
-    private enum State {JUMPING}
+    public enum State {FALLING, JUMPING, STANDING, RUNNING, DEAD}
 
     public State currentState;
+    public State previousState;
     private float stateTime;
     private Animation walkAnimation;
     private Array<TextureRegion> frames;
@@ -32,9 +33,19 @@ public class YamYam extends Enemy {
     private long lastShot;
     private SoundPlayer soundPlayer = new SoundPlayer();
     public static boolean wallIntact = false;
+    private float stateTimer;
+    private Animation yamyamRun;
+    private Animation yamyamJump;
+    private TextureRegion yamyamStand;
+
+
 
     public YamYam(PlayScreen screen, float x, float y) {
         super(screen, x, y);
+        currentState = State.STANDING;
+        previousState = State.STANDING;
+        stateTimer = 0;
+        runningRight = true;
         frames = new Array<TextureRegion>();
         runningRight = true;
 
@@ -47,6 +58,7 @@ public class YamYam extends Enemy {
         setToDestroy = false;
         destroyed = false;
         enemyFirePowerLasArray = new Array<EnemyFirePowerLas>();
+
     }
 
     public void update(float dt) {
@@ -62,20 +74,21 @@ public class YamYam extends Enemy {
 
                 if (!wallIntact || wallIntact) {
 
-                    b2body.setLinearVelocity(0, 0);
+                    setRegion(getFrame(dt));
+
+
+                    b2body.setLinearVelocity(0, -2);
 
 
                     if (Player.BOB_X_POSITION - 0.4 == b2body.getPosition().x || Player.BOB_X_POSITION + 0.4 == b2body.getPosition().x)
-                        b2body.setLinearVelocity(0, 0);
+                        b2body.setLinearVelocity(0, -2);
 
                     if (Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x)
-                        b2body.setLinearVelocity(1.5f, 0);
+                        b2body.setLinearVelocity(1.5f, -2);
 
                     if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x)
-                        b2body.setLinearVelocity(-1.5f, 0);
+                        b2body.setLinearVelocity(-1.5f, -2);
 
-                    if (PlayScreen.moveY >= b2body.getPosition().x)
-                        b2body.setLinearVelocity(0, 2);
                     //RAY:
 
 
@@ -122,6 +135,48 @@ public class YamYam extends Enemy {
                 }
             }
         }
+    }
+
+    public TextureRegion getFrame(float dt) {
+        currentState = getState();
+        TextureRegion region;
+        switch (currentState) {
+            case JUMPING:
+                region = yamyamJump.getKeyFrame(stateTimer);
+                break;
+            case RUNNING:
+                region = yamyamRun.getKeyFrame(stateTimer, true);
+
+                break;
+            case FALLING:
+            case STANDING:
+            default:
+                region = yamyamStand;
+                break;
+        }
+
+        if ((b2body.getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()) {
+            region.flip(true, false);
+            runningRight = false;
+        } else if ((b2body.getLinearVelocity().x > 0 || runningRight) && region.isFlipX()) {
+            region.flip(true, false);
+            runningRight = true;
+        }
+
+        stateTimer = currentState == previousState ? stateTimer + dt : 0;
+        previousState = currentState;
+        return region;
+    }
+
+    public State getState() {
+        if (b2body.getLinearVelocity().y > 0 || (b2body.getLinearVelocity().y < 0 && previousState == State.JUMPING))
+            return State.JUMPING;
+        else if (b2body.getLinearVelocity().y < 0)
+            return State.FALLING;
+        else if (b2body.getLinearVelocity().x != 0)
+            return State.RUNNING;
+        else
+            return State.STANDING;
     }
 
     @Override
@@ -175,6 +230,8 @@ public class YamYam extends Enemy {
 
     }
 
+
+
     public void draw(Batch batch) {
         if (!destroyed || stateTime < 1)
             super.draw(batch);
@@ -186,7 +243,10 @@ public class YamYam extends Enemy {
     }
 
     public void reverseVelocity(boolean x, boolean y) {
-
+        if (x)
+            velocity.x = -velocity.x;
+        if (y)
+            velocity.y = -velocity.y;
     }
 
     public void setToDestroy() {
@@ -210,9 +270,12 @@ public class YamYam extends Enemy {
     }
 
     public void jump() {
-        /*b2body.applyLinearImpulse(new Vector2(0, 50f), b2body.getWorldCenter(), true);
-        soundPlayer.PlaySoundBob(0);
-        currentState = Player.State.JUMPING;*/
+        System.out.println("wall interact! JUMP!!!!!");
+        if (currentState != State.JUMPING) {
+            b2body.applyLinearImpulse(new Vector2(0, 5), b2body.getWorldCenter(), true);
+            soundPlayer.PlaySoundBob(0);
+            currentState = State.JUMPING;
+        }
     }
 
     public boolean isDestroyed() {

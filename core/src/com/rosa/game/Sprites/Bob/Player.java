@@ -36,8 +36,6 @@ public class Player extends Sprite {
     private Array<Bullet> bullets;
     public static float BOB_X_POSITION;
     public static float BOB_Y_POSITION;
-    public static B2dSteeringEntity target;
-
 
     public Player(World world, PlayScreen screen) {
         super(screen.getAtlas().findRegion("keen"));
@@ -47,8 +45,6 @@ public class Player extends Sprite {
         previousState = State.STANDING;
         stateTimer = 0;
         runningRight = true;
-
-        //
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
@@ -69,9 +65,6 @@ public class Player extends Sprite {
         setRegion(playerStand);
 
         bullets = new Array<Bullet>();
-
-        //AI target:
-        target = new B2dSteeringEntity(b2body, 10);
     }
 
     public void update(float dt) {
@@ -165,19 +158,9 @@ public class Player extends Sprite {
         fixtureDef.shape = shape;
         b2body.createFixture(fixtureDef);
 
-/*
-        //AI target:
-        target = new B2dSteeringEntity(b2body,10);
-
-        Arrive<Vector2> arrive = new Arrive<Vector2>(target).setTimeToTarget(0.01f).setArrivalTolerance(2f).setDecelerationRadius(10);
-        target.setBehavior(arrive);
-*/
-
     }
 
     public void jump() {
-            PlayScreen.moveY = 0;
-
         if (currentState != State.JUMPING) {
             b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
             soundPlayer.PlaySoundBob(0);
