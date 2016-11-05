@@ -155,8 +155,8 @@ public class YamYam extends Enemy {
                         Application.GROUND_BIT |
                         Application.BULLET_BIT;
 
-        b2body.createFixture(fixtureDef).setUserData(this);
 
+        b2body.createFixture(fixtureDef).setUserData(this);
 
         //RAY:
         FixtureDef fixtureDefRay = new FixtureDef();
@@ -164,14 +164,14 @@ public class YamYam extends Enemy {
         rayShape.setRadius(6 / Application.PPM);
         fixtureDefRay.filter.categoryBits = Application.RAY;
         fixtureDefRay.filter.maskBits =
-                        Application.WALL_BIT;
+                Application.WALL_BIT;
 
         fixtureDefRay.shape = rayShape;
+        fixtureDefRay.isSensor = true;
         rayShape.setPosition(new Vector2(0.5f, 0 / Application.PPM));
         b2body.createFixture(fixtureDefRay).setUserData(this);
         rayShape.setPosition(new Vector2(-0.5f, 0 / Application.PPM));
         b2body.createFixture(fixtureDefRay).setUserData(this);
-
 
     }
 

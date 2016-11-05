@@ -117,6 +117,13 @@ public class WorldContactListener implements ContactListener {
                 break;
 
             //      *       *       *       RAY     *       *       *       //
+
+            case Application.ENEMY_AI | Application.RAY:
+                ((Enemy) fixA.getUserData()).hitByEnemy((Enemy) fixB.getUserData());
+                ((Enemy) fixB.getUserData()).hitByEnemy((Enemy) fixA.getUserData());
+                break;
+
+
             case Application.RAY | Application.WALL_BIT:
                 if (fixA.getFilterData().categoryBits == Application.RAY) {
 //                    ((YamYam) fixA.getUserData()).jump();
@@ -128,7 +135,6 @@ public class WorldContactListener implements ContactListener {
                     System.out.println("wall interact!");
                 }
                 break;
-
         }
     }
 
