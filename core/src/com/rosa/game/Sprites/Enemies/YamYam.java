@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
+import com.rosa.game.Sprites.Bob.Bullet;
 import com.rosa.game.Sprites.Bob.Player;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
@@ -38,19 +39,32 @@ public class YamYam extends Enemy {
     private Animation yamyamJump;
     private TextureRegion yamyamStand;
 
-
-
     public YamYam(PlayScreen screen, float x, float y) {
         super(screen, x, y);
         currentState = State.STANDING;
         previousState = State.STANDING;
         stateTimer = 0;
         runningRight = true;
-        frames = new Array<TextureRegion>();
-        runningRight = true;
 
+        Array<TextureRegion> frames = new Array<TextureRegion>();
+
+        for (int i = 1; i < 5; i++)
+            frames.add(new TextureRegion(screen.getAtlas().findRegion("keen"), i * 23, 0, 23, 32));
+        yamyamRun = new Animation(0.1f, frames);
+        frames.clear();
+
+        for (int i = 4; i < 7; i++)
+            frames.add(new TextureRegion(screen.getAtlas().findRegion("keen"), i * 23, 0, 23, 32));
+        yamyamJump = new Animation(0.1f, frames);
+        frames.clear();
+
+        yamyamStand = new TextureRegion(screen.getAtlas().findRegion("keen"), -5, 0, 23, 32);
         for (int i = 0; i < 2; i++)
             frames.add(new TextureRegion(screen.getAtlas().findRegion("keen"), i * 32, 0, 32, 32));
+
+        defineEnemy();
+        setRegion(yamyamStand);
+
 
         walkAnimation = new Animation(0.4f, frames);
         stateTime = 0;
@@ -71,47 +85,14 @@ public class YamYam extends Enemy {
 
         } else {
             if (!destroyed && b2body.isActive()) {
+                setRegion(getFrame(dt));
 
-                if (!wallIntact || wallIntact) {
+                //RAY (AI movement):
+                if ( Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x && b2body.getLinearVelocity().x <= -2)
+                    b2body.applyLinearImpulse(new Vector2(-0.1f, 0), b2body.getWorldCenter(), true);
 
-                    setRegion(getFrame(dt));
-
-
-                    b2body.setLinearVelocity(0, -2);
-
-
-                    if (Player.BOB_X_POSITION - 0.4 == b2body.getPosition().x || Player.BOB_X_POSITION + 0.4 == b2body.getPosition().x)
-                        b2body.setLinearVelocity(0, -2);
-
-                    if (Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x)
-                        b2body.setLinearVelocity(1.5f, -2);
-
-                    if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x)
-                        b2body.setLinearVelocity(-1.5f, -2);
-
-                    //RAY:
-
-
-                    //TODO: fix ai jump
-//                    if (Player.BOB_Y_POSITION - 0.4 >= b2body.getPosition().y)
-//                        b2body.setLinearVelocity(0, 1.5f);
-/*
-                    if (currentState != State.JUMPING) {
-                        b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
-                        soundPlayer.PlaySoundBob(0);
-                        currentState = State.JUMPING;
-                    }*/
-
-                }
-
-/*
-                if (wallIntact) {
-                    b2body.setLinearVelocity((float) -1.5, 0);
-                }
-*/
-
-
-                PlayScreen.moveY = 0;
+                if ( Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x &&  b2body.getLinearVelocity().x <= 2)
+                    b2body.applyLinearImpulse(new Vector2(0.1f, 0), b2body.getWorldCenter(), true);
 
                 //Draw:
                 setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
@@ -231,7 +212,6 @@ public class YamYam extends Enemy {
     }
 
 
-
     public void draw(Batch batch) {
         if (!destroyed || stateTime < 1)
             super.draw(batch);
@@ -270,9 +250,8 @@ public class YamYam extends Enemy {
     }
 
     public void jump() {
-        System.out.println("wall interact! JUMP!!!!!");
         if (currentState != State.JUMPING) {
-            b2body.applyLinearImpulse(new Vector2(0, 5), b2body.getWorldCenter(), true);
+            b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
             soundPlayer.PlaySoundBob(0);
             currentState = State.JUMPING;
         }
@@ -284,31 +263,3 @@ public class YamYam extends Enemy {
 
 
 }
-
-
-//                //Follow you:
-//                if (Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x) {
-//                    b2body.setLinearVelocity((float) 1.6, -2);
-//                } else if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x) {
-//                    b2body.setLinearVelocity((float) -1.6, -2);
-//                } else {
-//                    b2body.setLinearVelocity((float) 0, -2);
-//                }
-
-
-
-
-                /*if (PlayScreen.moveX != 0) {
-                    Vector2 vel = Player.target.getBody().getLinearVelocity();
-                    target.getBody().setLinearVelocity((Player.BOB_X_POSITION * 7f), vel.y);
-                }
-
-                if (PlayScreen.moveY != 0) {
-                    Vector2 vel = Player.target.getBody().getLinearVelocity();
-                    target.getBody().setLinearVelocity(vel.x, (Player.BOB_Y_POSITION * 0.7f));
-                }
-
-
-
-                */
-
