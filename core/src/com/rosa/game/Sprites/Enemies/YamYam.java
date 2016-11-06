@@ -16,7 +16,7 @@ import com.rosa.game.screens.PlayScreen;
 
 public class YamYam extends Enemy {
 
-    public enum State {FALLING, JUMPING, STANDING, RUNNING, DEAD}
+    public enum State {FALLING, JUMPING, STANDING, RUNNING}
 
     public State currentState;
     public State previousState;
@@ -42,7 +42,12 @@ public class YamYam extends Enemy {
         previousState = State.STANDING;
         stateTimer = 0;
         runningRight = true;
+        stateTime = 0;
+        setBounds(getX(), getY(), 16 / Application.PPM, 16 / Application.PPM);
+        setToDestroy = false;
+        destroyed = false;
 
+        enemyFirePowerLasArray = new Array<EnemyFirePowerLas>();
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
         for (int i = 1; i < 5; i++)
@@ -55,21 +60,14 @@ public class YamYam extends Enemy {
         yamyamJump = new Animation(0.1f, frames);
         frames.clear();
 
-        yamyamStand = new TextureRegion(screen.getAtlas().findRegion("keen"), -5, 0, 23, 32);
         for (int i = 0; i < 2; i++)
             frames.add(new TextureRegion(screen.getAtlas().findRegion("keen"), i * 32, 0, 32, 32));
+        yamyamStand = new TextureRegion(screen.getAtlas().findRegion("keen"), -5, 0, 23, 32);
+
+        walkAnimation = new Animation(0.4f, frames);
 
         defineEnemy();
         setRegion(yamyamStand);
-
-
-        walkAnimation = new Animation(0.4f, frames);
-        stateTime = 0;
-        setBounds(getX(), getY(), 16 / Application.PPM, 16 / Application.PPM);
-        setToDestroy = false;
-        destroyed = false;
-        enemyFirePowerLasArray = new Array<EnemyFirePowerLas>();
-
     }
 
     public void update(float dt) {
@@ -136,11 +134,11 @@ public class YamYam extends Enemy {
         if ((b2body.getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()) {
             region.flip(true, false);
             runningRight = false;
+
         } else if ((b2body.getLinearVelocity().x > 0 || runningRight) && region.isFlipX()) {
             region.flip(true, false);
             runningRight = true;
         }
-
         stateTimer = currentState == previousState ? stateTimer + dt : 0;
         previousState = currentState;
         return region;
@@ -162,13 +160,10 @@ public class YamYam extends Enemy {
         FixtureDef fixtureDef = new FixtureDef();
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(getX(), getY());
-
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bodyDef);
-
         PolygonShape head = new PolygonShape();
         Vector2[] vector2s = new Vector2[4];
-
         vector2s[0] = new Vector2(-5, 34).scl(1 / Application.PPM);
         vector2s[1] = new Vector2(5, 34).scl(1 / Application.PPM);
         vector2s[2] = new Vector2(-3, 3).scl(1 / Application.PPM);
@@ -177,8 +172,7 @@ public class YamYam extends Enemy {
 
         fixtureDef.shape = head;
         fixtureDef.filter.categoryBits = Application.ENEMY_AI;
-        fixtureDef.filter.maskBits =
-                Application.GROUND_BIT |
+        fixtureDef.filter.maskBits = Application.GROUND_BIT |
                         Application.ENEMY_AI |
                         Application.COIN_BIT |
                         Application.BRICK_BIT |
@@ -187,8 +181,6 @@ public class YamYam extends Enemy {
                         Application.BOB_BIT |
                         Application.GROUND_BIT |
                         Application.BULLET_BIT;
-
-
         b2body.createFixture(fixtureDef).setUserData(this);
 
         //RAY:
@@ -205,9 +197,7 @@ public class YamYam extends Enemy {
         b2body.createFixture(fixtureDefRay).setUserData(this);
         rayShape.setPosition(new Vector2(-0.5f, 0 / Application.PPM));
         b2body.createFixture(fixtureDefRay).setUserData(this);
-
     }
-
 
     public void draw(Batch batch) {
         if (!destroyed || stateTime < 1)
@@ -257,6 +247,4 @@ public class YamYam extends Enemy {
     public boolean isDestroyed() {
         return destroyed;
     }
-
-
 }
