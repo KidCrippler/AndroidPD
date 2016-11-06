@@ -66,7 +66,8 @@ public class EnemyFirePowerLas extends Sprite {
         fixtureDef.shape = shape;
         b2body.createFixture(fixtureDef).setUserData(this);
 
-        b2body.setLinearVelocity(new Vector2(fireRight ? 6 : -6, 0));
+        //FireSpeed:
+        b2body.setLinearVelocity(new Vector2(fireRight ? 3 : -3, 0));
         b2body.setBullet(true);
         b2body.setGravityScale(0);
     }

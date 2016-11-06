@@ -10,7 +10,6 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
-import com.rosa.game.Sprites.Bob.Bullet;
 import com.rosa.game.Sprites.Bob.Player;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
@@ -23,17 +22,15 @@ public class YamYam extends Enemy {
     public State previousState;
     private float stateTime;
     private Animation walkAnimation;
-    private Array<TextureRegion> frames;
     private boolean setToDestroy;
     private boolean destroyed;
     private int yamyamHP = 100;
     private SoundPlayer playSound = new SoundPlayer();
     private Array<EnemyFirePowerLas> enemyFirePowerLasArray;
-    private static final long FIRE_RATE = 600000000L;
-    private boolean runningRight;
+    private static final long FIRE_RATE = 1200000000L;
     private long lastShot;
+    private boolean runningRight;
     private SoundPlayer soundPlayer = new SoundPlayer();
-    public static boolean wallIntact = false;
     private float stateTimer;
     private Animation yamyamRun;
     private Animation yamyamJump;
@@ -88,17 +85,17 @@ public class YamYam extends Enemy {
                 setRegion(getFrame(dt));
 
                 //RAY (AI movement):
-                if ( Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x && b2body.getLinearVelocity().x <= -2)
-                    b2body.applyLinearImpulse(new Vector2(-0.1f, 0), b2body.getWorldCenter(), true);
+                if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x)
+                    b2body.applyLinearImpulse(new Vector2(-0.02f, 0), b2body.getWorldCenter(), true);
 
-                if ( Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x &&  b2body.getLinearVelocity().x <= 2)
-                    b2body.applyLinearImpulse(new Vector2(0.1f, 0), b2body.getWorldCenter(), true);
+                if (Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x)
+                    b2body.applyLinearImpulse(new Vector2(0.02f, 0), b2body.getWorldCenter(), true);
 
                 //Draw:
                 setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
                 setRegion(walkAnimation.getKeyFrame(stateTime, true));
 
-//                fire();
+                fire();
 
                 for (EnemyFirePowerLas enemyFirePowerLas : enemyFirePowerLasArray) {
                     enemyFirePowerLas.update(dt);
