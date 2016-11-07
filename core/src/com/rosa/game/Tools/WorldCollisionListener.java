@@ -24,31 +24,22 @@ public class WorldCollisionListener implements ContactListener {
         switch (cDef) {
 
             //      *       *       *       ENEMY     *       *       *       //
-            case Application.ENEMY_BIT | Application.WALL_BIT:
-                if (fixA.getFilterData().categoryBits == Application.ENEMY_BIT)
+            case Application.ENEMY_DUMB_BIT | Application.WALL_BIT:
+                if (fixA.getFilterData().categoryBits == Application.ENEMY_DUMB_BIT)
                     ((Enemy) fixA.getUserData()).reverseVelocity(true, false);
                 else
                     ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
                 break;
 
-
-            case Application.ENEMY_BIT | Application.ENEMY_BIT:
+            case Application.ENEMY_DUMB_BIT | Application.ENEMY_DUMB_BIT:
                 ((Enemy) fixA.getUserData()).hitByEnemy((Enemy) fixB.getUserData());
                 ((Enemy) fixB.getUserData()).hitByEnemy((Enemy) fixA.getUserData());
                 break;
 
-            case Application.ENEMY_HEAD_BIT | Application.BOB_BIT:
-                if (fixA.getFilterData().categoryBits == Application.ENEMY_HEAD_BIT)
-                    ((Enemy) fixA.getUserData()).reverseVelocity(true, false);
-                else
-                    ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
-                break;
-
-
             //      *       *       *       ENEMY-AI     *       *       *       //
 
 
-            case Application.ENEMY_AI | Application.ENEMY_AI:
+            case Application.ENEMY_AI_BIT | Application.ENEMY_AI_BIT:
                 ((Enemy) fixA.getUserData()).hitByEnemy((Enemy) fixB.getUserData());
                 ((Enemy) fixB.getUserData()).hitByEnemy((Enemy) fixA.getUserData());
                 break;
@@ -68,8 +59,8 @@ public class WorldCollisionListener implements ContactListener {
                 break;
 
             //      *       *       *       BULLETS     *       *       *       //
-            case Application.BULLET_BIT | Application.GROUND_BIT:
-                if (fixA.getFilterData().categoryBits == Application.BULLET_BIT) {
+            case Application.BUN_BULLET_BIT | Application.GROUND_BIT:
+                if (fixA.getFilterData().categoryBits == Application.BUN_BULLET_BIT) {
                     ((Bullet) fixA.getUserData()).setToDestroy();
                     soundPlayer.playSoundRandomLaserOneWall();
                 } else {
@@ -78,8 +69,8 @@ public class WorldCollisionListener implements ContactListener {
                 }
                 break;
 
-            case Application.BULLET_BIT | Application.WALL_BIT:
-                if (fixA.getFilterData().categoryBits == Application.BULLET_BIT) {
+            case Application.BUN_BULLET_BIT | Application.WALL_BIT:
+                if (fixA.getFilterData().categoryBits == Application.BUN_BULLET_BIT) {
                     ((Bullet) fixA.getUserData()).setToDestroy();
                     soundPlayer.playSoundRandomLaserOneWall();
                 } else {
@@ -89,27 +80,27 @@ public class WorldCollisionListener implements ContactListener {
                 }
                 break;
             //Enemy:
-            case Application.BULLET_BIT | Application.ENEMY_HEAD_BIT:
+            case Application.BUN_BULLET_BIT | Application.ENEMY_DUMB_BIT:
                 //Remove the enemy:
-                if (fixA.getFilterData().categoryBits == Application.ENEMY_HEAD_BIT)
+                if (fixA.getFilterData().categoryBits == Application.ENEMY_DUMB_BIT)
                     ((Enemy) fixA.getUserData()).setToDestroy();
                 else
                     ((Enemy) fixB.getUserData()).setToDestroy();
                 //Remove the bullet:
-                if (fixA.getFilterData().categoryBits == Application.BULLET_BIT)
+                if (fixA.getFilterData().categoryBits == Application.BUN_BULLET_BIT)
                     ((Bullet) fixA.getUserData()).setToDestroy();
                 else
                     ((Bullet) fixB.getUserData()).setToDestroy();
                 break;
             //Enemy AI:
-            case Application.BULLET_BIT | Application.ENEMY_AI:
+            case Application.BUN_BULLET_BIT | Application.ENEMY_AI_BIT:
                 //Remove the enemy:
-                if (fixA.getFilterData().categoryBits == Application.ENEMY_AI)
+                if (fixA.getFilterData().categoryBits == Application.ENEMY_AI_BIT)
                     ((Enemy) fixA.getUserData()).setToDestroy();
                 else
                     ((Enemy) fixB.getUserData()).setToDestroy();
                 //Remove the bullet:
-                if (fixA.getFilterData().categoryBits == Application.BULLET_BIT)
+                if (fixA.getFilterData().categoryBits == Application.BUN_BULLET_BIT)
                     ((Bullet) fixA.getUserData()).setToDestroy();
                 else
                     ((Bullet) fixB.getUserData()).setToDestroy();

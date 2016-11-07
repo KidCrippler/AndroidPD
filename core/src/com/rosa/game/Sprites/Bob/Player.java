@@ -145,14 +145,11 @@ public class Player extends Sprite {
         fixtureDef.filter.categoryBits = Application.BOB_BIT;
         fixtureDef.filter.maskBits =
                 Application.GROUND_BIT |
-                        Application.COIN_BIT |
-                        Application.BRICK_BIT |
-                        Application.ENEMY_BIT |
-                        Application.ENEMY_AI |
+                        Application.ENEMY_DUMB_BIT |
+                        Application.ENEMY_AI_BIT |
                         Application.WALL_BIT |
-                        Application.ENEMY_HEAD_BIT |
                         Application.ITEM_BIT |
-                        Application.BULLET_BIT;
+                        Application.BUN_BULLET_BIT;
 
         fixtureDef.shape = shape;
         b2body.createFixture(fixtureDef);

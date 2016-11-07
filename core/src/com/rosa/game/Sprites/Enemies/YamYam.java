@@ -175,16 +175,14 @@ public class YamYam extends Enemy {
         head.set(vector2s);
 
         fixtureDef.shape = head;
-        fixtureDef.filter.categoryBits = Application.ENEMY_AI;
+        fixtureDef.filter.categoryBits = Application.ENEMY_AI_BIT;
         fixtureDef.filter.maskBits = Application.GROUND_BIT |
-                        Application.ENEMY_AI |
-                        Application.COIN_BIT |
-                        Application.BRICK_BIT |
-                        Application.ENEMY_BIT |
+                        Application.ENEMY_AI_BIT |
+                        Application.ENEMY_DUMB_BIT |
                         Application.WALL_BIT |
                         Application.BOB_BIT |
                         Application.GROUND_BIT |
-                        Application.BULLET_BIT;
+                        Application.BUN_BULLET_BIT;
 
         b2body.createFixture(fixtureDef).setUserData(this);
 

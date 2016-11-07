@@ -54,14 +54,11 @@ public class EnemyFirePowerLas extends Sprite {
         CircleShape shape = new CircleShape();
         shape.setRadius(2 / Application.PPM);
 
-        fixtureDef.filter.categoryBits = Application.ENEMY_FIREPOWER;
+        fixtureDef.filter.categoryBits = Application.ENEMY_BULLET_BIT;
         fixtureDef.filter.maskBits =
-                Application.BRICK_BIT |
-                        Application.COIN_BIT |
-                        Application.ENEMY_BIT |
+                        Application.ENEMY_DUMB_BIT |
                         Application.GROUND_BIT |
-                        Application.WALL_BIT |
-                        Application.ENEMY_HEAD_BIT;
+                        Application.WALL_BIT;
 
         fixtureDef.shape = shape;
         b2body.createFixture(fixtureDef).setUserData(this);

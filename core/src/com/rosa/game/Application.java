@@ -9,20 +9,18 @@ public class Application extends Game {
     public static final int V_WIDTH = 400;
     public static final int V_HEIGHT = 208;
     public static final float PPM = 100;
-    public static final short GROUND_BIT = 1;
-    public static final short BOB_BIT = 2;
-    public static final short BRICK_BIT = 4;
-    public static final short COIN_BIT = 8;
-    public static final short ENEMY_AI = 16;
-    public static final short WALL_BIT = 32;
-    public static final short ENEMY_BIT = 64;
-    public static final short ENEMY_HEAD_BIT = 128;
-    public static final short ITEM_BIT = 256;
-    public static final short BULLET_BIT = 512;
-    public static final short ENEMY_FIREPOWER = 1024;
-    public static final short RAY_ONE = 2048;
-    public static final short RAY_TWO = 4096;
 
+    //Collision:
+    public static final short GROUND_BIT = 0;
+    public static final short WALL_BIT = 1;
+    public static final short ITEM_BIT = 2;
+    public static final short BOB_BIT = 4;
+    public static final short ENEMY_AI_BIT = 8;
+    public static final short ENEMY_DUMB_BIT = 16;
+    public static final short BUN_BULLET_BIT = 64;
+    public static final short ENEMY_BULLET_BIT = 128;
+    public static final short RAY_ONE = 256;
+    public static final short RAY_TWO = 512;
 
     public static SpriteBatch batch;
 

@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
@@ -57,40 +56,24 @@ public class Bun extends com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy {
         bodyDef.position.set(getX(), getY());
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bodyDef);
-        CircleShape shape = new CircleShape();
-        shape.setRadius(6 / Application.PPM);
-        fixtureDef.filter.categoryBits = Application.ENEMY_BIT;
-
-        fixtureDef.filter.maskBits =
-                Application.GROUND_BIT |
-                        Application.COIN_BIT |
-                        Application.BRICK_BIT |
-                        Application.ENEMY_BIT |
-                        Application.WALL_BIT |
-                        Application.BOB_BIT |
-                        Application.GROUND_BIT |
-                        Application.BULLET_BIT;
-        fixtureDef.shape = shape;
-        b2body.createFixture(fixtureDef).setUserData(this);
-
-        //
-
-        //TODO: fix the body shape (i don't need the head / body. just the body.)
-
-        //Create the Head here:
-
-        //
-
         PolygonShape head = new PolygonShape();
         Vector2[] vertice = new Vector2[4];
-        vertice[0] = new Vector2(-5, 24).scl(1 / Application.PPM);
-        vertice[1] = new Vector2(5, 24).scl(1 / Application.PPM);
+        vertice[0] = new Vector2(-5, 33).scl(1 / Application.PPM);
+        vertice[1] = new Vector2(5, 33).scl(1 / Application.PPM);
         vertice[2] = new Vector2(-3, 3).scl(1 / Application.PPM);
         vertice[3] = new Vector2(3, 3).scl(1 / Application.PPM);
         head.set(vertice);
+
+        fixtureDef.filter.categoryBits = Application.ENEMY_DUMB_BIT;
+
+        fixtureDef.filter.maskBits =
+                Application.GROUND_BIT |
+                        Application.ENEMY_DUMB_BIT |
+                        Application.WALL_BIT |
+                        Application.BOB_BIT |
+                        Application.GROUND_BIT |
+                        Application.BUN_BULLET_BIT;
         fixtureDef.shape = head;
-        fixtureDef.restitution = 0.5f;
-        fixtureDef.filter.categoryBits = Application.ENEMY_HEAD_BIT;
         b2body.createFixture(fixtureDef).setUserData(this);
     }
 
