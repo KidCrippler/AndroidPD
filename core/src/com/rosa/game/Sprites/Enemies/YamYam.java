@@ -43,11 +43,9 @@ public class YamYam extends Enemy {
         stateTimer = 0;
         runningRight = true;
         stateTime = 0;
-        setBounds(getX(), getY(), 16 / Application.PPM, 16 / Application.PPM);
         setToDestroy = false;
         destroyed = false;
 
-        enemyFirePowerLasArray = new Array<EnemyFirePowerLas>();
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
         for (int i = 1; i < 5; i++)
@@ -60,14 +58,18 @@ public class YamYam extends Enemy {
         yamyamJump = new Animation(0.1f, frames);
         frames.clear();
 
+        yamyamStand = new TextureRegion(screen.getAtlas().findRegion("keen"), -5, 0, 23, 32);
+
         for (int i = 0; i < 2; i++)
             frames.add(new TextureRegion(screen.getAtlas().findRegion("keen"), i * 32, 0, 32, 32));
-        yamyamStand = new TextureRegion(screen.getAtlas().findRegion("keen"), -5, 0, 23, 32);
+
 
         walkAnimation = new Animation(0.4f, frames);
 
-        defineEnemy();
+        setBounds(0, 0, 23 / Application.PPM, 32 / Application.PPM);
         setRegion(yamyamStand);
+
+        enemyFirePowerLasArray = new Array<EnemyFirePowerLas>();
     }
 
     public void update(float dt) {
@@ -79,8 +81,8 @@ public class YamYam extends Enemy {
             stateTime = 0;
 
         } else {
-            if (!destroyed && b2body.isActive()) {
                 setRegion(getFrame(dt));
+            if (!destroyed && b2body.isActive()) {
 
                 //RAY (AI movement):
                 if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x)
@@ -92,8 +94,8 @@ public class YamYam extends Enemy {
                 //Draw:
                 setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
                 setRegion(walkAnimation.getKeyFrame(stateTime, true));
-
-                fire();
+//
+//                fire();
 
                 for (EnemyFirePowerLas enemyFirePowerLas : enemyFirePowerLasArray) {
                     enemyFirePowerLas.update(dt);
@@ -181,8 +183,8 @@ public class YamYam extends Enemy {
                         Application.BOB_BIT |
                         Application.GROUND_BIT |
                         Application.BULLET_BIT;
-        b2body.createFixture(fixtureDef).setUserData(this);
 
+        b2body.createFixture(fixtureDef).setUserData(this);
         //RAY:
         FixtureDef fixtureDefRay = new FixtureDef();
         CircleShape rayShape = new CircleShape();
