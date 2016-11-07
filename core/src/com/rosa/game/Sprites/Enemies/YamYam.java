@@ -185,20 +185,36 @@ public class YamYam extends Enemy {
                         Application.BULLET_BIT;
 
         b2body.createFixture(fixtureDef).setUserData(this);
-        //RAY:
-        FixtureDef fixtureDefRay = new FixtureDef();
-        CircleShape rayShape = new CircleShape();
-        rayShape.setRadius(6 / Application.PPM);
-        fixtureDefRay.filter.categoryBits = Application.RAY;
-        fixtureDefRay.filter.maskBits =
+
+        //RAYOne:
+        FixtureDef fixtureDefRayOne = new FixtureDef();
+        CircleShape rayShapeOne = new CircleShape();
+        rayShapeOne.setRadius(6 / Application.PPM);
+        fixtureDefRayOne.filter.categoryBits = Application.RAY;
+        fixtureDefRayOne.filter.maskBits =
                 Application.WALL_BIT;
 
-        fixtureDefRay.shape = rayShape;
-        fixtureDefRay.isSensor = true;
-        rayShape.setPosition(new Vector2(0.5f, 0 / Application.PPM));
-        b2body.createFixture(fixtureDefRay).setUserData(this);
-        rayShape.setPosition(new Vector2(-0.5f, 0 / Application.PPM));
-        b2body.createFixture(fixtureDefRay).setUserData(this);
+        fixtureDefRayOne.shape = rayShapeOne;
+        fixtureDefRayOne.isSensor = true;
+        rayShapeOne.setPosition(new Vector2(0.5f, 0 / Application.PPM));
+        b2body.createFixture(fixtureDefRayOne).setUserData(this);
+        rayShapeOne.setPosition(new Vector2(-0.5f, 0 / Application.PPM));
+        b2body.createFixture(fixtureDefRayOne).setUserData(this);
+
+        //RAYOne:
+        FixtureDef fixtureDefRayTwo = new FixtureDef();
+        CircleShape rayShapeTwo = new CircleShape();
+        rayShapeTwo.setRadius(6 / Application.PPM);
+        fixtureDefRayTwo.filter.categoryBits = Application.RAY;
+        fixtureDefRayTwo.filter.maskBits =
+                Application.WALL_BIT;
+
+        fixtureDefRayTwo.shape = rayShapeTwo;
+        fixtureDefRayTwo.isSensor = true;
+        rayShapeTwo.setPosition(new Vector2(0.2f, 0 / Application.PPM));
+        b2body.createFixture(fixtureDefRayTwo).setUserData(this);
+        rayShapeTwo.setPosition(new Vector2(-0.2f, 0 / Application.PPM));
+        b2body.createFixture(fixtureDefRayTwo).setUserData(this);
     }
 
     public void draw(Batch batch) {
