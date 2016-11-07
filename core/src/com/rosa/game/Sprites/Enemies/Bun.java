@@ -24,7 +24,6 @@ public class Bun extends com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy {
     private int bunHP = 100;
     private SoundPlayer playSound = new SoundPlayer();
 
-
     public Bun(PlayScreen screen, float x, float y) {
         super(screen, x, y);
         frames = new Array<TextureRegion>();
@@ -50,7 +49,6 @@ public class Bun extends com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy {
             setRegion(walkAnimation.getKeyFrame(stateTime, true));
         }
     }
-
 
     @Override
     protected void defineEnemy() {

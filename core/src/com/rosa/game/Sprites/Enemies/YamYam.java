@@ -11,10 +11,12 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Bob.Player;
+import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
+import com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyFirePowerLas;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
 
-public class YamYam extends com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy {
+public class YamYam extends Enemy {
 
     public enum State {FALLING, JUMPING, STANDING, RUNNING}
 
@@ -84,6 +86,7 @@ public class YamYam extends com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy {
 
         } else {
                 setRegion(getFrame(dt));
+
             if (!destroyed && b2body.isActive() && chaseing) {
 
                 //RAY_ONE (AI movement):
@@ -98,13 +101,12 @@ public class YamYam extends com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy {
                 setRegion(walkAnimation.getKeyFrame(stateTime, true));
 
 //                fire();
-                for (com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyFirePowerLas enemyFirePowerLas : enemyFirePowerLasArray) {
+                for (EnemyFirePowerLas enemyFirePowerLas : enemyFirePowerLasArray) {
                     enemyFirePowerLas.update(dt);
                     if (enemyFirePowerLas.isDestroyed()) {
                         enemyFirePowerLasArray.removeValue(enemyFirePowerLas, true);
                     }
                 }
-
                 //looking at you:
                 if (b2body.getLinearVelocity().x < 0) {
                     runningRight = false;

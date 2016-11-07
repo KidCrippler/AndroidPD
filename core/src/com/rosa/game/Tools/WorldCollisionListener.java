@@ -130,9 +130,6 @@ public class WorldCollisionListener implements ContactListener {
                 else
                     ((YamYam) fixB.getUserData()).reverseVelocity(true,false);
                 break;
-
-
-
         }
     }
 
