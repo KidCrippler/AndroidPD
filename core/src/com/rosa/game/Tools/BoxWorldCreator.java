@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
-import com.rosa.game.Sprites.Enemies.Enemy;
+import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
 import com.rosa.game.Sprites.Enemies.YamYam;
 import com.rosa.game.Sprites.Enemies.Bun;
 import com.rosa.game.screens.PlayScreen;

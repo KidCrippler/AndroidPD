@@ -14,7 +14,7 @@ import com.rosa.game.Sprites.Bob.Player;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
 
-public class YamYam extends Enemy {
+public class YamYam extends com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy {
 
     public enum State {FALLING, JUMPING, STANDING, RUNNING}
 
@@ -26,7 +26,7 @@ public class YamYam extends Enemy {
     private boolean destroyed;
     private int yamyamHP = 100;
     private SoundPlayer playSound = new SoundPlayer();
-    private Array<EnemyFirePowerLas> enemyFirePowerLasArray;
+    private Array<com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyFirePowerLas> enemyFirePowerLasArray;
     private static final long FIRE_RATE = 1200000000L;
     private long lastShot;
     private boolean runningRight;
@@ -35,6 +35,7 @@ public class YamYam extends Enemy {
     private Animation yamyamRun;
     private Animation yamyamJump;
     private TextureRegion yamyamStand;
+    private static boolean chaseing = true;
 
 
     public YamYam(PlayScreen screen, float x, float y) {
@@ -70,7 +71,7 @@ public class YamYam extends Enemy {
         setBounds(0, 0, 23 / Application.PPM, 32 / Application.PPM);
         setRegion(yamyamStand);
 
-        enemyFirePowerLasArray = new Array<EnemyFirePowerLas>();
+        enemyFirePowerLasArray = new Array<com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyFirePowerLas>();
     }
 
     public void update(float dt) {
@@ -83,7 +84,7 @@ public class YamYam extends Enemy {
 
         } else {
                 setRegion(getFrame(dt));
-            if (!destroyed && b2body.isActive()) {
+            if (!destroyed && b2body.isActive() && chaseing) {
 
                 //RAY_ONE (AI movement):
                 if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x)
@@ -95,17 +96,15 @@ public class YamYam extends Enemy {
                 //Draw:
                 setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
                 setRegion(walkAnimation.getKeyFrame(stateTime, true));
-//
-//                fire();
 
-                for (EnemyFirePowerLas enemyFirePowerLas : enemyFirePowerLasArray) {
+//                fire();
+                for (com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyFirePowerLas enemyFirePowerLas : enemyFirePowerLasArray) {
                     enemyFirePowerLas.update(dt);
                     if (enemyFirePowerLas.isDestroyed()) {
                         enemyFirePowerLasArray.removeValue(enemyFirePowerLas, true);
                     }
                 }
 
-                //TODO: Fix steering at you and shooting
                 //looking at you:
                 if (b2body.getLinearVelocity().x < 0) {
                     runningRight = false;
@@ -224,7 +223,7 @@ public class YamYam extends Enemy {
     }
 
     @Override
-    public void hitByEnemy(Enemy enemy) {
+    public void hitByEnemy(com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy enemy) {
         playSound.playSoundRandomBunHurt();
     }
 
@@ -233,6 +232,11 @@ public class YamYam extends Enemy {
             velocity.x = -velocity.x;
         if (y)
             velocity.y = -velocity.y;
+
+        if(chaseing) chaseing = false;
+        else chaseing = true;
+
+        System.out.println("hit");
     }
 
     public void setToDestroy() {
@@ -249,7 +253,7 @@ public class YamYam extends Enemy {
 
     private void fire() {
         if (System.nanoTime() - lastShot >= FIRE_RATE) {
-            enemyFirePowerLasArray.add(new EnemyFirePowerLas(screen, (float) (b2body.getPosition().x - 0.1), (float) (b2body.getPosition().y + 0.2), runningRight));
+            enemyFirePowerLasArray.add(new com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyFirePowerLas(screen, (float) (b2body.getPosition().x - 0.1), (float) (b2body.getPosition().y + 0.2), runningRight));
             lastShot = System.nanoTime();
             soundPlayer.playSoundRandomYamYamFirePower();
         }

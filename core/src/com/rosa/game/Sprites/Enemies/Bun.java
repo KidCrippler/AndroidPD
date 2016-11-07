@@ -14,7 +14,7 @@ import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
 
 
-public class Bun extends Enemy {
+public class Bun extends com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy {
 
     private float stateTime;
     private Animation walkAnimation;
@@ -102,7 +102,7 @@ public class Bun extends Enemy {
     }
 
     @Override
-    public void hitByEnemy(Enemy enemy) {
+    public void hitByEnemy(com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy enemy) {
         reverseVelocity(true, false);
         playSound.playSoundRandomBunHurt();
     }

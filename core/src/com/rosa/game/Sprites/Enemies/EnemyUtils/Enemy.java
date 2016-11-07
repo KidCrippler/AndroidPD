@@ -1,4 +1,4 @@
-package com.rosa.game.Sprites.Enemies;
+package com.rosa.game.Sprites.Enemies.EnemyUtils;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;

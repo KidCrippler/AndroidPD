@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Bob.Bullet;
-import com.rosa.game.Sprites.Enemies.Enemy;
+import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
 import com.rosa.game.Sprites.Enemies.YamYam;
 
 public class WorldCollisionListener implements ContactListener {

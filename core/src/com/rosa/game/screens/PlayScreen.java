@@ -16,7 +16,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rosa.game.Application;
 import com.rosa.game.Scenes.Hud;
-import com.rosa.game.Sprites.Enemies.Enemy;
+import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
 import com.rosa.game.Sprites.Bob.Player;
 import com.rosa.game.Tools.BoxWorldCreator;
 import com.rosa.game.Tools.Controller;
