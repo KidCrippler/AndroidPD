@@ -16,12 +16,12 @@ import com.rosa.game.Sprites.Enemies.YamYam;
 import com.rosa.game.Sprites.Enemies.Bun;
 import com.rosa.game.screens.PlayScreen;
 
-public class B2WorldCreator {
+public class BoxWorldCreator {
 
     private Array<Bun> buns;
     private Array<YamYam> yamYams;
 
-    public B2WorldCreator(PlayScreen screen) {
+    public BoxWorldCreator(PlayScreen screen) {
         World world = screen.getWorld();
         TiledMap map = screen.getMap();
         BodyDef bodyDef = new BodyDef();

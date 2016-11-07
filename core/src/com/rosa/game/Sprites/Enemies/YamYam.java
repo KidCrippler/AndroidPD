@@ -36,6 +36,7 @@ public class YamYam extends Enemy {
     private Animation yamyamJump;
     private TextureRegion yamyamStand;
 
+
     public YamYam(PlayScreen screen, float x, float y) {
         super(screen, x, y);
         currentState = State.STANDING;
@@ -84,7 +85,7 @@ public class YamYam extends Enemy {
                 setRegion(getFrame(dt));
             if (!destroyed && b2body.isActive()) {
 
-                //RAY (AI movement):
+                //RAY_ONE (AI movement):
                 if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x)
                     b2body.applyLinearImpulse(new Vector2(-0.02f, 0), b2body.getWorldCenter(), true);
 
@@ -190,7 +191,7 @@ public class YamYam extends Enemy {
         FixtureDef fixtureDefRayOne = new FixtureDef();
         CircleShape rayShapeOne = new CircleShape();
         rayShapeOne.setRadius(6 / Application.PPM);
-        fixtureDefRayOne.filter.categoryBits = Application.RAY;
+        fixtureDefRayOne.filter.categoryBits = Application.RAY_ONE;
         fixtureDefRayOne.filter.maskBits =
                 Application.WALL_BIT;
 
@@ -205,7 +206,7 @@ public class YamYam extends Enemy {
         FixtureDef fixtureDefRayTwo = new FixtureDef();
         CircleShape rayShapeTwo = new CircleShape();
         rayShapeTwo.setRadius(6 / Application.PPM);
-        fixtureDefRayTwo.filter.categoryBits = Application.RAY;
+        fixtureDefRayTwo.filter.categoryBits = Application.RAY_TWO;
         fixtureDefRayTwo.filter.maskBits =
                 Application.WALL_BIT;
 

@@ -18,9 +18,9 @@ import com.rosa.game.Application;
 import com.rosa.game.Scenes.Hud;
 import com.rosa.game.Sprites.Enemies.Enemy;
 import com.rosa.game.Sprites.Bob.Player;
-import com.rosa.game.Tools.B2WorldCreator;
+import com.rosa.game.Tools.BoxWorldCreator;
 import com.rosa.game.Tools.Controller;
-import com.rosa.game.Tools.WorldContactListener;
+import com.rosa.game.Tools.WorldCollisionListener;
 
 public class PlayScreen implements Screen {
 
@@ -35,7 +35,7 @@ public class PlayScreen implements Screen {
     private Controller controller;
     private World world;
     private Box2DDebugRenderer b2dr;
-    private B2WorldCreator creator;
+    private BoxWorldCreator creator;
 
     public PlayScreen(Application game) {
 
@@ -53,12 +53,12 @@ public class PlayScreen implements Screen {
 
         world = new World(new Vector2(0, -10), true);
 
-        creator = new B2WorldCreator(this);
+        creator = new BoxWorldCreator(this);
         b2dr = new Box2DDebugRenderer();
 
         //Start the player:
         player = new Player(world, this);
-        world.setContactListener(new WorldContactListener());
+        world.setContactListener(new WorldCollisionListener());
         controller = new Controller();
     }
 

@@ -10,7 +10,7 @@ import com.rosa.game.Sprites.Bob.Bullet;
 import com.rosa.game.Sprites.Enemies.Enemy;
 import com.rosa.game.Sprites.Enemies.YamYam;
 
-public class WorldContactListener implements ContactListener {
+public class WorldCollisionListener implements ContactListener {
 
     SoundPlayer soundPlayer = new SoundPlayer();
 
@@ -115,20 +115,24 @@ public class WorldContactListener implements ContactListener {
                     ((Bullet) fixB.getUserData()).setToDestroy();
                 break;
 
-            //      *       *       *       RAY     *       *       *       //
-
-            case Application.ENEMY_AI | Application.RAY:
-                ((Enemy) fixA.getUserData()).hitByEnemy((Enemy) fixB.getUserData());
-                ((Enemy) fixB.getUserData()).hitByEnemy((Enemy) fixA.getUserData());
-                break;
-
-
-            case Application.RAY | Application.WALL_BIT:
-                if (fixA.getFilterData().categoryBits == Application.RAY)
+            //      *       *       *       RAY_ONE - ONE    *       *       *       //
+            case Application.RAY_ONE | Application.WALL_BIT:
+                if (fixA.getFilterData().categoryBits == Application.RAY_ONE)
                     ((YamYam) fixA.getUserData()).jump();
                 else
                     ((YamYam) fixB.getUserData()).jump();
                 break;
+
+            //      *       *       *       RAY_ONE - TWO    *       *       *       //
+            case Application.RAY_TWO | Application.WALL_BIT:
+                if (fixA.getFilterData().categoryBits == Application.RAY_TWO)
+                    ((YamYam) fixA.getUserData()).reverseVelocity(true,false);
+                else
+                    ((YamYam) fixB.getUserData()).reverseVelocity(true,false);
+                break;
+
+
+
         }
     }
 
