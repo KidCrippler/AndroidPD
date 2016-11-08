@@ -12,6 +12,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.graphics.Color;
 import com.rosa.game.Application;
 
+//test
+
 public class Hud implements Disposable {
 
     public Stage stage;

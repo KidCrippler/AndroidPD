@@ -16,7 +16,7 @@ public class SoundPlayer {
         soundString.add(1, "sounds/audio/bob/land.wav");
 
         try {
-            Sound soundFXStream = Gdx.audio.newSound(Gdx.files.internal(soundString.get(soundNumber)));//Volume:
+            Sound soundFXStream = Gdx.audio.newSound(Gdx.files.internal(soundString.get(soundNumber)));
             soundFXStream.play(genVolume);
         } catch (Exception e) {
             e.printStackTrace();
