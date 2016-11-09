@@ -25,6 +25,7 @@ public class Hud implements Disposable {
         viewport = new FitViewport(Application.V_WIDTH, Application.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, sb);
 
+
         Table table = new Table();
         table.top();
         table.right();
