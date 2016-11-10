@@ -43,7 +43,7 @@ public class EnemyFirePowerLas extends Sprite {
         defineBullet();
     }
 
-    public void defineBullet() {
+    private void defineBullet() {
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(fireRight ? getX() + 5 / Application.PPM : getX() - 12 / Application.PPM, getY());
         bodyDef.type = BodyDef.BodyType.DynamicBody;

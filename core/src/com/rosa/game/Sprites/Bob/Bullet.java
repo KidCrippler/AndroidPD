@@ -13,7 +13,6 @@ import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
 import com.rosa.game.screens.PlayScreen;
 
-
 public class Bullet extends Sprite {
 
     public World world;

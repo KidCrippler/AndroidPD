@@ -18,10 +18,10 @@ import com.rosa.game.screens.PlayScreen;
 
 public class YamYam extends Enemy {
 
-    public enum State {FALLING, JUMPING, STANDING, RUNNING}
+    private enum State {FALLING, JUMPING, STANDING, RUNNING}
 
-    public State currentState;
-    public State previousState;
+    private State currentState;
+    private State previousState;
     private float stateTime;
     private Animation walkAnimation;
     private boolean setToDestroy;
@@ -37,7 +37,7 @@ public class YamYam extends Enemy {
     private Animation yamyamRun;
     private Animation yamyamJump;
     private TextureRegion yamyamStand;
-    private static boolean chaseing = true;
+    private static boolean chasing = true;
 
 
     public YamYam(PlayScreen screen, float x, float y) {
@@ -87,7 +87,7 @@ public class YamYam extends Enemy {
         } else {
                 setRegion(getFrame(dt));
 
-            if (!destroyed && b2body.isActive() && chaseing) {
+            if (!destroyed && b2body.isActive() && chasing) {
 
                 //RAY_ONE (AI movement):
                 if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x)
@@ -117,7 +117,7 @@ public class YamYam extends Enemy {
         }
     }
 
-    public TextureRegion getFrame(float dt) {
+    private TextureRegion getFrame(float dt) {
         currentState = getState();
         TextureRegion region;
         switch (currentState) {
@@ -148,7 +148,7 @@ public class YamYam extends Enemy {
         return region;
     }
 
-    public State getState() {
+    private State getState() {
         if (b2body.getLinearVelocity().y > 0 || (b2body.getLinearVelocity().y < 0 && previousState == State.JUMPING))
             return State.JUMPING;
         else if (b2body.getLinearVelocity().y < 0)
@@ -233,8 +233,7 @@ public class YamYam extends Enemy {
         if (y)
             velocity.y = -velocity.y;
 
-        if(chaseing) chaseing = false;
-        else chaseing = true;
+        chasing = !chasing;
 
         System.out.println("hit");
     }
