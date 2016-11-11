@@ -3,6 +3,7 @@ package com.rosa.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.rosa.game.screens.PlayScreen;
+import com.rosa.game.screens.SplashScreen;
 
 public class Application extends Game {
 
@@ -23,11 +24,14 @@ public class Application extends Game {
     public static final short RAY_TWO = 512;
 
     public static SpriteBatch batch;
+    SplashScreen splashScreen;
 
     @Override
     public void create() {
         batch = new SpriteBatch();
-        setScreen(new PlayScreen(this));
+        //setScreen(new PlayScreen(this));
+        splashScreen = new SplashScreen();
+        setScreen(splashScreen);
     }
 
     @Override
