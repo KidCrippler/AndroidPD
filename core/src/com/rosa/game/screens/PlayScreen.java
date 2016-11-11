@@ -37,7 +37,9 @@ public class PlayScreen implements Screen {
     private Box2DDebugRenderer b2dr;
     private BoxWorldCreator creator;
 
-    public PlayScreen(Application game) {
+    public PlayScreen() {
+//    public PlayScreen(Application game) {
+//        this.game = game;
 
         atlas = new TextureAtlas("keen_one.pack");
         this.game = game;
@@ -61,6 +63,8 @@ public class PlayScreen implements Screen {
         world.setContactListener(new WorldCollisionListener());
         controller = new Controller();
     }
+
+
 
     public TextureAtlas getAtlas() {
         return atlas;
