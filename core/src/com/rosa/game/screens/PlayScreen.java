@@ -37,17 +37,17 @@ public class PlayScreen implements Screen {
     private Box2DDebugRenderer b2dr;
     private BoxWorldCreator creator;
 
-    public PlayScreen() {
-//    public PlayScreen(Application game) {
-//        this.game = game;
+//    public PlayScreen() {
+    public PlayScreen(Application game) {
+        this.game = game;
 
-        atlas = new TextureAtlas("keen_one.pack");
+        atlas = new TextureAtlas("style/ingame/figure/bob/bob.pack");
         this.game = game;
         orthographicCamera = new OrthographicCamera();
         gamePort = new FitViewport(Application.V_WIDTH / Application.PPM, Application.V_HEIGHT / Application.PPM, orthographicCamera);
         hud = new Hud(game.batch);
         TmxMapLoader mapLoader = new TmxMapLoader();
-        map = mapLoader.load("tmap.tmx");
+        map = mapLoader.load("style/ingame/level/tmap.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1 / Application.PPM);
 
         //GameCam:

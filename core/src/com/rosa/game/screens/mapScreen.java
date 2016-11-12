@@ -21,7 +21,7 @@ public class MapScreen implements Screen{
     @Override
     public void show() {
         stage = new Stage();
-        skin = new Skin(Gdx.files.internal("mainmenu.json"),new TextureAtlas("mainmenu.pack"));
+        skin = new Skin(Gdx.files.internal("style/menu/mainmenu.json"),new TextureAtlas("style/menu/mainmenu.pack"));
         final MenuScreen menuScreen=new MenuScreen();
 
         levelScreen = new Image(skin, "levelscreen");

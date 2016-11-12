@@ -29,7 +29,7 @@ public class Controller {
         Table table = new Table();
         table.left().bottom();
 
-        Image upImg = new Image(new Texture("controller/jump.png"));
+        Image upImg = new Image(new Texture("style/androidButtons/controller/jump.png"));
         upImg.setSize(50, 50);
         upImg.addListener(new InputListener() {
 
@@ -46,7 +46,7 @@ public class Controller {
         });
 
 
-        Image rightImg = new Image(new Texture("controller/right.png"));
+        Image rightImg = new Image(new Texture("style/androidButtons/controller/right.png"));
         rightImg.setSize(50, 50);
         rightImg.addListener(new InputListener() {
 
@@ -62,7 +62,7 @@ public class Controller {
             }
         });
 
-        Image leftImg = new Image(new Texture("controller/left.png"));
+        Image leftImg = new Image(new Texture("style/androidButtons/controller/left.png"));
         leftImg.setSize(50, 50);
         leftImg.addListener(new InputListener() {
 

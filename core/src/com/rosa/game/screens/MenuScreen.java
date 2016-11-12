@@ -28,7 +28,7 @@ public class MenuScreen implements Screen {
     @Override
     public void show() {
         stage = new Stage();
-        skin = new Skin(Gdx.files.internal("mainmenu.json"),new TextureAtlas("mainmenu.pack"));
+        skin = new Skin(Gdx.files.internal("style/menu/mainmenu.json"),new TextureAtlas("style/menu/mainmenu.pack"));
 
         bg = new Image(skin, "bg");
         startButton = new Button(skin, "startbutton");

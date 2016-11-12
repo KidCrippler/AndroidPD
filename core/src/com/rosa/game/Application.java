@@ -29,9 +29,9 @@ public class Application extends Game {
     @Override
     public void create() {
         batch = new SpriteBatch();
-//        setScreen(new PlayScreen(this));
-        splashScreen = new SplashScreen();
-        setScreen(splashScreen);
+        setScreen(new PlayScreen(this));
+//        splashScreen = new SplashScreen();
+//        setScreen(splashScreen);
     }
 
     @Override
