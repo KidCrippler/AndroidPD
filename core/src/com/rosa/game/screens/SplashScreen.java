@@ -12,7 +12,7 @@ import com.rosa.game.screens.PlayScreen;
 
 public class SplashScreen implements Screen {
 
-    private Texture texture = new Texture(Gdx.files.internal("Splash_srn.png"));
+    private Texture texture = new Texture(Gdx.files.internal("style/menu/splash/splash_srn.png"));
     private Image splashImage = new Image(texture);
     private Stage stage = new Stage();
 
