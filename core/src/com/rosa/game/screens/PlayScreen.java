@@ -1,5 +1,6 @@
 package com.rosa.game.screens;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -37,9 +38,9 @@ public class PlayScreen implements Screen {
     private Box2DDebugRenderer b2dr;
     private BoxWorldCreator creator;
 
-//    public PlayScreen() {
-    public PlayScreen(Application game) {
-        this.game = game;
+    public PlayScreen() {
+//    public PlayScreen(Application game) {
+//        this.game = game;
 
         atlas = new TextureAtlas("style/ingame/figure/bob/bob.pack");
         this.game = game;
@@ -101,6 +102,12 @@ public class PlayScreen implements Screen {
 
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE))
             player.fire();
+        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+
+            final MenuScreen menuScreen = new MenuScreen();
+            ((Game) Gdx.app.getApplicationListener()).setScreen(menuScreen);
+
+        }
     }
 
     public void update(float dt) {

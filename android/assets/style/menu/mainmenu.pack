@@ -60,8 +60,8 @@ repeat: none
 levelscreen
   rotate: false
   xy: 1, 1
-  size: 500, 700
-  orig: 500, 700
+  size: 1000, 800
+  orig: 1000, 800
   offset: 0, 0
   index: -1
 optionsscreen
@@ -79,7 +79,19 @@ repeat: none
 bg
   rotate: false
   xy: 1, 1
-  size: 479, 544
-  orig: 479, 544
+  size: 2560, 1600
+  orig: 2560, 1600
+  offset: 0, 0
+  index: -1
+
+design/map1.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+map1
+  rotate: false
+  xy: 12, 12
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1

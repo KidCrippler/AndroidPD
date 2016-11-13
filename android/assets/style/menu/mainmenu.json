@@ -21,13 +21,13 @@
       "down": "creditsbutton",
       "up": "creditsbutton"
     },
-    "facebookbutton": {
-      "down": "facebookbutton",
-      "up": "facebookbutton"
-    },
     "backbutton": {
       "down": "backbutton",
       "up": "backbutton"
+    },
+    "map1": {
+      "down": "map1",
+      "up": "map1"
     }
   }
 }

@@ -1,5 +1,7 @@
 package com.rosa.game.Sprites.Enemies;
 
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -14,6 +16,7 @@ import com.rosa.game.Sprites.Bob.Player;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyFirePowerLas;
 import com.rosa.game.Tools.SoundPlayer;
+import com.rosa.game.screens.MenuScreen;
 import com.rosa.game.screens.PlayScreen;
 
 public class YamYam extends Enemy {
@@ -223,8 +226,9 @@ public class YamYam extends Enemy {
     }
 
     @Override
-    public void hitByEnemy(com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy enemy) {
+    public void hitByEnemy(Enemy enemy) {
         playSound.playSoundRandomBunHurt();
+
     }
 
     public void reverseVelocity(boolean x, boolean y) {
