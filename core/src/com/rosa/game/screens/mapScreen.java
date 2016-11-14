@@ -20,16 +20,18 @@ public class MapScreen implements Screen {
     private Button backButton;
     private Button map1;
     private Application game;
+    private PlayScreen playScreen;
 
-    public MapScreen (Application game){
+    public MapScreen (Application game, PlayScreen playScreen){
         this.game = game;
+        this.playScreen = playScreen;
     }
 
     @Override
     public void show() {
         stage = new Stage();
         skin = new Skin(Gdx.files.internal("style/menu/mainmenu.json"), new TextureAtlas("style/menu/mainmenu.pack"));
-        final MenuScreen menuScreen = new MenuScreen(game);
+        final MenuScreen menuScreen = new MenuScreen(game,playScreen);
         final PlayScreen playScreen = new PlayScreen(game,menuScreen);
 
         levelScreen = new Image(skin, "levelscreen");

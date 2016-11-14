@@ -15,35 +15,37 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.Game;
 import com.rosa.game.Application;
 
-public class OptionsScreen implements Screen{
+public class OptionsScreen implements Screen {
 
+    PlayScreen playScreen;
     private Skin skin;
     private Stage stage;
     private Image optionsScreen;
     private Button backButton;
     private Application game;
 
-    public OptionsScreen(Application game){
+    public OptionsScreen(Application game, PlayScreen playScreen) {
         this.game = game;
+        this.playScreen = playScreen;
     }
 
 
     @Override
     public void show() {
         stage = new Stage();
-        skin = new Skin(Gdx.files.internal("mainmenu.json"),new TextureAtlas("mainmenu.pack"));
-        final MenuScreen menuScreen=new MenuScreen(game);
+        skin = new Skin(Gdx.files.internal("mainmenu.json"), new TextureAtlas("mainmenu.pack"));
+        final MenuScreen menuScreen = new MenuScreen(game,playScreen);
 
         optionsScreen = new Image(skin, "optionsscreen");
         backButton = new Button(skin, "backbutton");
 
         optionsScreen.setPosition(0.0f, 0.0f);
-        backButton.setPosition(Gdx.graphics.getWidth()/2-66/2f, Gdx.graphics.getHeight()/2-340f);
+        backButton.setPosition(Gdx.graphics.getWidth() / 2 - 66 / 2f, Gdx.graphics.getHeight() / 2 - 340f);
 
-        backButton.addListener(new ClickListener(){
+        backButton.addListener(new ClickListener() {
             @Override
-            public void clicked(InputEvent event, float x, float y){
-                ((Game)Gdx.app.getApplicationListener()).setScreen(menuScreen);
+            public void clicked(InputEvent event, float x, float y) {
+                ((Game) Gdx.app.getApplicationListener()).setScreen(menuScreen);
             }
         });
 
@@ -55,7 +57,7 @@ public class OptionsScreen implements Screen{
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0x64/255.0f,0x95/255.0f,0xed/255.0f,0xff/255.0f);
+        Gdx.gl.glClearColor(0x64 / 255.0f, 0x95 / 255.0f, 0xed / 255.0f, 0xff / 255.0f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
         stage.draw();
