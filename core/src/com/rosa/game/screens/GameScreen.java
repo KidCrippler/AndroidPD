@@ -6,18 +6,18 @@ import com.rosa.game.Application;
 
 public class GameScreen extends ScreenAdapter {
 
-    static final int GAME_READY = 0;
-    static final int GAME_RUNNING = 1;
-    static final int GAME_PAUSED = 2;
-    static final int GAME_LEVEL_END = 3;
-    static final int GAME_OVER = 4;
+    public static final int GAME_READY = 0;
+    public static final int GAME_RUNNING = 1;
+    public static final int GAME_PAUSED = 2;
+    public static final int GAME_LEVEL_END = 3;
+    public static final int GAME_OVER = 4;
+    public static int FRAME_GAME_STATE;
 
     Application game;
-    int state;
 
     public GameScreen(Application game) {
         this.game = game;
-        state = GAME_READY;
+        FRAME_GAME_STATE = GAME_READY;
     }
 
 
@@ -25,7 +25,7 @@ public class GameScreen extends ScreenAdapter {
         if (dt > 0.1f)
             dt = 0.1f;
 
-        switch (state) {
+        switch (FRAME_GAME_STATE) {
             case GAME_READY:
                 updateReady();
                 break;

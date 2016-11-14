@@ -26,8 +26,9 @@ public class MenuScreen implements Screen {
     private Button creditsButton;
     private static Application game;
     GameScreen gamescreen;
+    PlayScreen playScreen;
 
-    MenuScreen(Application game){
+    MenuScreen(Application game) {
         this.game = game;
     }
 
@@ -43,20 +44,26 @@ public class MenuScreen implements Screen {
         creditsButton = new Button(skin, "creditsbutton");
 
         bg.setPosition(1, 1);
-        startButton.setPosition(780 , 500);
+        startButton.setPosition(780, 500);
         optionsButton.setPosition(780, 430);
         creditsButton.setPosition(780, 360);
 
+        //Maps:
         startButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 ((Game) Gdx.app.getApplicationListener()).setScreen(mapScreen);
             }
         });
+
+        //Credits:
         optionsButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                ((Game) Gdx.app.getApplicationListener()).setScreen(optionsScreen);
+                ((Game) Gdx.app.getApplicationListener()).setScreen(playScreen);
+                System.out.println("play");
+                GameScreen.FRAME_GAME_STATE = GameScreen.GAME_PAUSED;
+//                ((Game) Gdx.app.getApplicationListener()).setScreen(optionsScreen);
             }
         });
         creditsButton.addListener(new ClickListener() {
@@ -89,7 +96,7 @@ public class MenuScreen implements Screen {
         gamescreen.update(dt);
     }
 
-        @Override
+    @Override
     public void resize(int width, int height) {
 
     }
