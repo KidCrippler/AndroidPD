@@ -15,15 +15,20 @@ import com.rosa.game.Application;
 
 public class MenuScreen implements Screen {
 
+
     private Skin skin;
     private Stage stage;
-    private MapScreen mapScreen = new MapScreen();
-    private OptionsScreen optionsScreen = new OptionsScreen();
+    private MapScreen mapScreen = new MapScreen(game);
+    private OptionsScreen optionsScreen = new OptionsScreen(game);
     private Image bg;
     private Button startButton;
     private Button optionsButton;
     private Button creditsButton;
-    public enum Screens {MAIN_MENU,GAME_RUNNING}
+    private static Application game;
+
+    MenuScreen(Application game){
+        this.game = game;
+    }
 
     @Override
     public void show() {
@@ -74,9 +79,15 @@ public class MenuScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
         stage.draw();
+        update(delta);
+
     }
 
-    @Override
+    public void update(float dt) {
+
+    }
+
+        @Override
     public void resize(int width, int height) {
 
     }

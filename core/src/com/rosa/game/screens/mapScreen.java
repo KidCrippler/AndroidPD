@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.Game;
+import com.rosa.game.Application;
 
 public class MapScreen implements Screen {
     private Skin skin;
@@ -18,13 +19,18 @@ public class MapScreen implements Screen {
     private Image levelScreen;
     private Button backButton;
     private Button map1;
+    private Application game;
+
+    public MapScreen (Application game){
+        this.game = game;
+    }
 
     @Override
     public void show() {
         stage = new Stage();
         skin = new Skin(Gdx.files.internal("style/menu/mainmenu.json"), new TextureAtlas("style/menu/mainmenu.pack"));
-        final MenuScreen menuScreen = new MenuScreen();
-        final PlayScreen playScreen = new PlayScreen();
+        final MenuScreen menuScreen = new MenuScreen(game);
+        final PlayScreen playScreen = new PlayScreen(game);
 
         levelScreen = new Image(skin, "levelscreen");
         backButton = new Button(skin, "backbutton");

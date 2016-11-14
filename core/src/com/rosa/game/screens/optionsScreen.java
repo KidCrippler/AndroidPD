@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.Game;
+import com.rosa.game.Application;
 
 public class OptionsScreen implements Screen{
 
@@ -20,13 +21,18 @@ public class OptionsScreen implements Screen{
     private Stage stage;
     private Image optionsScreen;
     private Button backButton;
+    private Application game;
+
+    public OptionsScreen(Application game){
+        this.game = game;
+    }
 
 
     @Override
     public void show() {
         stage = new Stage();
         skin = new Skin(Gdx.files.internal("mainmenu.json"),new TextureAtlas("mainmenu.pack"));
-        final MenuScreen menuScreen=new MenuScreen();
+        final MenuScreen menuScreen=new MenuScreen(game);
 
         optionsScreen = new Image(skin, "optionsscreen");
         backButton = new Button(skin, "backbutton");

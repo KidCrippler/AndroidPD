@@ -38,9 +38,9 @@ public class PlayScreen implements Screen {
     private Box2DDebugRenderer b2dr;
     private BoxWorldCreator creator;
 
-    public PlayScreen() {
-//    public PlayScreen(Application game) {
-//        this.game = game;
+//    public PlayScreen() {
+    public PlayScreen(Application game) {
+        this.game = game;
 
         atlas = new TextureAtlas("style/ingame/figure/bob/bob.pack");
         this.game = game;
@@ -104,7 +104,7 @@ public class PlayScreen implements Screen {
             player.fire();
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
 
-            final MenuScreen menuScreen = new MenuScreen();
+            final MenuScreen menuScreen = new MenuScreen(game);
             ((Game) Gdx.app.getApplicationListener()).setScreen(menuScreen);
 
         }

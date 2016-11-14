@@ -31,7 +31,7 @@ public class Application extends Game {
     public void create() {
         batch = new SpriteBatch();
 //        setScreen(new PlayScreen(this));
-        splashScreen = new SplashScreen();
+        splashScreen = new SplashScreen(this);
         setScreen(splashScreen);
     }
 
