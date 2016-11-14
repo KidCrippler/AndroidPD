@@ -25,6 +25,7 @@ public class MenuScreen implements Screen {
     private Button optionsButton;
     private Button creditsButton;
     private static Application game;
+    GameScreen gamescreen;
 
     MenuScreen(Application game){
         this.game = game;
@@ -34,6 +35,7 @@ public class MenuScreen implements Screen {
     public void show() {
         stage = new Stage();
         skin = new Skin(Gdx.files.internal("style/menu/mainmenu.json"), new TextureAtlas("style/menu/mainmenu.pack"));
+        gamescreen = new GameScreen(game);
 
         bg = new Image(skin, "bg");
         startButton = new Button(skin, "startbutton");
@@ -84,7 +86,7 @@ public class MenuScreen implements Screen {
     }
 
     public void update(float dt) {
-
+        gamescreen.update(dt);
     }
 
         @Override
