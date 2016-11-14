@@ -13,6 +13,9 @@ public class GameScreen extends ScreenAdapter {
     public static final int GAME_OVER = 4;
     public static int FRAME_GAME_STATE;
 
+    public enum GameState { READY, RUNNING, PAUSED, GAMEOVER }
+    public GameState state = GameState.READY;
+
     Application game;
 
     public GameScreen(Application game) {
@@ -58,8 +61,4 @@ public class GameScreen extends ScreenAdapter {
 
     private void updateRunning(float dt) {
     }
-
-
-
-
 }

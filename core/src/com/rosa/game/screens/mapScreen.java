@@ -22,7 +22,7 @@ public class MapScreen implements Screen {
     private Application game;
     private PlayScreen playScreen;
 
-    public MapScreen (Application game, PlayScreen playScreen){
+    public MapScreen(Application game, PlayScreen playScreen) {
         this.game = game;
         this.playScreen = playScreen;
     }
@@ -31,8 +31,8 @@ public class MapScreen implements Screen {
     public void show() {
         stage = new Stage();
         skin = new Skin(Gdx.files.internal("style/menu/mainmenu.json"), new TextureAtlas("style/menu/mainmenu.pack"));
-        final MenuScreen menuScreen = new MenuScreen(game,playScreen);
-        final PlayScreen playScreen = new PlayScreen(game,menuScreen);
+        final MenuScreen menuScreen = new MenuScreen(game, playScreen);
+        final PlayScreen playScreen = new PlayScreen(game, menuScreen);
 
         levelScreen = new Image(skin, "levelscreen");
         backButton = new Button(skin, "backbutton");

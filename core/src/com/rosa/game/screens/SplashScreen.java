@@ -19,7 +19,6 @@ public class SplashScreen implements Screen {
     private Application game;
     PlayScreen playScreen;
 
-
     public SplashScreen (Application game,PlayScreen playScreen){
         this.game = game;
         this.playScreen = playScreen;
@@ -29,11 +28,10 @@ public class SplashScreen implements Screen {
     @Override
     public void show() {
         stage.addActor(splashImage);
-        splashImage.addAction(Actions.sequence(Actions.alpha(0), Actions.fadeIn(4.0f), Actions.delay(1), Actions.run(new Runnable() {
+        splashImage.addAction(Actions.sequence(Actions.alpha(0), Actions.fadeIn(1.0f), Actions.delay(1), Actions.run(new Runnable() {
             @Override
             public void run() {
                 ((Game) Gdx.app.getApplicationListener()).setScreen(new MenuScreen(game,playScreen));
-//                ((Game) Gdx.app.getApplicationListener()).setScreen(new PlayScreen());
             }
         })));
     }

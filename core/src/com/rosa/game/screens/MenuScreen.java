@@ -16,10 +16,10 @@ import com.rosa.game.Application;
 public class MenuScreen implements Screen {
 
 
-    PlayScreen playScreen;
     GameScreen gamescreen;
     private Skin skin;
     private Stage stage;
+    private PlayScreen playScreen;
     private MapScreen mapScreen = new MapScreen(game,playScreen);
     private OptionsScreen optionsScreen = new OptionsScreen(game,playScreen);
     private Image bg;
@@ -27,10 +27,12 @@ public class MenuScreen implements Screen {
     private Button optionsButton;
     private Button creditsButton;
     private static Application game;
+    MenuScreen menuScreen;
 
     MenuScreen(Application game,PlayScreen playScreen) {
         this.game = game;
         this.playScreen = playScreen;
+        this.menuScreen = menuScreen;
     }
 
     @Override
@@ -57,11 +59,11 @@ public class MenuScreen implements Screen {
             }
         });
 
-        //Credits:
+        //Credits: / back / resume
         optionsButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                ((Game) Gdx.app.getApplicationListener()).setScreen(playScreen);
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new PlayScreen(game,menuScreen));
                 System.out.println("play");
                 GameScreen.FRAME_GAME_STATE = GameScreen.GAME_PAUSED;
 //                ((Game) Gdx.app.getApplicationListener()).setScreen(optionsScreen);
