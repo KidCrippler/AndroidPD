@@ -1,6 +1,12 @@
 package com.rosa.game.screens;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.World;
 import com.rosa.game.Application;
 
 
@@ -17,9 +23,23 @@ public class GameScreen extends ScreenAdapter {
     public GameState state = GameState.READY;
 
     Application game;
+    OrthographicCamera guiCam;
+    Vector3 touchPoint;
+    World world;
+    Rectangle pauseBounds;
+    Rectangle resumeBounds;
+    Rectangle quitBounds;
+    int lastScore;
+    String scoreString;
+    MenuScreen menuScreen;
+    PlayScreen playScreen;
 
-    public GameScreen(Application game) {
+
+    public GameScreen(Application game,MenuScreen menuScreen ) {
         this.game = game;
+        this.menuScreen = menuScreen;
+        this.playScreen = playScreen;
+
         FRAME_GAME_STATE = GAME_READY;
     }
 
@@ -27,6 +47,9 @@ public class GameScreen extends ScreenAdapter {
     public void update(float dt) {
         if (dt > 0.1f)
             dt = 0.1f;
+
+
+        System.out.println(FRAME_GAME_STATE);
 
         switch (FRAME_GAME_STATE) {
             case GAME_READY:
@@ -54,11 +77,36 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void updatePaused () {
+        if (Gdx.input.justTouched()) {
+            guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
+
+            if (resumeBounds.contains(touchPoint.x, touchPoint.y)) {
+                FRAME_GAME_STATE = GAME_RUNNING;
+                return;
+            }
+
+            if (quitBounds.contains(touchPoint.x, touchPoint.y)) {
+                game.setScreen(new MenuScreen(game,playScreen));
+                return;
+            }
+        }
     }
 
     private void updateReady () {
     }
 
-    private void updateRunning(float dt) {
+    private void updateRunning(float deltaTime) {
+        if (Gdx.input.justTouched()) {
+            guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
+
+            
+            //PAUSE:
+            if (pauseBounds.contains(touchPoint.x, touchPoint.y)) {
+                FRAME_GAME_STATE = GAME_PAUSED;
+                System.out.println("1");
+                return;
+            }
+        }
+
     }
 }

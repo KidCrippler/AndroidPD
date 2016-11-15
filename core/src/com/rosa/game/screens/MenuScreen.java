@@ -39,7 +39,7 @@ public class MenuScreen implements Screen {
     public void show() {
         stage = new Stage();
         skin = new Skin(Gdx.files.internal("style/menu/mainmenu.json"), new TextureAtlas("style/menu/mainmenu.pack"));
-        gamescreen = new GameScreen(game);
+        gamescreen = new GameScreen(game,menuScreen);
 
         bg = new Image(skin, "bg");
         startButton = new Button(skin, "startbutton");
@@ -63,10 +63,7 @@ public class MenuScreen implements Screen {
         optionsButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new PlayScreen(game,menuScreen));
-                System.out.println("play");
-                GameScreen.FRAME_GAME_STATE = GameScreen.GAME_PAUSED;
-//                ((Game) Gdx.app.getApplicationListener()).setScreen(optionsScreen);
+                ((Game) Gdx.app.getApplicationListener()).setScreen(optionsScreen);
             }
         });
         creditsButton.addListener(new ClickListener() {

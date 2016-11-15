@@ -41,8 +41,11 @@ public class PlayScreen implements Screen {
 
 
     public PlayScreen(Application game, MenuScreen menuScreen) {
+        GameScreen.FRAME_GAME_STATE = GameScreen.GAME_RUNNING;
+
         this.game = game;
         this.menuScreen = menuScreen;
+
 
         atlas = new TextureAtlas("style/ingame/figure/bob/bob.pack");
         this.game = game;
@@ -66,7 +69,6 @@ public class PlayScreen implements Screen {
         world.setContactListener(new WorldCollisionListener());
         controller = new Controller();
     }
-
 
 
     public TextureAtlas getAtlas() {
@@ -104,14 +106,20 @@ public class PlayScreen implements Screen {
 
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE))
             player.fire();
-        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
-//            final MenuScreen menuScreen = new MenuScreen(game);
-            ((Game) Gdx.app.getApplicationListener()).setScreen(menuScreen);
 
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+            GameScreen.FRAME_GAME_STATE = GameScreen.GAME_PAUSED;
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
+            GameScreen.FRAME_GAME_STATE = GameScreen.GAME_RUNNING;
         }
     }
 
     public void update(float dt) {
+
+        System.out.println(GameScreen.FRAME_GAME_STATE);
+
 
         handleInput();
         handleInputController();
@@ -146,7 +154,12 @@ public class PlayScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        update(delta);
+
+        if (GameScreen.FRAME_GAME_STATE == GameScreen.GAME_RUNNING) {
+            update(delta);
+
+        }
+
 
         //Clear screen:
         Gdx.gl.glClearColor(0, 0, 0, 0);
