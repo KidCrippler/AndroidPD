@@ -2,6 +2,7 @@ package com.rosa.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Rectangle;
@@ -10,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.rosa.game.Application;
 
 
-public class GameScreen extends ScreenAdapter {
+public class GameScreen extends ScreenAdapter implements Screen {
 
     public static final int GAME_READY = 0;
     public static final int GAME_RUNNING = 1;
@@ -35,12 +36,21 @@ public class GameScreen extends ScreenAdapter {
     PlayScreen playScreen;
 
 
-    public GameScreen(Application game,MenuScreen menuScreen ) {
+    public GameScreen(Application game,MenuScreen menuScreen )  {
         this.game = game;
         this.menuScreen = menuScreen;
         this.playScreen = playScreen;
 
+
         FRAME_GAME_STATE = GAME_READY;
+
+        System.out.println("1");
+    }
+
+    @Override
+    public void render(float delta) {
+        System.out.println("15");
+        update(delta);
     }
 
 
@@ -48,6 +58,7 @@ public class GameScreen extends ScreenAdapter {
         if (dt > 0.1f)
             dt = 0.1f;
 
+        System.out.println("15");
 
         System.out.println(FRAME_GAME_STATE);
 

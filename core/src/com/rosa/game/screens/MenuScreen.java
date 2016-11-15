@@ -93,7 +93,6 @@ public class MenuScreen implements Screen {
     }
 
     public void update(float dt) {
-        gamescreen.update(dt);
     }
 
     @Override

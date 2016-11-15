@@ -39,16 +39,13 @@ public class PlayScreen implements Screen {
     private BoxWorldCreator creator;
     private MenuScreen menuScreen;
 
-
     public PlayScreen(Application game, MenuScreen menuScreen) {
         GameScreen.FRAME_GAME_STATE = GameScreen.GAME_RUNNING;
 
         this.game = game;
         this.menuScreen = menuScreen;
 
-
         atlas = new TextureAtlas("style/ingame/figure/bob/bob.pack");
-        this.game = game;
         orthographicCamera = new OrthographicCamera();
         gamePort = new FitViewport(Application.V_WIDTH / Application.PPM, Application.V_HEIGHT / Application.PPM, orthographicCamera);
         hud = new Hud(game.batch);
@@ -69,7 +66,6 @@ public class PlayScreen implements Screen {
         world.setContactListener(new WorldCollisionListener());
         controller = new Controller();
     }
-
 
     public TextureAtlas getAtlas() {
         return atlas;
@@ -119,7 +115,6 @@ public class PlayScreen implements Screen {
     public void update(float dt) {
 
         System.out.println(GameScreen.FRAME_GAME_STATE);
-
 
         handleInput();
         handleInputController();
