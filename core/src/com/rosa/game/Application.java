@@ -37,13 +37,13 @@ public class Application extends Game {
 //        setScreen(new PlayScreen(this));
 
         gameScreen = new GameScreen(this,menuScreen);
-        playScreen = new PlayScreen(this,menuScreen);
+//        playScreen = new PlayScreen(this,menuScreen);
 
 
 //        splashScreen = new SplashScreen(this,playScreen);
 //        splashScreen = new SplashScreen(this,playScreen);
 //        setScreen(splashScreen);
-        setScreen(playScreen);
+        setScreen(gameScreen);
     }
 
     @Override

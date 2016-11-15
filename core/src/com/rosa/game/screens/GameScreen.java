@@ -4,11 +4,25 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rosa.game.Application;
+import com.rosa.game.Scenes.Hud;
+import com.rosa.game.Sprites.Bob.Player;
+import com.rosa.game.Tools.BoxWorldCreator;
+import com.rosa.game.Tools.Controller;
+import com.rosa.game.Tools.WorldCollisionListener;
 
 
 public class GameScreen extends ScreenAdapter implements Screen {
@@ -19,6 +33,20 @@ public class GameScreen extends ScreenAdapter implements Screen {
     public static final int GAME_LEVEL_END = 3;
     public static final int GAME_OVER = 4;
     public static int FRAME_GAME_STATE;
+
+    private TextureAtlas atlas;
+    private OrthographicCamera orthographicCamera;
+    private Viewport gamePort;
+    private Hud hud;
+    private TiledMap map;
+    private OrthogonalTiledMapRenderer renderer;
+    private Player player;
+    private Controller controller;
+    private Box2DDebugRenderer b2dr;
+    private BoxWorldCreator creator;
+
+
+
 
     public enum GameState { READY, RUNNING, PAUSED, GAMEOVER }
     public GameState state = GameState.READY;
@@ -43,14 +71,13 @@ public class GameScreen extends ScreenAdapter implements Screen {
 
 
         FRAME_GAME_STATE = GAME_READY;
-
-        System.out.println("1");
     }
 
     @Override
     public void render(float delta) {
         System.out.println("15");
-        update(delta);
+
+
     }
 
 
@@ -58,9 +85,8 @@ public class GameScreen extends ScreenAdapter implements Screen {
         if (dt > 0.1f)
             dt = 0.1f;
 
-        System.out.println("15");
+        System.out.println("FRAME_GAME_STATE: " + FRAME_GAME_STATE);
 
-        System.out.println(FRAME_GAME_STATE);
 
         switch (FRAME_GAME_STATE) {
             case GAME_READY:
