@@ -68,9 +68,6 @@ public class GameScreen extends ScreenAdapter implements Screen {
                 updateGameOver();
                 break;
         }
-
-        handleInput();
-
     }
 
     private void updateGameOver() {
@@ -110,15 +107,5 @@ public class GameScreen extends ScreenAdapter implements Screen {
             }
         }
 
-    }
-
-    public void handleInput() {
-        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
-            GameScreen.FRAME_GAME_STATE = GameScreen.GAME_RUNNING;
-//        playScreen = new PlayScreen(this,menuScreen);
-//        splashScreen = new SplashScreen(this,playScreen);
-//        splashScreen = new SplashScreen(this,playScreen);
-//        setScreen(splashScreen);
-        }
     }
 }

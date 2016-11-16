@@ -36,11 +36,7 @@ public class PlayScreen implements Screen {
     private World world;
     private Box2DDebugRenderer b2dr;
     private BoxWorldCreator creator;
-    static final int GAME_READY = 0;
-    static final int GAME_RUNNING = 1;
-    static final int GAME_PAUSED = 2;
-    static final int GAME_LEVEL_END = 3;
-    static final int GAME_OVER = 4;
+    private OnScreenOptionMenu onScreenOptionMenu;
 
     public PlayScreen(Application game) {
         GameScreen.FRAME_GAME_STATE = GameScreen.GAME_RUNNING;
@@ -61,11 +57,10 @@ public class PlayScreen implements Screen {
 
         creator = new BoxWorldCreator(this);
         b2dr = new Box2DDebugRenderer();
-
-        //Start the player:
         player = new Player(world, this);
         world.setContactListener(new WorldCollisionListener());
         controller = new Controller();
+        onScreenOptionMenu = new OnScreenOptionMenu();
     }
 
     public TextureAtlas getAtlas() {
@@ -110,8 +105,6 @@ public class PlayScreen implements Screen {
     }
 
     public void update(float dt) {
-
-        System.out.println("PLAYScreen");
         System.out.println(GameScreen.FRAME_GAME_STATE);
 
         handleInput();
@@ -173,14 +166,15 @@ public class PlayScreen implements Screen {
         controller.draw();
     }
 
-    public void gameStatus(float dt){
+    public void gameStatus(float dt) {
         if (GameScreen.FRAME_GAME_STATE == GameScreen.GAME_RUNNING) {
             update(dt);
         }
 
-
+        if (GameScreen.FRAME_GAME_STATE == GameScreen.GAME_PAUSED) {
+            onScreenOptionMenu.update(dt);
+        }
     }
-
 
 
     @Override
