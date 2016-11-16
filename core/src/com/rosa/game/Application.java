@@ -23,7 +23,7 @@ public class Application extends Game {
     public static final short RAY_TWO = 512;
 
     public static SpriteBatch batch;
-    SplashScreen splashScreen;
+    private SplashScreen splashScreen;
 
     @Override
     public void create() {
