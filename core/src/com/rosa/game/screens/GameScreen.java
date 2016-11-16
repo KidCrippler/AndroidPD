@@ -31,22 +31,16 @@ public class GameScreen extends ScreenAdapter implements Screen {
     Rectangle quitBounds;
     MenuScreen menuScreen;
     PlayScreen playScreen;
-    SplashScreen splashScreen;
 
     public GameScreen(Application game) {
         this.game = game;
         this.menuScreen = menuScreen;
         this.playScreen = playScreen;
         FRAME_GAME_STATE = GAME_READY;
-        splashScreen = new SplashScreen(game);
-        ((Game) Gdx.app.getApplicationListener()).setScreen(splashScreen);
     }
 
     @Override
     public void render(float delta) {
-        System.out.println("15");
-
-
     }
 
 

@@ -2,9 +2,6 @@ package com.rosa.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.rosa.game.screens.GameScreen;
-import com.rosa.game.screens.MenuScreen;
-import com.rosa.game.screens.PlayScreen;
 import com.rosa.game.screens.SplashScreen;
 
 public class Application extends Game {

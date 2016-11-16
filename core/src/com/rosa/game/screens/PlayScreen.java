@@ -36,6 +36,11 @@ public class PlayScreen implements Screen {
     private World world;
     private Box2DDebugRenderer b2dr;
     private BoxWorldCreator creator;
+    static final int GAME_READY = 0;
+    static final int GAME_RUNNING = 1;
+    static final int GAME_PAUSED = 2;
+    static final int GAME_LEVEL_END = 3;
+    static final int GAME_OVER = 4;
 
     public PlayScreen(Application game) {
         GameScreen.FRAME_GAME_STATE = GameScreen.GAME_RUNNING;
@@ -106,6 +111,7 @@ public class PlayScreen implements Screen {
 
     public void update(float dt) {
 
+        System.out.println("PLAYScreen");
         System.out.println(GameScreen.FRAME_GAME_STATE);
 
         handleInput();
@@ -140,13 +146,9 @@ public class PlayScreen implements Screen {
 
 
     @Override
-    public void render(float delta) {
+    public void render(float dt) {
 
-        if (GameScreen.FRAME_GAME_STATE == GameScreen.GAME_RUNNING) {
-            update(delta);
-
-        }
-
+        gameStatus(dt);
 
         //Clear screen:
         Gdx.gl.glClearColor(0, 0, 0, 0);
@@ -170,6 +172,16 @@ public class PlayScreen implements Screen {
         hud.stage.draw();
         controller.draw();
     }
+
+    public void gameStatus(float dt){
+        if (GameScreen.FRAME_GAME_STATE == GameScreen.GAME_RUNNING) {
+            update(dt);
+        }
+
+
+    }
+
+
 
     @Override
     public void resize(int width, int height) {
@@ -204,9 +216,5 @@ public class PlayScreen implements Screen {
 
     public World getWorld() {
         return world;
-    }
-
-    public Player getPlayer() {
-        return player;
     }
 }

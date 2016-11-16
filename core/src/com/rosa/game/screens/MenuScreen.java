@@ -16,11 +16,10 @@ import com.rosa.game.Application;
 public class MenuScreen implements Screen {
 
 
-    GameScreen gamescreen;
     private Skin skin;
     private Stage stage;
     private PlayScreen playScreen;
-    private MapScreen mapScreen = new MapScreen(game,playScreen);
+    private MapScreen mapScreen = new MapScreen(game);
     private OptionsScreen optionsScreen = new OptionsScreen(game,playScreen);
     private Image bg;
     private Button startButton;
@@ -28,6 +27,7 @@ public class MenuScreen implements Screen {
     private Button creditsButton;
     private static Application game;
     MenuScreen menuScreen;
+    GameScreen gamescreen;
 
     MenuScreen(Application game) {
         this.game = game;

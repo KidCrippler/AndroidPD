@@ -20,11 +20,9 @@ public class MapScreen implements Screen {
     private Button backButton;
     private Button map1;
     private Application game;
-    private PlayScreen playScreen;
 
-    public MapScreen(Application game, PlayScreen playScreen) {
+    public MapScreen(Application game) {
         this.game = game;
-        this.playScreen = playScreen;
     }
 
     @Override
