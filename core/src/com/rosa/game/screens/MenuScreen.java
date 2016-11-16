@@ -29,7 +29,7 @@ public class MenuScreen implements Screen {
     private static Application game;
     MenuScreen menuScreen;
 
-    MenuScreen(Application game,PlayScreen playScreen) {
+    MenuScreen(Application game) {
         this.game = game;
         this.playScreen = playScreen;
         this.menuScreen = menuScreen;
@@ -39,7 +39,7 @@ public class MenuScreen implements Screen {
     public void show() {
         stage = new Stage();
         skin = new Skin(Gdx.files.internal("style/menu/mainmenu.json"), new TextureAtlas("style/menu/mainmenu.pack"));
-        gamescreen = new GameScreen(game,menuScreen);
+        gamescreen = new GameScreen(game);
 
         bg = new Image(skin, "bg");
         startButton = new Button(skin, "startbutton");

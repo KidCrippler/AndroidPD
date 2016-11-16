@@ -34,7 +34,7 @@ public class OptionsScreen implements Screen {
     public void show() {
         stage = new Stage();
         skin = new Skin(Gdx.files.internal("mainmenu.json"), new TextureAtlas("mainmenu.pack"));
-        final MenuScreen menuScreen = new MenuScreen(game,playScreen);
+        final MenuScreen menuScreen = new MenuScreen(game);
 
         optionsScreen = new Image(skin, "optionsscreen");
         backButton = new Button(skin, "backbutton");

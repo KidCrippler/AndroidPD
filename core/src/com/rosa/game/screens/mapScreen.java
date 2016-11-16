@@ -31,8 +31,8 @@ public class MapScreen implements Screen {
     public void show() {
         stage = new Stage();
         skin = new Skin(Gdx.files.internal("style/menu/mainmenu.json"), new TextureAtlas("style/menu/mainmenu.pack"));
-        final MenuScreen menuScreen = new MenuScreen(game, playScreen);
-        final PlayScreen playScreen = new PlayScreen(game, menuScreen);
+        final MenuScreen menuScreen = new MenuScreen(game);
+        final PlayScreen playScreen = new PlayScreen(game);
 
         levelScreen = new Image(skin, "levelscreen");
         backButton = new Button(skin, "backbutton");

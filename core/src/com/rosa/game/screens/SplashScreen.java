@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.rosa.game.Application;
-import com.rosa.game.screens.PlayScreen;
 
 public class SplashScreen implements Screen {
 
@@ -17,13 +16,10 @@ public class SplashScreen implements Screen {
     private Image splashImage = new Image(texture);
     private Stage stage = new Stage();
     private Application game;
-    PlayScreen playScreen;
 
-    public SplashScreen (Application game,PlayScreen playScreen){
+    public SplashScreen (Application game){
         this.game = game;
-        this.playScreen = playScreen;
     }
-
 
     @Override
     public void show() {
@@ -31,7 +27,7 @@ public class SplashScreen implements Screen {
         splashImage.addAction(Actions.sequence(Actions.alpha(0), Actions.fadeIn(1.0f), Actions.delay(1), Actions.run(new Runnable() {
             @Override
             public void run() {
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new MenuScreen(game,playScreen));
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new MenuScreen(game));
             }
         })));
     }

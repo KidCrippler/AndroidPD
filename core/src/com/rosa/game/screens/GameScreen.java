@@ -1,29 +1,14 @@
 package com.rosa.game.screens;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rosa.game.Application;
-import com.rosa.game.Scenes.Hud;
-import com.rosa.game.Sprites.Bob.Player;
-import com.rosa.game.Tools.BoxWorldCreator;
-import com.rosa.game.Tools.Controller;
-import com.rosa.game.Tools.WorldCollisionListener;
-
 
 public class GameScreen extends ScreenAdapter implements Screen {
 
@@ -34,43 +19,27 @@ public class GameScreen extends ScreenAdapter implements Screen {
     public static final int GAME_OVER = 4;
     public static int FRAME_GAME_STATE;
 
-    private TextureAtlas atlas;
-    private OrthographicCamera orthographicCamera;
-    private Viewport gamePort;
-    private Hud hud;
-    private TiledMap map;
-    private OrthogonalTiledMapRenderer renderer;
-    private Player player;
-    private Controller controller;
-    private Box2DDebugRenderer b2dr;
-    private BoxWorldCreator creator;
+    public enum GameState {READY, RUNNING, PAUSED, GAMEOVER}
 
-
-
-
-    public enum GameState { READY, RUNNING, PAUSED, GAMEOVER }
     public GameState state = GameState.READY;
 
     Application game;
     OrthographicCamera guiCam;
     Vector3 touchPoint;
-    World world;
     Rectangle pauseBounds;
     Rectangle resumeBounds;
     Rectangle quitBounds;
-    int lastScore;
-    String scoreString;
     MenuScreen menuScreen;
     PlayScreen playScreen;
+    SplashScreen splashScreen;
 
-
-    public GameScreen(Application game,MenuScreen menuScreen )  {
+    public GameScreen(Application game) {
         this.game = game;
         this.menuScreen = menuScreen;
         this.playScreen = playScreen;
-
-
         FRAME_GAME_STATE = GAME_READY;
+        splashScreen = new SplashScreen(game);
+        ((Game) Gdx.app.getApplicationListener()).setScreen(splashScreen);
     }
 
     @Override
@@ -105,6 +74,9 @@ public class GameScreen extends ScreenAdapter implements Screen {
                 updateGameOver();
                 break;
         }
+
+        handleInput();
+
     }
 
     private void updateGameOver() {
@@ -113,7 +85,7 @@ public class GameScreen extends ScreenAdapter implements Screen {
     private void updateLevelEnd() {
     }
 
-    private void updatePaused () {
+    private void updatePaused() {
         if (Gdx.input.justTouched()) {
             guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 
@@ -123,20 +95,19 @@ public class GameScreen extends ScreenAdapter implements Screen {
             }
 
             if (quitBounds.contains(touchPoint.x, touchPoint.y)) {
-                game.setScreen(new MenuScreen(game,playScreen));
+                game.setScreen(new MenuScreen(game));
                 return;
             }
         }
     }
 
-    private void updateReady () {
+    private void updateReady() {
     }
 
-    private void updateRunning(float deltaTime) {
+    private void updateRunning(float dt) {
         if (Gdx.input.justTouched()) {
             guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 
-            
             //PAUSE:
             if (pauseBounds.contains(touchPoint.x, touchPoint.y)) {
                 FRAME_GAME_STATE = GAME_PAUSED;
@@ -145,5 +116,15 @@ public class GameScreen extends ScreenAdapter implements Screen {
             }
         }
 
+    }
+
+    public void handleInput() {
+        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
+            GameScreen.FRAME_GAME_STATE = GameScreen.GAME_RUNNING;
+//        playScreen = new PlayScreen(this,menuScreen);
+//        splashScreen = new SplashScreen(this,playScreen);
+//        splashScreen = new SplashScreen(this,playScreen);
+//        setScreen(splashScreen);
+        }
     }
 }

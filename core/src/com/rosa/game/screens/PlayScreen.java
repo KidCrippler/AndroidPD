@@ -1,6 +1,5 @@
 package com.rosa.game.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -37,14 +36,11 @@ public class PlayScreen implements Screen {
     private World world;
     private Box2DDebugRenderer b2dr;
     private BoxWorldCreator creator;
-    private MenuScreen menuScreen;
 
-    public PlayScreen(Application game, MenuScreen menuScreen) {
+    public PlayScreen(Application game) {
         GameScreen.FRAME_GAME_STATE = GameScreen.GAME_RUNNING;
 
         this.game = game;
-        this.menuScreen = menuScreen;
-
         atlas = new TextureAtlas("style/ingame/figure/bob/bob.pack");
         orthographicCamera = new OrthographicCamera();
         gamePort = new FitViewport(Application.V_WIDTH / Application.PPM, Application.V_HEIGHT / Application.PPM, orthographicCamera);
@@ -105,10 +101,6 @@ public class PlayScreen implements Screen {
 
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             GameScreen.FRAME_GAME_STATE = GameScreen.GAME_PAUSED;
-        }
-
-        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
-            GameScreen.FRAME_GAME_STATE = GameScreen.GAME_RUNNING;
         }
     }
 

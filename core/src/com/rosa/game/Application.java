@@ -27,23 +27,12 @@ public class Application extends Game {
 
     public static SpriteBatch batch;
     SplashScreen splashScreen;
-    PlayScreen playScreen;
-    GameScreen gameScreen;
-    MenuScreen menuScreen;
 
     @Override
     public void create() {
         batch = new SpriteBatch();
-//        setScreen(new PlayScreen(this));
-
-        gameScreen = new GameScreen(this,menuScreen);
-//        playScreen = new PlayScreen(this,menuScreen);
-
-
-//        splashScreen = new SplashScreen(this,playScreen);
-//        splashScreen = new SplashScreen(this,playScreen);
-//        setScreen(splashScreen);
-        setScreen(gameScreen);
+        splashScreen = new SplashScreen(this);
+        setScreen(splashScreen);
     }
 
     @Override
