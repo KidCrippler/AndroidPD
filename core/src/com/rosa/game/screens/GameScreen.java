@@ -10,6 +10,9 @@ import com.rosa.game.Application;
 
 public class GameScreen extends ScreenAdapter implements Screen {
 
+
+
+
     public static final int GAME_READY = 0;
     public static final int GAME_RUNNING = 1;
     public static final int GAME_PAUSED = 2;
