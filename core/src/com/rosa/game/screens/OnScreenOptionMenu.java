@@ -16,7 +16,16 @@ public class OnScreenOptionMenu implements Screen {
 
     OrthographicCamera orthographicCamera;
     Application game;
-    BitmapFont font = new BitmapFont(); //or use alex answer to use custom font
+    BitmapFont font = new BitmapFont();
+
+    public OnScreenOptionMenu(){
+        BitmapFont font;
+        create();
+    }
+
+    public void create(){
+    }
+
 
 
     public void update(float dt) {
@@ -38,26 +47,12 @@ public class OnScreenOptionMenu implements Screen {
 
     @Override
     public void render(float delta) {
-        System.out.println("1");
+        System.out.println("render Onscreen keyboard");
 
-//        game.batch.setProjectionMatrix(orthographicCamera.combined);
-//
-//        game.batch.begin();
-
-/*
-        Gdx.gl.glClearColor(0, 0, 0, 0);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        GL20 gl = Gdx.gl;
-        gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-*/
-
-//        font.draw(game.batch, "Hello World!", 640, 104);
-//        font.setColor(Color.RED );
-//
-//
-//        game.batch.draw(ScreenAssets.pauseMenu, 160 - 192 / 2, 240 - 96 / 2, 192, 96);
-//
-//        game.batch.end();
+        game.batch.begin();
+        font.setColor(Color.RED);
+        font.draw(game.batch, "hello", 12,12);
+        game.batch.end();
     }
 
     @Override

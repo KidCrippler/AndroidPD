@@ -1,11 +1,12 @@
 package com.rosa.game.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -13,7 +14,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rosa.game.Application;
@@ -23,6 +24,7 @@ import com.rosa.game.Sprites.Bob.Player;
 import com.rosa.game.Tools.BoxWorldCreator;
 import com.rosa.game.Tools.Controller;
 import com.rosa.game.Tools.WorldCollisionListener;
+
 
 public class PlayScreen implements Screen {
 
@@ -39,6 +41,11 @@ public class PlayScreen implements Screen {
     private Box2DDebugRenderer b2dr;
     private BoxWorldCreator creator;
     private OnScreenOptionMenu onScreenOptionMenu;
+    private BitmapFont font;
+
+    GlyphLayout glyphLayout = new GlyphLayout();
+    ScreenAssets screenAssets = new ScreenAssets();
+    private Label levelLabel;
 
     public PlayScreen(Application game) {
         GameScreen.FRAME_GAME_STATE = GameScreen.GAME_RUNNING;
@@ -63,6 +70,8 @@ public class PlayScreen implements Screen {
         world.setContactListener(new WorldCollisionListener());
         controller = new Controller();
         onScreenOptionMenu = new OnScreenOptionMenu();
+        font = new BitmapFont(); //or use alex answer to use custom font
+
     }
 
     public TextureAtlas getAtlas() {
@@ -142,8 +151,12 @@ public class PlayScreen implements Screen {
 
     @Override
     public void render(float dt) {
-
         gameStatus(dt);
+
+
+        game.batch.setProjectionMatrix(orthographicCamera.combined);
+
+
 
         //Clear screen:
         Gdx.gl.glClearColor(0, 0, 0, 0);
@@ -155,12 +168,16 @@ public class PlayScreen implements Screen {
         //debug line:
         b2dr.render(world, orthographicCamera.combined);
 
-        game.batch.setProjectionMatrix(orthographicCamera.combined);
+//        game.batch.setProjectionMatrix(orthographicCamera.combined);
         game.batch.begin();
         player.draw(game.batch);
 
         //End Batch
         game.batch.end();
+
+
+        //test
+
 
         //HUD:
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
