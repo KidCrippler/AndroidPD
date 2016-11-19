@@ -112,7 +112,6 @@ public class PlayScreen implements Screen {
 
         player.update(dt);
         hud.update(dt);
-        playscreenmenu.update(dt);
         creator.update(dt);
 
         //Load objects around the points of player:
@@ -140,9 +139,7 @@ public class PlayScreen implements Screen {
     @Override
     public void render(float dt) {
 
-
         game.batch.setProjectionMatrix(orthographicCamera.combined);
-
 
         //Clear screen:
         Gdx.gl.glClearColor(0, 0, 0, 0);
@@ -150,7 +147,6 @@ public class PlayScreen implements Screen {
 
         //Map render:
         renderer.render();
-
 
         //debug line:
         b2dr.render(world, orthographicCamera.combined);
@@ -160,10 +156,8 @@ public class PlayScreen implements Screen {
 
         player.draw(game.batch);
 
-
         //End Batch
         game.batch.end();
-
 
         //HUD:
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
@@ -173,14 +167,15 @@ public class PlayScreen implements Screen {
 
         //Game stop  state:
         if (GameScreen.FRAME_GAME_STATE == GameScreen.GAME_RUNNING) {
-        update(dt);
+            update(dt);
         }
         //Menu Active when pasue state:
         if (GameScreen.FRAME_GAME_STATE == GameScreen.GAME_PAUSED) {
             game.batch.setProjectionMatrix(playscreenmenu.stage.getCamera().combined);
             playscreenmenu.stage.draw();
             controller.draw();
-            playscreenmenu.update(dt    );
+            playscreenmenu.render(dt);
+            playscreenmenu.show();
         }
     }
 

@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.graphics.Color;
 import com.rosa.game.Application;
+import com.rosa.game.Sprites.Bob.Player;
 
 public class MenuPaused implements Screen {
     public Stage stage;
@@ -46,22 +47,12 @@ public class MenuPaused implements Screen {
 
     }
 
-    public void update(float dt) {
-        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
-            GameScreen.FRAME_GAME_STATE = GameScreen.GAME_RUNNING;
-        }
-        show();
-        render(dt);
-
-    }
 
     @Override
     public void show() {
         resumeButton = new Button(skin, "startbutton");
-        resumeButton.setPosition(780, 500);
-        System.out.println("1");
+        resumeButton.setPosition(Player.BOB_X_POSITION,Player.BOB_Y_POSITION);
 
-        //Resume:
         resumeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -71,6 +62,10 @@ public class MenuPaused implements Screen {
         });
         stage.addActor(resumeButton);
         Gdx.input.setInputProcessor(stage);
+
+        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
+            GameScreen.FRAME_GAME_STATE = GameScreen.GAME_RUNNING;
+        }
 
     }
 
