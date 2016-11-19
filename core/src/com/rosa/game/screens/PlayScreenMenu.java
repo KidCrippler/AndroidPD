@@ -1,5 +1,7 @@
 package com.rosa.game.screens;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -12,7 +14,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.graphics.Color;
 import com.rosa.game.Application;
 
-public class PlayScreenMenu implements Disposable{
+public class PlayScreenMenu implements Disposable {
     public Stage stage;
     public Viewport viewport;
 
@@ -30,12 +32,17 @@ public class PlayScreenMenu implements Disposable{
 
         levelLabel = new Label("s2c", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         table.add(levelLabel);
-        levelLabel.setSize(0.5f,0.5f);
+        levelLabel.setSize(0.5f, 0.5f);
 
         stage.addActor(table);
     }
 
     public void update(float dt) {
+
+        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
+            GameScreen.FRAME_GAME_STATE = GameScreen.GAME_RUNNING;
+        }
+
     }
 
     @Override

@@ -3,11 +3,8 @@ package com.rosa.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -15,9 +12,6 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rosa.game.Application;
@@ -27,7 +21,6 @@ import com.rosa.game.Sprites.Bob.Player;
 import com.rosa.game.Tools.BoxWorldCreator;
 import com.rosa.game.Tools.Controller;
 import com.rosa.game.Tools.WorldCollisionListener;
-
 
 public class PlayScreen implements Screen {
 
@@ -44,8 +37,6 @@ public class PlayScreen implements Screen {
     private World world;
     private Box2DDebugRenderer b2dr;
     private BoxWorldCreator creator;
-    private OnScreenOptionMenu onScreenOptionMenu;
-    private BitmapFont font;
 
 
     public PlayScreen(Application game) {
@@ -58,8 +49,6 @@ public class PlayScreen implements Screen {
         gamePort = new FitViewport(Application.V_WIDTH / Application.PPM, Application.V_HEIGHT / Application.PPM, orthographicCamera);
         hud = new Hud(game.batch);
         playscreenmenu = new PlayScreenMenu(game.batch);
-        onScreenOptionMenu = new OnScreenOptionMenu(this, game.batch);
-
 
         TmxMapLoader mapLoader = new TmxMapLoader();
         map = mapLoader.load("style/ingame/level/tmap.tmx");
@@ -71,7 +60,6 @@ public class PlayScreen implements Screen {
         player = new Player(world, this);
         world.setContactListener(new WorldCollisionListener());
         controller = new Controller();
-        font = new BitmapFont(); //or use alex answer to use custom font
     }
 
     public TextureAtlas getAtlas() {
@@ -153,7 +141,9 @@ public class PlayScreen implements Screen {
     @Override
     public void render(float dt) {
 
+
         game.batch.setProjectionMatrix(orthographicCamera.combined);
+
 
         //Clear screen:
         Gdx.gl.glClearColor(0, 0, 0, 0);
@@ -170,7 +160,6 @@ public class PlayScreen implements Screen {
         game.batch.begin();
 
         player.draw(game.batch);
-        onScreenOptionMenu.draw(game.batch);
 
 
         //End Batch
@@ -192,7 +181,7 @@ public class PlayScreen implements Screen {
             game.batch.setProjectionMatrix(playscreenmenu.stage.getCamera().combined);
             playscreenmenu.stage.draw();
             controller.draw();
-            onScreenOptionMenu.update(dt);
+            playscreenmenu.update(dt    );
         }
     }
 
