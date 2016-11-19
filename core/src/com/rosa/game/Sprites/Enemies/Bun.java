@@ -9,11 +9,12 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
+import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
 
 
-public class Bun extends com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy {
+public class Bun extends Enemy {
 
     private float stateTime;
     private Animation walkAnimation;

@@ -6,6 +6,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -16,14 +18,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.graphics.Color;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Bob.Player;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 
-public class MenuPaused implements Screen {
+
+public class MenuPaused extends Sprite implements Screen  {
     public Stage stage;
     public Viewport viewport;
     private Button resumeButton;
@@ -64,10 +67,8 @@ public class MenuPaused implements Screen {
         stage.addActor(resumeButton);
         Gdx.input.setInputProcessor(stage);
 
-
         game.batch.draw(ScreenAssets.pauseMenu, 160 - 192 / 2, 240 - 96 / 2, 192, 96);
         ScreenAssets.font.draw(game.batch, "1", 16, 480 - 20);
-
 
 
         if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
@@ -105,5 +106,9 @@ public class MenuPaused implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
+    }
+
+    public void draw(Batch batch) {
+            super.draw(batch);
     }
 }

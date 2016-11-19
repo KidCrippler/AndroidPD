@@ -8,10 +8,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-/**
- * Created by rosa on 11/17/16.
- */
-
 public class ScreenAssets {
     public static Texture background;
     public static TextureRegion backgroundRegion;
@@ -46,10 +42,12 @@ public class ScreenAssets {
     public static Sound clickSound;
 
     public static Texture loadTexture(String file) {
+        System.out.println("load");
         return new Texture(Gdx.files.internal(file));
     }
 
     public static void load() {
+        System.out.println("load");
         background = loadTexture("style/menu/design/mainmenu3.png");
         backgroundRegion = new TextureRegion(background, 0, 0, 320, 480);
 

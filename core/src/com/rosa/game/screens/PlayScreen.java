@@ -138,44 +138,33 @@ public class PlayScreen implements Screen {
 
     @Override
     public void render(float dt) {
+//            game.batch.setProjectionMatrix(orthographicCamera.combined);
+            Gdx.gl.glClearColor(0, 0, 0, 0);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            renderer.render();
+            //debug line:
+            b2dr.render(world, orthographicCamera.combined);
+            game.batch.setProjectionMatrix(orthographicCamera.combined);
+            game.batch.begin();
+            player.draw(game.batch);
+            game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
 
-        game.batch.setProjectionMatrix(orthographicCamera.combined);
-
-        //Clear screen:
-        Gdx.gl.glClearColor(0, 0, 0, 0);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        //Map render:
-        renderer.render();
-
-        //debug line:
-        b2dr.render(world, orthographicCamera.combined);
-
-        game.batch.setProjectionMatrix(orthographicCamera.combined);
-        game.batch.begin();
-
-        player.draw(game.batch);
-
-        //End Batch
-
-        //HUD:
-        //Menu Active when pasue state:
-        game.batch.end();
-        game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
-        hud.stage.draw();
-        controller.draw();
-
-        if (GameScreen.FRAME_GAME_STATE == GameScreen.GAME_PAUSED) {
-//            game.batch.setProjectionMatrix(playscreenmenu.stage.getCamera().combined);
+            game.batch.end();
+            hud.stage.draw();
             controller.draw();
-            playscreenmenu.render(dt);
-            playscreenmenu.show();
-            playscreenmenu.stage.draw();
-        }
 
-        //Game stop  state:
         if (GameScreen.FRAME_GAME_STATE == GameScreen.GAME_RUNNING) {
             update(dt);
+        }
+
+        if (GameScreen.FRAME_GAME_STATE == GameScreen.GAME_PAUSED) {
+            playscreenmenu.render(dt);
+            playscreenmenu.stage.draw();
+            game.batch.begin();
+            playscreenmenu.show();
+            game.batch.end();
+
+
         }
     }
 
