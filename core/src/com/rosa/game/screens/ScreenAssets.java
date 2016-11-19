@@ -74,7 +74,13 @@ public class ScreenAssets {
         brakingPlatform = new Animation(0.2f, new TextureRegion(items, 64, 160, 64, 16), new TextureRegion(items, 64, 176, 64, 16), new TextureRegion(items, 64, 192, 64, 16), new TextureRegion(items, 64, 208, 64, 16));
 
         font = new BitmapFont(Gdx.files.internal("style/menu/fonts/font.fnt"), Gdx.files.internal("style/menu/fonts/font.png"), false);
-/*
+
+
+//        TODO: Move this and create a new class holding the entire music and sound fx in LibGdx format
+//        TODO: With: import com.badlogic.gdx.audio.Music;
+//        TODO: with: import com.badlogic.gdx.audio.Sound;
+
+        /*
         music = Gdx.audio.newMusic(Gdx.files.internal("data/music.mp3"));
         music.setLooping(true);
         music.setVolume(0.5f);
@@ -90,6 +96,6 @@ public class ScreenAssets {
         public static void playSound (Sound sound) {
             if (Settings.soundEnabled) sound.play(1);
         }
-*/
+        */
     }
 }
