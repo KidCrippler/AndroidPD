@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -19,18 +20,20 @@ import com.rosa.game.Sprites.Bob.Player;
 
 public class OnScreenOptionMenu extends Sprite implements Screen {
 
-    OrthographicCamera orthographicCamera;
     Application game;
     BitmapFont font = new BitmapFont();
     public Stage stage;
     public Viewport viewport;
     private Label levelLabel;
+    Batch batch;
 
-    public OnScreenOptionMenu(SpriteBatch sb){
+    public OnScreenOptionMenu(PlayScreen screen,Batch batch){
+        this.batch = batch;
+
         BitmapFont font;
         create();
         viewport = new FitViewport(Application.V_WIDTH, Application.V_HEIGHT, new OrthographicCamera());
-        stage = new Stage(viewport, sb);
+
 
 
         Table table = new Table();
@@ -42,7 +45,8 @@ public class OnScreenOptionMenu extends Sprite implements Screen {
         table.add(levelLabel);
         levelLabel.setSize(0.5f,0.5f);
 
-        stage.addActor(table);
+        System.out.println("OnScreenOptionMenu");
+
     }
 
     public void create(){
@@ -62,6 +66,7 @@ public class OnScreenOptionMenu extends Sprite implements Screen {
         }
     }
 
+
     @Override
     public void show() {
 
@@ -73,17 +78,18 @@ public class OnScreenOptionMenu extends Sprite implements Screen {
 
         game.batch.begin();
 
-        game.batch.draw(ScreenAssets.pauseMenu, 160 - 192 / 2, 240 - 96 / 2, 192, 96);
-        ScreenAssets.font.draw(game.batch, "test", 16, 480 - 20);
+//        game.batch.draw(ScreenAssets.pauseMenu, 160 - 192 / 2, 240 - 96 / 2, 192, 96);
+//        ScreenAssets.font.draw(game.batch, "test", 16, 480 - 20);
 
-        font.draw(game.batch, "hello", Player.BOB_X_POSITION,Player.BOB_Y_POSITION);
+        font.draw(game.batch, "hello", Player.BOB_X_POSITION, Player.BOB_Y_POSITION);
         font.setColor(Color.RED);
 
+//        Gdx.gl.glClearColor(121, 134, 133, 5);
+//        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 
         game.batch.end();
     }
-
     @Override
     public void resize(int width, int height) {
 
@@ -110,6 +116,6 @@ public class OnScreenOptionMenu extends Sprite implements Screen {
     }
 
     public void draw(Batch batch) {
-        super.draw(batch);
+//        super.draw(batch);
     }
 }

@@ -2,6 +2,7 @@ package com.rosa.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.rosa.game.screens.PlayScreen;
 import com.rosa.game.screens.SplashScreen;
 
 public class Application extends Game {
@@ -24,12 +25,18 @@ public class Application extends Game {
 
     public static SpriteBatch batch;
     private SplashScreen splashScreen;
+    private PlayScreen playScreen;
 
     @Override
     public void create() {
         batch = new SpriteBatch();
-        splashScreen = new SplashScreen(this);
-        setScreen(splashScreen);
+//        splashScreen = new SplashScreen(this);
+//        setScreen(splashScreen);
+
+
+        playScreen = new PlayScreen(this);
+        setScreen(playScreen);
+
     }
 
     @Override

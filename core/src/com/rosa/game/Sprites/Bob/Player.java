@@ -1,5 +1,7 @@
 package com.rosa.game.Sprites.Bob;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -64,6 +66,7 @@ public class Player extends Sprite {
         setRegion(playerStand);
 
         bullets = new Array<Bullet>();
+
     }
 
     public void update(float dt) {
@@ -80,6 +83,7 @@ public class Player extends Sprite {
         }
         BOB_X_POSITION = b2body.getPosition().x;
         BOB_Y_POSITION = b2body.getPosition().y;
+
     }
 
     public TextureRegion getFrame(float dt) {

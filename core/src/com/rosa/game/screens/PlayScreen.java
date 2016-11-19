@@ -36,6 +36,7 @@ public class PlayScreen implements Screen {
     private OrthographicCamera orthographicCamera;
     private Viewport gamePort;
     private Hud hud;
+    private PlayScreenMenu playscreenmenu;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
     private Player player;
@@ -51,21 +52,20 @@ public class PlayScreen implements Screen {
         GameScreen.FRAME_GAME_STATE = GameScreen.GAME_RUNNING;
 
         this.game = game;
+
         atlas = new TextureAtlas("style/ingame/figure/bob/bob.pack");
         orthographicCamera = new OrthographicCamera();
         gamePort = new FitViewport(Application.V_WIDTH / Application.PPM, Application.V_HEIGHT / Application.PPM, orthographicCamera);
         hud = new Hud(game.batch);
-        onScreenOptionMenu = new OnScreenOptionMenu(game.batch);
+        playscreenmenu = new PlayScreenMenu(game.batch);
+        onScreenOptionMenu = new OnScreenOptionMenu(this, game.batch);
+
 
         TmxMapLoader mapLoader = new TmxMapLoader();
         map = mapLoader.load("style/ingame/level/tmap.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1 / Application.PPM);
-
-        //GameCam:
         orthographicCamera.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
-
         world = new World(new Vector2(0, -10), true);
-
         creator = new BoxWorldCreator(this);
         b2dr = new Box2DDebugRenderer();
         player = new Player(world, this);
@@ -125,6 +125,7 @@ public class PlayScreen implements Screen {
 
         player.update(dt);
         hud.update(dt);
+        playscreenmenu.update(dt);
         creator.update(dt);
 
         //Load objects around the points of player:
@@ -151,11 +152,8 @@ public class PlayScreen implements Screen {
 
     @Override
     public void render(float dt) {
-        gameStatus(dt);
-
 
         game.batch.setProjectionMatrix(orthographicCamera.combined);
-
 
         //Clear screen:
         Gdx.gl.glClearColor(0, 0, 0, 0);
@@ -172,6 +170,8 @@ public class PlayScreen implements Screen {
         game.batch.begin();
 
         player.draw(game.batch);
+        onScreenOptionMenu.draw(game.batch);
+
 
         //End Batch
         game.batch.end();
@@ -182,18 +182,19 @@ public class PlayScreen implements Screen {
         hud.stage.draw();
         controller.draw();
 
-    }
 
-    public void gameStatus(float dt) {
+        //Game stop  state:
         if (GameScreen.FRAME_GAME_STATE == GameScreen.GAME_RUNNING) {
-            update(dt);
+        update(dt);
         }
-
+        //Menu Active when pasue state:
         if (GameScreen.FRAME_GAME_STATE == GameScreen.GAME_PAUSED) {
+            game.batch.setProjectionMatrix(playscreenmenu.stage.getCamera().combined);
+            playscreenmenu.stage.draw();
+            controller.draw();
             onScreenOptionMenu.update(dt);
         }
     }
-
 
     @Override
     public void resize(int width, int height) {
