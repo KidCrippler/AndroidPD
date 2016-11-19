@@ -12,7 +12,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.graphics.Color;
 import com.rosa.game.Application;
 
-//test
 
 public class Hud implements Disposable {
 
@@ -31,7 +30,7 @@ public class Hud implements Disposable {
         table.right();
         table.setFillParent(true);
 
-        levelLabel = new Label("!!!3213123123!!", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        levelLabel = new Label("sc", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         table.add(levelLabel);
         levelLabel.setSize(0.5f,0.5f);
 

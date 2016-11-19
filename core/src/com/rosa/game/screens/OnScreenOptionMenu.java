@@ -1,26 +1,48 @@
 package com.rosa.game.screens;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rosa.game.Application;
+import com.rosa.game.Sprites.Bob.Player;
 
-import javax.swing.text.View;
-
-public class OnScreenOptionMenu implements Screen {
+public class OnScreenOptionMenu extends Sprite implements Screen {
 
     OrthographicCamera orthographicCamera;
     Application game;
     BitmapFont font = new BitmapFont();
+    public Stage stage;
+    public Viewport viewport;
+    private Label levelLabel;
 
-    public OnScreenOptionMenu(){
+    public OnScreenOptionMenu(SpriteBatch sb){
         BitmapFont font;
         create();
+        viewport = new FitViewport(Application.V_WIDTH, Application.V_HEIGHT, new OrthographicCamera());
+        stage = new Stage(viewport, sb);
+
+
+        Table table = new Table();
+        table.top();
+        table.right();
+        table.setFillParent(true);
+
+        levelLabel = new Label("!!!3213213213123123123123131233123123!!", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        table.add(levelLabel);
+        levelLabel.setSize(0.5f,0.5f);
+
+        stage.addActor(table);
     }
 
     public void create(){
@@ -30,7 +52,7 @@ public class OnScreenOptionMenu implements Screen {
 
     public void update(float dt) {
         handleInput();
-        System.out.println("OnScreenOptionMenu");
+        render(dt);
     }
 
 
@@ -50,8 +72,15 @@ public class OnScreenOptionMenu implements Screen {
         System.out.println("render Onscreen keyboard");
 
         game.batch.begin();
+
+        game.batch.draw(ScreenAssets.pauseMenu, 160 - 192 / 2, 240 - 96 / 2, 192, 96);
+        ScreenAssets.font.draw(game.batch, "test", 16, 480 - 20);
+
+        font.draw(game.batch, "hello", Player.BOB_X_POSITION,Player.BOB_Y_POSITION);
         font.setColor(Color.RED);
-        font.draw(game.batch, "hello", 12,12);
+
+
+
         game.batch.end();
     }
 
@@ -77,6 +106,10 @@ public class OnScreenOptionMenu implements Screen {
 
     @Override
     public void dispose() {
+        stage.dispose();
+    }
 
+    public void draw(Batch batch) {
+        super.draw(batch);
     }
 }
