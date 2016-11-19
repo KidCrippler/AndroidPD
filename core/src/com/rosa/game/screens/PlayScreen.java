@@ -3,6 +3,7 @@ package com.rosa.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -165,24 +166,43 @@ public class PlayScreen implements Screen {
         //Map render:
         renderer.render();
 
+
+
+
         //debug line:
         b2dr.render(world, orthographicCamera.combined);
 
-//        game.batch.setProjectionMatrix(orthographicCamera.combined);
+        game.batch.setProjectionMatrix(orthographicCamera.combined);
         game.batch.begin();
+
+
+
+        //test
+        game.batch.draw(ScreenAssets.pauseMenu, player.getX(),player.getY());
+        ScreenAssets.font.draw(game.batch, "ds",player.getX(),player.getY());
+
+
+
+
+
+
+
         player.draw(game.batch);
 
         //End Batch
         game.batch.end();
 
 
-        //test
-
-
         //HUD:
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
         controller.draw();
+
+
+
+
+
+
     }
 
     public void gameStatus(float dt) {

@@ -19,6 +19,7 @@ public class SplashScreen implements Screen {
 
     public SplashScreen (Application game){
         this.game = game;
+        ScreenAssets.load();
     }
 
     @Override
