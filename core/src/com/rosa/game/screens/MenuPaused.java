@@ -29,6 +29,7 @@ public class MenuPaused implements Screen {
     private Button resumeButton;
     private Skin skin;
     private Label levelLabel;
+    Application game;
 
     public MenuPaused(SpriteBatch sb) {
         viewport = new FitViewport(Application.V_WIDTH, Application.V_HEIGHT, new OrthographicCamera());
@@ -62,6 +63,12 @@ public class MenuPaused implements Screen {
         });
         stage.addActor(resumeButton);
         Gdx.input.setInputProcessor(stage);
+
+
+        game.batch.draw(ScreenAssets.pauseMenu, 160 - 192 / 2, 240 - 96 / 2, 192, 96);
+        ScreenAssets.font.draw(game.batch, "1", 16, 480 - 20);
+
+
 
         if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
             GameScreen.FRAME_GAME_STATE = GameScreen.GAME_RUNNING;

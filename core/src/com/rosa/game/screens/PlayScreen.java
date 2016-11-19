@@ -157,25 +157,25 @@ public class PlayScreen implements Screen {
         player.draw(game.batch);
 
         //End Batch
-        game.batch.end();
 
         //HUD:
+        //Menu Active when pasue state:
+        game.batch.end();
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
         controller.draw();
 
+        if (GameScreen.FRAME_GAME_STATE == GameScreen.GAME_PAUSED) {
+//            game.batch.setProjectionMatrix(playscreenmenu.stage.getCamera().combined);
+            controller.draw();
+            playscreenmenu.render(dt);
+            playscreenmenu.show();
+            playscreenmenu.stage.draw();
+        }
 
         //Game stop  state:
         if (GameScreen.FRAME_GAME_STATE == GameScreen.GAME_RUNNING) {
             update(dt);
-        }
-        //Menu Active when pasue state:
-        if (GameScreen.FRAME_GAME_STATE == GameScreen.GAME_PAUSED) {
-            game.batch.setProjectionMatrix(playscreenmenu.stage.getCamera().combined);
-            playscreenmenu.stage.draw();
-            controller.draw();
-            playscreenmenu.render(dt);
-            playscreenmenu.show();
         }
     }
 
