@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.rosa.game.Application;
 
-public class MenuScreen implements Screen {
+public class MainMenuScreen implements Screen {
 
 
     private Skin skin;
@@ -26,13 +26,13 @@ public class MenuScreen implements Screen {
     private Button optionsButton;
     private Button creditsButton;
     private static Application game;
-    MenuScreen menuScreen;
+    MainMenuScreen mainMenuScreen;
     GameScreen gamescreen;
 
-    MenuScreen(Application game) {
+    MainMenuScreen(Application game) {
         this.game = game;
         this.playScreen = playScreen;
-        this.menuScreen = menuScreen;
+        this.mainMenuScreen = mainMenuScreen;
     }
 
     @Override
@@ -83,12 +83,12 @@ public class MenuScreen implements Screen {
 
 
     @Override
-    public void render(float delta) {
+    public void render(float dt) {
         Gdx.gl.glClearColor(0x64 / 255.0f, 0x95 / 255.0f, 0xed / 255.0f, 0xff / 255.0f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
         stage.draw();
-        update(delta);
+        update(dt);
 
     }
 

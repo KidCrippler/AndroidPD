@@ -29,7 +29,7 @@ public class MapScreen implements Screen {
     public void show() {
         stage = new Stage();
         skin = new Skin(Gdx.files.internal("style/menu/mainmenu.json"), new TextureAtlas("style/menu/mainmenu.pack"));
-        final MenuScreen menuScreen = new MenuScreen(game);
+        final MainMenuScreen mainMenuScreen = new MainMenuScreen(game);
         final PlayScreen playScreen = new PlayScreen(game);
 
         levelScreen = new Image(skin, "levelscreen");
@@ -44,7 +44,7 @@ public class MapScreen implements Screen {
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                ((Game) Gdx.app.getApplicationListener()).setScreen(menuScreen);
+                ((Game) Gdx.app.getApplicationListener()).setScreen(mainMenuScreen);
             }
         });
 

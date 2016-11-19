@@ -33,7 +33,7 @@ public class OptionsScreen implements Screen {
     public void show() {
         stage = new Stage();
         skin = new Skin(Gdx.files.internal("mainmenu.json"), new TextureAtlas("mainmenu.pack"));
-        final MenuScreen menuScreen = new MenuScreen(game);
+        final MainMenuScreen mainMenuScreen = new MainMenuScreen(game);
 
         optionsScreen = new Image(skin, "optionsscreen");
         backButton = new Button(skin, "backbutton");
@@ -44,7 +44,7 @@ public class OptionsScreen implements Screen {
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                ((Game) Gdx.app.getApplicationListener()).setScreen(menuScreen);
+                ((Game) Gdx.app.getApplicationListener()).setScreen(mainMenuScreen);
             }
         });
 

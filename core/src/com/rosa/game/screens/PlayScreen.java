@@ -29,7 +29,7 @@ public class PlayScreen implements Screen {
     private OrthographicCamera orthographicCamera;
     private Viewport gamePort;
     private Hud hud;
-    private PlayScreenMenu playscreenmenu;
+    private MenuPaused playscreenmenu;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
     private Player player;
@@ -48,7 +48,7 @@ public class PlayScreen implements Screen {
         orthographicCamera = new OrthographicCamera();
         gamePort = new FitViewport(Application.V_WIDTH / Application.PPM, Application.V_HEIGHT / Application.PPM, orthographicCamera);
         hud = new Hud(game.batch);
-        playscreenmenu = new PlayScreenMenu(game.batch);
+        playscreenmenu = new MenuPaused(game.batch);
 
         TmxMapLoader mapLoader = new TmxMapLoader();
         map = mapLoader.load("style/ingame/level/tmap.tmx");
@@ -104,7 +104,6 @@ public class PlayScreen implements Screen {
     }
 
     public void update(float dt) {
-        System.out.println(GameScreen.FRAME_GAME_STATE);
 
         handleInput();
         handleInputController();

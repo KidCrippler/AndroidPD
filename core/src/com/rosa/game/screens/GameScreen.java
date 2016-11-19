@@ -30,12 +30,12 @@ public class GameScreen extends ScreenAdapter implements Screen {
     Rectangle pauseBounds;
     Rectangle resumeBounds;
     Rectangle quitBounds;
-    MenuScreen menuScreen;
+    MainMenuScreen mainMenuScreen;
     PlayScreen playScreen;
 
     public GameScreen(Application game) {
         this.game = game;
-        this.menuScreen = menuScreen;
+        this.mainMenuScreen = mainMenuScreen;
         this.playScreen = playScreen;
         FRAME_GAME_STATE = GAME_READY;
     }
@@ -48,9 +48,6 @@ public class GameScreen extends ScreenAdapter implements Screen {
     public void update(float dt) {
         if (dt > 0.1f)
             dt = 0.1f;
-
-        System.out.println("FRAME_GAME_STATE: " + FRAME_GAME_STATE);
-
 
         switch (FRAME_GAME_STATE) {
             case GAME_READY:
@@ -87,7 +84,7 @@ public class GameScreen extends ScreenAdapter implements Screen {
             }
 
             if (quitBounds.contains(touchPoint.x, touchPoint.y)) {
-                game.setScreen(new MenuScreen(game));
+                game.setScreen(new MainMenuScreen(game));
                 return;
             }
         }
@@ -103,7 +100,6 @@ public class GameScreen extends ScreenAdapter implements Screen {
             //PAUSE:
             if (pauseBounds.contains(touchPoint.x, touchPoint.y)) {
                 FRAME_GAME_STATE = GAME_PAUSED;
-                System.out.println("1");
                 return;
             }
         }

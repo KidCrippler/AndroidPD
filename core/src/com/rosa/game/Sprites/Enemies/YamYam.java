@@ -1,7 +1,5 @@
 package com.rosa.game.Sprites.Enemies;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -16,7 +14,6 @@ import com.rosa.game.Sprites.Bob.Player;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyFirePowerLas;
 import com.rosa.game.Tools.SoundPlayer;
-import com.rosa.game.screens.MenuScreen;
 import com.rosa.game.screens.PlayScreen;
 
 public class YamYam extends Enemy {
@@ -239,7 +236,6 @@ public class YamYam extends Enemy {
 
         chasing = !chasing;
 
-        System.out.println("hit");
     }
 
     public void setToDestroy() {
@@ -247,7 +243,7 @@ public class YamYam extends Enemy {
         playSound.playSoundRandomBunHurt();
         int bulletPowerOne = 10;
         yamyamHP = yamyamHP - bulletPowerOne;
-        System.out.println(yamyamHP);
+        System.out.println("yamyamhp="+yamyamHP);
         if (yamyamHP <= 0) {
             playSound.playSoundRandomBunDead();
             setToDestroy = true;
