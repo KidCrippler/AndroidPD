@@ -27,7 +27,6 @@ public class MenuPaused extends Sprite implements Screen {
     private PlayScreen playScreen;
     private Application game;
 
-
     public MenuPaused(SpriteBatch sb) {
         viewport = new FitViewport(Application.V_WIDTH, Application.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, sb);
@@ -48,7 +47,6 @@ public class MenuPaused extends Sprite implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 GameScreen.FRAME_GAME_STATE = GameScreen.GAME_RUNNING;
-
             }
         });
 
