@@ -1,5 +1,6 @@
 package com.rosa.game.screens;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -23,6 +24,9 @@ public class MenuPaused extends Sprite implements Screen {
     private Button resumeButton;
     private Button quitButton;
     private Skin skin;
+    private PlayScreen playScreen;
+    private Application game;
+
 
     public MenuPaused(SpriteBatch sb) {
         viewport = new FitViewport(Application.V_WIDTH, Application.V_HEIGHT, new OrthographicCamera());
@@ -37,7 +41,7 @@ public class MenuPaused extends Sprite implements Screen {
         resumeButton.setSize(30, 30);
 
         quitButton = new Button(skin, "quitbutton");
-        quitButton.setPosition(140, 100);
+        quitButton.setPosition(100, 100);
         quitButton.setSize(30, 30);
 
         resumeButton.addListener(new ClickListener() {
@@ -51,8 +55,7 @@ public class MenuPaused extends Sprite implements Screen {
         quitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                GameScreen.FRAME_GAME_STATE = GameScreen.GAME_RUNNING;
-
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenuScreen(game));
             }
         });
 
@@ -62,6 +65,7 @@ public class MenuPaused extends Sprite implements Screen {
         }
 
         stage.addActor(resumeButton);
+        stage.addActor(quitButton);
         Gdx.input.setInputProcessor(stage);
     }
 
