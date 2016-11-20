@@ -1,0 +1,23 @@
+play.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+startbutton
+  rotate: false
+  xy: 1, 1
+  size: 330, 330
+  orig: 330, 330
+  offset: 0, 0
+  index: -1
+
+quit.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+quitbutton
+  rotate: false
+  xy: 1, 1
+  size: 330, 330
+  orig: 330, 330
+  offset: 0, 0
+  index: -1

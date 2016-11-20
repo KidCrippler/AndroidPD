@@ -53,7 +53,7 @@ public class ScreenAssets {
 
         items = loadTexture("style/menu/design/items.png");
         mainMenu = new TextureRegion(items, 0, 224, 300, 110);
-        pauseMenu = new TextureRegion(items, 224, 128, 192, 96);
+        pauseMenu = new TextureRegion(items, 224, 128, 192 , 96);
         ready = new TextureRegion(items, 320, 224, 192, 32);
         gameOver = new TextureRegion(items, 352, 256, 160, 96);
         highScoresRegion = new TextureRegion(ScreenAssets.items, 0, 257, 300, 110 / 3);
