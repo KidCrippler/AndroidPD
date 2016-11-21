@@ -163,8 +163,6 @@ public class PlayScreen implements Screen {
             game.batch.begin();
             playscreenmenu.show();
             game.batch.end();
-
-
         }
     }
 
