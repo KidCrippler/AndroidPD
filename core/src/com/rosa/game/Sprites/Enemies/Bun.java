@@ -34,6 +34,7 @@ public class Bun extends Enemy {
         setBounds(getX(), getY(), 16 / Application.PPM, 16 / Application.PPM);
         setToDestroy = false;
         destroyed = false;
+
     }
 
     public void update(float dt) {

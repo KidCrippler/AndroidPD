@@ -16,6 +16,8 @@ import com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyFirePowerLas;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
 
+import java.util.concurrent.TimeUnit;
+
 public class YamYam extends Enemy {
 
     private enum State {FALLING, JUMPING, STANDING, RUNNING}
@@ -49,6 +51,7 @@ public class YamYam extends Enemy {
         stateTime = 0;
         setToDestroy = false;
         destroyed = false;
+        chasing = true;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
@@ -79,14 +82,35 @@ public class YamYam extends Enemy {
     public void update(float dt) {
         stateTime += dt;
         if (setToDestroy && !destroyed) {
+
             world.destroyBody(b2body);
             destroyed = true;
             setRegion(new TextureRegion(screen.getAtlas().findRegion("keen"), 11, 0, 22, 12));
             stateTime = 0;
 
         } else {
-                setRegion(getFrame(dt));
+            setRegion(getFrame(dt));
 
+            //Chasing or not?
+            float speedNow = b2body.getLinearVelocity().len();
+            System.out.println(speedNow);
+            if(speedNow <= 0.05){
+//                System.out.println("stop chase!");
+                chasing = false;
+            }
+
+            if (speedNow >= 0.6){
+                chasing = true;
+//                System.out.println("chase!chase!chase!chase!chase!");
+            }
+
+
+            //If you are not chased:
+            if (!chasing) {
+                b2body.setLinearVelocity(velocity);
+            }
+
+            //If you are chased behaver:
             if (!destroyed && b2body.isActive() && chasing) {
 
                 //RAY_ONE (AI movement):
@@ -116,6 +140,8 @@ public class YamYam extends Enemy {
             }
         }
     }
+
+
 
     private TextureRegion getFrame(float dt) {
         currentState = getState();
@@ -176,13 +202,12 @@ public class YamYam extends Enemy {
 
         fixtureDef.shape = head;
         fixtureDef.filter.categoryBits = Application.ENEMY_AI_BIT;
-        fixtureDef.filter.maskBits = Application.GROUND_BIT |
-                        Application.ENEMY_AI_BIT |
-                        Application.ENEMY_DUMB_BIT |
-                        Application.WALL_BIT |
-                        Application.BOB_BIT |
-                        Application.GROUND_BIT |
-                        Application.BUN_BULLET_BIT;
+        fixtureDef.filter.maskBits = Application.ENEMY_AI_BIT |
+                Application.ENEMY_DUMB_BIT |
+                Application.WALL_BIT |
+                Application.BOB_BIT |
+                Application.GROUND_BIT |
+                Application.BUN_BULLET_BIT;
 
         b2body.createFixture(fixtureDef).setUserData(this);
 
@@ -191,8 +216,7 @@ public class YamYam extends Enemy {
         CircleShape rayShapeOne = new CircleShape();
         rayShapeOne.setRadius(6 / Application.PPM);
         fixtureDefRayOne.filter.categoryBits = Application.RAY_ONE;
-        fixtureDefRayOne.filter.maskBits =
-                Application.WALL_BIT;
+        fixtureDefRayOne.filter.maskBits = Application.WALL_BIT;
 
         fixtureDefRayOne.shape = rayShapeOne;
         fixtureDefRayOne.isSensor = true;
@@ -201,13 +225,12 @@ public class YamYam extends Enemy {
         rayShapeOne.setPosition(new Vector2(-0.5f, 0 / Application.PPM));
         b2body.createFixture(fixtureDefRayOne).setUserData(this);
 
-        //RAYOne:
+        //RAYTwo:
         FixtureDef fixtureDefRayTwo = new FixtureDef();
         CircleShape rayShapeTwo = new CircleShape();
         rayShapeTwo.setRadius(6 / Application.PPM);
         fixtureDefRayTwo.filter.categoryBits = Application.RAY_TWO;
-        fixtureDefRayTwo.filter.maskBits =
-                Application.WALL_BIT;
+        fixtureDefRayTwo.filter.maskBits = Application.WALL_BIT;
 
         fixtureDefRayTwo.shape = rayShapeTwo;
         fixtureDefRayTwo.isSensor = true;
@@ -233,9 +256,6 @@ public class YamYam extends Enemy {
             velocity.x = -velocity.x;
         if (y)
             velocity.y = -velocity.y;
-
-        chasing = !chasing;
-
     }
 
     public void setToDestroy() {
@@ -243,7 +263,7 @@ public class YamYam extends Enemy {
         playSound.playSoundRandomBunHurt();
         int bulletPowerOne = 10;
         yamyamHP = yamyamHP - bulletPowerOne;
-        System.out.println("yamyamhp="+yamyamHP);
+        System.out.println("yamyamhp=" + yamyamHP);
         if (yamyamHP <= 0) {
             playSound.playSoundRandomBunDead();
             setToDestroy = true;
@@ -259,10 +279,13 @@ public class YamYam extends Enemy {
     }
 
     public void jump() {
-        if (currentState != State.JUMPING) {
-            b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
-            soundPlayer.PlaySoundBob(0);
-            currentState = State.JUMPING;
+        if (!destroyed && b2body.isActive() && chasing) {
+
+            if (currentState != State.JUMPING) {
+                b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
+                soundPlayer.PlaySoundBob(0);
+                currentState = State.JUMPING;
+            }
         }
     }
 
