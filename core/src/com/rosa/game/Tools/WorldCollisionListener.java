@@ -108,7 +108,7 @@ public class WorldCollisionListener implements ContactListener {
                     ((Bullet) fixB.getUserData()).setToDestroy();
                 break;
 
-            //      *       *       *       RAY_ONE_OUTER - ONE    *       *       *       //
+            //      *       *       *       RAY_ONE_OUTER     *       *       *       //
             case Application.RAY_ONE_OUTER | Application.WALL_BIT:
                 if (fixA.getFilterData().categoryBits == Application.RAY_ONE_OUTER)
                     ((YamYam) fixA.getUserData()).jump();
@@ -117,7 +117,7 @@ public class WorldCollisionListener implements ContactListener {
                 break;
 
 
-            //      *       *       *       RAY_ONE_INNER - TWO    *       *       *       //
+            //      *       *       *       RAY_TWO_INNER     *       *       *       //
             case Application.RAY_TWO_INNER | Application.WALL_BIT:
                 if (fixA.getFilterData().categoryBits == Application.RAY_TWO_INNER) {
                     ((YamYam) fixA.getUserData()).setRayTwoNextToWall(true);
