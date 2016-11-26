@@ -21,8 +21,8 @@ public class Application extends Game {
     public static final short ENEMY_DUMB_BIT = 16;
     public static final short BULLET_BIT = 64;
     public static final short ENEMY_BULLET_BIT = 128;
-    public static final short RAY_ONE = 256;
-    public static final short RAY_TWO = 512;
+    public static final short RAY_ONE_OUTER = 256;
+    public static final short RAY_TWO_INNER = 512;
     public static final short WALL_BIT = 1024;
     public static final short GROUND_BIT = 2048;
 

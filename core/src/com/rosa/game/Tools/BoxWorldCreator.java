@@ -51,7 +51,12 @@ public class BoxWorldCreator {
             shape.setAsBox(rect.getWidth() / 2 / Application.PPM, rect.getHeight() / 2 / Application.PPM);
             fixtureDef.shape = shape;
             fixtureDef.filter.categoryBits = Application.WALL_BIT;
-            fixtureDef.filter.maskBits = Application.BOB_BIT | Application.ENEMY_AI_BIT | Application.ENEMY_DUMB_BIT | Application.BULLET_BIT;
+            fixtureDef.filter.maskBits = Application.BOB_BIT |
+                    Application.ENEMY_AI_BIT |
+                    Application.ENEMY_DUMB_BIT |
+                    Application.BULLET_BIT |
+                    Application.RAY_ONE_OUTER |
+                    Application.RAY_TWO_INNER;
             body.createFixture(fixtureDef);
         }
 

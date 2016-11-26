@@ -108,35 +108,24 @@ public class WorldCollisionListener implements ContactListener {
                     ((Bullet) fixB.getUserData()).setToDestroy();
                 break;
 
-            //      *       *       *       RAY_ONE - ONE    *       *       *       //
-            case Application.RAY_ONE | Application.WALL_BIT:
-                if (fixA.getFilterData().categoryBits == Application.RAY_ONE)
+            //      *       *       *       RAY_ONE_OUTER - ONE    *       *       *       //
+            case Application.RAY_ONE_OUTER | Application.WALL_BIT:
+                if (fixA.getFilterData().categoryBits == Application.RAY_ONE_OUTER)
                     ((YamYam) fixA.getUserData()).jump();
                 else
                     ((YamYam) fixB.getUserData()).jump();
                 break;
 
 
-            //      *       *       *       RAY_ONE - TWO    *       *       *       //
-            case Application.RAY_TWO | Application.WALL_BIT:
-                if (fixA.getFilterData().categoryBits == Application.RAY_TWO) {
+            //      *       *       *       RAY_ONE_INNER - TWO    *       *       *       //
+            case Application.RAY_TWO_INNER | Application.WALL_BIT:
+                if (fixA.getFilterData().categoryBits == Application.RAY_TWO_INNER) {
                     ((YamYam) fixA.getUserData()).setRayTwoNextToWall(true);
                 } else {
                     ((YamYam) fixB.getUserData()).setRayTwoNextToWall(true);
                 }
                 break;
         }
-//            //      *       *       *       RAY_ONE - TWO    *       *       *       //
-//            case Application.RAY_TWO | Application.WALL_BIT:
-//                if (fixA.getFilterData().categoryBits == Application.RAY_TWO) {
-//                    ((YamYam) fixA.getUserData()).reverseVelocity(true, false);
-//                    ((YamYam) fixA.getUserData()).setRayTwoNextToWall(true);
-//                } else {
-//                    ((YamYam) fixB.getUserData()).reverseVelocity(true, false);
-//                    ((YamYam) fixB.getUserData()).setRayTwoNextToWall(true);
-//                }
-//                break;
-//        }
     }
 
     @Override

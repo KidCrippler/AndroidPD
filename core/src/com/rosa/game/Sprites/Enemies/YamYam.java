@@ -106,7 +106,7 @@ public class YamYam extends Enemy {
             //If you are chased behaver:
             if (!destroyed && b2body.isActive() && chasing) {
 
-                //RAY_ONE (AI movement):
+                //RAY_ONE_OUTER (AI movement):
                 if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x)
                     b2body.applyLinearImpulse(new Vector2(-0.02f, 0), b2body.getWorldCenter(), true);
 
@@ -207,8 +207,8 @@ public class YamYam extends Enemy {
         FixtureDef fixtureDefRayOne = new FixtureDef();
         CircleShape rayShapeOne = new CircleShape();
         rayShapeOne.setRadius(6 / Application.PPM);
-        fixtureDefRayOne.filter.categoryBits = Application.RAY_ONE;
-        fixtureDefRayOne.filter.maskBits = Application.WALL_BIT;
+        fixtureDefRayOne.filter.categoryBits = Application.RAY_ONE_OUTER;
+//        fixtureDefRayOne.filter.maskBits = Application.WALL_BIT;
 
         fixtureDefRayOne.shape = rayShapeOne;
         fixtureDefRayOne.isSensor = true;
@@ -221,8 +221,8 @@ public class YamYam extends Enemy {
         FixtureDef fixtureDefRayTwo = new FixtureDef();
         CircleShape rayShapeTwo = new CircleShape();
         rayShapeTwo.setRadius(6 / Application.PPM);
-        fixtureDefRayTwo.filter.categoryBits = Application.RAY_TWO;
-        fixtureDefRayTwo.filter.maskBits = Application.WALL_BIT | Application.GROUND_BIT;
+        fixtureDefRayTwo.filter.categoryBits = Application.RAY_TWO_INNER;
+//        fixtureDefRayTwo.filter.maskBits = Application.WALL_BIT;
 
         fixtureDefRayTwo.shape = rayShapeTwo;
         fixtureDefRayTwo.isSensor = true;
