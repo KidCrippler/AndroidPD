@@ -93,17 +93,11 @@ public class YamYam extends Enemy {
 
             //Chasing or not?
             float speedNow = b2body.getLinearVelocity().len();
-            System.out.println(speedNow);
-            if(speedNow <= 0.05){
-//                System.out.println("stop chase!");
+            chasing = true;
+            if (speedNow == 0.0) {
                 chasing = false;
+                reverseVelocity(true, false);
             }
-
-            if (speedNow >= 0.6){
-                chasing = true;
-//                System.out.println("chase!chase!chase!chase!chase!");
-            }
-
 
             //If you are not chased:
             if (!chasing) {
@@ -140,7 +134,6 @@ public class YamYam extends Enemy {
             }
         }
     }
-
 
 
     private TextureRegion getFrame(float dt) {
