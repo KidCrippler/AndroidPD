@@ -13,16 +13,18 @@ public class Application extends Game {
     public static final float PPM = 100;
 
     //Collision:
-    public static final short GROUND_BIT = 0;
-    public static final short WALL_BIT = 1;
+    public static final short NOTHING_BIT = 0;
+    public static final short BIT = 1;
     public static final short ITEM_BIT = 2;
     public static final short BOB_BIT = 4;
     public static final short ENEMY_AI_BIT = 8;
     public static final short ENEMY_DUMB_BIT = 16;
-    public static final short BUN_BULLET_BIT = 64;
+    public static final short BULLET_BIT = 64;
     public static final short ENEMY_BULLET_BIT = 128;
     public static final short RAY_ONE = 256;
     public static final short RAY_TWO = 512;
+    public static final short WALL_BIT = 1024;
+    public static final short GROUND_BIT = 2048;
 
     public static SpriteBatch batch;
     private SplashScreen splashScreen;

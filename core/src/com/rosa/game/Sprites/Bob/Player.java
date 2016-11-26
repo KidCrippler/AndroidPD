@@ -1,7 +1,5 @@
 package com.rosa.game.Sprites.Bob;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -153,7 +151,7 @@ public class Player extends Sprite {
                         Application.ENEMY_AI_BIT |
                         Application.WALL_BIT |
                         Application.ITEM_BIT |
-                        Application.BUN_BULLET_BIT;
+                        Application.BULLET_BIT;
 
         fixtureDef.shape = shape;
         b2body.createFixture(fixtureDef);

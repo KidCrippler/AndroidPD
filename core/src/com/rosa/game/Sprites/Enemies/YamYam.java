@@ -37,7 +37,7 @@ public class YamYam extends Enemy {
     private Animation yamyamRun;
     private Animation yamyamJump;
     private TextureRegion yamyamStand;
-    public static boolean rayTwoNextToWall = false;
+    public static boolean rayTwoNextToWall;
     private static boolean chasing = true;
 
 
@@ -132,7 +132,6 @@ public class YamYam extends Enemy {
                 }
             }
         }
-        System.out.println(rayTwoNextToWall);
     }
 
 
@@ -200,7 +199,7 @@ public class YamYam extends Enemy {
                 Application.WALL_BIT |
                 Application.BOB_BIT |
                 Application.GROUND_BIT |
-                Application.BUN_BULLET_BIT;
+                Application.BULLET_BIT;
 
         b2body.createFixture(fixtureDef).setUserData(this);
 
@@ -223,7 +222,7 @@ public class YamYam extends Enemy {
         CircleShape rayShapeTwo = new CircleShape();
         rayShapeTwo.setRadius(6 / Application.PPM);
         fixtureDefRayTwo.filter.categoryBits = Application.RAY_TWO;
-        fixtureDefRayTwo.filter.maskBits = Application.WALL_BIT;
+        fixtureDefRayTwo.filter.maskBits = Application.WALL_BIT | Application.GROUND_BIT;
 
         fixtureDefRayTwo.shape = rayShapeTwo;
         fixtureDefRayTwo.isSensor = true;
@@ -264,7 +263,7 @@ public class YamYam extends Enemy {
     }
 
     private void fire() {
-        if (nearWall()) {
+        if (!rayTwoNextToWall) {
             if (System.nanoTime() - lastShot >= FIRE_RATE) {
                 enemyFirePowerLasArray.add(new EnemyFirePowerLas(screen, (float) (b2body.getPosition().x - 0.1), (float) (b2body.getPosition().y + 0.2), runningRight));
                 lastShot = System.nanoTime();
@@ -288,7 +287,7 @@ public class YamYam extends Enemy {
         return destroyed;
     }
 
-    public boolean nearWall() {
-        return true;
+    public void setRayTwoNextToWall(boolean rayTwoNextToWall) {
+        this.rayTwoNextToWall = rayTwoNextToWall;
     }
 }

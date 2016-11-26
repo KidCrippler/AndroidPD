@@ -68,13 +68,12 @@ public class Bun extends Enemy {
 
         fixtureDef.filter.categoryBits = Application.ENEMY_DUMB_BIT;
 
-        fixtureDef.filter.maskBits =
+        fixtureDef.filter.maskBits = Application.GROUND_BIT |
+                Application.ENEMY_DUMB_BIT |
+                Application.WALL_BIT |
+                Application.BOB_BIT |
                 Application.GROUND_BIT |
-                        Application.ENEMY_DUMB_BIT |
-                        Application.WALL_BIT |
-                        Application.BOB_BIT |
-                        Application.GROUND_BIT |
-                        Application.BUN_BULLET_BIT;
+                Application.BULLET_BIT;
         fixtureDef.shape = head;
         b2body.createFixture(fixtureDef).setUserData(this);
     }
@@ -106,7 +105,7 @@ public class Bun extends Enemy {
         if (bunHP <= 0) {
             playSound.playSoundRandomBunDead();
             setToDestroy = true;
-          }
+        }
     }
 
     public boolean isDestroyed() {

@@ -59,8 +59,8 @@ public class WorldCollisionListener implements ContactListener {
                 break;
 
             //      *       *       *       BULLETS     *       *       *       //
-            case Application.BUN_BULLET_BIT | Application.GROUND_BIT:
-                if (fixA.getFilterData().categoryBits == Application.BUN_BULLET_BIT) {
+            case Application.BULLET_BIT | Application.GROUND_BIT:
+                if (fixA.getFilterData().categoryBits == Application.BULLET_BIT) {
                     ((Bullet) fixA.getUserData()).setToDestroy();
                     soundPlayer.playSoundRandomLaserOneWall();
                 } else {
@@ -69,8 +69,8 @@ public class WorldCollisionListener implements ContactListener {
                 }
                 break;
 
-            case Application.BUN_BULLET_BIT | Application.WALL_BIT:
-                if (fixA.getFilterData().categoryBits == Application.BUN_BULLET_BIT) {
+            case Application.BULLET_BIT | Application.WALL_BIT:
+                if (fixA.getFilterData().categoryBits == Application.BULLET_BIT) {
                     ((Bullet) fixA.getUserData()).setToDestroy();
                     soundPlayer.playSoundRandomLaserOneWall();
                 } else {
@@ -79,28 +79,30 @@ public class WorldCollisionListener implements ContactListener {
 
                 }
                 break;
+
             //Enemy:
-            case Application.BUN_BULLET_BIT | Application.ENEMY_DUMB_BIT:
+            case Application.BULLET_BIT | Application.ENEMY_DUMB_BIT:
                 //Remove the enemy:
                 if (fixA.getFilterData().categoryBits == Application.ENEMY_DUMB_BIT)
                     ((Enemy) fixA.getUserData()).setToDestroy();
                 else
                     ((Enemy) fixB.getUserData()).setToDestroy();
                 //Remove the bullet:
-                if (fixA.getFilterData().categoryBits == Application.BUN_BULLET_BIT)
+                if (fixA.getFilterData().categoryBits == Application.BULLET_BIT)
                     ((Bullet) fixA.getUserData()).setToDestroy();
                 else
                     ((Bullet) fixB.getUserData()).setToDestroy();
                 break;
+
             //Enemy AI:
-            case Application.BUN_BULLET_BIT | Application.ENEMY_AI_BIT:
+            case Application.BULLET_BIT | Application.ENEMY_AI_BIT:
                 //Remove the enemy:
                 if (fixA.getFilterData().categoryBits == Application.ENEMY_AI_BIT)
                     ((Enemy) fixA.getUserData()).setToDestroy();
                 else
                     ((Enemy) fixB.getUserData()).setToDestroy();
                 //Remove the bullet:
-                if (fixA.getFilterData().categoryBits == Application.BUN_BULLET_BIT)
+                if (fixA.getFilterData().categoryBits == Application.BULLET_BIT)
                     ((Bullet) fixA.getUserData()).setToDestroy();
                 else
                     ((Bullet) fixB.getUserData()).setToDestroy();
@@ -114,20 +116,27 @@ public class WorldCollisionListener implements ContactListener {
                     ((YamYam) fixB.getUserData()).jump();
                 break;
 
+
             //      *       *       *       RAY_ONE - TWO    *       *       *       //
             case Application.RAY_TWO | Application.WALL_BIT:
                 if (fixA.getFilterData().categoryBits == Application.RAY_TWO) {
-                    ((YamYam) fixA.getUserData()).reverseVelocity(true, false);
-                    ((YamYam) fixA.getUserData()).nearWall();
-                    System.out.println("near!");
-
+                    ((YamYam) fixA.getUserData()).setRayTwoNextToWall(true);
                 } else {
-                    ((YamYam) fixB.getUserData()).reverseVelocity(true, false);
-                    ((YamYam) fixB.getUserData()).nearWall();
-                    System.out.println("near!");
+                    ((YamYam) fixB.getUserData()).setRayTwoNextToWall(true);
                 }
                 break;
         }
+//            //      *       *       *       RAY_ONE - TWO    *       *       *       //
+//            case Application.RAY_TWO | Application.WALL_BIT:
+//                if (fixA.getFilterData().categoryBits == Application.RAY_TWO) {
+//                    ((YamYam) fixA.getUserData()).reverseVelocity(true, false);
+//                    ((YamYam) fixA.getUserData()).setRayTwoNextToWall(true);
+//                } else {
+//                    ((YamYam) fixB.getUserData()).reverseVelocity(true, false);
+//                    ((YamYam) fixB.getUserData()).setRayTwoNextToWall(true);
+//                }
+//                break;
+//        }
     }
 
     @Override

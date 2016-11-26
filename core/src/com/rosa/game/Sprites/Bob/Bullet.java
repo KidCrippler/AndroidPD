@@ -52,7 +52,7 @@ public class Bullet extends Sprite {
         CircleShape shape = new CircleShape();
         shape.setRadius(2 / Application.PPM);
 
-        fixtureDef.filter.categoryBits = Application.BUN_BULLET_BIT;
+        fixtureDef.filter.categoryBits = Application.BULLET_BIT;
         fixtureDef.filter.maskBits =
 
                         Application.ENEMY_DUMB_BIT |

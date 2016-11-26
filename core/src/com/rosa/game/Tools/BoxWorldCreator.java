@@ -36,6 +36,8 @@ public class BoxWorldCreator {
             bodyDef.position.set((rect.getX() + rect.getWidth() / 2) / Application.PPM, (rect.getY() + rect.getHeight() / 2) / Application.PPM);
             body = world.createBody(bodyDef);
             shape.setAsBox(rect.getWidth() / 2 / Application.PPM, rect.getHeight() / 2 / Application.PPM);
+            fixtureDef.filter.categoryBits = Application.GROUND_BIT;
+            fixtureDef.filter.maskBits = Application.BOB_BIT | Application.ENEMY_AI_BIT | Application.ENEMY_DUMB_BIT;
             fixtureDef.shape = shape;
             body.createFixture(fixtureDef);
         }
@@ -49,6 +51,7 @@ public class BoxWorldCreator {
             shape.setAsBox(rect.getWidth() / 2 / Application.PPM, rect.getHeight() / 2 / Application.PPM);
             fixtureDef.shape = shape;
             fixtureDef.filter.categoryBits = Application.WALL_BIT;
+            fixtureDef.filter.maskBits = Application.BOB_BIT | Application.ENEMY_AI_BIT | Application.ENEMY_DUMB_BIT | Application.BULLET_BIT;
             body.createFixture(fixtureDef);
         }
 
