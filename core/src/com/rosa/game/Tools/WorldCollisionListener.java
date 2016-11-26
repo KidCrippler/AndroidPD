@@ -12,6 +12,7 @@ import com.rosa.game.Sprites.Enemies.YamYam;
 
 public class WorldCollisionListener implements ContactListener {
 
+
     SoundPlayer soundPlayer = new SoundPlayer();
 
     @Override
@@ -119,11 +120,10 @@ public class WorldCollisionListener implements ContactListener {
 
             //      *       *       *       RAY_TWO_INNER     *       *       *       //
             case Application.RAY_TWO_INNER | Application.WALL_BIT:
-                if (fixA.getFilterData().categoryBits == Application.RAY_TWO_INNER) {
+                if (fixA.getFilterData().categoryBits == Application.RAY_TWO_INNER)
                     ((YamYam) fixA.getUserData()).setRayTwoNextToWall(true);
-                } else {
+                else
                     ((YamYam) fixB.getUserData()).setRayTwoNextToWall(true);
-                }
                 break;
         }
     }

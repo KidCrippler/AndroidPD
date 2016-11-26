@@ -1,5 +1,6 @@
 package com.rosa.game.Sprites.Enemies;
 
+import com.badlogic.gdx.ai.utils.Ray;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -75,7 +76,10 @@ public class YamYam extends Enemy {
         setBounds(0, 0, 23 / Application.PPM, 32 / Application.PPM);
         setRegion(yamyamStand);
 
-        enemyFirePowerLasArray = new Array<com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyFirePowerLas>();
+        enemyFirePowerLasArray = new Array<EnemyFirePowerLas>();
+
+        //TODO: find tut about ray and maybe could be used against the circle ray point.
+        //Ray ray = new Ray(b2body.getLinearVelocity(),b2body.getLinearVelocity());
     }
 
     public void update(float dt) {
@@ -209,7 +213,6 @@ public class YamYam extends Enemy {
         CircleShape rayShapeOne = new CircleShape();
         rayShapeOne.setRadius(6 / Application.PPM);
         fixtureDefRayOne.filter.categoryBits = Application.RAY_ONE_OUTER;
-//        fixtureDefRayOne.filter.maskBits = Application.WALL_BIT;
 
         fixtureDefRayOne.shape = rayShapeOne;
         fixtureDefRayOne.isSensor = true;
@@ -223,7 +226,6 @@ public class YamYam extends Enemy {
         CircleShape rayShapeTwo = new CircleShape();
         rayShapeTwo.setRadius(6 / Application.PPM);
         fixtureDefRayTwo.filter.categoryBits = Application.RAY_TWO_INNER;
-//        fixtureDefRayTwo.filter.maskBits = Application.WALL_BIT;
 
         fixtureDefRayTwo.shape = rayShapeTwo;
         fixtureDefRayTwo.isSensor = true;
@@ -275,7 +277,6 @@ public class YamYam extends Enemy {
 
     public void jump() {
         if (!destroyed && b2body.isActive() && chasing) {
-
             if (currentState != State.JUMPING) {
                 b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
                 soundPlayer.PlaySoundBob(0);
