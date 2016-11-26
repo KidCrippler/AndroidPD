@@ -116,10 +116,16 @@ public class WorldCollisionListener implements ContactListener {
 
             //      *       *       *       RAY_ONE - TWO    *       *       *       //
             case Application.RAY_TWO | Application.WALL_BIT:
-                if (fixA.getFilterData().categoryBits == Application.RAY_TWO)
-                    ((YamYam) fixA.getUserData()).reverseVelocity(true,false);
-                else
-                    ((YamYam) fixB.getUserData()).reverseVelocity(true,false);
+                if (fixA.getFilterData().categoryBits == Application.RAY_TWO) {
+                    ((YamYam) fixA.getUserData()).reverseVelocity(true, false);
+                    ((YamYam) fixA.getUserData()).nearWall();
+                    System.out.println("near!");
+
+                } else {
+                    ((YamYam) fixB.getUserData()).reverseVelocity(true, false);
+                    ((YamYam) fixB.getUserData()).nearWall();
+                    System.out.println("near!");
+                }
                 break;
         }
     }

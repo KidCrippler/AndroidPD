@@ -16,8 +16,6 @@ import com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyFirePowerLas;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
 
-import java.util.concurrent.TimeUnit;
-
 public class YamYam extends Enemy {
 
     private enum State {FALLING, JUMPING, STANDING, RUNNING}
@@ -39,6 +37,7 @@ public class YamYam extends Enemy {
     private Animation yamyamRun;
     private Animation yamyamJump;
     private TextureRegion yamyamStand;
+    public static boolean rayTwoNextToWall = false;
     private static boolean chasing = true;
 
 
@@ -133,6 +132,7 @@ public class YamYam extends Enemy {
                 }
             }
         }
+        System.out.println(rayTwoNextToWall);
     }
 
 
@@ -204,7 +204,7 @@ public class YamYam extends Enemy {
 
         b2body.createFixture(fixtureDef).setUserData(this);
 
-        //RAYOne:
+        //RAYOne - (Outer):
         FixtureDef fixtureDefRayOne = new FixtureDef();
         CircleShape rayShapeOne = new CircleShape();
         rayShapeOne.setRadius(6 / Application.PPM);
@@ -218,7 +218,7 @@ public class YamYam extends Enemy {
         rayShapeOne.setPosition(new Vector2(-0.5f, 0 / Application.PPM));
         b2body.createFixture(fixtureDefRayOne).setUserData(this);
 
-        //RAYTwo:
+        //RAYTwo - (Inner):
         FixtureDef fixtureDefRayTwo = new FixtureDef();
         CircleShape rayShapeTwo = new CircleShape();
         rayShapeTwo.setRadius(6 / Application.PPM);
@@ -264,10 +264,12 @@ public class YamYam extends Enemy {
     }
 
     private void fire() {
-        if (System.nanoTime() - lastShot >= FIRE_RATE) {
-            enemyFirePowerLasArray.add(new com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyFirePowerLas(screen, (float) (b2body.getPosition().x - 0.1), (float) (b2body.getPosition().y + 0.2), runningRight));
-            lastShot = System.nanoTime();
-            soundPlayer.playSoundRandomYamYamFirePower();
+        if (nearWall()) {
+            if (System.nanoTime() - lastShot >= FIRE_RATE) {
+                enemyFirePowerLasArray.add(new EnemyFirePowerLas(screen, (float) (b2body.getPosition().x - 0.1), (float) (b2body.getPosition().y + 0.2), runningRight));
+                lastShot = System.nanoTime();
+                soundPlayer.playSoundRandomYamYamFirePower();
+            }
         }
     }
 
@@ -284,5 +286,9 @@ public class YamYam extends Enemy {
 
     public boolean isDestroyed() {
         return destroyed;
+    }
+
+    public boolean nearWall() {
+        return true;
     }
 }
