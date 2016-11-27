@@ -1,6 +1,5 @@
 package com.rosa.game.Sprites.Enemies;
 
-import com.badlogic.gdx.ai.utils.Ray;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
