@@ -74,7 +74,7 @@ public class YamYam extends Enemy {
 
         setBounds(0, 0, 23 / Application.PPM, 32 / Application.PPM);
         setRegion(yamyamStand);
-        
+
         enemyFirePowerLasArray = new Array<EnemyFirePowerLas>();
 
         //TODO: find tut about ray and maybe could be used against the circle ray point.
