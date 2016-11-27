@@ -26,8 +26,8 @@ public class MainMenuScreen implements Screen {
     private Button optionsButton;
     private Button creditsButton;
     private static Application game;
-    MainMenuScreen mainMenuScreen;
-    GameScreen gamescreen;
+    private MainMenuScreen mainMenuScreen;
+    protected GameScreen gamescreen;
 
     MainMenuScreen(Application game) {
         this.game = game;

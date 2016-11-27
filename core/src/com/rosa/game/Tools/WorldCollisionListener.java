@@ -121,7 +121,7 @@ public class WorldCollisionListener implements ContactListener {
             //      *       *       *       RAY_TWO_INNER     *       *       *       //
             case Application.RAY_TWO_INNER | Application.WALL_BIT:
                 if (fixA.getFilterData().categoryBits == Application.RAY_TWO_INNER)
-                    ((YamYam) fixA.getUserData()).setRayTwoNextToWall(true);
+                    ((YamYam) fixA.getUserData()).setRayTwoNextToWall(false);
                 else
                     ((YamYam) fixB.getUserData()).setRayTwoNextToWall(true);
                 break;
