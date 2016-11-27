@@ -130,6 +130,20 @@ public class WorldCollisionListener implements ContactListener {
 
     @Override
     public void endContact(Contact contact) {
+        Fixture fixA = contact.getFixtureA();
+        Fixture fixB = contact.getFixtureB();
+
+        int cDef = fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
+
+        switch (cDef) {
+            //      *       *       *       RAY_TWO_INNER     *       *       *       //
+            case Application.RAY_TWO_INNER | Application.WALL_BIT:
+                if (fixA.getFilterData().categoryBits == Application.RAY_TWO_INNER)
+                    ((YamYam) fixA.getUserData()).setRayTwoNextToWall(true);
+                else
+                    ((YamYam) fixB.getUserData()).setRayTwoNextToWall(false);
+                break;
+        }
     }
 
     @Override
