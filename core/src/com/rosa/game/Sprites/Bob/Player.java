@@ -17,10 +17,10 @@ import com.rosa.game.screens.PlayScreen;
 
 public class Player extends Sprite {
 
-    public enum State {FALLING, JUMPING, STANDING, RUNNING, DEAD}
+    private enum State {FALLING, JUMPING, STANDING, RUNNING, DEAD}
 
-    public State currentState;
-    public State previousState;
+    private State currentState;
+    private State previousState;
     public World world;
     public Body b2body;
     private TextureRegion playerStand;
@@ -34,7 +34,7 @@ public class Player extends Sprite {
     private SoundPlayer soundPlayer = new SoundPlayer();
     private Array<Bullet> bullets;
     public static float BOB_X_POSITION;
-    public static float BOB_Y_POSITION;
+    private static float BOB_Y_POSITION;
 
     public Player(World world, PlayScreen screen) {
         super(screen.getAtlas().findRegion("keen"));
@@ -80,7 +80,7 @@ public class Player extends Sprite {
         }
     }
 
-    public TextureRegion getFrame(float dt) {
+    private TextureRegion getFrame(float dt) {
         currentState = getState();
         TextureRegion region;
         switch (currentState) {
@@ -111,7 +111,7 @@ public class Player extends Sprite {
         return region;
     }
 
-    public State getState() {
+    private State getState() {
         if (b2body.getLinearVelocity().y > 0 || (b2body.getLinearVelocity().y < 0 && previousState == State.JUMPING))
             return State.JUMPING;
         else if (b2body.getLinearVelocity().y < 0)
@@ -122,9 +122,13 @@ public class Player extends Sprite {
             return State.STANDING;
     }
 
-    public void definePlayer() {
+    private void definePlayer() {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(32 / Application.PPM, 32 / Application.PPM);
+
+        //TODO: set this on TIled:
+//        bodyDef.position.set(32 / Application.PPM, 32 / Application.PPM);
+//        bodyDef.position.set(1,1);
+
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bodyDef);
         FixtureDef fixtureDef = new FixtureDef();
