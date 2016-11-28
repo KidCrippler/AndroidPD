@@ -89,40 +89,41 @@ public class AIYamYam extends Enemy {
         } else {
             setRegion(getFrame(dt));
 
-            //TODO: fix chase or not
-            //If you are not chased:
-            if (!chasing) {
-                chasing = true;
-//                b2body.setLinearVelocity(velocity);
-            }
-
-            //If you are chased behaver:
-            if (!destroyed && b2body.isActive() && chasing ) {
-
-                //RAY_ONE_OUTER (AI movement):
-                if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x)
-                    b2body.applyLinearImpulse(new Vector2(-0.02f, 0), b2body.getWorldCenter(), true);
-
-                if (Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x)
-                    b2body.applyLinearImpulse(new Vector2(0.02f, 0), b2body.getWorldCenter(), true);
+            if (!destroyed && b2body.isActive()) {
 
                 //Draw:
                 setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
                 setRegion(walkAnimation.getKeyFrame(stateTime, true));
 
-                //Fire bullets:
-                fire();
-                for (EnemyFirePowerLas enemyFirePowerLas : enemyFirePowerLasArray) {
-                    enemyFirePowerLas.update(dt);
-                    if (enemyFirePowerLas.isDestroyed()) {
-                        enemyFirePowerLasArray.removeValue(enemyFirePowerLas, true);
-                    }
+                //TODO: fix chase or not
+                //If you are not chased:
+                if (!chasing) {
+                    chasing = true;
                 }
-                //looking at you:
-                if (b2body.getLinearVelocity().x < 0) {
-                    runningRight = false;
-                } else if (b2body.getLinearVelocity().x > 0) {
-                    runningRight = true;
+
+                //If you are chased behaver:
+                if (chasing) {
+
+                    //RAY_ONE_OUTER (AI movement):
+                    if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x)
+                        b2body.applyLinearImpulse(new Vector2(-0.02f, 0), b2body.getWorldCenter(), true);
+
+                    if (Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x)
+                        b2body.applyLinearImpulse(new Vector2(0.02f, 0), b2body.getWorldCenter(), true);
+                    //Fire bullets:
+                    fire();
+                    for (EnemyFirePowerLas enemyFirePowerLas : enemyFirePowerLasArray) {
+                        enemyFirePowerLas.update(dt);
+                        if (enemyFirePowerLas.isDestroyed()) {
+                            enemyFirePowerLasArray.removeValue(enemyFirePowerLas, true);
+                        }
+                    }
+                    //looking at you:
+                    if (b2body.getLinearVelocity().x < 0) {
+                        runningRight = false;
+                    } else if (b2body.getLinearVelocity().x > 0) {
+                        runningRight = true;
+                    }
                 }
             }
         }
