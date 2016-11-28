@@ -40,15 +40,12 @@ public class PlayScreen implements Screen {
 
     public PlayScreen(Application game) {
         GameScreen.FRAME_GAME_STATE = GameScreen.GAME_RUNNING;
-
         this.game = game;
-
         atlas = new TextureAtlas("style/ingame/figure/bob/bob.pack");
         orthographicCamera = new OrthographicCamera();
         gamePort = new FitViewport(Application.V_WIDTH / Application.PPM, Application.V_HEIGHT / Application.PPM, orthographicCamera);
         hud = new Hud(game.batch);
         playscreenmenu = new MenuPaused(game.batch);
-
         TmxMapLoader mapLoader = new TmxMapLoader();
         map = mapLoader.load("style/ingame/level/tmap.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1 / Application.PPM);
@@ -59,15 +56,6 @@ public class PlayScreen implements Screen {
         player = new Player(world, this);
         world.setContactListener(new WorldCollisionListener());
         controller = new Controller();
-    }
-
-    public TextureAtlas getAtlas() {
-        return atlas;
-    }
-
-    @Override
-    public void show() {
-
     }
 
     public void handleInputController() {
@@ -169,6 +157,11 @@ public class PlayScreen implements Screen {
     }
 
     @Override
+    public void show() {
+
+    }
+
+    @Override
     public void pause() {
     }
 
@@ -195,5 +188,9 @@ public class PlayScreen implements Screen {
 
     public World getWorld() {
         return world;
+    }
+
+    public TextureAtlas getAtlas() {
+        return atlas;
     }
 }

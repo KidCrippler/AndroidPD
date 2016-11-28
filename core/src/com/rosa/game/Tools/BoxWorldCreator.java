@@ -60,7 +60,7 @@ public class BoxWorldCreator {
             body.createFixture(fixtureDef);
         }
 
-        //Create buns:
+        //Create Dumb Bun:
         buns = new Array<DumbBun>();
 
         for (MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
@@ -68,7 +68,7 @@ public class BoxWorldCreator {
             buns.add(new DumbBun(screen, rect.getX() / Application.PPM, rect.getY() / Application.PPM));
         }
 
-        //Create yamyam:
+        //Create AI YamYam:
         yamYams = new Array<AIYamYam>();
 
         for (MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)) {

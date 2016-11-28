@@ -64,24 +64,20 @@ public class Player extends Sprite {
         setRegion(playerStand);
 
         bullets = new Array<Bullet>();
-
     }
 
     public void update(float dt) {
-        //position of sprite inside shape:
         setPosition(b2body.getPosition().x - getWidth() / 2, (float) (b2body.getPosition().y - getHeight() / 300.0));
         setRegion(getFrame(dt));
+        BOB_X_POSITION = b2body.getPosition().x;
+        BOB_Y_POSITION = b2body.getPosition().y;
 
         for (Bullet bullet : bullets) {
             bullet.update(dt);
             if (bullet.isDestroyed()) {
                 bullets.removeValue(bullet, true);
-
             }
         }
-        BOB_X_POSITION = b2body.getPosition().x;
-        BOB_Y_POSITION = b2body.getPosition().y;
-
     }
 
     public TextureRegion getFrame(float dt) {
@@ -111,7 +107,6 @@ public class Player extends Sprite {
         }
 
         stateTimer = currentState == previousState ? stateTimer + dt : 0;
-
         previousState = currentState;
         return region;
     }
@@ -132,18 +127,14 @@ public class Player extends Sprite {
         bodyDef.position.set(32 / Application.PPM, 32 / Application.PPM);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bodyDef);
-
         FixtureDef fixtureDef = new FixtureDef();
-
         PolygonShape shape = new PolygonShape();
-
         Vector2[] vector2s = new Vector2[4];
         vector2s[0] = new Vector2(-3, 30).scl(1 / Application.PPM);
         vector2s[1] = new Vector2(3, 30).scl(1 / Application.PPM);
         vector2s[2] = new Vector2(-4, 1).scl(1 / Application.PPM);
         vector2s[3] = new Vector2(4, 1).scl(1 / Application.PPM);
         shape.set(vector2s);
-
         fixtureDef.filter.categoryBits = Application.BOB_BIT;
         fixtureDef.filter.maskBits =
                 Application.GROUND_BIT |
@@ -152,10 +143,8 @@ public class Player extends Sprite {
                         Application.WALL_BIT |
                         Application.ITEM_BIT |
                         Application.BULLET_BIT;
-
         fixtureDef.shape = shape;
         b2body.createFixture(fixtureDef);
-
     }
 
     public void jump() {
