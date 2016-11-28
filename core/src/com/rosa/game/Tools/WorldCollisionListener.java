@@ -8,7 +8,7 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Bob.Bullet;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
-import com.rosa.game.Sprites.Enemies.YamYam;
+import com.rosa.game.Sprites.Enemies.AIYamYam;
 
 public class WorldCollisionListener implements ContactListener {
 
@@ -112,18 +112,18 @@ public class WorldCollisionListener implements ContactListener {
             //      *       *       *       RAY_ONE_OUTER     *       *       *       //
             case Application.RAY_ONE_OUTER | Application.WALL_BIT:
                 if (fixA.getFilterData().categoryBits == Application.RAY_ONE_OUTER)
-                    ((YamYam) fixA.getUserData()).jump();
+                    ((AIYamYam) fixA.getUserData()).jump();
                 else
-                    ((YamYam) fixB.getUserData()).jump();
+                    ((AIYamYam) fixB.getUserData()).jump();
                 break;
 
 
             //      *       *       *       RAY_TWO_INNER     *       *       *       //
             case Application.RAY_TWO_INNER | Application.WALL_BIT:
                 if (fixA.getFilterData().categoryBits == Application.RAY_TWO_INNER)
-                    ((YamYam) fixA.getUserData()).setRayTwoNextToWall(false);
+                    ((AIYamYam) fixA.getUserData()).setRayTwoNextToWall(false);
                 else
-                    ((YamYam) fixB.getUserData()).setRayTwoNextToWall(true);
+                    ((AIYamYam) fixB.getUserData()).setRayTwoNextToWall(true);
                 break;
         }
     }
@@ -139,9 +139,9 @@ public class WorldCollisionListener implements ContactListener {
             //      *       *       *       RAY_TWO_INNER     *       *       *       //
             case Application.RAY_TWO_INNER | Application.WALL_BIT:
                 if (fixA.getFilterData().categoryBits == Application.RAY_TWO_INNER)
-                    ((YamYam) fixA.getUserData()).setRayTwoNextToWall(true);
+                    ((AIYamYam) fixA.getUserData()).setRayTwoNextToWall(true);
                 else
-                    ((YamYam) fixB.getUserData()).setRayTwoNextToWall(false);
+                    ((AIYamYam) fixB.getUserData()).setRayTwoNextToWall(false);
                 break;
         }
     }

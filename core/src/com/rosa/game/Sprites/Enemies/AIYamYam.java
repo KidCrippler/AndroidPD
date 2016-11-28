@@ -16,7 +16,7 @@ import com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyFirePowerLas;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
 
-public class YamYam extends Enemy {
+public class AIYamYam extends Enemy {
 
     private enum State {FALLING, JUMPING, STANDING, RUNNING}
 
@@ -41,7 +41,7 @@ public class YamYam extends Enemy {
     private static boolean chasing = true;
 
 
-    public YamYam(PlayScreen screen, float x, float y) {
+    public AIYamYam(PlayScreen screen, float x, float y) {
         super(screen, x, y);
         currentState = State.STANDING;
         previousState = State.STANDING;

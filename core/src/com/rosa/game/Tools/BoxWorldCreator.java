@@ -11,15 +11,15 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
+import com.rosa.game.Sprites.Enemies.DumbBun;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
-import com.rosa.game.Sprites.Enemies.YamYam;
-import com.rosa.game.Sprites.Enemies.Bun;
+import com.rosa.game.Sprites.Enemies.AIYamYam;
 import com.rosa.game.screens.PlayScreen;
 
 public class BoxWorldCreator {
 
-    private Array<Bun> buns;
-    private Array<YamYam> yamYams;
+    private Array<DumbBun> buns;
+    private Array<AIYamYam> yamYams;
 
     public BoxWorldCreator(PlayScreen screen) {
         World world = screen.getWorld();
@@ -61,19 +61,19 @@ public class BoxWorldCreator {
         }
 
         //Create buns:
-        buns = new Array<Bun>();
+        buns = new Array<DumbBun>();
 
         for (MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            buns.add(new Bun(screen, rect.getX() / Application.PPM, rect.getY() / Application.PPM));
+            buns.add(new DumbBun(screen, rect.getX() / Application.PPM, rect.getY() / Application.PPM));
         }
 
         //Create yamyam:
-        yamYams = new Array<YamYam>();
+        yamYams = new Array<AIYamYam>();
 
         for (MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            yamYams.add(new YamYam(screen, rect.getX() / Application.PPM, rect.getY() / Application.PPM));
+            yamYams.add(new AIYamYam(screen, rect.getX() / Application.PPM, rect.getY() / Application.PPM));
         }
     }
 
@@ -86,14 +86,14 @@ public class BoxWorldCreator {
 
     public void update(float dt) {
         //Remove buns from memory:
-        for (Bun bun : buns) {
-            bun.update(dt);
-            if (bun.isDestroyed()) {
-                buns.removeValue(bun, true);
+        for (DumbBun dumbBun : buns) {
+            dumbBun.update(dt);
+            if (dumbBun.isDestroyed()) {
+                buns.removeValue(dumbBun, true);
             }
         }
         //Remove yamYams from memory:
-        for (YamYam yam : yamYams) {
+        for (AIYamYam yam : yamYams) {
             yam.update(dt);
             if (yam.isDestroyed()) {
                 yamYams.removeValue(yam, true);
