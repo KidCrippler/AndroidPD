@@ -19,7 +19,6 @@ import com.rosa.game.screens.PlayScreen;
 public class AIYamYam extends Enemy {
 
     private enum State {FALLING, JUMPING, STANDING, RUNNING}
-
     private State currentState;
     private State previousState;
     private float stateTime;
@@ -37,9 +36,8 @@ public class AIYamYam extends Enemy {
     private Animation yamyamRun;
     private Animation yamyamJump;
     private TextureRegion yamyamStand;
-    public static boolean rayTwoNextToWall;
-    private static boolean chasing = true;
-
+    private boolean rayTwoNextToWall;
+    private boolean chasing;
 
     public AIYamYam(PlayScreen screen, float x, float y) {
         super(screen, x, y);
@@ -76,9 +74,7 @@ public class AIYamYam extends Enemy {
         setRegion(yamyamStand);
 
         enemyFirePowerLasArray = new Array<EnemyFirePowerLas>();
-
-        //TODO: find tut about ray and maybe could be used against the circle ray point.
-        //Ray ray = new Ray(b2body.getLinearVelocity(),b2body.getLinearVelocity());
+        chasing = true;
     }
 
     public void update(float dt) {
@@ -93,21 +89,15 @@ public class AIYamYam extends Enemy {
         } else {
             setRegion(getFrame(dt));
 
-            //Chasing or not?
-            float speedNow = b2body.getLinearVelocity().len();
-            chasing = true;
-            if (speedNow == 0.0) {
-                chasing = false;
-                reverseVelocity(true, false);
-            }
-
+            //TODO: fix chase or not
             //If you are not chased:
             if (!chasing) {
-                b2body.setLinearVelocity(velocity);
+                chasing = true;
+//                b2body.setLinearVelocity(velocity);
             }
 
             //If you are chased behaver:
-            if (!destroyed && b2body.isActive() && chasing) {
+            if (!destroyed && b2body.isActive() && chasing ) {
 
                 //RAY_ONE_OUTER (AI movement):
                 if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x)
