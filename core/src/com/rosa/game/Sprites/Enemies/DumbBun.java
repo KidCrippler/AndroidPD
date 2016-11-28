@@ -16,6 +16,8 @@ import com.rosa.game.screens.PlayScreen;
 
 public class DumbBun extends Enemy {
 
+    //TODO: Bun can kick you far away!
+
     private float stateTime;
     private Animation walkAnimation;
     private Array<TextureRegion> frames;
