@@ -41,6 +41,6 @@
   <object id="145" x="144" y="112" width="16" height="16"/>
  </objectgroup>
  <objectgroup name="Player">
-  <object id="148" x="48" y="48" width="16" height="16"/>
+  <object id="148" x="0" y="0" width="16" height="16"/>
  </objectgroup>
 </map>

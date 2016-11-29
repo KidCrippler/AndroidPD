@@ -20,14 +20,22 @@ public class BoxWorldCreator {
 
     private Array<DumbBun> buns;
     private Array<AIYamYam> yamYams;
+    public static TiledMap map;
 
     public BoxWorldCreator(PlayScreen screen) {
         World world = screen.getWorld();
-        TiledMap map = screen.getMap();
+        map = screen.getMap();
         BodyDef bodyDef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fixtureDef = new FixtureDef();
         Body body;
+
+        //Player Drop:
+//        for (MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
+//            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+//            bodyDef.type = BodyDef.BodyType.StaticBody;
+//            bodyDef.position.set((rect.getX() + rect.getWidth() / 2) / Application.PPM, (rect.getY() + rect.getHeight() / 2) / Application.PPM);
+//        }
 
         //Create ground:
         for (MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {

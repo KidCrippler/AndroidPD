@@ -4,6 +4,10 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -12,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
+import com.rosa.game.Tools.BoxWorldCreator;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
 
@@ -34,7 +39,7 @@ public class Player extends Sprite {
     private SoundPlayer soundPlayer = new SoundPlayer();
     private Array<Bullet> bullets;
     public static float BOB_X_POSITION;
-    private static float BOB_Y_POSITION;
+    BoxWorldCreator boxWorldCreator;
 
     public Player(World world, PlayScreen screen) {
         super(screen.getAtlas().findRegion("keen"));
@@ -70,7 +75,6 @@ public class Player extends Sprite {
         setPosition(b2body.getPosition().x - getWidth() / 2, (float) (b2body.getPosition().y - getHeight() / 300.0));
         setRegion(getFrame(dt));
         BOB_X_POSITION = b2body.getPosition().x;
-        BOB_Y_POSITION = b2body.getPosition().y;
 
         for (Bullet bullet : bullets) {
             bullet.update(dt);
@@ -125,9 +129,10 @@ public class Player extends Sprite {
     private void definePlayer() {
         BodyDef bodyDef = new BodyDef();
 
-        //TODO: set this on TIled:
-//        bodyDef.position.set(32 / Application.PPM, 32 / Application.PPM);
-//        bodyDef.position.set(1,1);
+        for (MapObject object : BoxWorldCreator.map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            bodyDef.position.set((rect.getX() + rect.getWidth() / 2) / Application.PPM, (rect.getY() + rect.getHeight() / 2) / Application.PPM);
+        }
 
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bodyDef);
@@ -140,13 +145,12 @@ public class Player extends Sprite {
         vector2s[3] = new Vector2(4, 1).scl(1 / Application.PPM);
         shape.set(vector2s);
         fixtureDef.filter.categoryBits = Application.BOB_BIT;
-        fixtureDef.filter.maskBits =
-                Application.GROUND_BIT |
-                        Application.ENEMY_DUMB_BIT |
-                        Application.ENEMY_AI_BIT |
-                        Application.WALL_BIT |
-                        Application.ITEM_BIT |
-                        Application.BULLET_BIT;
+        fixtureDef.filter.maskBits = Application.GROUND_BIT |
+                Application.ENEMY_DUMB_BIT |
+                Application.ENEMY_AI_BIT |
+                Application.WALL_BIT |
+                Application.ITEM_BIT |
+                Application.BULLET_BIT;
         fixtureDef.shape = shape;
         b2body.createFixture(fixtureDef);
     }
