@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.rosa.game.Application;
-
+//test
 public class SplashScreen implements Screen {
 
     private Texture texture = new Texture(Gdx.files.internal("style/menu/splash/splash_srn.png"));
