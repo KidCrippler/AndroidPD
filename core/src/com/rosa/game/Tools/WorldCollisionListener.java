@@ -7,8 +7,10 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Bob.Bullet;
+import com.rosa.game.Sprites.Bob.Player;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
 import com.rosa.game.Sprites.Enemies.AIYamYam;
+import com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyFirePowerLas;
 
 public class WorldCollisionListener implements ContactListener {
 
@@ -59,17 +61,17 @@ public class WorldCollisionListener implements ContactListener {
                     soundPlayer.PlaySoundBob(1);
                 break;
 
-            //      *       *       *       BULLETS     *       *       *       //
-            case Application.BULLET_BIT | Application.GROUND_BIT:
-                if (fixA.getFilterData().categoryBits == Application.BULLET_BIT) {
-                    ((Bullet) fixA.getUserData()).setToDestroy();
-                    soundPlayer.playSoundRandomLaserOneWall();
-                } else {
-                    ((Bullet) fixB.getUserData()).setToDestroy();
-                    soundPlayer.playSoundRandomLaserOneWall();
-                }
-                break;
+//            case Application.BULLET_BIT | Application.GROUND_BIT:
+//                if (fixA.getFilterData().categoryBits == Application.BULLET_BIT) {
+//                    ((Bullet) fixA.getUserData()).setToDestroy();
+//                    soundPlayer.playSoundRandomLaserOneWall();
+//                } else {
+//                    ((Bullet) fixB.getUserData()).setToDestroy();
+//                    soundPlayer.playSoundRandomLaserOneWall();
+//                }
+//                break;
 
+            //      *       *       *       BULLETS     *       *       *       //
             case Application.BULLET_BIT | Application.WALL_BIT:
                 if (fixA.getFilterData().categoryBits == Application.BULLET_BIT) {
                     ((Bullet) fixA.getUserData()).setToDestroy();
@@ -81,7 +83,35 @@ public class WorldCollisionListener implements ContactListener {
                 }
                 break;
 
-            //Enemy:
+            case Application.ENEMY_BULLET_BIT | Application.WALL_BIT:
+                if (fixA.getFilterData().categoryBits == Application.ENEMY_BULLET_BIT) {
+                    ((EnemyFirePowerLas) fixA.getUserData()).setToDestroy();
+                    soundPlayer.playSoundRandomLaserOneWall();
+                    System.out.println("wall");
+                } else {
+                    ((EnemyFirePowerLas) fixB.getUserData()).setToDestroy();
+                    soundPlayer.playSoundRandomLaserOneWall();
+                    System.out.println("wall");
+
+                }
+                break;
+
+            //Bullet fire at BOB:
+            case Application.ENEMY_BULLET_BIT | Application.BOB_BIT:
+                //Take down bob's HP:
+                if (fixA.getFilterData().categoryBits == Application.BOB_BIT)
+                    ((Player) fixA.getUserData()).setHpDown(10);
+                else
+                    ((Player) fixB.getUserData()).setHpDown(10);
+                //Remove the bullet:
+                if (fixA.getFilterData().categoryBits == Application.ENEMY_BULLET_BIT)
+                    ((EnemyFirePowerLas) fixA.getUserData()).setToDestroy();
+                else
+                    ((EnemyFirePowerLas) fixB.getUserData()).setToDestroy();
+                break;
+
+
+            //Bullet fire at Enemy:
             case Application.BULLET_BIT | Application.ENEMY_DUMB_BIT:
                 //Remove the enemy:
                 if (fixA.getFilterData().categoryBits == Application.ENEMY_DUMB_BIT)

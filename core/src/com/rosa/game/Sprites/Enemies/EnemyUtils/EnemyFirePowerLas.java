@@ -56,9 +56,9 @@ public class EnemyFirePowerLas extends Sprite {
 
         fixtureDef.filter.categoryBits = Application.ENEMY_BULLET_BIT;
         fixtureDef.filter.maskBits =
-                        Application.ENEMY_DUMB_BIT |
                         Application.GROUND_BIT |
-                        Application.WALL_BIT;
+                        Application.WALL_BIT |
+                        Application.BOB_BIT;
 
         fixtureDef.shape = shape;
         b2body.createFixture(fixtureDef).setUserData(this);
@@ -77,7 +77,7 @@ public class EnemyFirePowerLas extends Sprite {
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
 
         //Remove the bullet after 3 seconds:
-        if ((stateTime > 3 || setToDestroy) && !destroyed) {
+        if ((stateTime > 8 || setToDestroy) && !destroyed) {
             world.destroyBody(b2body);
             destroyed = true;
         }

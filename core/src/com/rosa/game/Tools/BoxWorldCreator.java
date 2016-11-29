@@ -30,13 +30,6 @@ public class BoxWorldCreator {
         FixtureDef fixtureDef = new FixtureDef();
         Body body;
 
-        //Player Drop:
-//        for (MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
-//            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-//            bodyDef.type = BodyDef.BodyType.StaticBody;
-//            bodyDef.position.set((rect.getX() + rect.getWidth() / 2) / Application.PPM, (rect.getY() + rect.getHeight() / 2) / Application.PPM);
-//        }
-
         //Create ground:
         for (MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
@@ -63,6 +56,7 @@ public class BoxWorldCreator {
                     Application.ENEMY_AI_BIT |
                     Application.ENEMY_DUMB_BIT |
                     Application.BULLET_BIT |
+                    Application.ENEMY_BULLET_BIT |
                     Application.RAY_ONE_OUTER |
                     Application.RAY_TWO_INNER;
             body.createFixture(fixtureDef);
