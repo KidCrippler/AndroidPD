@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -39,7 +38,7 @@ public class Player extends Sprite {
     private SoundPlayer soundPlayer = new SoundPlayer();
     private Array<Bullet> bullets;
     public static float BOB_X_POSITION;
-    BoxWorldCreator boxWorldCreator;
+    public static int BOB_HEALTH = 100;
 
     public Player(World world, PlayScreen screen) {
         super(screen.getAtlas().findRegion("keen"));
@@ -74,7 +73,13 @@ public class Player extends Sprite {
     public void update(float dt) {
         setPosition(b2body.getPosition().x - getWidth() / 2, (float) (b2body.getPosition().y - getHeight() / 300.0));
         setRegion(getFrame(dt));
+
         BOB_X_POSITION = b2body.getPosition().x;
+
+        if(BOB_HEALTH <= 0){
+            System.out.println("you are dead.");
+            currentState = State.DEAD;
+        }
 
         for (Bullet bullet : bullets) {
             bullet.update(dt);
