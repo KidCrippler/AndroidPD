@@ -194,7 +194,7 @@ public class Player extends Sprite {
             bullet.draw(batch);
     }
 
-    public void setHpDown(int hpDown){
+    public void setHpDown(){
 //        this.hpDown = hpDown;
         System.out.println("hp");
     }

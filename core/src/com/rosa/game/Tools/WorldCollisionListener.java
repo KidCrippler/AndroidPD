@@ -100,9 +100,9 @@ public class WorldCollisionListener implements ContactListener {
             case Application.ENEMY_BULLET_BIT | Application.BOB_BIT:
                 //Take down bob's HP:
                 if (fixA.getFilterData().categoryBits == Application.BOB_BIT)
-                    ((Player) fixA.getUserData()).setHpDown(10);
+                    ((Player) fixA.getUserData()).setHpDown();
                 else
-                    ((Player) fixB.getUserData()).setHpDown(10);
+                    ((Player) fixB.getUserData()).setHpDown();
                 //Remove the bullet:
                 if (fixA.getFilterData().categoryBits == Application.ENEMY_BULLET_BIT)
                     ((EnemyFirePowerLas) fixA.getUserData()).setToDestroy();
