@@ -61,6 +61,8 @@ public class WorldCollisionListener implements ContactListener {
                     soundPlayer.PlaySoundBob(1);
                 break;
 
+
+
 //            case Application.BULLET_BIT | Application.GROUND_BIT:
 //                if (fixA.getFilterData().categoryBits == Application.BULLET_BIT) {
 //                    ((Bullet) fixA.getUserData()).setToDestroy();
