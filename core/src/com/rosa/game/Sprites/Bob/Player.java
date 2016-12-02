@@ -42,6 +42,7 @@ public class Player extends Sprite {
     private Array<Bullet> bullets;
     private int bob_health = 100;
     public static float BOB_X_POSITION;
+    public static float BOB_Y_POSITION;
     private Application game;
 
     public Player(World world, ScreenPlay screen, Application game) {
@@ -80,9 +81,9 @@ public class Player extends Sprite {
         setRegion(getFrame(dt));
 
         BOB_X_POSITION = b2body.getPosition().x;
+        BOB_Y_POSITION = b2body.getPosition().y;
 
-
-        if (bob_health <= 0) {
+        if (bob_health <= 0 || BOB_Y_POSITION < -10) {
             dead();
         }
 
