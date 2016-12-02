@@ -202,10 +202,11 @@ public class Player extends Sprite {
         System.out.println(bob_health);
     }
 
-    final void dead (){
+    private final void dead(){
         soundPlayer.playSoundBob(0);
         System.out.println("you are dead.");
         currentState = State.DEAD;
         ((Game) Gdx.app.getApplicationListener()).setScreen(new ScreenMainMenu(game));
+        //TODO: need to be a dead screen, and then main menu screen.
     }
 }

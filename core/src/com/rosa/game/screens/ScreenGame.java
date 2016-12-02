@@ -20,9 +20,9 @@ public class ScreenGame extends ScreenAdapter implements Screen {
     public static final int GAME_OVER = 4;
     public static int FRAME_GAME_STATE;
 
-    public enum GameState {READY, RUNNING, PAUSED, GAMEOVER}
-
-    public GameState state = GameState.READY;
+//    public enum GameState {READY, RUNNING, PAUSED, GAMEOVER}
+//
+//    public GameState state = GameState.READY;
 
     Application game;
     OrthographicCamera guiCam;
@@ -64,8 +64,6 @@ public class ScreenGame extends ScreenAdapter implements Screen {
                 break;
         }
     }
-
-
 
     private void updateGameOver() {
     }
