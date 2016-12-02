@@ -12,33 +12,27 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.graphics.Color;
 import com.rosa.game.Application;
 
-
-public class Hud implements Disposable {
+public class Hud implements Disposable  {
 
     public Stage stage;
-    public Viewport viewport;
-
+    private Viewport viewport;
     private Label levelLabel;
 
     public Hud(SpriteBatch sb) {
         viewport = new FitViewport(Application.V_WIDTH, Application.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, sb);
-
-
         Table table = new Table();
         table.top();
         table.right();
         table.setFillParent(true);
-
         levelLabel = new Label("sc", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         table.add(levelLabel);
         levelLabel.setSize(0.5f,0.5f);
-
         stage.addActor(table);
     }
 
-    public void update(float dt) {
-    }
+
+    public void update(float dt) {}
 
     @Override
     public void dispose() {
