@@ -14,6 +14,8 @@ public class SoundPlayer {
         ArrayList<String> soundString = new ArrayList();
         soundString.add(0, "sounds/audio/bob/jump.wav");
         soundString.add(1, "sounds/audio/bob/land.wav");
+        soundString.add(2, "sounds/audio/bob/death1.wav");
+        soundString.add(3, "sounds/audio/bob/death2.wav");
 
         try {
             Sound soundFXStream = Gdx.audio.newSound(Gdx.files.internal(soundString.get(soundNumber)));
@@ -22,6 +24,7 @@ public class SoundPlayer {
             e.printStackTrace();
         }
     }
+
 
     public void playSoundRandomLazerLaserShootOne() {
         Random randomFromArray;
@@ -38,7 +41,6 @@ public class SoundPlayer {
             e.printStackTrace();
         }
     }
-
 
     public void playSoundRandomLaserOneWall() {
         Random randomFromArray;
