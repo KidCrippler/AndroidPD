@@ -28,11 +28,10 @@ public class AIYamYam extends Enemy {
     private int yamyamHP = 100;
     private SoundPlayer playSound = new SoundPlayer();
     private Array<EnemyBullet> enemyFirePowerLasArray;
-    private static final long FIRE_RATE = 800000000L;
+    private static final long FIRE_RATE = 400000000L;
 //    private static final long FIRE_RATE = 1200000000L;
     private long lastShot;
     private boolean runningRight;
-    private SoundPlayer soundPlayer = new SoundPlayer();
     private float stateTimer;
     private Animation yamyamRun;
     private Animation yamyamJump;
@@ -261,7 +260,7 @@ public class AIYamYam extends Enemy {
             if (System.nanoTime() - lastShot >= FIRE_RATE) {
                 enemyFirePowerLasArray.add(new EnemyBullet(screen, (float) (b2body.getPosition().x - 0.1), (float) (b2body.getPosition().y + 0.2), runningRight));
                 lastShot = System.nanoTime();
-                soundPlayer.playSoundRandomYamYamFirePower();
+                playSound.playSoundRandomYamYamFirePower();
             }
         }
     }
@@ -270,7 +269,7 @@ public class AIYamYam extends Enemy {
         if (!destroyed && b2body.isActive() && chasing) {
             if (currentState != State.JUMPING) {
                 b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
-                soundPlayer.PlaySoundBob(0);
+                playSound.playSoundBob(0);
                 currentState = State.JUMPING;
             }
         }

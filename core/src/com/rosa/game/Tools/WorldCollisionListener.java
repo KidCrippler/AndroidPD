@@ -50,16 +50,16 @@ public class WorldCollisionListener implements ContactListener {
             //      *       *       *       BOB     *       *       *       //
             case Application.BOB_BIT | Application.GROUND_BIT:
                 if (fixA.getFilterData().categoryBits == Application.BOB_BIT)
-                    soundPlayer.PlaySoundBob(1);
+                    soundPlayer.playSoundBob(1);
                 else
-                    soundPlayer.PlaySoundBob(1);
+                    soundPlayer.playSoundBob(1);
                 break;
 
             case Application.BOB_BIT | Application.WALL_BIT:
                 if (fixA.getFilterData().categoryBits == Application.BOB_BIT)
-                    soundPlayer.PlaySoundBob(1);
+                    soundPlayer.playSoundBob(1);
                 else
-                    soundPlayer.PlaySoundBob(1);
+                    soundPlayer.playSoundBob(1);
                 break;
 
             //      *       *       *       BULLETS     *        *       *       //

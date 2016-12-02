@@ -84,9 +84,6 @@ public class Player extends Sprite {
 
 
         if(bob_health <= 0){
-            soundPlayer.playSoundRandomBunHurt();
-            System.out.println("you are dead.");
-            currentState = State.DEAD;
             dead();
         }
 
@@ -172,7 +169,7 @@ public class Player extends Sprite {
     public void jump() {
         if (currentState != State.JUMPING) {
             b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
-            soundPlayer.PlaySoundBob(0);
+            soundPlayer.playSoundBob(0);
             currentState = State.JUMPING;
         }
     }
@@ -206,6 +203,9 @@ public class Player extends Sprite {
     }
 
     final void dead (){
+        soundPlayer.playSoundBob(0);
+        System.out.println("you are dead.");
+        currentState = State.DEAD;
         ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenuScreen(game));
     }
 }
