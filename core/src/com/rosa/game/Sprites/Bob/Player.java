@@ -42,12 +42,12 @@ public class Player extends Sprite {
     private SoundPlayer soundPlayer = new SoundPlayer();
     private Array<Bullet> bullets;
     private int bob_health = 100;
-    private int hpDown;
     public static float BOB_X_POSITION;
     private Application game;
 
-    public Player(World world, ScreenPlay screen) {
+    public Player(World world, ScreenPlay screen, Application game) {
         super(screen.getAtlas().findRegion("keen"));
+        this.game = game;
         this.world = world;
         this.screen = screen;
         currentState = State.STANDING;
@@ -83,7 +83,7 @@ public class Player extends Sprite {
         BOB_X_POSITION = b2body.getPosition().x;
 
 
-        if(bob_health <= 0){
+        if (bob_health <= 0) {
             dead();
         }
 
@@ -196,13 +196,13 @@ public class Player extends Sprite {
             bullet.draw(batch);
     }
 
-    public void setHpDown(int hpDown){
-        this.hpDown = hpDown;
+
+    public void setHpDown(int hpDown) {
         bob_health -= hpDown;
-        System.out.println(bob_health);
+        System.out.println("HP: " + bob_health);
     }
 
-    private final void dead(){
+    private final void dead() {
         soundPlayer.playSoundBob(0);
         System.out.println("you are dead.");
         currentState = State.DEAD;

@@ -53,7 +53,7 @@ public class ScreenPlay implements Screen {
         world = new World(new Vector2(0, -10), true);
         creator = new BoxWorldCreator(this);
         b2dr = new Box2DDebugRenderer();
-        player = new Player(world, this);
+        player = new Player(world, this, game);
         world.setContactListener(new WorldCollisionListener());
         controller = new Controller();
     }
@@ -123,19 +123,19 @@ public class ScreenPlay implements Screen {
 
     @Override
     public void render(float dt) {
-            Gdx.gl.glClearColor(0, 0, 0, 0);
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-            renderer.render();
-            //debug line:
-            b2dr.render(world, orthographicCamera.combined);
-            game.batch.setProjectionMatrix(orthographicCamera.combined);
-            game.batch.begin();
-            player.draw(game.batch);
-            game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        Gdx.gl.glClearColor(0, 0, 0, 0);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        renderer.render();
+        //debug line:
+        b2dr.render(world, orthographicCamera.combined);
+        game.batch.setProjectionMatrix(orthographicCamera.combined);
+        game.batch.begin();
+        player.draw(game.batch);
+        game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
 
-            game.batch.end();
-            hud.stage.draw();
-            controller.draw();
+        game.batch.end();
+        hud.stage.draw();
+        controller.draw();
 
         if (ScreenGame.FRAME_GAME_STATE == ScreenGame.GAME_RUNNING) {
             update(dt);
