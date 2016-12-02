@@ -21,6 +21,7 @@ import com.rosa.game.screens.PlayScreen;
 
 public class Player extends Sprite {
 
+
     private enum State {FALLING, JUMPING, STANDING, RUNNING, DEAD}
 
     private State currentState;
@@ -37,9 +38,9 @@ public class Player extends Sprite {
     private long lastShot;
     private SoundPlayer soundPlayer = new SoundPlayer();
     private Array<Bullet> bullets;
+    private int bob_health = 100;
+    private int hpDown;
     public static float BOB_X_POSITION;
-    public static int BOB_HEALTH = 100;
-    public int hpDown;
 
     public Player(World world, PlayScreen screen) {
         super(screen.getAtlas().findRegion("keen"));
@@ -76,13 +77,12 @@ public class Player extends Sprite {
         setRegion(getFrame(dt));
 
         BOB_X_POSITION = b2body.getPosition().x;
-        BOB_HEALTH =- hpDown;
 
-//        System.out.println(hpDown);
-//        if(BOB_HEALTH <= 0){
-//            System.out.println("you are dead.");
-//            currentState = State.DEAD;
-//        }
+
+        if(bob_health <= 0){
+            System.out.println("you are dead.");
+            currentState = State.DEAD;
+        }
 
         for (Bullet bullet : bullets) {
             bullet.update(dt);
@@ -158,10 +158,11 @@ public class Player extends Sprite {
                 Application.ENEMY_AI_BIT |
                 Application.WALL_BIT |
                 Application.ITEM_BIT |
-                Application.BULLET_BIT|
                 Application.ENEMY_BULLET_BIT;
         fixtureDef.shape = shape;
-        b2body.createFixture(fixtureDef);
+//        b2body.createFixture(fixtureDef);
+        b2body.createFixture(fixtureDef).setUserData(this);
+
     }
 
     public void jump() {
@@ -194,8 +195,9 @@ public class Player extends Sprite {
             bullet.draw(batch);
     }
 
-    public void setHpDown(){
-//        this.hpDown = hpDown;
-        System.out.println("hp");
+    public void setHpDown(int hpDown){
+        this.hpDown = hpDown;
+        bob_health -= hpDown;
+        System.out.println(bob_health);
     }
 }

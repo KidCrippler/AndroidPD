@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Bob.Player;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
-import com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyFirePowerLas;
+import com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyBullet;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.PlayScreen;
 
@@ -27,7 +27,7 @@ public class AIYamYam extends Enemy {
     private boolean destroyed;
     private int yamyamHP = 100;
     private SoundPlayer playSound = new SoundPlayer();
-    private Array<com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyFirePowerLas> enemyFirePowerLasArray;
+    private Array<EnemyBullet> enemyFirePowerLasArray;
     private static final long FIRE_RATE = 1200000000L;
     private long lastShot;
     private boolean runningRight;
@@ -73,7 +73,7 @@ public class AIYamYam extends Enemy {
         setBounds(0, 0, 23 / Application.PPM, 32 / Application.PPM);
         setRegion(yamyamStand);
 
-        enemyFirePowerLasArray = new Array<EnemyFirePowerLas>();
+        enemyFirePowerLasArray = new Array<EnemyBullet>();
         chasing = true;
     }
 
@@ -112,7 +112,7 @@ public class AIYamYam extends Enemy {
                         b2body.applyLinearImpulse(new Vector2(0.02f, 0), b2body.getWorldCenter(), true);
                     //Fire bullets:
                     fire();
-                    for (EnemyFirePowerLas enemyFirePowerLas : enemyFirePowerLasArray) {
+                    for (EnemyBullet enemyFirePowerLas : enemyFirePowerLasArray) {
                         enemyFirePowerLas.update(dt);
                         if (enemyFirePowerLas.isDestroyed()) {
                             enemyFirePowerLasArray.removeValue(enemyFirePowerLas, true);
@@ -258,7 +258,7 @@ public class AIYamYam extends Enemy {
     private void fire() {
         if (!rayTwoNextToWall) {
             if (System.nanoTime() - lastShot >= FIRE_RATE) {
-                enemyFirePowerLasArray.add(new EnemyFirePowerLas(screen, (float) (b2body.getPosition().x - 0.1), (float) (b2body.getPosition().y + 0.2), runningRight));
+                enemyFirePowerLasArray.add(new EnemyBullet(screen, (float) (b2body.getPosition().x - 0.1), (float) (b2body.getPosition().y + 0.2), runningRight));
                 lastShot = System.nanoTime();
                 soundPlayer.playSoundRandomYamYamFirePower();
             }

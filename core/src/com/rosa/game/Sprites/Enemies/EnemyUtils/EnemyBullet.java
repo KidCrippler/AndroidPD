@@ -14,7 +14,7 @@ import com.rosa.game.Application;
 import com.rosa.game.screens.PlayScreen;
 
 
-public class EnemyFirePowerLas extends Sprite {
+public class EnemyBullet extends Sprite {
 
     public World world;
     public Body b2body;
@@ -26,12 +26,11 @@ public class EnemyFirePowerLas extends Sprite {
     Array<TextureRegion> frames;
     PlayScreen screen;
 
-    public EnemyFirePowerLas(PlayScreen screen, float x, float y, boolean fireRight) {
+    public EnemyBullet(PlayScreen screen, float x, float y, boolean fireRight) {
 
         this.fireRight = fireRight;
         this.world = screen.getWorld();
         this.screen = screen;
-
 
         frames = new Array<TextureRegion>();
         for (int i = 0; i < 4; i++) {
@@ -59,8 +58,8 @@ public class EnemyFirePowerLas extends Sprite {
                         Application.GROUND_BIT |
                         Application.WALL_BIT |
                         Application.BOB_BIT;
-
         fixtureDef.shape = shape;
+
         b2body.createFixture(fixtureDef).setUserData(this);
 
         //FireSpeed:
