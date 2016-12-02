@@ -7,17 +7,17 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Bob.Player;
-import com.rosa.game.screens.PlayScreen;
+import com.rosa.game.screens.ScreenPlay;
 
 public abstract class Item extends Sprite {
-    protected PlayScreen screen;
+    protected ScreenPlay screen;
     protected World world;
     protected Vector2 velocity;
     protected boolean toDestroy;
     protected boolean destroyed;
     protected Body body;
 
-    public Item(PlayScreen screen, float x, float y){
+    public Item(ScreenPlay screen, float x, float y){
         this.screen = screen;
         this.world = screen.getWorld();
         toDestroy = false;

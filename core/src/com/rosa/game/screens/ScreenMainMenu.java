@@ -13,23 +13,23 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.rosa.game.Application;
 
-public class MainMenuScreen implements Screen {
+public class ScreenMainMenu implements Screen {
 
 
     private Skin skin;
     private Stage stage;
-    private PlayScreen playScreen;
-    private MapScreen mapScreen = new MapScreen(game);
-    private OptionsScreen optionsScreen = new OptionsScreen(game,playScreen);
+    private ScreenPlay playScreen;
+    private ScreenMap mapScreen = new ScreenMap(game);
+    private ScreenOptions optionsScreen = new ScreenOptions(game,playScreen);
     private Image bg;
     private Button startButton;
     private Button optionsButton;
     private Button creditsButton;
     private static Application game;
-    private MainMenuScreen mainMenuScreen;
-    protected GameScreen gamescreen;
+    private ScreenMainMenu mainMenuScreen;
+    protected ScreenGame gamescreen;
 
-    public MainMenuScreen(Application game) {
+    public ScreenMainMenu(Application game) {
         this.game = game;
         this.playScreen = playScreen;
         this.mainMenuScreen = mainMenuScreen;
@@ -39,7 +39,7 @@ public class MainMenuScreen implements Screen {
     public void show() {
         stage = new Stage();
         skin = new Skin(Gdx.files.internal("style/menu/mainmenu.json"), new TextureAtlas("style/menu/mainmenu.pack"));
-        gamescreen = new GameScreen(game);
+        gamescreen = new ScreenGame(game);
 
         bg = new Image(skin, "bg");
         startButton = new Button(skin, "startbutton");

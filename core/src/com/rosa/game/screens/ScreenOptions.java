@@ -14,16 +14,16 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.Game;
 import com.rosa.game.Application;
 
-public class OptionsScreen implements Screen {
+public class ScreenOptions implements Screen {
 
-    PlayScreen playScreen;
+    ScreenPlay playScreen;
     private Skin skin;
     private Stage stage;
     private Image optionsScreen;
     private Button backButton;
     private Application game;
 
-    public OptionsScreen(Application game, PlayScreen playScreen) {
+    public ScreenOptions(Application game, ScreenPlay playScreen) {
         this.game = game;
         this.playScreen = playScreen;
     }
@@ -33,7 +33,7 @@ public class OptionsScreen implements Screen {
     public void show() {
         stage = new Stage();
         skin = new Skin(Gdx.files.internal("mainmenu.json"), new TextureAtlas("mainmenu.pack"));
-        final MainMenuScreen mainMenuScreen = new MainMenuScreen(game);
+        final ScreenMainMenu mainMenuScreen = new ScreenMainMenu(game);
 
         optionsScreen = new Image(skin, "optionsscreen");
         backButton = new Button(skin, "backbutton");

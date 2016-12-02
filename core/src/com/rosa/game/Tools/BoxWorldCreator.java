@@ -14,7 +14,7 @@ import com.rosa.game.Application;
 import com.rosa.game.Sprites.Enemies.DumbBun;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
 import com.rosa.game.Sprites.Enemies.AIYamYam;
-import com.rosa.game.screens.PlayScreen;
+import com.rosa.game.screens.ScreenPlay;
 
 public class BoxWorldCreator {
 
@@ -22,7 +22,7 @@ public class BoxWorldCreator {
     private Array<AIYamYam> yamYams;
     public static TiledMap map;
 
-    public BoxWorldCreator(PlayScreen screen) {
+    public BoxWorldCreator(ScreenPlay screen) {
         World world = screen.getWorld();
         map = screen.getMap();
         BodyDef bodyDef = new BodyDef();

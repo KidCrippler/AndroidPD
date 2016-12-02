@@ -13,19 +13,19 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.rosa.game.Application;
-import com.rosa.game.screens.PlayScreen;
+import com.rosa.game.screens.ScreenPlay;
 
 public abstract class InteractiveTileObject {
     protected World world;
     protected TiledMap map;
     protected Rectangle bounds;
     protected Body body;
-    protected PlayScreen screen;
+    protected ScreenPlay screen;
     protected MapObject object;
 
     protected Fixture fixture;
 
-    public InteractiveTileObject(PlayScreen screen, MapObject object) {
+    public InteractiveTileObject(ScreenPlay screen, MapObject object) {
         this.object = object;
         this.screen = screen;
         this.world = screen.getWorld();

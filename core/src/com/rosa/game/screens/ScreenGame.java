@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.rosa.game.Application;
 
-public class GameScreen extends ScreenAdapter implements Screen {
+public class ScreenGame extends ScreenAdapter implements Screen {
 
 
 
@@ -30,13 +30,10 @@ public class GameScreen extends ScreenAdapter implements Screen {
     Rectangle pauseBounds;
     Rectangle resumeBounds;
     Rectangle quitBounds;
-    MainMenuScreen mainMenuScreen;
-    PlayScreen playScreen;
 
-    public GameScreen(Application game) {
+
+    public ScreenGame(Application game) {
         this.game = game;
-        this.mainMenuScreen = mainMenuScreen;
-        this.playScreen = playScreen;
         FRAME_GAME_STATE = GAME_READY;
     }
 
@@ -86,7 +83,7 @@ public class GameScreen extends ScreenAdapter implements Screen {
             }
 
             if (quitBounds.contains(touchPoint.x, touchPoint.y)) {
-                game.setScreen(new MainMenuScreen(game));
+                game.setScreen(new ScreenMainMenu(game));
                 return;
             }
         }

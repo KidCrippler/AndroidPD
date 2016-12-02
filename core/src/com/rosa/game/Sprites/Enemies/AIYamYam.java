@@ -14,7 +14,7 @@ import com.rosa.game.Sprites.Bob.Player;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyBullet;
 import com.rosa.game.Tools.SoundPlayer;
-import com.rosa.game.screens.PlayScreen;
+import com.rosa.game.screens.ScreenPlay;
 
 public class AIYamYam extends Enemy {
 
@@ -39,7 +39,7 @@ public class AIYamYam extends Enemy {
     private boolean rayTwoNextToWall;
     private boolean chasing;
 
-    public AIYamYam(PlayScreen screen, float x, float y) {
+    public AIYamYam(ScreenPlay screen, float x, float y) {
         super(screen, x, y);
         currentState = State.STANDING;
         previousState = State.STANDING;

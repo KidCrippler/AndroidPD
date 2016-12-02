@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
-import com.rosa.game.screens.PlayScreen;
+import com.rosa.game.screens.ScreenPlay;
 
 public class Bullet extends Sprite {
 
@@ -23,9 +23,9 @@ public class Bullet extends Sprite {
     private float stateTime;
     Animation fireAnimation;
     Array<TextureRegion> frames;
-    PlayScreen screen;
+    ScreenPlay screen;
 
-    public Bullet(PlayScreen screen, float x, float y, boolean fireRight) {
+    public Bullet(ScreenPlay screen, float x, float y, boolean fireRight) {
 
         this.fireRight = fireRight;
         this.world = screen.getWorld();

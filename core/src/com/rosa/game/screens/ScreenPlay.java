@@ -22,14 +22,14 @@ import com.rosa.game.Tools.BoxWorldCreator;
 import com.rosa.game.Tools.Controller;
 import com.rosa.game.Tools.WorldCollisionListener;
 
-public class PlayScreen implements Screen {
+public class ScreenPlay implements Screen {
 
     private Application game;
     private TextureAtlas atlas;
     private OrthographicCamera orthographicCamera;
     private Viewport gamePort;
     private Hud hud;
-    private MenuPaused menuPaused;
+    private ScreenMenuPaused menuPaused;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
     private Player player;
@@ -38,14 +38,14 @@ public class PlayScreen implements Screen {
     private Box2DDebugRenderer b2dr;
     private BoxWorldCreator creator;
 
-    public PlayScreen(Application game) {
-        GameScreen.FRAME_GAME_STATE = GameScreen.GAME_RUNNING;
+    public ScreenPlay(Application game) {
+        ScreenGame.FRAME_GAME_STATE = ScreenGame.GAME_RUNNING;
         this.game = game;
         atlas = new TextureAtlas("style/ingame/figure/bob/bob.pack");
         orthographicCamera = new OrthographicCamera();
         gamePort = new FitViewport(Application.V_WIDTH / Application.PPM, Application.V_HEIGHT / Application.PPM, orthographicCamera);
         hud = new Hud(game.batch);
-        menuPaused = new MenuPaused(game.batch);
+        menuPaused = new ScreenMenuPaused(game.batch);
         TmxMapLoader mapLoader = new TmxMapLoader();
         map = mapLoader.load("style/ingame/level/tmap.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1 / Application.PPM);
@@ -86,7 +86,7 @@ public class PlayScreen implements Screen {
             player.fire();
 
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            GameScreen.FRAME_GAME_STATE = GameScreen.GAME_PAUSED;
+            ScreenGame.FRAME_GAME_STATE = ScreenGame.GAME_PAUSED;
         }
     }
 
@@ -137,11 +137,11 @@ public class PlayScreen implements Screen {
             hud.stage.draw();
             controller.draw();
 
-        if (GameScreen.FRAME_GAME_STATE == GameScreen.GAME_RUNNING) {
+        if (ScreenGame.FRAME_GAME_STATE == ScreenGame.GAME_RUNNING) {
             update(dt);
         }
 
-        if (GameScreen.FRAME_GAME_STATE == GameScreen.GAME_PAUSED) {
+        if (ScreenGame.FRAME_GAME_STATE == ScreenGame.GAME_PAUSED) {
             menuPaused.render(dt);
             menuPaused.stage.draw();
             game.batch.begin();

@@ -19,8 +19,8 @@ import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
 import com.rosa.game.Tools.BoxWorldCreator;
 import com.rosa.game.Tools.SoundPlayer;
-import com.rosa.game.screens.MainMenuScreen;
-import com.rosa.game.screens.PlayScreen;
+import com.rosa.game.screens.ScreenMainMenu;
+import com.rosa.game.screens.ScreenPlay;
 
 public class Player extends Sprite {
 
@@ -36,7 +36,7 @@ public class Player extends Sprite {
     private Animation playerJump;
     private float stateTimer;
     private boolean runningRight;
-    private PlayScreen screen;
+    private ScreenPlay screen;
     private static final long FIRE_RATE = 100000000L;
     private long lastShot;
     private SoundPlayer soundPlayer = new SoundPlayer();
@@ -46,7 +46,7 @@ public class Player extends Sprite {
     public static float BOB_X_POSITION;
     private Application game;
 
-    public Player(World world, PlayScreen screen) {
+    public Player(World world, ScreenPlay screen) {
         super(screen.getAtlas().findRegion("keen"));
         this.world = world;
         this.screen = screen;
@@ -206,6 +206,6 @@ public class Player extends Sprite {
         soundPlayer.playSoundBob(0);
         System.out.println("you are dead.");
         currentState = State.DEAD;
-        ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenuScreen(game));
+        ((Game) Gdx.app.getApplicationListener()).setScreen(new ScreenMainMenu(game));
     }
 }

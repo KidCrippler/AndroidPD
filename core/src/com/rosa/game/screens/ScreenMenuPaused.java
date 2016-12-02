@@ -18,16 +18,16 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rosa.game.Application;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-public class MenuPaused extends Sprite implements Screen {
+public class ScreenMenuPaused extends Sprite implements Screen {
     public Stage stage;
     public Viewport viewport;
     private Button resumeButton;
     private Button quitButton;
     private Skin skin;
-    private PlayScreen playScreen;
+    private ScreenPlay playScreen;
     private Application game;
 
-    public MenuPaused(SpriteBatch sb) {
+    public ScreenMenuPaused(SpriteBatch sb) {
         viewport = new FitViewport(Application.V_WIDTH, Application.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, sb);
         skin = new Skin(Gdx.files.internal("style/menu/design/mainmenu.json"), new TextureAtlas("style/menu/design/mainmenu.pack"));
@@ -46,20 +46,20 @@ public class MenuPaused extends Sprite implements Screen {
         resumeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                GameScreen.FRAME_GAME_STATE = GameScreen.GAME_RUNNING;
+                ScreenGame.FRAME_GAME_STATE = ScreenGame.GAME_RUNNING;
             }
         });
 
         quitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenuScreen(game));
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new ScreenMainMenu(game));
             }
         });
 
 
         if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
-            GameScreen.FRAME_GAME_STATE = GameScreen.GAME_RUNNING;
+            ScreenGame.FRAME_GAME_STATE = ScreenGame.GAME_RUNNING;
         }
 
         stage.addActor(resumeButton);
