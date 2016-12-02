@@ -28,7 +28,8 @@ public class AIYamYam extends Enemy {
     private int yamyamHP = 100;
     private SoundPlayer playSound = new SoundPlayer();
     private Array<EnemyBullet> enemyFirePowerLasArray;
-    private static final long FIRE_RATE = 1200000000L;
+    private static final long FIRE_RATE = 800000000L;
+//    private static final long FIRE_RATE = 1200000000L;
     private long lastShot;
     private boolean runningRight;
     private SoundPlayer soundPlayer = new SoundPlayer();
@@ -248,7 +249,7 @@ public class AIYamYam extends Enemy {
         playSound.playSoundRandomBunHurt();
         int bulletPowerOne = 10;
         yamyamHP = yamyamHP - bulletPowerOne;
-        System.out.println("yamyamhp=" + yamyamHP);
+        System.out.println("YamYam HP= " + yamyamHP);
         if (yamyamHP <= 0) {
             playSound.playSoundRandomBunDead();
             setToDestroy = true;

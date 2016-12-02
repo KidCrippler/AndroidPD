@@ -29,7 +29,7 @@ public class MainMenuScreen implements Screen {
     private MainMenuScreen mainMenuScreen;
     protected GameScreen gamescreen;
 
-    MainMenuScreen(Application game) {
+    public MainMenuScreen(Application game) {
         this.game = game;
         this.playScreen = playScreen;
         this.mainMenuScreen = mainMenuScreen;

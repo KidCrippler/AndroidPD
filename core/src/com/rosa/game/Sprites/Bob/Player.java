@@ -1,5 +1,7 @@
 package com.rosa.game.Sprites.Bob;
 
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -17,6 +19,7 @@ import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
 import com.rosa.game.Tools.BoxWorldCreator;
 import com.rosa.game.Tools.SoundPlayer;
+import com.rosa.game.screens.MainMenuScreen;
 import com.rosa.game.screens.PlayScreen;
 
 public class Player extends Sprite {
@@ -41,6 +44,7 @@ public class Player extends Sprite {
     private int bob_health = 100;
     private int hpDown;
     public static float BOB_X_POSITION;
+    private Application game;
 
     public Player(World world, PlayScreen screen) {
         super(screen.getAtlas().findRegion("keen"));
@@ -80,8 +84,10 @@ public class Player extends Sprite {
 
 
         if(bob_health <= 0){
+            soundPlayer.playSoundRandomBunHurt();
             System.out.println("you are dead.");
             currentState = State.DEAD;
+            dead();
         }
 
         for (Bullet bullet : bullets) {
@@ -160,9 +166,7 @@ public class Player extends Sprite {
                 Application.ITEM_BIT |
                 Application.ENEMY_BULLET_BIT;
         fixtureDef.shape = shape;
-//        b2body.createFixture(fixtureDef);
         b2body.createFixture(fixtureDef).setUserData(this);
-
     }
 
     public void jump() {
@@ -199,5 +203,9 @@ public class Player extends Sprite {
         this.hpDown = hpDown;
         bob_health -= hpDown;
         System.out.println(bob_health);
+    }
+
+    final void dead (){
+        ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenuScreen(game));
     }
 }

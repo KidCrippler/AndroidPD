@@ -16,15 +16,15 @@ import com.rosa.game.screens.PlayScreen;
 
 public class EnemyBullet extends Sprite {
 
-    public World world;
-    public Body b2body;
-    boolean fireRight;
-    boolean destroyed;
-    boolean setToDestroy;
+    private World world;
+    private Body b2body;
+    private boolean fireRight;
+    private boolean destroyed;
+    private boolean setToDestroy;
     private float stateTime;
-    Animation fireAnimation;
-    Array<TextureRegion> frames;
-    PlayScreen screen;
+    private Animation fireAnimation;
+    private Array<TextureRegion> frames;
+    private PlayScreen screen;
 
     public EnemyBullet(PlayScreen screen, float x, float y, boolean fireRight) {
 
