@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
 import com.rosa.game.Tools.BoxWorldCreator;
 import com.rosa.game.Tools.SoundPlayer;
+import com.rosa.game.screens.ScreenDead;
 import com.rosa.game.screens.ScreenMainMenu;
 import com.rosa.game.screens.ScreenPlay;
 
@@ -207,7 +208,8 @@ public class Player extends Sprite {
         soundPlayer.playSoundBob(2);
         System.out.println("you are dead.");
         currentState = State.DEAD;
-        ((Game) Gdx.app.getApplicationListener()).setScreen(new ScreenMainMenu(game));
+//        ((Game) Gdx.app.getApplicationListener()).setScreen(new ScreenMainMenu(game));
         //TODO: need to be a dead screen, and then main menu screen.
+        ((Game) Gdx.app.getApplicationListener()).setScreen(new ScreenDead(game));
     }
 }

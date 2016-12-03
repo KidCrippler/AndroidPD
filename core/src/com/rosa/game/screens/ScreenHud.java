@@ -38,6 +38,9 @@ public class ScreenHud extends Sprite implements Screen {
 
 
     public void update(float dt) {
+        stage.act();
+        stage.draw();
+
     }
 
     @Override
