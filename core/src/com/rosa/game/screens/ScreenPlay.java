@@ -15,7 +15,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rosa.game.Application;
-import com.rosa.game.Scenes.Hud;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
 import com.rosa.game.Sprites.Bob.Player;
 import com.rosa.game.Tools.BoxWorldCreator;
@@ -28,7 +27,7 @@ public class ScreenPlay implements Screen {
     private TextureAtlas atlas;
     private OrthographicCamera orthographicCamera;
     private Viewport gamePort;
-    private Hud hud;
+    private ScreenHud hud;
     private ScreenMenuPaused menuPaused;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
@@ -44,7 +43,7 @@ public class ScreenPlay implements Screen {
         atlas = new TextureAtlas("style/ingame/figure/bob/bob.pack");
         orthographicCamera = new OrthographicCamera();
         gamePort = new FitViewport(Application.V_WIDTH / Application.PPM, Application.V_HEIGHT / Application.PPM, orthographicCamera);
-        hud = new Hud(game.batch);
+        hud = new ScreenHud(game.batch);
         menuPaused = new ScreenMenuPaused(game.batch);
         TmxMapLoader mapLoader = new TmxMapLoader();
         map = mapLoader.load("style/ingame/level/tmap.tmx");
@@ -100,6 +99,8 @@ public class ScreenPlay implements Screen {
         player.update(dt);
         hud.update(dt);
         creator.update(dt);
+        hud.render(dt);
+
 
         //Load objects around the points of player:
         for (Enemy enemy : creator.getEnemies()) {
@@ -131,6 +132,7 @@ public class ScreenPlay implements Screen {
         game.batch.setProjectionMatrix(orthographicCamera.combined);
         game.batch.begin();
         player.draw(game.batch);
+
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
 
         game.batch.end();

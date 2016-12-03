@@ -40,7 +40,7 @@ public class Player extends Sprite {
     private long lastShot;
     private SoundPlayer soundPlayer = new SoundPlayer();
     private Array<Bullet> bullets;
-    private int bob_health = 100;
+    public static float bob_health;
     public static float BOB_X_POSITION;
     public static float BOB_Y_POSITION;
     private Application game;
@@ -74,6 +74,7 @@ public class Player extends Sprite {
         setRegion(playerStand);
 
         bullets = new Array<Bullet>();
+        bob_health = 100;
     }
 
     public void update(float dt) {
