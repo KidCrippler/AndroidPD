@@ -1,5 +1,5 @@
 package com.rosa.game.Sprites.Enemies;
-
+//test
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -16,10 +16,9 @@ import com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyBullet;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.ScreenPlay;
 
-public class AIYamYam extends Enemy {
+public class AiTiw extends Enemy {
 
     private enum State {FALLING, JUMPING, STANDING, RUNNING}
-
     private State currentState;
     private State previousState;
     private float stateTime;
@@ -29,7 +28,8 @@ public class AIYamYam extends Enemy {
     private int yamyamHP = 100;
     private SoundPlayer playSound = new SoundPlayer();
     private Array<EnemyBullet> enemyFirePowerLasArray;
-    private static final long FIRE_TIME = 220000000L;
+    private static final long FIRE_RATE = 400000000L;
+    //    private static final long FIRE_RATE = 1200000000L;
     private long lastShot;
     private boolean runningRight;
     private float stateTimer;
@@ -39,7 +39,7 @@ public class AIYamYam extends Enemy {
     private boolean rayTwoNextToWall;
     private boolean chasing;
 
-    public AIYamYam(ScreenPlay screen, float x, float y) {
+    public AiTiw(ScreenPlay screen, float x, float y) {
         super(screen, x, y);
         currentState = State.STANDING;
         previousState = State.STANDING;
@@ -257,7 +257,7 @@ public class AIYamYam extends Enemy {
 
     private void fire() {
         if (!rayTwoNextToWall) {
-            if (System.nanoTime() - lastShot >= FIRE_TIME) {
+            if (System.nanoTime() - lastShot >= FIRE_RATE) {
                 enemyFirePowerLasArray.add(new EnemyBullet(screen, (float) (b2body.getPosition().x - 0.1), (float) (b2body.getPosition().y + 0.2), runningRight));
                 lastShot = System.nanoTime();
                 playSound.playSoundRandomYamYamFirePower();
