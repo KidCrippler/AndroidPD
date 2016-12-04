@@ -25,7 +25,6 @@ import com.rosa.game.screens.ScreenPlay;
 public class Player extends Sprite {
 
     private enum State {FALLING, JUMPING, STANDING, RUNNING, DEAD}
-
     private State currentState;
     private State previousState;
     public World world;
@@ -197,7 +196,6 @@ public class Player extends Sprite {
             bullet.draw(batch);
     }
 
-
     public void setHpDown(int hpDown) {
         bob_health -= hpDown;
         System.out.println("HP: " + bob_health);
@@ -207,8 +205,6 @@ public class Player extends Sprite {
         soundPlayer.playSoundBob(2);
         System.out.println("you are dead.");
         currentState = State.DEAD;
-//        ((Game) Gdx.app.getApplicationListener()).setScreen(new ScreenMainMenu(game));
-        //TODO: need to be a dead screen, and then main menu screen.
         ((Game) Gdx.app.getApplicationListener()).setScreen(new ScreenDead(game));
     }
 }

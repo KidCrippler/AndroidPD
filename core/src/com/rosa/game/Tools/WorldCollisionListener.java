@@ -14,7 +14,6 @@ import com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyBullet;
 
 public class WorldCollisionListener implements ContactListener {
 
-
     SoundPlayer soundPlayer = new SoundPlayer();
 
     @Override

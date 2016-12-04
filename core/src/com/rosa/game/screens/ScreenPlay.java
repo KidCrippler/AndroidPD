@@ -43,7 +43,6 @@ public class ScreenPlay implements Screen {
         atlas = new TextureAtlas("style/ingame/figure/bob/bob.pack");
         orthographicCamera = new OrthographicCamera();
         gamePort = new FitViewport(Application.V_WIDTH / Application.PPM, Application.V_HEIGHT / Application.PPM, orthographicCamera);
-        hud = new ScreenHud(game.batch);
         menuPaused = new ScreenMenuPaused(game.batch);
         TmxMapLoader mapLoader = new TmxMapLoader();
         map = mapLoader.load("style/ingame/level/tmap.tmx");
@@ -52,6 +51,7 @@ public class ScreenPlay implements Screen {
         world = new World(new Vector2(0, -10), true);
         creator = new BoxWorldCreator(this);
         b2dr = new Box2DDebugRenderer();
+        hud = new ScreenHud();
         player = new Player(world, this, game);
         world.setContactListener(new WorldCollisionListener());
         controller = new Controller();
@@ -71,7 +71,6 @@ public class ScreenPlay implements Screen {
     }
 
     public void handleInput() {
-
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
             player.jump();
 
@@ -99,7 +98,6 @@ public class ScreenPlay implements Screen {
         player.update(dt);
         hud.update(dt);
         creator.update(dt);
-        hud.render(dt);
 
 
         //Load objects around the points of player:
@@ -132,11 +130,8 @@ public class ScreenPlay implements Screen {
         game.batch.setProjectionMatrix(orthographicCamera.combined);
         game.batch.begin();
         player.draw(game.batch);
-
-        game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
-
+        hud.draw(game.batch);
         game.batch.end();
-        hud.stage.draw();
         controller.draw();
 
         if (ScreenGame.FRAME_GAME_STATE == ScreenGame.GAME_RUNNING) {
@@ -181,7 +176,6 @@ public class ScreenPlay implements Screen {
         renderer.dispose();
         world.dispose();
         b2dr.dispose();
-        hud.dispose();
     }
 
     public TiledMap getMap() {

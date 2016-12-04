@@ -29,7 +29,7 @@ public class AIYamYam extends Enemy {
     private int yamyamHP = 100;
     private SoundPlayer playSound = new SoundPlayer();
     private Array<EnemyBullet> enemyFirePowerLasArray;
-    private static final long FIRE_TIME = 220000000L;
+    private static final long FIRE_TIME = 2220000000L;
     private long lastShot;
     private boolean runningRight;
     private float stateTimer;
