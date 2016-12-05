@@ -17,10 +17,6 @@ public class ScreenHud extends Sprite {
 
     public ScreenHud() {
 
-
-
-
-
         skinAtlas = new TextureAtlas(Gdx.files.internal("style/ingame/hud/health_bar.atlas"));
 
         NinePatch loadingBarBackgroundPatch = new NinePatch(skinAtlas.findRegion("grey_bar"), 122, 122, 122, 122);
