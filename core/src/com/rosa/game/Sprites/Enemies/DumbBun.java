@@ -31,6 +31,7 @@ public class DumbBun extends Enemy {
         frames = new Array<TextureRegion>();
         for (int i = 0; i < 2; i++)
             frames.add(new TextureRegion(screen.getAtlas().findRegion("keen"), i * 16, 0, 16, 16));
+
         walkAnimation = new Animation(0.4f, frames);
         stateTime = 0;
         setBounds(getX(), getY(), 16 / Application.PPM, 16 / Application.PPM);
@@ -45,6 +46,7 @@ public class DumbBun extends Enemy {
             world.destroyBody(b2body);
             destroyed = true;
             setRegion(new TextureRegion(screen.getAtlas().findRegion("keen"), 32, 0, 16, 16));
+
             stateTime = 0;
         } else if (!destroyed) {
             b2body.setLinearVelocity(velocity);
