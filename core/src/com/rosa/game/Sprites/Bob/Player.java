@@ -20,6 +20,7 @@ import com.rosa.game.Application;
 import com.rosa.game.Tools.BoxWorldCreator;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.ScreenDead;
+import com.rosa.game.screens.ScreenHud;
 import com.rosa.game.screens.ScreenPlay;
 
 public class Player extends Sprite {
@@ -67,7 +68,6 @@ public class Player extends Sprite {
         frames.clear();
 
         playerStand = new TextureRegion(screen.getAtlas().findRegion("keen"), -5, 0, 23, 32);
-//        playerStand = new TextureRegion(screen.getAtlas().findRegion("keen"), -5, 0, 23, 32);
 
         definePlayer();
         setBounds(0, 0, 23 / Application.PPM, 32 / Application.PPM);

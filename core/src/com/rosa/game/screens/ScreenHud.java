@@ -40,6 +40,8 @@ public class ScreenHud extends Sprite {
         scale(-52222);
     }
 
+
+
     public void update(float dt) {
     }
 

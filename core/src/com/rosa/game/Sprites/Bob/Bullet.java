@@ -33,9 +33,9 @@ public class Bullet extends Sprite {
 
         frames = new Array<TextureRegion>();
         for (int i = 0; i < 4; i++) {
-            frames.add(new TextureRegion(screen.getAtlas().findRegion("keen"), i * 8, 0, 8, 8));
+            frames.add(new TextureRegion(screen.getAtlas().findRegion("keen"), i * 8, 0, 1, 20));
         }
-        fireAnimation = new Animation(0.2f, frames);
+        fireAnimation = new Animation(0.02f, frames);
         setRegion(fireAnimation.getKeyFrame(0));
         setBounds(x, y, 6 / Application.PPM, 6 / Application.PPM);
         defineBullet();
