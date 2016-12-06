@@ -51,7 +51,7 @@ public class ScreenPlay implements Screen {
         world = new World(new Vector2(0, -10), true);
         creator = new BoxWorldCreator(this);
         b2dr = new Box2DDebugRenderer();
-        hud = new ScreenHud();
+        hud = new ScreenHud(this);
         player = new Player(world, this, game);
         world.setContactListener(new WorldCollisionListener());
         controller = new Controller();
