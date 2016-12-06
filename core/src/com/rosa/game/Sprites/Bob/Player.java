@@ -67,6 +67,7 @@ public class Player extends Sprite {
         frames.clear();
 
         playerStand = new TextureRegion(screen.getAtlas().findRegion("keen"), -5, 0, 23, 32);
+//        playerStand = new TextureRegion(screen.getAtlas().findRegion("keen"), -5, 0, 23, 32);
 
         definePlayer();
         setBounds(0, 0, 23 / Application.PPM, 32 / Application.PPM);
