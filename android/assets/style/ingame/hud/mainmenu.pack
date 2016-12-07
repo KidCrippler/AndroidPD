@@ -1,0 +1,19 @@
+health_bar.png
+size: 128,16
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+grey_bar
+  rotate: false
+  xy: 2, 8
+  size: 93, 4
+  orig: 93, 4
+  offset: 0, 0
+  index: -1
+red_bar
+  rotate: false
+  xy: 2, 2
+  size: 93, 4
+  orig: 93, 4
+  offset: 0, 0
+  index: -1

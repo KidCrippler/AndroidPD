@@ -26,9 +26,6 @@ public class Application extends Game {
     public static final short WALL_BIT = 1024;
     public static final short GROUND_BIT = 2048;
 
-    //Debug
-    public static int debbugerx;
-    public static int debbugery;
 
     public static SpriteBatch batch;
     private ScreenSplash splashScreen;
