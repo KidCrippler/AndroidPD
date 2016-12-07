@@ -51,7 +51,7 @@ public class ScreenPlay implements Screen {
         world = new World(new Vector2(0, -10), true);
         creator = new BoxWorldCreator(this);
         b2dr = new Box2DDebugRenderer();
-        hud = new ScreenHud(this);
+        hud = new ScreenHud(game.batch);
         player = new Player(world, this, game);
         world.setContactListener(new WorldCollisionListener());
         controller = new Controller();
@@ -96,7 +96,7 @@ public class ScreenPlay implements Screen {
         world.step(1 / 60f, 6, 2);
 
         player.update(dt);
-        hud.update(dt);
+//        hud.update(dt);
         creator.update(dt);
 
 
@@ -127,10 +127,11 @@ public class ScreenPlay implements Screen {
         renderer.render();
         //debug line:
         b2dr.render(world, orthographicCamera.combined);
+        hud.render(dt);
         game.batch.setProjectionMatrix(orthographicCamera.combined);
         game.batch.begin();
+        hud.show();
         player.draw(game.batch);
-        hud.draw(game.batch);
         game.batch.end();
         controller.draw();
 

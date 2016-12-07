@@ -2,6 +2,7 @@ package com.rosa.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.rosa.game.Tools.Debbugerxy;
 import com.rosa.game.screens.ScreenPlay;
 import com.rosa.game.screens.ScreenSplash;
 
@@ -25,11 +26,13 @@ public class Application extends Game {
     public static final short WALL_BIT = 1024;
     public static final short GROUND_BIT = 2048;
 
+    //Debug
+    public static int debbugerx;
+    public static int debbugery;
+
     public static SpriteBatch batch;
     private ScreenSplash splashScreen;
     private ScreenPlay playScreen;
-
-
 
 
     @Override

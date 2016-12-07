@@ -1,49 +1,97 @@
 package com.rosa.game.screens;
 
-
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.NinePatch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
-import com.rosa.game.Sprites.Bob.Player;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
+import com.rosa.game.Application;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 
-public class ScreenHud extends Sprite {
+public class ScreenHud extends Sprite implements Screen {
+    public Stage stage;
+    public Viewport viewport;
+    private Button resumeButton;
+    private Button quitButton;
+    private Skin skin;
 
-    private ScreenPlay screen;
-    private NinePatchDrawable loadingBarBackground;
-    private NinePatchDrawable loadingBar;
-    private TextureAtlas skinAtlas;
-
-    public ScreenHud(ScreenPlay screen) {
-        this.screen = screen;
-
-
-        skinAtlas = new TextureAtlas(Gdx.files.internal("style/ingame/hud/health_bar.atlas"));
-
-
-        NinePatch loadingBarBackgroundPatch = new NinePatch(skinAtlas.findRegion("grey_bar"), 1, 1, 93, 4);
-//        NinePatch loadingBarPatch = new NinePatch(skinAtlas.findRegion("red_bar"), 1, 1, 93, 4);
-
-
-
-        loadingBarBackground = new NinePatchDrawable(loadingBarBackgroundPatch);
-//        loadingBar = new NinePatchDrawable(loadingBarPatch);
+    public ScreenHud(SpriteBatch sb) {
+        viewport = new FitViewport(Application.V_WIDTH, Application.V_HEIGHT, new OrthographicCamera());
+        stage = new Stage(viewport, sb);
+        skin = new Skin(Gdx.files.internal("style/menu/design/mainmenu.json"), new TextureAtlas("style/menu/design/mainmenu.pack"));
 
     }
+
+    @Override
+    public void show() {
+        resumeButton = new Button(skin, "startbutton");
+        resumeButton.setPosition(140, 100);
+        resumeButton.setSize(30, 30);
+
+        quitButton = new Button(skin, "quitbutton");
+        quitButton.setPosition(100, 100);
+        quitButton.setSize(30, 30);
+
+        resumeButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                ScreenGame.FRAME_GAME_STATE = ScreenGame.GAME_RUNNING;
+            }
+        });
+
+
+
+        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
+            ScreenGame.FRAME_GAME_STATE = ScreenGame.GAME_RUNNING;
+        }
+
+        stage.addActor(resumeButton);
+        stage.addActor(quitButton);
+        Gdx.input.setInputProcessor(stage);
+    }
+
+    @Override
+    public void render(float dt) {
+        stage.act();
+        stage.draw();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+    @Override
+    public void dispose() {
+        stage.dispose();
+    }
+
     public void draw(Batch batch) {
-        loadingBarBackground.draw(batch, Player.BOB_X_POSITION, Player.BOB_Y_POSITION, 0.93f, 0.4f);
-//        loadingBar.draw(batch, Player.BOB_X_POSITION, Player.BOB_Y_POSITION, 93, 4);
-        setSize(0.7f,0.7f);
-        scale(-52222);
+        super.draw(batch);
     }
-
-
-
-    public void update(float dt) {
-    }
-
-
 }
