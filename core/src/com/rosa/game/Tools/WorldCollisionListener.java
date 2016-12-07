@@ -25,7 +25,7 @@ public class WorldCollisionListener implements ContactListener {
 
         switch (cDef) {
 
-            //      *       *       *       ENEMY     *       *       *       //
+            //Enemy Dumb
             case Application.ENEMY_DUMB_BIT | Application.WALL_BIT:
                 if (fixA.getFilterData().categoryBits == Application.ENEMY_DUMB_BIT)
                     ((Enemy) fixA.getUserData()).reverseVelocity(true, false);
@@ -38,7 +38,16 @@ public class WorldCollisionListener implements ContactListener {
                 ((Enemy) fixB.getUserData()).hitByEnemy((Enemy) fixA.getUserData());
                 break;
 
-            //      *       *       *       ENEMY-AI     *       *       *       //
+            case Application.ENEMY_DUMB_BIT | Application.BOB_BIT:
+                if (fixA.getFilterData().categoryBits == Application.ENEMY_DUMB_BIT)
+                    ((Enemy) fixA.getUserData()).reverseVelocity(true, false);
+                else
+                    ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
+                break;
+
+
+
+            //Enemy Ai
 
 
             case Application.ENEMY_AI_BIT | Application.ENEMY_AI_BIT:
