@@ -48,14 +48,12 @@ public class WorldCollisionListener implements ContactListener {
 
 
             //Enemy Ai
-
-
             case Application.ENEMY_AI_BIT | Application.ENEMY_AI_BIT:
                 ((Enemy) fixA.getUserData()).hitByEnemy((Enemy) fixB.getUserData());
                 ((Enemy) fixB.getUserData()).hitByEnemy((Enemy) fixA.getUserData());
                 break;
 
-            //      *       *       *       BOB     *       *       *       //
+            //Bob
             case Application.BOB_BIT | Application.GROUND_BIT:
                 if (fixA.getFilterData().categoryBits == Application.BOB_BIT)
                     soundPlayer.playSoundBob(1);
@@ -70,9 +68,7 @@ public class WorldCollisionListener implements ContactListener {
                     soundPlayer.playSoundBob(1);
                 break;
 
-            //      *       *       *       BULLETS     *        *       *       //
-
-
+            //Bullets
             case Application.BULLET_BIT | Application.WALL_BIT:
                 if (fixA.getFilterData().categoryBits == Application.BULLET_BIT) {
                     ((Bullet) fixA.getUserData()).setToDestroy();
@@ -94,7 +90,6 @@ public class WorldCollisionListener implements ContactListener {
                 }
                 break;
 
-
             //Bullet fire at BOB:
             case Application.ENEMY_BULLET_BIT | Application.BOB_BIT:
                 if (fixA.getFilterData().categoryBits == Application.BOB_BIT)
@@ -107,7 +102,6 @@ public class WorldCollisionListener implements ContactListener {
                 else
                     ((EnemyBullet) fixB.getUserData()).setToDestroy();
                 break;
-
 
             //Bullet fire at Enemy:
             case Application.BULLET_BIT | Application.ENEMY_DUMB_BIT:
@@ -137,7 +131,7 @@ public class WorldCollisionListener implements ContactListener {
                     ((Bullet) fixB.getUserData()).setToDestroy();
                 break;
 
-            //      *       *       *       RAY_ONE_OUTER     *       *       *       //
+            //RAY_ONE_OUTER:
             case Application.RAY_ONE_OUTER | Application.WALL_BIT:
                 if (fixA.getFilterData().categoryBits == Application.RAY_ONE_OUTER)
                     ((AIYamYam) fixA.getUserData()).jump();
@@ -145,8 +139,7 @@ public class WorldCollisionListener implements ContactListener {
                     ((AIYamYam) fixB.getUserData()).jump();
                 break;
 
-
-            //      *       *       *       RAY_TWO_INNER     *       *       *       //
+            //RAY_TWO_INNER:
             case Application.RAY_TWO_INNER | Application.WALL_BIT:
                 if (fixA.getFilterData().categoryBits == Application.RAY_TWO_INNER)
                     ((AIYamYam) fixA.getUserData()).setRayTwoNextToWall(false);
@@ -164,7 +157,7 @@ public class WorldCollisionListener implements ContactListener {
         int cDef = fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
 
         switch (cDef) {
-            //      *       *       *       RAY_TWO_INNER     *       *       *       //
+            //RAY_TWO_INNER:
             case Application.RAY_TWO_INNER | Application.WALL_BIT:
                 if (fixA.getFilterData().categoryBits == Application.RAY_TWO_INNER)
                     ((AIYamYam) fixA.getUserData()).setRayTwoNextToWall(true);
