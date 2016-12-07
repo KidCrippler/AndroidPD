@@ -181,10 +181,10 @@ public class AIYamYam extends Enemy {
         b2body = world.createBody(bodyDef);
         PolygonShape head = new PolygonShape();
         Vector2[] vector2s = new Vector2[4];
-        vector2s[0] = new Vector2(-5, 34).scl(1 / Application.PPM);
-        vector2s[1] = new Vector2(5, 34).scl(1 / Application.PPM);
-        vector2s[2] = new Vector2(-3, 3).scl(1 / Application.PPM);
-        vector2s[3] = new Vector2(3, 3).scl(1 / Application.PPM);
+        vector2s[0] = new Vector2(-1, 33).scl(1 / Application.PPM);
+        vector2s[1] = new Vector2(1, 33).scl(1 / Application.PPM);
+        vector2s[2] = new Vector2(-4, 1).scl(1 / Application.PPM);
+        vector2s[3] = new Vector2(4, 1).scl(1 / Application.PPM);
         head.set(vector2s);
 
         fixtureDef.shape = head;

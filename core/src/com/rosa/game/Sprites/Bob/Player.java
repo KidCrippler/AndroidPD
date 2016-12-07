@@ -151,8 +151,8 @@ public class Player extends Sprite {
         FixtureDef fixtureDef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
         Vector2[] vector2s = new Vector2[4];
-        vector2s[0] = new Vector2(-3, 30).scl(1 / Application.PPM);
-        vector2s[1] = new Vector2(3, 30).scl(1 / Application.PPM);
+        vector2s[0] = new Vector2(-1, 33).scl(1 / Application.PPM);
+        vector2s[1] = new Vector2(1, 33).scl(1 / Application.PPM);
         vector2s[2] = new Vector2(-4, 1).scl(1 / Application.PPM);
         vector2s[3] = new Vector2(4, 1).scl(1 / Application.PPM);
         shape.set(vector2s);

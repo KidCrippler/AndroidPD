@@ -64,10 +64,10 @@ public class DumbBun extends Enemy {
         b2body = world.createBody(bodyDef);
         PolygonShape head = new PolygonShape();
         Vector2[] vertice = new Vector2[4];
-        vertice[0] = new Vector2(-5, 33).scl(1 / Application.PPM);
-        vertice[1] = new Vector2(5, 33).scl(1 / Application.PPM);
-        vertice[2] = new Vector2(-3, 3).scl(1 / Application.PPM);
-        vertice[3] = new Vector2(3, 3).scl(1 / Application.PPM);
+        vertice[0] = new Vector2(-1, 33).scl(1 / Application.PPM);
+        vertice[1] = new Vector2(1, 33).scl(1 / Application.PPM);
+        vertice[2] = new Vector2(-4, 0).scl(1 / Application.PPM);
+        vertice[3] = new Vector2(4, 0).scl(1 / Application.PPM);
         head.set(vertice);
 
         fixtureDef.filter.categoryBits = Application.ENEMY_DUMB_BIT;
