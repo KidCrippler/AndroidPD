@@ -1,94 +1,58 @@
 package com.rosa.game.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rosa.game.Application;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar.ProgressBarStyle;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.rosa.game.Sprites.Bob.Player;
 
-public class ScreenHud extends Sprite implements Screen {
+public class ScreenHud extends Sprite  {
     public Stage stage;
     public Viewport viewport;
     private Button resumeButton;
-    private Button quitButton;
     private Skin skin;
+    ProgressBarStyle barStyle;
+    TextureRegionDrawable textureBar;
+    ProgressBar bar;
 
     public ScreenHud(SpriteBatch sb) {
         viewport = new FitViewport(Application.V_WIDTH, Application.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, sb);
         skin = new Skin(Gdx.files.internal("style/menu/design/mainmenu.json"), new TextureAtlas("style/menu/design/mainmenu.pack"));
+//        textureBar = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("style/ingame/hud/health_bar.png"))));
+        barStyle = new ProgressBarStyle(skin.newDrawable("startbutton", Color.DARK_GRAY), textureBar);
+        barStyle.knobBefore = barStyle.knob;
+        bar = new ProgressBar(0, Player.bob_health, 0.5f, false, barStyle);
 
     }
 
-    @Override
     public void show() {
-        resumeButton = new Button(skin, "startbutton");
-        resumeButton.setPosition(140, 100);
-        resumeButton.setSize(30, 30);
-
-        quitButton = new Button(skin, "quitbutton");
-        quitButton.setPosition(100, 100);
-        quitButton.setSize(30, 30);
-
-        resumeButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                ScreenGame.FRAME_GAME_STATE = ScreenGame.GAME_RUNNING;
-            }
-        });
 
 
 
-        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
-            ScreenGame.FRAME_GAME_STATE = ScreenGame.GAME_RUNNING;
-        }
-
-        stage.addActor(resumeButton);
-        stage.addActor(quitButton);
-        Gdx.input.setInputProcessor(stage);
+        bar.setPosition(10, 10);
+        bar.setSize(Player.bob_health, bar.getPrefHeight());
+        bar.setAnimateDuration(2);
+        stage.addActor(bar);
     }
 
-    @Override
     public void render(float dt) {
         stage.act();
         stage.draw();
-    }
-
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void dispose() {
-        stage.dispose();
     }
 
     public void draw(Batch batch) {
