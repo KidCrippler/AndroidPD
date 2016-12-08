@@ -20,7 +20,6 @@ import com.rosa.game.Application;
 import com.rosa.game.Tools.BoxWorldCreator;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.ScreenDead;
-import com.rosa.game.screens.ScreenHud;
 import com.rosa.game.screens.ScreenPlay;
 
 public class Player extends Sprite {
@@ -185,7 +184,8 @@ public class Player extends Sprite {
 
     public void fire() {
         if (System.nanoTime() - lastShot >= FIRE_RATE) {
-            bullets.add(new Bullet(screen, (float) (b2body.getPosition().x - 0.1), (float) (b2body.getPosition().y + 0.2), runningRight));
+            bullets.add(new Bullet(screen, (float) (b2body.getPosition().x), (float) (b2body.getPosition().y + 0.2), runningRight));
+//            bullets.add(new Bullet(screen, (float) (b2body.getPosition().x - 0.1), (float) (b2body.getPosition().y + 0.2), runningRight));
             lastShot = System.nanoTime();
             soundPlayer.playSoundRandomLazerLaserShootOne();
         }
