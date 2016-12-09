@@ -15,8 +15,6 @@ import com.rosa.game.screens.ScreenPlay;
 
 public class Bullet extends Sprite {
 
-
-
     public World world;
     public Body b2body;
     boolean fireRight;
