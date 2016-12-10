@@ -255,7 +255,7 @@ public class AiTiw extends Enemy {
     private void fire() {
         if (!rayTwoNextToWall) {
             if (System.nanoTime() - lastShot >= FIRE_TIME) {
-                enemyFirePowerLasArray.add(new EnemyBullet(screen, (float) (b2body.getPosition().x - 0.1), (float) (b2body.getPosition().y + 0.2), runningRight));
+                enemyFirePowerLasArray.add(new EnemyBullet(screen, b2body.getPosition().x, (float) (b2body.getPosition().y + 0.2), runningRight));
                 lastShot = System.nanoTime();
                 playSound.playSoundRandomYamYamFirePower();
             }
