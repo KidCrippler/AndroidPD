@@ -81,9 +81,8 @@ public class Player extends Sprite {
         setRegion(getFrame(dt));
 
         BOB_X_POSITION = b2body.getPosition().x;
-        BOB_Y_POSITION = b2body.getPosition().y;
 
-        if (bob_health <= 0 || BOB_Y_POSITION < -10) {
+        if (bob_health <= 0 || b2body.getPosition().y < -10) {
             dead();
         }
 

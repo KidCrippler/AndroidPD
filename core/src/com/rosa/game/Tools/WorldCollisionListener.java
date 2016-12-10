@@ -107,9 +107,9 @@ public class WorldCollisionListener implements ContactListener {
             case Application.BULLET_BIT | Application.ENEMY_DUMB_BIT:
                 //Remove the enemy:
                 if (fixA.getFilterData().categoryBits == Application.ENEMY_DUMB_BIT)
-                    ((Enemy) fixA.getUserData()).setToDestroy();
+                    ((Enemy) fixA.getUserData()).takeShot(10);
                 else
-                    ((Enemy) fixB.getUserData()).setToDestroy();
+                    ((Enemy) fixB.getUserData()).takeShot(10);
                 //Remove the bullet:
                 if (fixA.getFilterData().categoryBits == Application.BULLET_BIT)
                     ((Bullet) fixA.getUserData()).setToDestroy();
@@ -121,9 +121,9 @@ public class WorldCollisionListener implements ContactListener {
             case Application.BULLET_BIT | Application.ENEMY_AI_BIT:
                 //Remove the enemy:
                 if (fixA.getFilterData().categoryBits == Application.ENEMY_AI_BIT)
-                    ((Enemy) fixA.getUserData()).setToDestroy();
+                    ((Enemy) fixA.getUserData()).takeShot(10);
                 else
-                    ((Enemy) fixB.getUserData()).setToDestroy();
+                    ((Enemy) fixB.getUserData()).takeShot(10);
                 //Remove the bullet:
                 if (fixA.getFilterData().categoryBits == Application.BULLET_BIT)
                     ((Bullet) fixA.getUserData()).setToDestroy();

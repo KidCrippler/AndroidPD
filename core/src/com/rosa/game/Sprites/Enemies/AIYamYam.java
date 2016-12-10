@@ -125,7 +125,12 @@ public class AIYamYam extends Enemy {
                         runningRight = true;
                     }
                 }
+
+
             }
+        }
+        if (yamyamHP <= 0 || b2body.getPosition().y < -2) {
+            dead();
         }
     }
 
@@ -245,13 +250,6 @@ public class AIYamYam extends Enemy {
 
     public void setToDestroy() {
         isDestroyed();
-        playSound.playSoundRandomBunHurt();
-        int bulletPowerOne = 10;
-        yamyamHP = yamyamHP - bulletPowerOne;
-        System.out.println("YamYam HP= " + yamyamHP);
-        if (yamyamHP <= 0) {
-            setToDestroy = true;
-        }
     }
 
     private void fire() {
@@ -272,6 +270,18 @@ public class AIYamYam extends Enemy {
                 currentState = State.JUMPING;
             }
         }
+    }
+
+    public void takeShot(int bulletPower) {
+        yamyamHP = yamyamHP - bulletPower;
+        System.out.println("YamYam HP= " + yamyamHP);
+    }
+
+    private void dead() {
+        playSound.playSoundRandomBunHurt();
+        System.out.println("dead!!!");
+        setToDestroy();
+        setToDestroy = true;
     }
 
     public boolean isDestroyed() {

@@ -53,7 +53,12 @@ public class DumbBun extends Enemy {
             setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
             setRegion(walkAnimation.getKeyFrame(stateTime, true));
         }
+
+        if(bunHP <= 0 || b2body.getPosition().y < -10){
+            dead();
+        }
     }
+
 
     @Override
     protected void defineEnemy() {
@@ -88,7 +93,7 @@ public class DumbBun extends Enemy {
     }
 
     @Override
-    public void hitByEnemy(com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy enemy) {
+    public void hitByEnemy(Enemy enemy) {
         reverseVelocity(true, false);
         playSound.playSoundRandomBunHurt();
     }
@@ -100,15 +105,21 @@ public class DumbBun extends Enemy {
             velocity.y = -velocity.y;
     }
 
+
+    public void takeShot(int bulletPower) {
+        bunHP = bunHP - bulletPower;
+        System.out.println(bunHP);
+    }
+
+    private void dead(){
+        playSound.playSoundRandomBunHurt();
+        System.out.println("dead!!!");
+        setToDestroy();
+        setToDestroy = true;
+    }
+
     public void setToDestroy() {
         isDestroyed();
-        playSound.playSoundRandomBunHurt();
-        int bulletPowerOne = 10;
-        bunHP = bunHP - bulletPowerOne;
-        System.out.println(bunHP);
-        if (bunHP <= 0) {
-            setToDestroy = true;
-        }
     }
 
     public boolean isDestroyed() {

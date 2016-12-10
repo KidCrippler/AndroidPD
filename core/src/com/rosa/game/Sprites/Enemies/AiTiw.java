@@ -1,5 +1,5 @@
 package com.rosa.game.Sprites.Enemies;
-//test
+
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -19,6 +19,7 @@ import com.rosa.game.screens.ScreenPlay;
 public class AiTiw extends Enemy {
 
     private enum State {FALLING, JUMPING, STANDING, RUNNING}
+
     private State currentState;
     private State previousState;
     private float stateTime;
@@ -28,8 +29,7 @@ public class AiTiw extends Enemy {
     private int yamyamHP = 100;
     private SoundPlayer playSound = new SoundPlayer();
     private Array<EnemyBullet> enemyFirePowerLasArray;
-    private static final long FIRE_RATE = 400000000L;
-    //    private static final long FIRE_RATE = 1200000000L;
+    private static final long FIRE_TIME = 2220000000L;
     private long lastShot;
     private boolean runningRight;
     private float stateTimer;
@@ -125,7 +125,12 @@ public class AiTiw extends Enemy {
                         runningRight = true;
                     }
                 }
+
+
             }
+        }
+        if (yamyamHP <= 0 || b2body.getPosition().y < -2) {
+            dead();
         }
     }
 
@@ -181,10 +186,10 @@ public class AiTiw extends Enemy {
         b2body = world.createBody(bodyDef);
         PolygonShape head = new PolygonShape();
         Vector2[] vector2s = new Vector2[4];
-        vector2s[0] = new Vector2(-5, 34).scl(1 / Application.PPM);
-        vector2s[1] = new Vector2(5, 34).scl(1 / Application.PPM);
-        vector2s[2] = new Vector2(-3, 3).scl(1 / Application.PPM);
-        vector2s[3] = new Vector2(3, 3).scl(1 / Application.PPM);
+        vector2s[0] = new Vector2(-1, 33).scl(1 / Application.PPM);
+        vector2s[1] = new Vector2(1, 33).scl(1 / Application.PPM);
+        vector2s[2] = new Vector2(-4, 1).scl(1 / Application.PPM);
+        vector2s[3] = new Vector2(4, 1).scl(1 / Application.PPM);
         head.set(vector2s);
 
         fixtureDef.shape = head;
@@ -245,18 +250,11 @@ public class AiTiw extends Enemy {
 
     public void setToDestroy() {
         isDestroyed();
-        playSound.playSoundRandomBunHurt();
-        int bulletPowerOne = 10;
-        yamyamHP = yamyamHP - bulletPowerOne;
-        System.out.println("YamYam HP= " + yamyamHP);
-        if (yamyamHP <= 0) {
-            setToDestroy = true;
-        }
     }
 
     private void fire() {
         if (!rayTwoNextToWall) {
-            if (System.nanoTime() - lastShot >= FIRE_RATE) {
+            if (System.nanoTime() - lastShot >= FIRE_TIME) {
                 enemyFirePowerLasArray.add(new EnemyBullet(screen, (float) (b2body.getPosition().x - 0.1), (float) (b2body.getPosition().y + 0.2), runningRight));
                 lastShot = System.nanoTime();
                 playSound.playSoundRandomYamYamFirePower();
@@ -272,6 +270,18 @@ public class AiTiw extends Enemy {
                 currentState = State.JUMPING;
             }
         }
+    }
+
+    public void takeShot(int bulletPower) {
+        yamyamHP = yamyamHP - bulletPower;
+        System.out.println("YamYam HP= " + yamyamHP);
+    }
+
+    private void dead() {
+        playSound.playSoundRandomBunHurt();
+        System.out.println("dead!!!");
+        setToDestroy();
+        setToDestroy = true;
     }
 
     public boolean isDestroyed() {
