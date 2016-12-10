@@ -250,7 +250,6 @@ public class AIYamYam extends Enemy {
         yamyamHP = yamyamHP - bulletPowerOne;
         System.out.println("YamYam HP= " + yamyamHP);
         if (yamyamHP <= 0) {
-            playSound.playSoundRandomBunDead();
             setToDestroy = true;
         }
     }

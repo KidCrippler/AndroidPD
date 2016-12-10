@@ -21,6 +21,7 @@ public class BoxWorldCreator {
     private Array<DumbBun> buns;
     private Array<AIYamYam> yamYams;
     public static TiledMap map;
+    private SoundPlayer soundPlayer = new SoundPlayer();
 
     public BoxWorldCreator(ScreenPlay screen) {
         World world = screen.getWorld();
@@ -92,6 +93,7 @@ public class BoxWorldCreator {
             dumbBun.update(dt);
             if (dumbBun.isDestroyed()) {
                 buns.removeValue(dumbBun, true);
+                soundPlayer.playSoundRandomBunDead();
             }
         }
         //Remove yamYams from memory:
@@ -99,6 +101,7 @@ public class BoxWorldCreator {
             yam.update(dt);
             if (yam.isDestroyed()) {
                 yamYams.removeValue(yam, true);
+                soundPlayer.playSoundRandomBunDead();
             }
         }
     }

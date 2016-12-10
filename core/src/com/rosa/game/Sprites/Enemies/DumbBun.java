@@ -107,7 +107,6 @@ public class DumbBun extends Enemy {
         bunHP = bunHP - bulletPowerOne;
         System.out.println(bunHP);
         if (bunHP <= 0) {
-            playSound.playSoundRandomBunDead();
             setToDestroy = true;
         }
     }
