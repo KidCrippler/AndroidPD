@@ -44,7 +44,7 @@ public class Bullet extends Sprite {
     public void defineBullet() {
         BodyDef bodyDef = new BodyDef();
 //        bodyDef.position.set(fireRight ? getX() + 5 / Application.PPM : getX() - 12 / Application.PPM, getY());
-        bodyDef.position.set(fireRight ? getX() + 1 / Application.PPM : getX() - 1 / Application.PPM, getY());
+        bodyDef.position.set(fireRight ? getX() + 0.20f / Application.PPM : getX() - 0.20f / Application.PPM, getY());
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         if (!world.isLocked())
             b2body = world.createBody(bodyDef);

@@ -131,7 +131,7 @@ public class ScreenPlay implements Screen {
         game.batch.setProjectionMatrix(orthographicCamera.combined);
         game.batch.begin();
         hud.show();
-//        player.draw(game.batch);
+        player.draw(game.batch);
         game.batch.end();
         controller.draw();
 
