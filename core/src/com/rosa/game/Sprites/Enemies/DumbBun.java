@@ -54,7 +54,7 @@ public class DumbBun extends Enemy {
             setRegion(walkAnimation.getKeyFrame(stateTime, true));
         }
 
-        if(bunHP <= 0 || b2body.getPosition().y < -10){
+        if(bunHP <= 0 || b2body.getPosition().y < -1){
             dead();
         }
     }

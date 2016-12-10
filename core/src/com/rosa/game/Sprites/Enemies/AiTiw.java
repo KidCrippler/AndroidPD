@@ -129,7 +129,7 @@ public class AiTiw extends Enemy {
 
             }
         }
-        if (yamyamHP <= 0 || b2body.getPosition().y < -2) {
+        if (yamyamHP <= 0 || b2body.getPosition().y < -1) {
             dead();
         }
     }

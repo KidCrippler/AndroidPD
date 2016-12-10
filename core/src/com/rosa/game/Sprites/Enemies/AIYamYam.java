@@ -1,13 +1,17 @@
 package com.rosa.game.Sprites.Enemies;
 
+import com.badlogic.gdx.ai.utils.Ray;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Bob.Player;
@@ -16,7 +20,9 @@ import com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyBullet;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.ScreenPlay;
 
+
 public class AIYamYam extends Enemy {
+
 
     private enum State {FALLING, JUMPING, STANDING, RUNNING}
 
@@ -38,6 +44,9 @@ public class AIYamYam extends Enemy {
     private TextureRegion yamyamStand;
     private boolean rayTwoNextToWall;
     private boolean chasing;
+    private static final Vector3 rayFrom = new Vector3();
+    private static final Vector3 rayTo = new Vector3();
+
 
     public AIYamYam(ScreenPlay screen, float x, float y) {
         super(screen, x, y);
@@ -129,7 +138,7 @@ public class AIYamYam extends Enemy {
 
             }
         }
-        if (yamyamHP <= 0 || b2body.getPosition().y < -2) {
+        if (yamyamHP <= 0 || b2body.getPosition().y < -1) {
             dead();
         }
     }
@@ -216,6 +225,11 @@ public class AIYamYam extends Enemy {
         rayShapeOne.setPosition(new Vector2(-0.5f, 0 / Application.PPM));
         b2body.createFixture(fixtureDefRayOne).setUserData(this);
 
+
+        Ray ray = new Ray(b2body.getPosition(),new Vector2(100f, 0 / Application.PPM));
+
+
+
         //RAYTwo - (Inner):
         FixtureDef fixtureDefRayTwo = new FixtureDef();
         CircleShape rayShapeTwo = new CircleShape();
@@ -284,6 +298,10 @@ public class AIYamYam extends Enemy {
         setToDestroy = true;
     }
 
+    private void testRayX(){
+        System.out.println("!");
+    }
+
     public boolean isDestroyed() {
         return destroyed;
     }
@@ -291,4 +309,5 @@ public class AIYamYam extends Enemy {
     public void setRayTwoNextToWall(boolean rayTwoNextToWall) {
         this.rayTwoNextToWall = rayTwoNextToWall;
     }
+
 }
