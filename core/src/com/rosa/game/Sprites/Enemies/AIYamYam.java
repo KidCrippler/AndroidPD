@@ -1,32 +1,23 @@
 package com.rosa.game.Sprites.Enemies;
 
-import com.badlogic.gdx.ai.utils.Ray;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.RayCastCallback;
+import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Bob.Player;
+import com.rosa.game.Sprites.Enemies.EnemyUtils.BulletRaycastCollisionDetector;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyBullet;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.ScreenPlay;
-import com.badlogic.gdx.ai.utils.Collision;
-import com.badlogic.gdx.ai.utils.Ray;
-import com.badlogic.gdx.ai.utils.RaycastCollisionDetector;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.bullet.collision.ClosestNotMeRayResultCallback;
-import com.badlogic.gdx.physics.bullet.collision.ClosestRayResultCallback;
-import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
-import com.badlogic.gdx.physics.bullet.collision.btCollisionWorld;
+
 
 public class AIYamYam extends Enemy {
 
@@ -50,16 +41,7 @@ public class AIYamYam extends Enemy {
     private TextureRegion yamyamStand;
     private boolean rayTwoNextToWall;
     private boolean chasing;
-
-    private static final Vector3 rayFrom = new Vector3();
-    private static final Vector3 rayTo = new Vector3();
-
-    RayCastCallback rayCastCallback = new RayCastCallback() {
-        @Override
-        public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
-            return 0;
-        }
-    };
+    private btCollisionObject me = new btCollisionObject();
 
     public AIYamYam(ScreenPlay screen, float x, float y) {
         super(screen, x, y);
@@ -156,6 +138,8 @@ public class AIYamYam extends Enemy {
     }
 
 
+
+
     private TextureRegion getFrame(float dt) {
         currentState = getState();
         TextureRegion region;
@@ -224,7 +208,6 @@ public class AIYamYam extends Enemy {
 
         b2body.createFixture(fixtureDef).setUserData(this);
 
-        Ray ray = new Ray(b2body.getPosition(),new Vector2(100f, 0 / Application.PPM));
 
 
         //RAYOne - (Outer):
