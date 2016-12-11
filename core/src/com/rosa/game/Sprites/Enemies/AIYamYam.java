@@ -18,7 +18,6 @@ import com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyBullet;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.ScreenPlay;
 
-
 public class AIYamYam extends Enemy {
 
     private enum State {FALLING, JUMPING, STANDING, RUNNING}
@@ -41,7 +40,7 @@ public class AIYamYam extends Enemy {
     private TextureRegion yamyamStand;
     private boolean rayTwoNextToWall;
     private boolean chasing;
-    private btCollisionObject me = new btCollisionObject();
+//    private btCollisionObject me = new btCollisionObject();
 
     public AIYamYam(ScreenPlay screen, float x, float y) {
         super(screen, x, y);

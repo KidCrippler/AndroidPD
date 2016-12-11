@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 
 
-public class Debbugerxy {
+class Debbugerxy {
 
     //Debug
     public static int debbugerx;

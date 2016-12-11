@@ -2,7 +2,6 @@ package com.rosa.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.rosa.game.Tools.Debbugerxy;
 import com.rosa.game.screens.ScreenPlay;
 import com.rosa.game.screens.ScreenSplash;
 
