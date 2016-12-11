@@ -19,10 +19,16 @@ import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyBullet;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.ScreenPlay;
-
+import com.badlogic.gdx.ai.utils.Collision;
+import com.badlogic.gdx.ai.utils.Ray;
+import com.badlogic.gdx.ai.utils.RaycastCollisionDetector;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.bullet.collision.ClosestNotMeRayResultCallback;
+import com.badlogic.gdx.physics.bullet.collision.ClosestRayResultCallback;
+import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
+import com.badlogic.gdx.physics.bullet.collision.btCollisionWorld;
 
 public class AIYamYam extends Enemy {
-
 
     private enum State {FALLING, JUMPING, STANDING, RUNNING}
 
@@ -44,9 +50,16 @@ public class AIYamYam extends Enemy {
     private TextureRegion yamyamStand;
     private boolean rayTwoNextToWall;
     private boolean chasing;
+
     private static final Vector3 rayFrom = new Vector3();
     private static final Vector3 rayTo = new Vector3();
 
+    RayCastCallback rayCastCallback = new RayCastCallback() {
+        @Override
+        public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
+            return 0;
+        }
+    };
 
     public AIYamYam(ScreenPlay screen, float x, float y) {
         super(screen, x, y);
@@ -89,7 +102,6 @@ public class AIYamYam extends Enemy {
     public void update(float dt) {
         stateTime += dt;
         if (setToDestroy && !destroyed) {
-
             world.destroyBody(b2body);
             destroyed = true;
             setRegion(new TextureRegion(screen.getAtlas().findRegion("keen"), 11, 0, 22, 12));
@@ -212,6 +224,9 @@ public class AIYamYam extends Enemy {
 
         b2body.createFixture(fixtureDef).setUserData(this);
 
+        Ray ray = new Ray(b2body.getPosition(),new Vector2(100f, 0 / Application.PPM));
+
+
         //RAYOne - (Outer):
         FixtureDef fixtureDefRayOne = new FixtureDef();
         CircleShape rayShapeOne = new CircleShape();
@@ -226,7 +241,7 @@ public class AIYamYam extends Enemy {
         b2body.createFixture(fixtureDefRayOne).setUserData(this);
 
 
-        Ray ray = new Ray(b2body.getPosition(),new Vector2(100f, 0 / Application.PPM));
+
 
 
 
@@ -294,8 +309,8 @@ public class AIYamYam extends Enemy {
     private void dead() {
         playSound.playSoundRandomBunHurt();
         System.out.println("dead!!!");
-        setToDestroy();
         setToDestroy = true;
+        setToDestroy();
     }
 
     private void testRayX(){

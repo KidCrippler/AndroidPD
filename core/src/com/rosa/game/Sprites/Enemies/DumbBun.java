@@ -114,8 +114,8 @@ public class DumbBun extends Enemy {
     private void dead(){
         playSound.playSoundRandomBunHurt();
         System.out.println("dead!!!");
-        setToDestroy();
         setToDestroy = true;
+        setToDestroy();
     }
 
     public void setToDestroy() {
