@@ -4,15 +4,16 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
+import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Bob.Player;
-import com.rosa.game.Sprites.Enemies.EnemyUtils.BulletRaycastCollisionDetector;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyBullet;
 import com.rosa.game.Tools.SoundPlayer;
@@ -40,7 +41,11 @@ public class AIYamYam extends Enemy {
     private TextureRegion yamyamStand;
     private boolean rayTwoNextToWall;
     private boolean chasing;
-//    private btCollisionObject me = new btCollisionObject();
+    Vector2 p1 = new Vector2();
+    Vector2 p2 = new Vector2();
+    Vector2 collision = new Vector2();
+    Vector2 normal = new Vector2();
+
 
     public AIYamYam(ScreenPlay screen, float x, float y) {
         super(screen, x, y);
@@ -205,7 +210,54 @@ public class AIYamYam extends Enemy {
                 Application.GROUND_BIT |
                 Application.BULLET_BIT;
 
+
+        Vector3 tmp = new Vector3();
+
+        tmp.set(2f,2f,2f);
+
+        //Test for real ray:
+        RayCastCallback callback = new RayCastCallback() {
+
+            @Override
+            public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
+                collision.set(point);
+                AIYamYam.this.normal.set(normal).add(point);
+                return 1;
+            }
+
+        };
+
+//        p1.set(tmp.x,tmp.y);
+//        p2.set(b2body.getPosition().x + 10,b2body.getPosition().y +10);
+
+
+
+        world.rayCast(callback,vector2s[0],vector2s[0]);
+
         b2body.createFixture(fixtureDef).setUserData(this);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -222,11 +274,6 @@ public class AIYamYam extends Enemy {
         rayShapeOne.setPosition(new Vector2(-0.5f, 0 / Application.PPM));
         b2body.createFixture(fixtureDefRayOne).setUserData(this);
 
-
-
-
-
-
         //RAYTwo - (Inner):
         FixtureDef fixtureDefRayTwo = new FixtureDef();
         CircleShape rayShapeTwo = new CircleShape();
@@ -239,6 +286,9 @@ public class AIYamYam extends Enemy {
         b2body.createFixture(fixtureDefRayTwo).setUserData(this);
         rayShapeTwo.setPosition(new Vector2(-0.2f, 0 / Application.PPM));
         b2body.createFixture(fixtureDefRayTwo).setUserData(this);
+
+
+
     }
 
     public void draw(Batch batch) {
@@ -295,9 +345,6 @@ public class AIYamYam extends Enemy {
         setToDestroy();
     }
 
-    private void testRayX(){
-        System.out.println("!");
-    }
 
     public boolean isDestroyed() {
         return destroyed;
@@ -306,5 +353,4 @@ public class AIYamYam extends Enemy {
     public void setRayTwoNextToWall(boolean rayTwoNextToWall) {
         this.rayTwoNextToWall = rayTwoNextToWall;
     }
-
 }
