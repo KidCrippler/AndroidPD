@@ -1,8 +1,12 @@
 package com.rosa.game.Sprites.Enemies;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -11,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Bob.Player;
@@ -41,11 +46,9 @@ public class AIYamYam extends Enemy {
     private TextureRegion yamyamStand;
     private boolean rayTwoNextToWall;
     private boolean chasing;
-    Vector2 p1 = new Vector2();
-    Vector2 p2 = new Vector2();
-    Vector2 collision = new Vector2();
-    Vector2 normal = new Vector2();
-
+    Vector2 p1 = new Vector2(), p2 = new Vector2(), collision = new Vector2(), normal = new Vector2();
+    Vector3 tmp = new Vector3();
+    ShapeRenderer sr = new ShapeRenderer();
 
     public AIYamYam(ScreenPlay screen, float x, float y) {
         super(screen, x, y);
@@ -92,7 +95,6 @@ public class AIYamYam extends Enemy {
             destroyed = true;
             setRegion(new TextureRegion(screen.getAtlas().findRegion("keen"), 11, 0, 22, 12));
             stateTime = 0;
-
         } else {
             setRegion(getFrame(dt));
 
@@ -131,6 +133,7 @@ public class AIYamYam extends Enemy {
                     } else if (b2body.getLinearVelocity().x > 0) {
                         runningRight = true;
                     }
+
                 }
 
 
@@ -139,9 +142,10 @@ public class AIYamYam extends Enemy {
         if (yamyamHP <= 0 || b2body.getPosition().y < -1) {
             dead();
         }
+
+
+
     }
-
-
 
 
     private TextureRegion getFrame(float dt) {
@@ -210,55 +214,7 @@ public class AIYamYam extends Enemy {
                 Application.GROUND_BIT |
                 Application.BULLET_BIT;
 
-
-        Vector3 tmp = new Vector3();
-
-        tmp.set(2f,2f,2f);
-
-        //Test for real ray:
-        RayCastCallback callback = new RayCastCallback() {
-
-            @Override
-            public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
-                collision.set(point);
-                AIYamYam.this.normal.set(normal).add(point);
-                return 1;
-            }
-
-        };
-
-//        p1.set(tmp.x,tmp.y);
-//        p2.set(b2body.getPosition().x + 10,b2body.getPosition().y +10);
-
-
-
-        world.rayCast(callback,vector2s[0],vector2s[0]);
-
         b2body.createFixture(fixtureDef).setUserData(this);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         //RAYOne - (Outer):
@@ -280,12 +236,55 @@ public class AIYamYam extends Enemy {
         rayShapeTwo.setRadius(6 / Application.PPM);
         fixtureDefRayTwo.filter.categoryBits = Application.RAY_TWO_INNER;
 
-        fixtureDefRayTwo.shape = rayShapeTwo;
+
+//        fixtureDefRayTwo.shape = rayShapeTwo;
+//        fixtureDefRayTwo.isSensor = true;
+//        rayShapeTwo.setPosition(new Vector2(0.2f, 0 / Application.PPM));
+//        b2body.createFixture(fixtureDefRayTwo).setUserData(this);
+//        rayShapeTwo.setPosition(new Vector2(-0.2f, 0 / Application.PPM));
+//        b2body.createFixture(fixtureDefRayTwo).setUserData(this);
+
+
+                fixtureDefRayTwo.shape = rayShapeTwo;
         fixtureDefRayTwo.isSensor = true;
         rayShapeTwo.setPosition(new Vector2(0.2f, 0 / Application.PPM));
         b2body.createFixture(fixtureDefRayTwo).setUserData(this);
         rayShapeTwo.setPosition(new Vector2(-0.2f, 0 / Application.PPM));
         b2body.createFixture(fixtureDefRayTwo).setUserData(this);
+
+
+        sr.begin(ShapeRenderer.ShapeType.Line);
+        sr.line(p1, p2);
+        sr.line(collision, normal);
+
+
+        Gdx.input.setInputProcessor(new InputAdapter() {
+            Vector3 tmp = new Vector3();
+            RayCastCallback callback = new RayCastCallback() {
+
+                @Override
+                public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
+                    collision.set(point);
+                    AIYamYam.this.normal.set(normal).add(point);
+                    return 1;
+                }
+
+            };
+
+
+            public boolean touchDragged(int screenX, int screenY, int pointer) {
+                tmp.set(screenX, screenY, 0);
+                if (Gdx.input.isButtonPressed(Input.Buttons.LEFT))
+                    p2.set(tmp.x, tmp.y);
+                else if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT))
+                    p1.set(tmp.x, tmp.y);
+                world.rayCast(callback, p1, p2);
+                return true;
+            }
+
+        });
+
+
 
 
 
@@ -311,6 +310,7 @@ public class AIYamYam extends Enemy {
 
     public void setToDestroy() {
         isDestroyed();
+
     }
 
     private void fire() {
@@ -340,7 +340,7 @@ public class AIYamYam extends Enemy {
 
     private void dead() {
         playSound.playSoundRandomBunHurt();
-        System.out.println("dead!!!");
+        System.out.println("YamYam IS DEAD");
         setToDestroy = true;
         setToDestroy();
     }
