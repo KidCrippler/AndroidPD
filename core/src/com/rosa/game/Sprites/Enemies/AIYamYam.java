@@ -3,6 +3,7 @@ package com.rosa.game.Sprites.Enemies;
 import com.badlogic.gdx.ai.steer.behaviors.RaycastObstacleAvoidance;
 import com.badlogic.gdx.ai.steer.utils.rays.RayConfigurationBase;
 import com.badlogic.gdx.ai.utils.Ray;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -43,10 +44,15 @@ public class AIYamYam extends Enemy {
     private TextureRegion yamyamStand;
     private boolean rayTwoNextToWall;
     private boolean chasing;
-    ShapeRenderer shapeRenderer;
+    ShapeRenderer shapeRenderer = new ShapeRenderer();
+
     RayConfigurationBase<Vector2>[] rayConfigurations;
     RaycastObstacleAvoidance<Vector2> raycastObstacleAvoidanceSB;
     int rayConfigurationIndex = 0;
+    Vector2 p1 = new Vector2();
+    Vector2 p2 = new Vector2();
+    Vector2 collision = new Vector2();
+    Vector2 normal = new Vector2();
 
 
     public AIYamYam(ScreenPlay screen, float x, float y) {
@@ -79,15 +85,39 @@ public class AIYamYam extends Enemy {
             frames.add(new TextureRegion(screen.getAtlas().findRegion("keen"), i * 32, 0, 32, 32));
 
 
-        walkAnimation = new Animation(0.4f, frames);
+        walkAnimation = new Animation(0.1f, frames);
 
         setBounds(0, 0, 23 / Application.PPM, 32 / Application.PPM);
         setRegion(yamyamStand);
 
         enemyFirePowerLasArray = new Array<EnemyBullet>();
         chasing = true;
-        shapeRenderer = new ShapeRenderer();
 
+
+
+    }
+
+
+    @Override
+    public void draw(Batch batch) {
+        super.draw(batch);
+
+//        if (!destroyed || stateTime < 1) {
+//            super.draw(batch);
+//            System.out.println("1");
+//        }
+
+//        sr.line(p1, p2);
+
+//
+//            Ray<Vector2>[] rays = rayConfigurations[rayConfigurationIndex].getRays();
+//            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+//            shapeRenderer.setColor(1, 0, 0, 1);
+//            for (int i = 0; i < rays.length; i++) {
+//                Ray<Vector2> ray = rays[i];
+//                shapeRenderer.line(ray.start, ray.end);
+//            }
+//            shapeRenderer.end();
     }
 
     public void update(float dt) {
@@ -103,8 +133,8 @@ public class AIYamYam extends Enemy {
             if (!destroyed && b2body.isActive()) {
 
                 //Draw:
-                setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
-                setRegion(walkAnimation.getKeyFrame(stateTime, true));
+                setPosition(b2body.getPosition().x - getWidth() / 2, (float) (b2body.getPosition().y - getHeight() / 300.0));
+                setRegion(getFrame(dt));
 
                 //TODO: fix chase or not
                 //If you are not chased:
@@ -112,7 +142,7 @@ public class AIYamYam extends Enemy {
                     chasing = true;
                 }
 
-                //If you are chased behaver:
+                //If you are chased behavior:
                 if (chasing) {
 
                     //RAY_ONE_OUTER (AI movement):
@@ -136,6 +166,17 @@ public class AIYamYam extends Enemy {
                         runningRight = true;
                     }
 
+                    p1.set(Player.BOB_X_POSITION,1);
+                    p2.set(Player.BOB_X_POSITION,5);
+
+                    shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+                    shapeRenderer.setColor(Color.RED);
+                    shapeRenderer.line(p1, p2);
+                    shapeRenderer.setColor(Color.RED);
+                    shapeRenderer.end();
+                    System.out.println("121212");
+
+
                 }
 
 
@@ -144,8 +185,6 @@ public class AIYamYam extends Enemy {
         if (yamyamHP <= 0 || b2body.getPosition().y < -1) {
             dead();
         }
-
-
     }
 
 
@@ -258,31 +297,12 @@ public class AIYamYam extends Enemy {
         b2body.createFixture(box2dray).setUserData(this);
 
 
-
-
     }
 
-    public void draw(Batch batch) {
-//        if (!destroyed || stateTime < 1) {
-//            super.draw(batch);
-//            System.out.println("1");
-//        }
-            System.out.println("1");
-//
-//            Ray<Vector2>[] rays = rayConfigurations[rayConfigurationIndex].getRays();
-//            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-//            shapeRenderer.setColor(1, 0, 0, 1);
-//            for (int i = 0; i < rays.length; i++) {
-//                Ray<Vector2> ray = rays[i];
-//                shapeRenderer.line(ray.start, ray.end);
-//            }
-//            shapeRenderer.end();
-    }
 
     @Override
     public void hitByEnemy(Enemy enemy) {
         playSound.playSoundRandomBunHurt();
-
     }
 
     public void reverseVelocity(boolean x, boolean y) {
@@ -294,7 +314,6 @@ public class AIYamYam extends Enemy {
 
     public void setToDestroy() {
         isDestroyed();
-
     }
 
     private void fire() {

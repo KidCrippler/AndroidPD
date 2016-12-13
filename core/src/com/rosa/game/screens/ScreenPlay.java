@@ -96,7 +96,6 @@ public class ScreenPlay implements Screen {
         world.step(1 / 60f, 6, 2);
 
         player.update(dt);
-//        hud.update(dt);
         creator.update(dt);
 
 
@@ -129,10 +128,11 @@ public class ScreenPlay implements Screen {
         b2dr.render(world, orthographicCamera.combined);
         hud.render(dt);
         game.batch.setProjectionMatrix(orthographicCamera.combined);
+
         game.batch.begin();
-        hud.show();
-        player.draw(game.batch);
         creator.draw(game.batch);
+        player.draw(game.batch);
+        hud.show();
         game.batch.end();
         controller.draw();
 
