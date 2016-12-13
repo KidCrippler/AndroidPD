@@ -1,5 +1,6 @@
 package com.rosa.game.Tools;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -103,6 +104,13 @@ public class BoxWorldCreator {
                 yamYams.removeValue(yam, true);
                 soundPlayer.playSoundRandomBunDead();
             }
+        }
+    }
+
+    public void draw(Batch batch){
+        //draw yamYams
+        for (AIYamYam yam : yamYams) {
+            yam.draw(batch);
         }
     }
 }

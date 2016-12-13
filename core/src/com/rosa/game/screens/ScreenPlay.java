@@ -132,6 +132,7 @@ public class ScreenPlay implements Screen {
         game.batch.begin();
         hud.show();
         player.draw(game.batch);
+        creator.draw(game.batch);
         game.batch.end();
         controller.draw();
 
