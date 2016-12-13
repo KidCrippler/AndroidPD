@@ -1,18 +1,23 @@
 package com.rosa.game.Sprites.Enemies;
 
 import com.badlogic.gdx.ai.steer.behaviors.RaycastObstacleAvoidance;
+import com.badlogic.gdx.ai.steer.utils.Ray;
 import com.badlogic.gdx.ai.steer.utils.rays.RayConfigurationBase;
-import com.badlogic.gdx.ai.utils.Ray;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.bullet.collision.ClosestRayResultCallback;
+import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
+import com.badlogic.gdx.physics.bullet.collision.btCollisionWorld;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Bob.Player;
@@ -44,6 +49,15 @@ public class AIYamYam extends Enemy {
     private TextureRegion yamyamStand;
     private boolean rayTwoNextToWall;
     private boolean chasing;
+    private static final Vector3 rayFrom = new Vector3();
+    private static final Vector3 rayTo = new Vector3();
+    private Vector2 tmp = new Vector2();
+    private Vector2 tmp2 = new Vector2();
+    private Batch spriteBatch;
+    boolean drawDebug;
+
+
+
     ShapeRenderer shapeRenderer = new ShapeRenderer();
 
     RayConfigurationBase<Vector2>[] rayConfigurations;
@@ -94,30 +108,11 @@ public class AIYamYam extends Enemy {
         chasing = true;
 
 
-
     }
-
 
     @Override
     public void draw(Batch batch) {
         super.draw(batch);
-
-//        if (!destroyed || stateTime < 1) {
-//            super.draw(batch);
-//            System.out.println("1");
-//        }
-
-//        sr.line(p1, p2);
-
-//
-//            Ray<Vector2>[] rays = rayConfigurations[rayConfigurationIndex].getRays();
-//            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-//            shapeRenderer.setColor(1, 0, 0, 1);
-//            for (int i = 0; i < rays.length; i++) {
-//                Ray<Vector2> ray = rays[i];
-//                shapeRenderer.line(ray.start, ray.end);
-//            }
-//            shapeRenderer.end();
     }
 
     public void update(float dt) {
@@ -168,14 +163,6 @@ public class AIYamYam extends Enemy {
 
                     p1.set(Player.BOB_X_POSITION,1);
                     p2.set(Player.BOB_X_POSITION,5);
-
-                    shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-                    shapeRenderer.setColor(Color.RED);
-                    shapeRenderer.line(p1, p2);
-                    shapeRenderer.setColor(Color.RED);
-                    shapeRenderer.end();
-                    System.out.println("121212");
-
 
                 }
 
@@ -284,17 +271,34 @@ public class AIYamYam extends Enemy {
         b2body.createFixture(fixtureDefRayTwo).setUserData(this);
 
 
-        //RAYTwo - (Inner):
-        FixtureDef box2dray = new FixtureDef();
+        //RAYOne - (Outer):
+        FixtureDef fixtureDefRayFire = new FixtureDef();
+        CircleShape rayShapeFire = new CircleShape();
 
-        CircleShape circleShape = new CircleShape();
-        circleShape.setRadius(6 / Application.PPM);
-        box2dray.filter.categoryBits = Application.RAY_TWO_INNER;
+        PolygonShape head1 = new PolygonShape();
+        Vector2[] vector2s1 = new Vector2[4];
+        vector2s[0] = new Vector2(-1, 55).scl(1 / Application.PPM);
+        vector2s[1] = new Vector2(1, 55).scl(1 / Application.PPM);
+        vector2s[2] = new Vector2(-4, 55).scl(1 / Application.PPM);
+        vector2s[3] = new Vector2(4, 55).scl(1 / Application.PPM);
+        head1.set(vector2s1);
+        b2body.createFixture(fixtureDef).setUserData(this);
 
-        box2dray.shape = circleShape;
-        box2dray.isSensor = true;
-        circleShape.setPosition(new Vector2(0.4f, 0 / Application.PPM));
-        b2body.createFixture(box2dray).setUserData(this);
+
+        rayShapeFire.setRadius(6 / Application.PPM);
+
+        fixtureDefRayFire.filter.categoryBits = Application.RAY_ONE_OUTER;
+
+        fixtureDefRayFire.shape = rayShapeFire;
+
+
+        fixtureDefRayFire.isSensor = true;
+        rayShapeFire.setPosition(new Vector2(0.6f, 0 / Application.PPM));
+        b2body.createFixture(fixtureDefRayFire).setUserData(this);
+        rayShapeFire.setPosition(new Vector2(-0.6f, 0 / Application.PPM));
+        b2body.createFixture(fixtureDefRayFire).setUserData(this);
+
+
 
 
     }
