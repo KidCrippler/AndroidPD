@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -50,24 +51,7 @@ public class AIYamYam extends Enemy {
     private TextureRegion yamyamStand;
     private boolean rayTwoNextToWall;
     private boolean chasing;
-    private static final Vector3 rayFrom = new Vector3();
-    private static final Vector3 rayTo = new Vector3();
-    private Vector2 tmp = new Vector2();
-    private Vector2 tmp2 = new Vector2();
-    private Batch spriteBatch;
-    boolean drawDebug;
 
-
-
-    ShapeRenderer shapeRenderer = new ShapeRenderer();
-
-    RayConfigurationBase<Vector2>[] rayConfigurations;
-    RaycastObstacleAvoidance<Vector2> raycastObstacleAvoidanceSB;
-    int rayConfigurationIndex = 0;
-    Vector2 p1 = new Vector2();
-    Vector2 p2 = new Vector2();
-    Vector2 collision = new Vector2();
-    Vector2 normal = new Vector2();
 
 
     public AIYamYam(ScreenPlay screen, float x, float y) {
@@ -162,8 +146,7 @@ public class AIYamYam extends Enemy {
                         runningRight = true;
                     }
 
-                    p1.set(Player.BOB_X_POSITION,1);
-                    p2.set(Player.BOB_X_POSITION,5);
+
 
                 }
 
