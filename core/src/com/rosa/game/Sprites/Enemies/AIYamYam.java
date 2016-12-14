@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -269,36 +270,6 @@ public class AIYamYam extends Enemy {
         b2body.createFixture(fixtureDefRayTwo).setUserData(this);
         rayShapeTwo.setPosition(new Vector2(-0.2f, 0 / Application.PPM));
         b2body.createFixture(fixtureDefRayTwo).setUserData(this);
-
-
-        //RAYOne - (Outer):
-        FixtureDef fixtureDefRayFire = new FixtureDef();
-        CircleShape rayShapeFire = new CircleShape();
-
-        PolygonShape head1 = new PolygonShape();
-        Vector2[] vector2s1 = new Vector2[4];
-        vector2s[0] = new Vector2(-1, 55).scl(1 / Application.PPM);
-        vector2s[1] = new Vector2(1, 55).scl(1 / Application.PPM);
-        vector2s[2] = new Vector2(-4, 55).scl(1 / Application.PPM);
-        vector2s[3] = new Vector2(4, 55).scl(1 / Application.PPM);
-        head1.set(vector2s1);
-        b2body.createFixture(fixtureDef).setUserData(this);
-
-
-        rayShapeFire.setRadius(6 / Application.PPM);
-
-        fixtureDefRayFire.filter.categoryBits = Application.RAY_ONE_OUTER;
-
-        fixtureDefRayFire.shape = rayShapeFire;
-
-
-        fixtureDefRayFire.isSensor = true;
-        rayShapeFire.setPosition(new Vector2(0.6f, 0 / Application.PPM));
-        b2body.createFixture(fixtureDefRayFire).setUserData(this);
-        rayShapeFire.setPosition(new Vector2(-0.6f, 0 / Application.PPM));
-        b2body.createFixture(fixtureDefRayFire).setUserData(this);
-
-
 
 
     }
