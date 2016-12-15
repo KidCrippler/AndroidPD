@@ -39,6 +39,7 @@ public class BulletRaycastCollisionDetector implements RaycastCollisionDetector<
             callback.getHitNormalWorld(outputCollision.normal);
         }
 
+
         return callback.hasHit();
     }
 
