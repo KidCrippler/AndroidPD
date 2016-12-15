@@ -10,7 +10,6 @@ import com.badlogic.gdx.physics.bullet.collision.ClosestRayResultCallback;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionWorld;
 
-
 public class BulletRaycastCollisionDetector implements RaycastCollisionDetector<Vector3> {
 
     btCollisionWorld world;
