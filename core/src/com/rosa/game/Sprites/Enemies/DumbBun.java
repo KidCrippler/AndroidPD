@@ -105,7 +105,6 @@ public class DumbBun extends Enemy {
             velocity.y = -velocity.y;
     }
 
-
     public void takeShot(int bulletPower) {
         bunHP = bunHP - bulletPower;
         System.out.println(bunHP);

@@ -1,13 +1,12 @@
 package com.rosa.game.Sprites.Enemies;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -19,8 +18,6 @@ import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyBullet;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.ScreenPlay;
-
-
 
 public class AIYamYam extends Enemy {
 
@@ -57,7 +54,6 @@ public class AIYamYam extends Enemy {
         setToDestroy = false;
         destroyed = false;
         chasing = true;
-
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
@@ -231,31 +227,44 @@ public class AIYamYam extends Enemy {
         b2body.createFixture(fixtureDef).setUserData(this);
 
 
-        //RAYOne - (Outer):
-        FixtureDef fixtureDefRayOne = new FixtureDef();
-        CircleShape rayShapeOne = new CircleShape();
-        rayShapeOne.setRadius(6 / Application.PPM);
-        fixtureDefRayOne.filter.categoryBits = Application.RAY_ONE_OUTER;
+//        RAYOne - (Outer):
+//        FixtureDef fixtureDefRayOne = new FixtureDef();
+//        CircleShape rayShapeOne = new CircleShape();
+//        rayShapeOne.setRadius(6 / Application.PPM);
+//        fixtureDefRayOne.filter.categoryBits = Application.RAY_ONE_OUTER;
+//
+//        fixtureDefRayOne.shape = rayShapeOne;
+//        fixtureDefRayOne.isSensor = true;
+//        rayShapeOne.setPosition(new Vector2(0.5f, 0 / Application.PPM));
+//        b2body.createFixture(fixtureDefRayOne).setUserData(this);
+//        rayShapeOne.setPosition(new Vector2(-0.5f, 0 / Application.PPM));
+//        b2body.createFixture(fixtureDefRayOne).setUserData(this);
+//
+//        RAYTwo - (Inner):
+//        FixtureDef fixtureDefRayTwo = new FixtureDef();
+//        CircleShape rayShapeTwo = new CircleShape();
+//        rayShapeTwo.setRadius(6 / Application.PPM);
+//        fixtureDefRayTwo.filter.categoryBits = Application.RAY_TWO_INNER;
+//
+//        fixtureDefRayTwo.shape = rayShapeTwo;
+//        fixtureDefRayTwo.isSensor = true;
+//        rayShapeTwo.setPosition(new Vector2(0.2f, 0 / Application.PPM));
+//        b2body.createFixture(fixtureDefRayTwo).setUserData(this);
+//        rayShapeTwo.setPosition(new Vector2(-0.2f, 0 / Application.PPM));
+//        b2body.createFixture(fixtureDefRayTwo).setUserData(this);
 
-        fixtureDefRayOne.shape = rayShapeOne;
-        fixtureDefRayOne.isSensor = true;
-        rayShapeOne.setPosition(new Vector2(0.5f, 0 / Application.PPM));
-        b2body.createFixture(fixtureDefRayOne).setUserData(this);
-        rayShapeOne.setPosition(new Vector2(-0.5f, 0 / Application.PPM));
-        b2body.createFixture(fixtureDefRayOne).setUserData(this);
+        //Ray:
+        FixtureDef fixtureDefRay = new FixtureDef();
+        EdgeShape edgeShape = new EdgeShape();
 
-        //RAYTwo - (Inner):
-        FixtureDef fixtureDefRayTwo = new FixtureDef();
-        CircleShape rayShapeTwo = new CircleShape();
-        rayShapeTwo.setRadius(6 / Application.PPM);
-        fixtureDefRayTwo.filter.categoryBits = Application.RAY_TWO_INNER;
+        edgeShape.set(new Vector2(2f,2f),new Vector2(2f,2f));
 
-        fixtureDefRayTwo.shape = rayShapeTwo;
-        fixtureDefRayTwo.isSensor = true;
-        rayShapeTwo.setPosition(new Vector2(0.2f, 0 / Application.PPM));
-        b2body.createFixture(fixtureDefRayTwo).setUserData(this);
-        rayShapeTwo.setPosition(new Vector2(-0.2f, 0 / Application.PPM));
-        b2body.createFixture(fixtureDefRayTwo).setUserData(this);
+        fixtureDef.filter.categoryBits = Application.REAL_RAYCAST;
+//        rayShapeEdge.set(new Vector2(-0.2f, 0 / Application.PPM),new Vector2(-0.2f, 0 / Application.PPM));
+        fixtureDefRay.shape = head;
+        fixtureDefRay.isSensor = true;
+        b2body.createFixture(fixtureDefRay).setUserData(this);
+
     }
 
 
