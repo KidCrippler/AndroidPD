@@ -95,7 +95,7 @@ public class AIYamYam extends Enemy {
 
     @Override
     public void draw(Batch batch) {
-        super.draw(batch);
+//        super.draw(batch);
     }
 
     public void update(float dt) {
@@ -207,15 +207,15 @@ public class AIYamYam extends Enemy {
         bodyDef.position.set(getX(), getY());
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bodyDef);
-        PolygonShape head = new PolygonShape();
+        PolygonShape heads = new PolygonShape();
         Vector2[] vector2s = new Vector2[4];
         vector2s[0] = new Vector2(-1, 33).scl(1 / Application.PPM);
         vector2s[1] = new Vector2(1, 33).scl(1 / Application.PPM);
         vector2s[2] = new Vector2(-4, 1).scl(1 / Application.PPM);
         vector2s[3] = new Vector2(4, 1).scl(1 / Application.PPM);
-        head.set(vector2s);
+        heads.set(vector2s);
 
-        fixtureDef.shape = head;
+        fixtureDef.shape = heads;
         fixtureDef.filter.categoryBits = Application.ENEMY_AI_BIT;
         fixtureDef.filter.maskBits = Application.ENEMY_AI_BIT |
                 Application.ENEMY_DUMB_BIT |
@@ -253,18 +253,14 @@ public class AIYamYam extends Enemy {
 //        rayShapeTwo.setPosition(new Vector2(-0.2f, 0 / Application.PPM));
 //        b2body.createFixture(fixtureDefRayTwo).setUserData(this);
 
-        //Ray:
-        FixtureDef fixtureDefRay = new FixtureDef();
-        EdgeShape edgeShape = new EdgeShape();
-
-        edgeShape.set(new Vector2(2f,2f),new Vector2(2f,2f));
-
+        //Ray Fire:
+        EdgeShape head = new EdgeShape();
+        head.set(new Vector2(0 / Application.PPM, 24 / Application.PPM), new Vector2(240 / Application.PPM, 24 / Application.PPM));
         fixtureDef.filter.categoryBits = Application.REAL_RAYCAST;
-//        rayShapeEdge.set(new Vector2(-0.2f, 0 / Application.PPM),new Vector2(-0.2f, 0 / Application.PPM));
-        fixtureDefRay.shape = head;
-        fixtureDefRay.isSensor = true;
-        b2body.createFixture(fixtureDefRay).setUserData(this);
+        fixtureDef.shape = head;
+        fixtureDef.isSensor = true;
 
+        b2body.createFixture(fixtureDef).setUserData(this);
     }
 
 
