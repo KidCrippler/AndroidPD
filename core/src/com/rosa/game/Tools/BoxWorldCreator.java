@@ -1,6 +1,5 @@
 package com.rosa.game.Tools;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -60,7 +59,7 @@ public class BoxWorldCreator {
                     Application.ENEMY_DUMB_BIT |
                     Application.BULLET_BIT |
                     Application.ENEMY_BULLET_BIT |
-                    Application.RAY_ONE_OUTER |
+                    Application.RAY_JUMP |
                     Application.RAY_TWO_INNER;
             body.createFixture(fixtureDef);
         }

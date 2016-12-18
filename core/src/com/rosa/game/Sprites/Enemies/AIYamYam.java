@@ -1,13 +1,9 @@
 package com.rosa.game.Sprites.Enemies;
 
-import com.badlogic.gdx.ai.steer.behaviors.RaycastObstacleAvoidance;
-import com.badlogic.gdx.ai.steer.utils.rays.RayConfigurationBase;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
@@ -24,6 +20,7 @@ import com.rosa.game.screens.ScreenPlay;
 public class AIYamYam extends Enemy {
 
     private enum State {FALLING, JUMPING, STANDING, RUNNING}
+
     private State currentState;
     private State previousState;
     private float stateTime;
@@ -42,6 +39,8 @@ public class AIYamYam extends Enemy {
     private TextureRegion yamyamStand;
     private boolean rayTwoNextToWall;
     private boolean chasing;
+    public static boolean playerAtRangeOfFire;
+
 
     public AIYamYam(ScreenPlay screen, float x, float y) {
         super(screen, x, y);
@@ -79,6 +78,7 @@ public class AIYamYam extends Enemy {
 
         enemyFirePowerLasArray = new Array<EnemyBullet>();
         chasing = true;
+        playerAtRangeOfFire = false;
     }
 
     @Override
@@ -97,48 +97,39 @@ public class AIYamYam extends Enemy {
             setRegion(getFrame(dt));
 
             if (!destroyed && b2body.isActive()) {
-
                 //Draw:
                 setPosition(b2body.getPosition().x - getWidth() / 2, (float) (b2body.getPosition().y - getHeight() / 300.0));
                 setRegion(getFrame(dt));
-
-                //TODO: fix chase or not
-                //If you are not chased:
-                if (!chasing) {
-                    chasing = true;
-                }
-
-                //If you are chased behavior:
-                if (chasing) {
-
-                    //RAY_ONE_OUTER (AI movement):
-                    if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x)
-                        b2body.applyLinearImpulse(new Vector2(-0.02f, 0), b2body.getWorldCenter(), true);
-
-                    if (Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x)
-                        b2body.applyLinearImpulse(new Vector2(0.02f, 0), b2body.getWorldCenter(), true);
-                    //Fire bullets:
-                    fire();
-                    for (EnemyBullet enemyFirePowerLas : enemyFirePowerLasArray) {
-                        enemyFirePowerLas.update(dt);
-                        if (enemyFirePowerLas.isDestroyed()) {
-                            enemyFirePowerLasArray.removeValue(enemyFirePowerLas, true);
-                        }
-                    }
-                    //looking at you:
-                    if (b2body.getLinearVelocity().x < 0) {
-                        runningRight = false;
-                    } else if (b2body.getLinearVelocity().x > 0) {
-                        runningRight = true;
-                    }
-                }
+                AIBehavior(dt);
             }
         }
-        if (yamyamHP <= 0 || b2body.getPosition().y < -1) {
+        if (yamyamHP <= 0 || b2body.getPosition().y < -1)
             dead();
-        }
+        System.out.println(playerAtRangeOfFire);
     }
 
+    private void AIBehavior(float dt) {
+        //RAY_JUMP (AI movement):
+        if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x)
+            b2body.applyLinearImpulse(new Vector2(-0.02f, 0), b2body.getWorldCenter(), true);
+
+        if (Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x)
+            b2body.applyLinearImpulse(new Vector2(0.02f, 0), b2body.getWorldCenter(), true);
+        //Fire bullets:
+        fire();
+        for (EnemyBullet enemyFirePowerLas : enemyFirePowerLasArray) {
+            enemyFirePowerLas.update(dt);
+            if (enemyFirePowerLas.isDestroyed()) {
+                enemyFirePowerLasArray.removeValue(enemyFirePowerLas, true);
+            }
+        }
+        //looking at you:
+        if (b2body.getLinearVelocity().x < 0) {
+            runningRight = false;
+        } else if (b2body.getLinearVelocity().x > 0) {
+            runningRight = true;
+        }
+    }
 
     private TextureRegion getFrame(float dt) {
         currentState = getState();
@@ -212,7 +203,7 @@ public class AIYamYam extends Enemy {
         FixtureDef fixtureDefRayOfJump = new FixtureDef();
         CircleShape circleRayOfJump = new CircleShape();
         circleRayOfJump.setRadius(6 / Application.PPM);
-        fixtureDefRayOfJump.filter.categoryBits = Application.RAY_ONE_OUTER;
+        fixtureDefRayOfJump.filter.categoryBits = Application.RAY_JUMP;
 
         fixtureDefRayOfJump.shape = circleRayOfJump;
         fixtureDefRayOfJump.isSensor = true;
@@ -238,7 +229,8 @@ public class AIYamYam extends Enemy {
         FixtureDef fixtureDefRayOfFire = new FixtureDef();
         EdgeShape edgeShapeOfFire = new EdgeShape();
 
-        fixtureDefRayOfFire.filter.categoryBits = Application.REAL_RAYCAST;
+        fixtureDefRayOfFire.filter.categoryBits = Application.RAY_BULLET;
+
         fixtureDefRayOfFire.shape = edgeShapeOfFire;
         fixtureDefRayOfFire.isSensor = true;
 
@@ -248,7 +240,6 @@ public class AIYamYam extends Enemy {
         edgeShapeOfFire.set(new Vector2(0 / Application.PPM, 24 / Application.PPM), new Vector2(-240 / Application.PPM, 24 / Application.PPM));
         b2body.createFixture(fixtureDefRayOfFire).setUserData(this);
     }
-
 
     @Override
     public void hitByEnemy(Enemy enemy) {
@@ -267,7 +258,7 @@ public class AIYamYam extends Enemy {
     }
 
     private void fire() {
-        if (!rayTwoNextToWall) {
+        if (!rayTwoNextToWall && playerAtRangeOfFire) {
             if (System.nanoTime() - lastShot >= FIRE_TIME) {
                 enemyFirePowerLasArray.add(new EnemyBullet(screen, b2body.getPosition().x, (float) (b2body.getPosition().y + 0.2), runningRight));
                 lastShot = System.nanoTime();
@@ -305,5 +296,9 @@ public class AIYamYam extends Enemy {
 
     public void setRayTwoNextToWall(boolean rayTwoNextToWall) {
         this.rayTwoNextToWall = rayTwoNextToWall;
+    }
+
+    public void isPlayerAtRangeOfFire(boolean playerAtRangeOfFire){
+        this.playerAtRangeOfFire = playerAtRangeOfFire;
     }
 }

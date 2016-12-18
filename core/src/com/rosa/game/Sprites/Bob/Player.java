@@ -42,6 +42,7 @@ public class Player extends Sprite {
     public static float bob_health;
     public static float BOB_X_POSITION;
     public static float BOB_Y_POSITION;
+
     private Application game;
 
     public Player(World world, ScreenPlay screen, Application game) {
@@ -160,7 +161,8 @@ public class Player extends Sprite {
                 Application.ENEMY_AI_BIT |
                 Application.WALL_BIT |
                 Application.ITEM_BIT |
-                Application.ENEMY_BULLET_BIT;
+                Application.ENEMY_BULLET_BIT |
+                Application.RAY_BULLET;
         fixtureDef.shape = shape;
         b2body.createFixture(fixtureDef).setUserData(this);
     }

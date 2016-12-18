@@ -131,12 +131,22 @@ public class WorldCollisionListener implements ContactListener {
                     ((Bullet) fixB.getUserData()).setToDestroy();
                 break;
 
-            //RAY_ONE_OUTER:
-            case Application.RAY_ONE_OUTER | Application.WALL_BIT:
-                if (fixA.getFilterData().categoryBits == Application.RAY_ONE_OUTER)
+            //RAY_JUMP:
+            case Application.RAY_JUMP | Application.WALL_BIT:
+                if (fixA.getFilterData().categoryBits == Application.RAY_JUMP)
                     ((AIYamYam) fixA.getUserData()).jump();
                 else
                     ((AIYamYam) fixB.getUserData()).jump();
+                break;
+
+            //RAY_BULLET_FIRE:
+            case Application.RAY_BULLET | Application.BOB_BIT:
+                if (fixA.getFilterData().categoryBits == Application.RAY_BULLET)
+                    ((AIYamYam) fixA.getUserData()).isPlayerAtRangeOfFire(false);
+//                    System.out.println("fire");
+                else
+//                    System.out.println("fire");
+                    ((AIYamYam) fixA.getUserData()).isPlayerAtRangeOfFire(true);
                 break;
 
             //RAY_TWO_INNER:
