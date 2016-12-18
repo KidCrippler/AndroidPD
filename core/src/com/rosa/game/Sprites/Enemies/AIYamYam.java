@@ -1,5 +1,8 @@
 package com.rosa.game.Sprites.Enemies;
 
+import com.badlogic.gdx.ai.steer.utils.Collision;
+import com.badlogic.gdx.ai.steer.utils.Ray;
+import com.badlogic.gdx.ai.steer.utils.RaycastCollisionDetector;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -19,7 +22,17 @@ import com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyBullet;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.ScreenPlay;
 
-public class AIYamYam extends Enemy {
+public class AIYamYam extends Enemy implements RaycastCollisionDetector<Vector2> {
+
+    @Override
+    public boolean collides(Ray<Vector2> ray) {
+        return false;
+    }
+
+    @Override
+    public boolean findCollision(Collision<Vector2> collision, Ray<Vector2> ray) {
+        return false;
+    }
 
     private enum State {FALLING, JUMPING, STANDING, RUNNING}
 
@@ -43,6 +56,8 @@ public class AIYamYam extends Enemy {
     private boolean chasing;
     private static final Vector3 rayFrom = new Vector3();
     private static final Vector3 rayTo = new Vector3();
+
+
 
     public AIYamYam(ScreenPlay screen, float x, float y) {
         super(screen, x, y);
@@ -90,7 +105,6 @@ public class AIYamYam extends Enemy {
             return 0;
         }
     };
-
 
 
     @Override
@@ -146,16 +160,14 @@ public class AIYamYam extends Enemy {
 
 
 
+
                 }
-
-
             }
         }
         if (yamyamHP <= 0 || b2body.getPosition().y < -1) {
             dead();
         }
     }
-
 
 
     private TextureRegion getFrame(float dt) {
@@ -252,15 +264,23 @@ public class AIYamYam extends Enemy {
 //        b2body.createFixture(fixtureDefRayTwo).setUserData(this);
 //        rayShapeTwo.setPosition(new Vector2(-0.2f, 0 / Application.PPM));
 //        b2body.createFixture(fixtureDefRayTwo).setUserData(this);
+        int rayDirection = 240;
+        if (runningRight) {
+            rayDirection =- 240;
+        }
 
-        //Ray Fire:
+
         EdgeShape head = new EdgeShape();
-        head.set(new Vector2(0 / Application.PPM, 24 / Application.PPM), new Vector2(240 / Application.PPM, 24 / Application.PPM));
+        head.set(new Vector2(0 / Application.PPM, 24 / Application.PPM), new Vector2(rayDirection / Application.PPM, 24 / Application.PPM));
+        System.out.println(rayDirection);
+        //Ray Fire:
         fixtureDef.filter.categoryBits = Application.REAL_RAYCAST;
         fixtureDef.shape = head;
         fixtureDef.isSensor = true;
 
         b2body.createFixture(fixtureDef).setUserData(this);
+
+
     }
 
 
