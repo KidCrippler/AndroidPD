@@ -1,19 +1,18 @@
 package com.rosa.game.Sprites.Enemies;
 
-import com.badlogic.gdx.ai.steer.utils.Collision;
-import com.badlogic.gdx.ai.steer.utils.Ray;
-import com.badlogic.gdx.ai.steer.utils.RaycastCollisionDetector;
+import com.badlogic.gdx.ai.steer.behaviors.RaycastObstacleAvoidance;
+import com.badlogic.gdx.ai.steer.utils.rays.RayConfigurationBase;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Bob.Player;
@@ -22,20 +21,9 @@ import com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyBullet;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.ScreenPlay;
 
-public class AIYamYam extends Enemy implements RaycastCollisionDetector<Vector2> {
-
-    @Override
-    public boolean collides(Ray<Vector2> ray) {
-        return false;
-    }
-
-    @Override
-    public boolean findCollision(Collision<Vector2> collision, Ray<Vector2> ray) {
-        return false;
-    }
+public class AIYamYam extends Enemy {
 
     private enum State {FALLING, JUMPING, STANDING, RUNNING}
-
     private State currentState;
     private State previousState;
     private float stateTime;
@@ -54,10 +42,6 @@ public class AIYamYam extends Enemy implements RaycastCollisionDetector<Vector2>
     private TextureRegion yamyamStand;
     private boolean rayTwoNextToWall;
     private boolean chasing;
-    private static final Vector3 rayFrom = new Vector3();
-    private static final Vector3 rayTo = new Vector3();
-
-
 
     public AIYamYam(ScreenPlay screen, float x, float y) {
         super(screen, x, y);
@@ -95,21 +79,11 @@ public class AIYamYam extends Enemy implements RaycastCollisionDetector<Vector2>
 
         enemyFirePowerLasArray = new Array<EnemyBullet>();
         chasing = true;
-
-
     }
-
-    private static RayCastCallback rayCastCallback = new RayCastCallback() {
-        @Override
-        public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
-            return 0;
-        }
-    };
-
 
     @Override
     public void draw(Batch batch) {
-//        super.draw(batch);
+        super.draw(batch);
     }
 
     public void update(float dt) {
@@ -157,10 +131,6 @@ public class AIYamYam extends Enemy implements RaycastCollisionDetector<Vector2>
                     } else if (b2body.getLinearVelocity().x > 0) {
                         runningRight = true;
                     }
-
-
-
-
                 }
             }
         }
@@ -214,7 +184,7 @@ public class AIYamYam extends Enemy implements RaycastCollisionDetector<Vector2>
 
     @Override
     protected void defineEnemy() {
-        FixtureDef fixtureDef = new FixtureDef();
+        FixtureDef fixtureDefOfEnemyBody = new FixtureDef();
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(getX(), getY());
         bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -227,31 +197,30 @@ public class AIYamYam extends Enemy implements RaycastCollisionDetector<Vector2>
         vector2s[3] = new Vector2(4, 1).scl(1 / Application.PPM);
         heads.set(vector2s);
 
-        fixtureDef.shape = heads;
-        fixtureDef.filter.categoryBits = Application.ENEMY_AI_BIT;
-        fixtureDef.filter.maskBits = Application.ENEMY_AI_BIT |
+        fixtureDefOfEnemyBody.shape = heads;
+        fixtureDefOfEnemyBody.filter.categoryBits = Application.ENEMY_AI_BIT;
+        fixtureDefOfEnemyBody.filter.maskBits = Application.ENEMY_AI_BIT |
                 Application.ENEMY_DUMB_BIT |
                 Application.WALL_BIT |
                 Application.BOB_BIT |
                 Application.GROUND_BIT |
                 Application.BULLET_BIT;
 
-        b2body.createFixture(fixtureDef).setUserData(this);
+        b2body.createFixture(fixtureDefOfEnemyBody).setUserData(this);
 
+//      RAYOne - (Outer - Jump):
+        FixtureDef fixtureDefRayOfJump = new FixtureDef();
+        CircleShape circleRayOfJump = new CircleShape();
+        circleRayOfJump.setRadius(6 / Application.PPM);
+        fixtureDefRayOfJump.filter.categoryBits = Application.RAY_ONE_OUTER;
 
-//        RAYOne - (Outer):
-//        FixtureDef fixtureDefRayOne = new FixtureDef();
-//        CircleShape rayShapeOne = new CircleShape();
-//        rayShapeOne.setRadius(6 / Application.PPM);
-//        fixtureDefRayOne.filter.categoryBits = Application.RAY_ONE_OUTER;
-//
-//        fixtureDefRayOne.shape = rayShapeOne;
-//        fixtureDefRayOne.isSensor = true;
-//        rayShapeOne.setPosition(new Vector2(0.5f, 0 / Application.PPM));
-//        b2body.createFixture(fixtureDefRayOne).setUserData(this);
-//        rayShapeOne.setPosition(new Vector2(-0.5f, 0 / Application.PPM));
-//        b2body.createFixture(fixtureDefRayOne).setUserData(this);
-//
+        fixtureDefRayOfJump.shape = circleRayOfJump;
+        fixtureDefRayOfJump.isSensor = true;
+        circleRayOfJump.setPosition(new Vector2(0.5f, 0 / Application.PPM));
+        b2body.createFixture(fixtureDefRayOfJump).setUserData(this);
+        circleRayOfJump.setPosition(new Vector2(-0.5f, 0 / Application.PPM));
+        b2body.createFixture(fixtureDefRayOfJump).setUserData(this);
+
 //        RAYTwo - (Inner):
 //        FixtureDef fixtureDefRayTwo = new FixtureDef();
 //        CircleShape rayShapeTwo = new CircleShape();
@@ -264,23 +233,20 @@ public class AIYamYam extends Enemy implements RaycastCollisionDetector<Vector2>
 //        b2body.createFixture(fixtureDefRayTwo).setUserData(this);
 //        rayShapeTwo.setPosition(new Vector2(-0.2f, 0 / Application.PPM));
 //        b2body.createFixture(fixtureDefRayTwo).setUserData(this);
-        int rayDirection = 240;
-        if (runningRight) {
-            rayDirection =- 240;
-        }
 
-
-        EdgeShape head = new EdgeShape();
-        head.set(new Vector2(0 / Application.PPM, 24 / Application.PPM), new Vector2(rayDirection / Application.PPM, 24 / Application.PPM));
-        System.out.println(rayDirection);
         //Ray Fire:
-        fixtureDef.filter.categoryBits = Application.REAL_RAYCAST;
-        fixtureDef.shape = head;
-        fixtureDef.isSensor = true;
+        FixtureDef fixtureDefRayOfFire = new FixtureDef();
+        EdgeShape edgeShapeOfFire = new EdgeShape();
 
-        b2body.createFixture(fixtureDef).setUserData(this);
+        fixtureDefRayOfFire.filter.categoryBits = Application.REAL_RAYCAST;
+        fixtureDefRayOfFire.shape = edgeShapeOfFire;
+        fixtureDefRayOfFire.isSensor = true;
 
+        edgeShapeOfFire.set(new Vector2(0 / Application.PPM, 24 / Application.PPM), new Vector2(240 / Application.PPM, 24 / Application.PPM));
+        b2body.createFixture(fixtureDefRayOfFire).setUserData(this);
 
+        edgeShapeOfFire.set(new Vector2(0 / Application.PPM, 24 / Application.PPM), new Vector2(-240 / Application.PPM, 24 / Application.PPM));
+        b2body.createFixture(fixtureDefRayOfFire).setUserData(this);
     }
 
 

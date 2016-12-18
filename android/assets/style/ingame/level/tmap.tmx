@@ -38,7 +38,6 @@
   <object id="125" x="352" y="96" width="16" height="16"/>
  </objectgroup>
  <objectgroup name="YamYam">
-  <object id="145" x="144" y="112" width="16" height="16"/>
   <object id="157" x="208" y="48" width="16" height="16"/>
  </objectgroup>
  <objectgroup name="Player">
