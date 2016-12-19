@@ -11,9 +11,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Queue;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Bob.Player;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
@@ -110,7 +108,6 @@ public class AIYamYam extends Enemy {
         }
         if (yamyamHP <= 0 || b2body.getPosition().y < -1)
             dead();
-        System.out.println(playerAtRangeOfFire);
     }
 
     private void AIBehavior(float dt) {
@@ -138,34 +135,28 @@ public class AIYamYam extends Enemy {
             runningRight = true;
         }
 
-//        if (lineOfSight.first().getFilterData().categoryBits == Application.BOB_BIT) {
-//            lineOfSight = new Queue<Fixture>();
-//            fire();
-//        } else {
-//            lineOfSight.clear();
-//        }
+        RayCastCallback callback = new RayCastCallback() {
+            @Override
+            public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
 
-    }
-
-
-    private RayCastCallback callback = new RayCastCallback() {
-        @Override
-        public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 Normal, float fraction) {
-//            collision.set(point);
-//            lineOfSight.addLast(fixture);
-
-            if (fixture.getFilterData().categoryBits != Application.BOB_BIT) {
-                System.out.println("ray hit wall");
-                return fraction;
-            } else if (fixture.getFilterData().categoryBits == Application.BOB_BIT) {
-                System.out.println("player found");
-
-                return fraction;
+                if (fixture.getFilterData().categoryBits == Application.BOB_BIT) {
+                    System.out.println("CAN SEE!");
+                    return 0;
+                }
+                if (fixture.getFilterData().categoryBits == Application.WALL_BIT) {
+                    System.out.println("CAN SEE WALL!");
+                    return 0;
+                }
+                return -1;
             }
+        };
 
-            return 0;
-        }
-    };
+        world.rayCast(callback, b2body.getPosition(), new Vector2(b2body.getPosition().x - 500, b2body.getPosition().y));
+
+
+
+        //DEBUG:
+    }
 
     private TextureRegion getFrame(float dt) {
         currentState = getState();
