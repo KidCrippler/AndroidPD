@@ -7,9 +7,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.RayCastCallback;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Queue;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Bob.Player;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
@@ -40,7 +44,9 @@ public class AIYamYam extends Enemy {
     private boolean rayTwoNextToWall;
     private boolean chasing;
     public static boolean playerAtRangeOfFire;
-
+    private Vector2 startPoint = b2body.getPosition();
+    private Vector2 endPoint = b2body.getPosition();
+    private float fraction;
 
     public AIYamYam(ScreenPlay screen, float x, float y) {
         super(screen, x, y);
@@ -131,7 +137,35 @@ public class AIYamYam extends Enemy {
         } else if (b2body.getLinearVelocity().x > 0) {
             runningRight = true;
         }
+
+//        if (lineOfSight.first().getFilterData().categoryBits == Application.BOB_BIT) {
+//            lineOfSight = new Queue<Fixture>();
+//            fire();
+//        } else {
+//            lineOfSight.clear();
+//        }
+
     }
+
+
+    private RayCastCallback callback = new RayCastCallback() {
+        @Override
+        public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 Normal, float fraction) {
+//            collision.set(point);
+//            lineOfSight.addLast(fixture);
+
+            if (fixture.getFilterData().categoryBits != Application.BOB_BIT) {
+                System.out.println("ray hit wall");
+                return fraction;
+            } else if (fixture.getFilterData().categoryBits == Application.BOB_BIT) {
+                System.out.println("player found");
+
+                return fraction;
+            }
+
+            return 0;
+        }
+    };
 
     private TextureRegion getFrame(float dt) {
         currentState = getState();
