@@ -142,11 +142,9 @@ public class WorldCollisionListener implements ContactListener {
             //RAY_BULLET_FIRE:
             case Application.RAY_BULLET | Application.BOB_BIT:
                 if (fixA.getFilterData().categoryBits == Application.RAY_BULLET)
-                    ((AIYamYam) fixA.getUserData()).isPlayerAtRangeOfFire(false);
-//                    System.out.println("fire");
-                else
-//                    System.out.println("fire");
                     ((AIYamYam) fixA.getUserData()).isPlayerAtRangeOfFire(true);
+                else
+                    ((AIYamYam) fixA.getUserData()).isPlayerAtRangeOfFire(false);
                 break;
 
             //RAY_TWO_INNER:
@@ -173,6 +171,14 @@ public class WorldCollisionListener implements ContactListener {
                     ((AIYamYam) fixA.getUserData()).setRayTwoNextToWall(true);
                 else
                     ((AIYamYam) fixB.getUserData()).setRayTwoNextToWall(false);
+                break;
+
+            //RAY_BULLET_FIRE:
+            case Application.RAY_BULLET | Application.BOB_BIT:
+                if (fixA.getFilterData().categoryBits == Application.RAY_BULLET)
+                    ((AIYamYam) fixA.getUserData()).isPlayerAtRangeOfFire(false);
+                else
+                    ((AIYamYam) fixA.getUserData()).isPlayerAtRangeOfFire(true);
                 break;
         }
     }

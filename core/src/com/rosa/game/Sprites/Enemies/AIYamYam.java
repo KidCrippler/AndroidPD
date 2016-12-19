@@ -30,7 +30,7 @@ public class AIYamYam extends Enemy {
     private int yamyamHP = 100;
     private SoundPlayer playSound = new SoundPlayer();
     private Array<EnemyBullet> enemyFirePowerLasArray;
-    private static final long FIRE_TIME = 2220000000L;
+    private static final long FIRE_TIME = 220000000L;
     private long lastShot;
     private boolean runningRight;
     private float stateTimer;
@@ -78,7 +78,6 @@ public class AIYamYam extends Enemy {
 
         enemyFirePowerLasArray = new Array<EnemyBullet>();
         chasing = true;
-        playerAtRangeOfFire = false;
     }
 
     @Override
@@ -116,7 +115,10 @@ public class AIYamYam extends Enemy {
         if (Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x)
             b2body.applyLinearImpulse(new Vector2(0.02f, 0), b2body.getWorldCenter(), true);
         //Fire bullets:
-        fire();
+        if (!rayTwoNextToWall && playerAtRangeOfFire) {
+            fire();
+        }
+
         for (EnemyBullet enemyFirePowerLas : enemyFirePowerLasArray) {
             enemyFirePowerLas.update(dt);
             if (enemyFirePowerLas.isDestroyed()) {
@@ -199,7 +201,7 @@ public class AIYamYam extends Enemy {
 
         b2body.createFixture(fixtureDefOfEnemyBody).setUserData(this);
 
-//      RAYOne - (Outer - Jump):
+        //RAYOne - (Outer - Jump):
         FixtureDef fixtureDefRayOfJump = new FixtureDef();
         CircleShape circleRayOfJump = new CircleShape();
         circleRayOfJump.setRadius(6 / Application.PPM);
@@ -258,17 +260,15 @@ public class AIYamYam extends Enemy {
     }
 
     private void fire() {
-        if (!rayTwoNextToWall && playerAtRangeOfFire) {
-            if (System.nanoTime() - lastShot >= FIRE_TIME) {
-                enemyFirePowerLasArray.add(new EnemyBullet(screen, b2body.getPosition().x, (float) (b2body.getPosition().y + 0.2), runningRight));
-                lastShot = System.nanoTime();
-                playSound.playSoundRandomYamYamFirePower();
-            }
+        if (System.nanoTime() - lastShot >= FIRE_TIME) {
+            enemyFirePowerLasArray.add(new EnemyBullet(screen, b2body.getPosition().x, (float) (b2body.getPosition().y + 0.2), runningRight));
+            lastShot = System.nanoTime();
+            playSound.playSoundRandomYamYamFirePower();
         }
     }
 
     public void jump() {
-        if (!destroyed && b2body.isActive() && chasing) {
+        if (!destroyed && b2body.isActive()) {
             if (currentState != State.JUMPING) {
                 b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
                 playSound.playSoundBob(0);
@@ -289,7 +289,6 @@ public class AIYamYam extends Enemy {
         setToDestroy();
     }
 
-
     public boolean isDestroyed() {
         return destroyed;
     }
@@ -298,7 +297,7 @@ public class AIYamYam extends Enemy {
         this.rayTwoNextToWall = rayTwoNextToWall;
     }
 
-    public void isPlayerAtRangeOfFire(boolean playerAtRangeOfFire){
+    public void isPlayerAtRangeOfFire(boolean playerAtRangeOfFire) {
         this.playerAtRangeOfFire = playerAtRangeOfFire;
     }
 }
