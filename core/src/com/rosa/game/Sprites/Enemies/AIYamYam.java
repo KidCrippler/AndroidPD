@@ -266,6 +266,24 @@ public class AIYamYam extends Enemy {
 
         edgeShapeOfFire.set(new Vector2(0 / Application.PPM, 24 / Application.PPM), new Vector2(-240 / Application.PPM, 24 / Application.PPM));
         b2body.createFixture(fixtureDefRayOfFire).setUserData(this);
+
+
+
+
+        //Ray Real:
+        FixtureDef FixtureRealRayCast = new FixtureDef();
+        EdgeShape edgeShapeRealRayCast = new EdgeShape();
+
+        FixtureRealRayCast.filter.categoryBits = Application.RAY_BULLET;
+
+        FixtureRealRayCast.shape = edgeShapeRealRayCast;
+        FixtureRealRayCast.isSensor = true;
+
+        edgeShapeRealRayCast.set(new Vector2(0 / Application.PPM, 48 / Application.PPM), new Vector2(100 / Application.PPM, 48 / Application.PPM));
+        b2body.createFixture(FixtureRealRayCast).setUserData(this);
+
+        edgeShapeRealRayCast.set(new Vector2(0 / Application.PPM, 48 / Application.PPM), new Vector2(-100 / Application.PPM, 48 / Application.PPM));
+        b2body.createFixture(FixtureRealRayCast).setUserData(this);
     }
 
     @Override
