@@ -45,6 +45,7 @@ public class AIYamYam extends Enemy {
     private Vector2 startPoint = b2body.getPosition();
     private Vector2 endPoint = b2body.getPosition();
     private float fraction;
+    EdgeShape edgeShapeRealRayCast;
 
     public AIYamYam(ScreenPlay screen, float x, float y) {
         super(screen, x, y);
@@ -56,6 +57,7 @@ public class AIYamYam extends Enemy {
         setToDestroy = false;
         destroyed = false;
         chasing = true;
+
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
@@ -82,6 +84,7 @@ public class AIYamYam extends Enemy {
 
         enemyFirePowerLasArray = new Array<EnemyBullet>();
         chasing = true;
+
     }
 
     @Override
@@ -119,7 +122,7 @@ public class AIYamYam extends Enemy {
             b2body.applyLinearImpulse(new Vector2(0.02f, 0), b2body.getWorldCenter(), true);
         //Fire bullets:
         if (!rayTwoNextToWall && playerAtRangeOfFire) {
-            fire();
+//            fire();
         }
 
         for (EnemyBullet enemyFirePowerLas : enemyFirePowerLasArray) {
@@ -134,6 +137,8 @@ public class AIYamYam extends Enemy {
         } else if (b2body.getLinearVelocity().x > 0) {
             runningRight = true;
         }
+
+
 
         RayCastCallback callback = new RayCastCallback() {
             @Override
@@ -152,9 +157,8 @@ public class AIYamYam extends Enemy {
         };
 
         world.rayCast(callback, b2body.getPosition(), new Vector2(b2body.getPosition().x - 500, b2body.getPosition().y));
+        edgeShapeRealRayCast.set(new Vector2(b2body.getPosition().x, b2body.getPosition().x), new Vector2(b2body.getPosition().x, b2body.getPosition().x ));
 
-
-        //DEBUG:
     }
 
     private TextureRegion getFrame(float dt) {
@@ -260,29 +264,29 @@ public class AIYamYam extends Enemy {
         fixtureDefRayOfFire.shape = edgeShapeOfFire;
         fixtureDefRayOfFire.isSensor = true;
 
-        edgeShapeOfFire.set(new Vector2(0 / Application.PPM, 24 / Application.PPM), new Vector2(240 / Application.PPM, 24 / Application.PPM));
-        b2body.createFixture(fixtureDefRayOfFire).setUserData(this);
-
-        edgeShapeOfFire.set(new Vector2(0 / Application.PPM, 24 / Application.PPM), new Vector2(-240 / Application.PPM, 24 / Application.PPM));
-        b2body.createFixture(fixtureDefRayOfFire).setUserData(this);
-
+//        edgeShapeOfFire.set(new Vector2(0 / Application.PPM, 24 / Application.PPM), new Vector2(240 / Application.PPM, 24 / Application.PPM));
+//        b2body.createFixture(fixtureDefRayOfFire).setUserData(this);
+//
+//        edgeShapeOfFire.set(new Vector2(0 / Application.PPM, 24 / Application.PPM), new Vector2(-240 / Application.PPM, 24 / Application.PPM));
+//        b2body.createFixture(fixtureDefRayOfFire).setUserData(this);
+//
 
 
 
         //Ray Real:
         FixtureDef FixtureRealRayCast = new FixtureDef();
-        EdgeShape edgeShapeRealRayCast = new EdgeShape();
+        edgeShapeRealRayCast = new EdgeShape();
 
         FixtureRealRayCast.filter.categoryBits = Application.RAY_BULLET;
 
         FixtureRealRayCast.shape = edgeShapeRealRayCast;
         FixtureRealRayCast.isSensor = true;
 
-        edgeShapeRealRayCast.set(new Vector2(0 / Application.PPM, 48 / Application.PPM), new Vector2(100 / Application.PPM, 48 / Application.PPM));
+//        edgeShapeRealRayCast.set(new Vector2(b2body.getPosition().x, b2body.getPosition().x), new Vector2(b2body.getPosition().x, b2body.getPosition().x ));
         b2body.createFixture(FixtureRealRayCast).setUserData(this);
 
-        edgeShapeRealRayCast.set(new Vector2(0 / Application.PPM, 48 / Application.PPM), new Vector2(-100 / Application.PPM, 48 / Application.PPM));
-        b2body.createFixture(FixtureRealRayCast).setUserData(this);
+//        edgeShapeRealRayCast.set(new Vector2(0 / Application.PPM, 48 / Application.PPM), new Vector2(-100 / Application.PPM, 48 / Application.PPM));
+//        b2body.createFixture(FixtureRealRayCast).setUserData(this);
     }
 
     @Override
