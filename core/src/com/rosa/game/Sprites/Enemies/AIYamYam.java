@@ -154,7 +154,6 @@ public class AIYamYam extends Enemy {
         world.rayCast(callback, b2body.getPosition(), new Vector2(b2body.getPosition().x - 500, b2body.getPosition().y));
 
 
-
         //DEBUG:
     }
 
