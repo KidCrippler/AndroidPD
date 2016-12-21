@@ -3,6 +3,7 @@ package com.rosa.game.Sprites.Enemies;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -11,6 +12,9 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Bob.Player;
@@ -46,6 +50,8 @@ public class AIYamYam extends Enemy {
     private Vector2 endPoint = b2body.getPosition();
     private float fraction;
     EdgeShape edgeShapeRealRayCast;
+    ShapeRenderer sr = new ShapeRenderer();
+
 
     public AIYamYam(ScreenPlay screen, float x, float y) {
         super(screen, x, y);
@@ -84,7 +90,6 @@ public class AIYamYam extends Enemy {
 
         enemyFirePowerLasArray = new Array<EnemyBullet>();
         chasing = true;
-
     }
 
     @Override
@@ -139,7 +144,6 @@ public class AIYamYam extends Enemy {
         }
 
 
-
         RayCastCallback callback = new RayCastCallback() {
             @Override
             public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
@@ -149,7 +153,7 @@ public class AIYamYam extends Enemy {
                     return 0;
                 }
                 if (fixture.getFilterData().categoryBits == Application.WALL_BIT) {
-                    System.out.println("CAN SEE WALL!");
+//                    System.out.println("CAN SEE WALL!");
                     return 0;
                 }
                 return -1;
@@ -157,7 +161,6 @@ public class AIYamYam extends Enemy {
         };
 
         world.rayCast(callback, b2body.getPosition(), new Vector2(b2body.getPosition().x - 500, b2body.getPosition().y));
-
     }
 
     private TextureRegion getFrame(float dt) {
@@ -271,7 +274,6 @@ public class AIYamYam extends Enemy {
 //
 
 
-
         //Ray Real:
         FixtureDef FixtureRealRayCast = new FixtureDef();
         edgeShapeRealRayCast = new EdgeShape();
@@ -281,11 +283,7 @@ public class AIYamYam extends Enemy {
         FixtureRealRayCast.shape = edgeShapeRealRayCast;
         FixtureRealRayCast.isSensor = true;
 
-//        edgeShapeRealRayCast.set(new Vector2(b2body.getPosition().x, b2body.getPosition().x), new Vector2(b2body.getPosition().x, b2body.getPosition().x ));
-        b2body.createFixture(FixtureRealRayCast).setUserData(this);
-
-//        edgeShapeRealRayCast.set(new Vector2(0 / Application.PPM, 48 / Application.PPM), new Vector2(-100 / Application.PPM, 48 / Application.PPM));
-        edgeShapeRealRayCast.set(new Vector2(b2body.getPosition().x, b2body.getPosition().x), new Vector2(b2body.getPosition().x, b2body.getPosition().x ));
+//        world.rayCast(callback, b2body.getPosition(), new Vector2(b2body.getPosition().x - 500, b2body.getPosition().y));
 
         b2body.createFixture(FixtureRealRayCast).setUserData(this);
     }
@@ -323,9 +321,6 @@ public class AIYamYam extends Enemy {
             }
         }
     }
-
-
-
 
 
     public void takeShot(int bulletPower) {
