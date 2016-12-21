@@ -323,6 +323,10 @@ public class AIYamYam extends Enemy {
         }
     }
 
+
+
+
+
     public void takeShot(int bulletPower) {
         yamyamHP = yamyamHP - bulletPower;
         System.out.println("YamYam HP= " + yamyamHP);
