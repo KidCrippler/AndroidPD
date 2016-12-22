@@ -46,8 +46,10 @@ public class AIYamYam extends Enemy {
     private Vector2 startPoint = b2body.getPosition();
     private Vector2 endPoint = b2body.getPosition();
     private float fraction;
-    EdgeShape edgeShapeRealRayCast;
     ShapeRenderer sr = new ShapeRenderer();
+
+    FixtureDef FixtureRealRayCast = new FixtureDef();
+    EdgeShape edgeShapeRealRayCast = new EdgeShape();
 
 
     public AIYamYam(ScreenPlay screen, float x, float y) {
@@ -109,6 +111,7 @@ public class AIYamYam extends Enemy {
                 setPosition(b2body.getPosition().x - getWidth() / 2, (float) (b2body.getPosition().y - getHeight() / 300.0));
                 setRegion(getFrame(dt));
                 AIBehavior(dt);
+                rayUpdate();
             }
         }
         if (yamyamHP <= 0 || b2body.getPosition().y < -1)
@@ -156,8 +159,12 @@ public class AIYamYam extends Enemy {
                 return -1;
             }
         };
+//        world.rayCast(callback, b2body.getPosition(), new Vector2(b2body.getPosition().x - 500, b2body.getPosition().y));
 
-        world.rayCast(callback, b2body.getPosition(), new Vector2(b2body.getPosition().x - 500, b2body.getPosition().y));
+
+//        edgeShapeRealRayCast.set(new Vector2(0 / Application.PPM, 24 / Application.PPM), new Vector2(-240 / Application.PPM, 24 / Application.PPM));
+
+
     }
 
     private TextureRegion getFrame(float dt) {
@@ -271,18 +278,43 @@ public class AIYamYam extends Enemy {
 //
 
 
+    }
+
+    private void rayUpdate(){
+        Vector2 end = new Vector2(b2body.getPosition().x - 2, b2body.getPosition().y);
+        Vector2 start = new Vector2(b2body.getPosition());
+
+        RayCastCallback callback = new RayCastCallback() {
+            @Override
+            public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
+
+                if (fixture.getFilterData().categoryBits == Application.BOB_BIT) {
+                    System.out.println("CAN SEE!");
+                    fire();
+                    return 0;
+                }
+                if (fixture.getFilterData().categoryBits == Application.WALL_BIT) {
+//                    System.out.println("CAN SEE WALL!");
+                    return 0;
+                }
+                return -1;
+            }
+        };
+
         //Ray Real:
-        FixtureDef FixtureRealRayCast = new FixtureDef();
-        edgeShapeRealRayCast = new EdgeShape();
+
 
         FixtureRealRayCast.filter.categoryBits = Application.RAY_BULLET;
 
         FixtureRealRayCast.shape = edgeShapeRealRayCast;
         FixtureRealRayCast.isSensor = true;
 
-//        world.rayCast(callback, b2body.getPosition(), new Vector2(b2body.getPosition().x - 500, b2body.getPosition().y));
+        world.rayCast(callback, start, end);
+        edgeShapeRealRayCast.set(start, end);
 
         b2body.createFixture(FixtureRealRayCast).setUserData(this);
+        edgeShapeRealRayCast.dispose();
+
     }
 
     @Override
