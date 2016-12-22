@@ -12,9 +12,6 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Bob.Player;
@@ -69,7 +66,7 @@ public class AIYamYam extends Enemy {
 
         for (int i = 1; i < 5; i++)
             frames.add(new TextureRegion(screen.getAtlas().findRegion("keen"), i * 23, 0, 23, 32));
-        yamyamRun = new Animation(0.1f, frames);
+        yamyamRun = new Animation(0.25f, frames);
         frames.clear();
 
         for (int i = 4; i < 7; i++)
@@ -121,10 +118,10 @@ public class AIYamYam extends Enemy {
     private void AIBehavior(float dt) {
         //RAY_JUMP (AI movement):
         if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x)
-            b2body.applyLinearImpulse(new Vector2(-0.02f, 0), b2body.getWorldCenter(), true);
+            b2body.applyLinearImpulse(new Vector2(-0.03f, 0), b2body.getWorldCenter(), true);
 
         if (Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x)
-            b2body.applyLinearImpulse(new Vector2(0.02f, 0), b2body.getWorldCenter(), true);
+            b2body.applyLinearImpulse(new Vector2(0.03f, 0), b2body.getWorldCenter(), true);
         //Fire bullets:
         if (!rayTwoNextToWall && playerAtRangeOfFire) {
 //            fire();
