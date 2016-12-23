@@ -1,5 +1,6 @@
 package com.rosa.game.Sprites.Enemies;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -46,7 +47,7 @@ public class AIYamYam extends Enemy {
     private Vector2 startPoint = b2body.getPosition();
     private Vector2 endPoint = b2body.getPosition();
     private float fraction;
-    ShapeRenderer sr = new ShapeRenderer();
+    ShapeRenderer shapeRenderer = new ShapeRenderer();
 
     FixtureDef FixtureRealRayCast = new FixtureDef();
     EdgeShape edgeShapeRealRayCast = new EdgeShape();
@@ -94,6 +95,11 @@ public class AIYamYam extends Enemy {
     @Override
     public void draw(Batch batch) {
         super.draw(batch);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(0, 1, 0, 1);
+        shapeRenderer.line(1,1,1,1);
+        shapeRenderer.end();
+        shapeRenderer.dispose();
     }
 
     public void update(float dt) {
@@ -313,8 +319,6 @@ public class AIYamYam extends Enemy {
         edgeShapeRealRayCast.set(start, end);
 
         b2body.createFixture(FixtureRealRayCast).setUserData(this);
-        edgeShapeRealRayCast.dispose();
-
     }
 
     @Override
