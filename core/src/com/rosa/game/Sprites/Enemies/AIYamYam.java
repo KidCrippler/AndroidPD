@@ -95,12 +95,13 @@ public class AIYamYam extends Enemy {
     @Override
     public void draw(Batch batch) {
         super.draw(batch);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(0, 1, 0, 1);
+        /*shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.circle(3,3,3);
         shapeRenderer.line(1,1,1,1);
-        shapeRenderer.end();
-        shapeRenderer.dispose();
+        shapeRenderer.setColor(Color.RED);
+        shapeRenderer.end();*/
     }
+
 
     public void update(float dt) {
         stateTime += dt;
@@ -117,7 +118,7 @@ public class AIYamYam extends Enemy {
                 setPosition(b2body.getPosition().x - getWidth() / 2, (float) (b2body.getPosition().y - getHeight() / 300.0));
                 setRegion(getFrame(dt));
                 AIBehavior(dt);
-                rayUpdate();
+//                rayUpdate();
             }
         }
         if (yamyamHP <= 0 || b2body.getPosition().y < -1)

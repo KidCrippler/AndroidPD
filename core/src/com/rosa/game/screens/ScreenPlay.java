@@ -3,9 +3,11 @@ package com.rosa.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -36,6 +38,7 @@ public class ScreenPlay implements Screen {
     private World world;
     private Box2DDebugRenderer b2dr;
     private BoxWorldCreator creator;
+    private ShapeRenderer shapeRenderer;
 
     public ScreenPlay(Application game) {
         ScreenGame.FRAME_GAME_STATE = ScreenGame.GAME_RUNNING;
@@ -55,6 +58,7 @@ public class ScreenPlay implements Screen {
         player = new Player(world, this, game);
         world.setContactListener(new WorldCollisionListener());
         controller = new Controller();
+        shapeRenderer = new ShapeRenderer();
     }
 
     public void handleInputController() {
@@ -115,6 +119,9 @@ public class ScreenPlay implements Screen {
         }
 
         orthographicCamera.update();
+
+
+
         renderer.setView(orthographicCamera);
     }
 
@@ -123,6 +130,46 @@ public class ScreenPlay implements Screen {
     public void render(float dt) {
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+//////////
+/////
+/////
+/////
+
+
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setProjectionMatrix(orthographicCamera.combined);
+        shapeRenderer.setProjectionMatrix(game.batch.getProjectionMatrix());
+        shapeRenderer.circle(Player.BOB_X_POSITION,Player.BOB_Y_POSITION,1);
+        shapeRenderer.setColor(Color.RED);
+        shapeRenderer.line(1,1,1,1);
+        shapeRenderer.line(player.getX(),player.getY(),player.getX(),player.getY());
+        shapeRenderer.setColor(Color.RED);
+        shapeRenderer.end();
+
+        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glEnable(GL20.GL_BLEND);
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+        Gdx.gl.glDisable(GL20.GL_BLEND);
+
+        shapeRenderer.setColor(Color.RED);
+        shapeRenderer.end();
+
+//////////
+/////
+/////
+/////
+//////////
+/////
+/////
+/////
+//////////
+/////
+/////
+/////
+
+
         renderer.render();
         //debug line:
         b2dr.render(world, orthographicCamera.combined);
@@ -135,6 +182,14 @@ public class ScreenPlay implements Screen {
         hud.show();
         game.batch.end();
         controller.draw();
+
+
+
+
+
+
+
+
 
         if (ScreenGame.FRAME_GAME_STATE == ScreenGame.GAME_RUNNING) {
             update(dt);
@@ -190,5 +245,9 @@ public class ScreenPlay implements Screen {
 
     public TextureAtlas getAtlas() {
         return atlas;
+    }
+
+    public OrthographicCamera getOrthographicCamera(){
+        return orthographicCamera;
     }
 }
