@@ -95,11 +95,13 @@ public class AIYamYam extends Enemy {
     @Override
     public void draw(Batch batch) {
         super.draw(batch);
-        /*shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.circle(3,3,3);
-        shapeRenderer.line(1,1,1,1);
+        //////////
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
+        shapeRenderer.line(Player.BOB_X_POSITION,Player.BOB_Y_POSITION,1f,1f);
         shapeRenderer.setColor(Color.RED);
-        shapeRenderer.end();*/
+        shapeRenderer.end();
+        //////////
     }
 
 

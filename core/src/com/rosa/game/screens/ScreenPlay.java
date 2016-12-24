@@ -17,6 +17,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rosa.game.Application;
+import com.rosa.game.Sprites.Enemies.AIYamYam;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
 import com.rosa.game.Sprites.Bob.Player;
 import com.rosa.game.Tools.BoxWorldCreator;
@@ -130,46 +131,6 @@ public class ScreenPlay implements Screen {
     public void render(float dt) {
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-//////////
-/////
-/////
-/////
-
-
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setProjectionMatrix(orthographicCamera.combined);
-        shapeRenderer.setProjectionMatrix(game.batch.getProjectionMatrix());
-        shapeRenderer.circle(Player.BOB_X_POSITION,Player.BOB_Y_POSITION,1);
-        shapeRenderer.setColor(Color.RED);
-        shapeRenderer.line(1,1,1,1);
-        shapeRenderer.line(player.getX(),player.getY(),player.getX(),player.getY());
-        shapeRenderer.setColor(Color.RED);
-        shapeRenderer.end();
-
-        Gdx.gl.glClearColor(1, 1, 1, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        Gdx.gl.glEnable(GL20.GL_BLEND);
-        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-        Gdx.gl.glDisable(GL20.GL_BLEND);
-
-        shapeRenderer.setColor(Color.RED);
-        shapeRenderer.end();
-
-//////////
-/////
-/////
-/////
-//////////
-/////
-/////
-/////
-//////////
-/////
-/////
-/////
-
-
         renderer.render();
         //debug line:
         b2dr.render(world, orthographicCamera.combined);
@@ -182,14 +143,6 @@ public class ScreenPlay implements Screen {
         hud.show();
         game.batch.end();
         controller.draw();
-
-
-
-
-
-
-
-
 
         if (ScreenGame.FRAME_GAME_STATE == ScreenGame.GAME_RUNNING) {
             update(dt);
