@@ -33,7 +33,7 @@ public class AIYamYam extends Enemy {
     private int yamyamHP = 100;
     private SoundPlayer playSound = new SoundPlayer();
     private Array<EnemyBullet> enemyFirePowerLasArray;
-    private static final long FIRE_TIME = 220000000L;
+    private static final long FIRE_TIME = 2220000000L;
     private long lastShot;
     private boolean runningRight;
     private float stateTimer;
@@ -93,7 +93,7 @@ public class AIYamYam extends Enemy {
         shapeRenderer.line(collision, normal);
         shapeRenderer.setColor(Color.GREEN);
 
-        shapeRenderer.line(p1, new Vector2(fractionp, p2.y + 0.5f));
+        shapeRenderer.line(new Vector2(p1.x,p1.y + 0.01f), new Vector2(fractionp, p2.y + 0.01f));
         shapeRenderer.line(collision, normal);
         shapeRenderer.setColor(Color.RED);
         shapeRenderer.end();
@@ -109,7 +109,6 @@ public class AIYamYam extends Enemy {
             setRegion(getFrame(dt));
 
             if (!destroyed && b2body.isActive()) {
-                //Draw:
                 setPosition(b2body.getPosition().x - getWidth() / 2, (float) (b2body.getPosition().y - getHeight() / 300.0));
                 setRegion(getFrame(dt));
                 AIBehavior(dt);
@@ -120,7 +119,6 @@ public class AIYamYam extends Enemy {
     }
 
     private void AIBehavior(float dt) {
-        //RAY_JUMP (AI movement):
         if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x)
             b2body.applyLinearImpulse(new Vector2(-0.03f, 0), b2body.getWorldCenter(), true);
 
@@ -139,16 +137,15 @@ public class AIYamYam extends Enemy {
         if (b2body.getLinearVelocity().x < 0) {
             runningRight = false;
             rayCastDirection = -2f;
-            fractionp = -fractionp - fractionp;
+            fractionp = fractionp -1 ;
         } else if (b2body.getLinearVelocity().x > 0) {
             runningRight = true;
             rayCastDirection = 2f;
-            fractionp = fractionp;
+            fractionp = -fractionp - fractionp ;
         }
         //RayCast:
         p1.set(b2body.getPosition().x, b2body.getPosition().y + 0.2f);
         p2.set(b2body.getPosition().x + rayCastDirection, b2body.getPosition().y + 0.2f);
-
 
         RayCastCallback callback = new RayCastCallback() {
             @Override
