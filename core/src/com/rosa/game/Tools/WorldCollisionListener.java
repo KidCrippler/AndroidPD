@@ -46,7 +46,6 @@ public class WorldCollisionListener implements ContactListener {
                 break;
 
 
-
             //Enemy Ai
             case Application.ENEMY_AI_BIT | Application.ENEMY_AI_BIT:
                 ((Enemy) fixA.getUserData()).hitByEnemy((Enemy) fixB.getUserData());
@@ -146,14 +145,6 @@ public class WorldCollisionListener implements ContactListener {
                 else
                     ((AIYamYam) fixA.getUserData()).isPlayerAtRangeOfFire(false);
                 break;
-
-            //RAY_TWO_INNER:
-            case Application.RAY_TWO_INNER | Application.WALL_BIT:
-                if (fixA.getFilterData().categoryBits == Application.RAY_TWO_INNER)
-                    ((AIYamYam) fixA.getUserData()).setRayTwoNextToWall(false);
-                else
-                    ((AIYamYam) fixB.getUserData()).setRayTwoNextToWall(true);
-                break;
         }
     }
 
@@ -165,13 +156,6 @@ public class WorldCollisionListener implements ContactListener {
         int cDef = fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
 
         switch (cDef) {
-            //RAY_TWO_INNER:
-            case Application.RAY_TWO_INNER | Application.WALL_BIT:
-                if (fixA.getFilterData().categoryBits == Application.RAY_TWO_INNER)
-                    ((AIYamYam) fixA.getUserData()).setRayTwoNextToWall(true);
-                else
-                    ((AIYamYam) fixB.getUserData()).setRayTwoNextToWall(false);
-                break;
 
             //RAY_BULLET_FIRE:
             case Application.RAY_BULLET | Application.BOB_BIT:

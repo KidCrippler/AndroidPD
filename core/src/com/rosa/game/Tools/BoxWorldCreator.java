@@ -59,8 +59,7 @@ public class BoxWorldCreator {
                     Application.ENEMY_DUMB_BIT |
                     Application.BULLET_BIT |
                     Application.ENEMY_BULLET_BIT |
-                    Application.RAY_JUMP |
-                    Application.RAY_TWO_INNER;
+                    Application.RAY_JUMP;
             body.createFixture(fixtureDef);
         }
 
@@ -107,7 +106,7 @@ public class BoxWorldCreator {
         }
     }
 
-    public void draw(Batch batch){
+    public void draw(Batch batch) {
         //draw yamYams
         for (AIYamYam yam : yamYams) {
             yam.draw(batch);

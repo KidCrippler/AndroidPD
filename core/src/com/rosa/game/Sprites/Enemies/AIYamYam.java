@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -28,8 +27,7 @@ public class AIYamYam extends Enemy {
 
     private State currentState;
     private State previousState;
-    private float stateTime;
-    private Animation walkAnimation;
+    //    private Animation walkAnimation;
     private boolean setToDestroy;
     private boolean destroyed;
     private int yamyamHP = 100;
@@ -42,18 +40,11 @@ public class AIYamYam extends Enemy {
     private Animation yamyamRun;
     private Animation yamyamJump;
     private TextureRegion yamyamStand;
-    private boolean rayTwoNextToWall;
-    private boolean chasing;
     public static boolean playerAtRangeOfFire;
-    private static Vector2 startPoint;
-    private static Vector2 endPoint;
-    private float fraction;
     ShapeRenderer shapeRenderer = new ShapeRenderer();
-
-    FixtureDef FixtureRealRayCast = new FixtureDef();
-    EdgeShape edgeShapeRealRayCast = new EdgeShape();
     Vector2 p1 = new Vector2();
     Vector2 p2 = new Vector2();
+    float fractionp;
     Vector2 collision = new Vector2();
     Vector2 normal = new Vector2();
 
@@ -64,11 +55,8 @@ public class AIYamYam extends Enemy {
         previousState = State.STANDING;
         stateTimer = 0;
         runningRight = true;
-        stateTime = 0;
         setToDestroy = false;
         destroyed = false;
-        chasing = true;
-
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
@@ -88,47 +76,35 @@ public class AIYamYam extends Enemy {
             frames.add(new TextureRegion(screen.getAtlas().findRegion("keen"), i * 32, 0, 32, 32));
 
 
-        walkAnimation = new Animation(0.1f, frames);
+//        walkAnimation = new Animation(0.1f, frames);
 
         setBounds(0, 0, 23 / Application.PPM, 32 / Application.PPM);
         setRegion(yamyamStand);
 
         enemyFirePowerLasArray = new Array<EnemyBullet>();
-        chasing = true;
-        startPoint = b2body.getPosition();
-        endPoint = b2body.getPosition();
     }
 
     @Override
     public void draw(Batch batch) {
         super.draw(batch);
-//        //////////
-//        shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
-//        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-//        shapeRenderer.line(startPoint,endPoint);
-//        shapeRenderer.setColor(Color.RED);
-//        shapeRenderer.end();
-//        //////////
-
-//        //////////
         shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
         shapeRenderer.begin(ShapeType.Line);
         shapeRenderer.line(p1, p2);
         shapeRenderer.line(collision, normal);
+        shapeRenderer.setColor(Color.GREEN);
+
+        shapeRenderer.line(p1, new Vector2(fractionp, p2.y + 0.5f));
+        shapeRenderer.line(collision, normal);
+        shapeRenderer.setColor(Color.RED);
         shapeRenderer.end();
-//        //////////
-
-
     }
 
 
     public void update(float dt) {
-        stateTime += dt;
         if (setToDestroy && !destroyed) {
             world.destroyBody(b2body);
             destroyed = true;
             setRegion(new TextureRegion(screen.getAtlas().findRegion("keen"), 11, 0, 22, 12));
-            stateTime = 0;
         } else {
             setRegion(getFrame(dt));
 
@@ -137,9 +113,6 @@ public class AIYamYam extends Enemy {
                 setPosition(b2body.getPosition().x - getWidth() / 2, (float) (b2body.getPosition().y - getHeight() / 300.0));
                 setRegion(getFrame(dt));
                 AIBehavior(dt);
-//                rayUpdate();
-
-
             }
         }
         if (yamyamHP <= 0 || b2body.getPosition().y < -1)
@@ -153,11 +126,6 @@ public class AIYamYam extends Enemy {
 
         if (Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x)
             b2body.applyLinearImpulse(new Vector2(0.03f, 0), b2body.getWorldCenter(), true);
-        //Fire bullets:
-
-//        if (!rayTwoNextToWall && playerAtRangeOfFire) {
-//            fire();
-//        }
 
         for (EnemyBullet enemyFirePowerLas : enemyFirePowerLasArray) {
             enemyFirePowerLas.update(dt);
@@ -171,9 +139,11 @@ public class AIYamYam extends Enemy {
         if (b2body.getLinearVelocity().x < 0) {
             runningRight = false;
             rayCastDirection = -2f;
+            fractionp = -fractionp - fractionp;
         } else if (b2body.getLinearVelocity().x > 0) {
             runningRight = true;
             rayCastDirection = 2f;
+            fractionp = fractionp;
         }
         //RayCast:
         p1.set(b2body.getPosition().x, b2body.getPosition().y + 0.2f);
@@ -185,14 +155,15 @@ public class AIYamYam extends Enemy {
             public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
 
                 if (fixture.getFilterData().categoryBits == Application.BOB_BIT) {
-                    System.out.println("CAN SEE!");
+                    System.out.println("CAN SEE!" + fractionp);
                     fire();
                     return 0;
                 }
                 if (fixture.getFilterData().categoryBits == Application.WALL_BIT) {
-                    System.out.println("CAN SEE WALL!");
+                    System.out.println("CAN SEE WALL!" + fractionp);
                     return 0;
                 }
+                fractionp = fraction;
                 return -1;
             }
         };
@@ -279,72 +250,6 @@ public class AIYamYam extends Enemy {
         b2body.createFixture(fixtureDefRayOfJump).setUserData(this);
         circleRayOfJump.setPosition(new Vector2(-0.5f, 0 / Application.PPM));
         b2body.createFixture(fixtureDefRayOfJump).setUserData(this);
-
-//        RAYTwo - (Inner):
-//        FixtureDef fixtureDefRayTwo = new FixtureDef();
-//        CircleShape rayShapeTwo = new CircleShape();
-//        rayShapeTwo.setRadius(6 / Application.PPM);
-//        fixtureDefRayTwo.filter.categoryBits = Application.RAY_TWO_INNER;
-//
-//        fixtureDefRayTwo.shape = rayShapeTwo;
-//        fixtureDefRayTwo.isSensor = true;
-//        rayShapeTwo.setPosition(new Vector2(0.2f, 0 / Application.PPM));
-//        b2body.createFixture(fixtureDefRayTwo).setUserData(this);
-//        rayShapeTwo.setPosition(new Vector2(-0.2f, 0 / Application.PPM));
-//        b2body.createFixture(fixtureDefRayTwo).setUserData(this);
-
-        //Ray Fire:
-        FixtureDef fixtureDefRayOfFire = new FixtureDef();
-        EdgeShape edgeShapeOfFire = new EdgeShape();
-
-        fixtureDefRayOfFire.filter.categoryBits = Application.RAY_BULLET;
-
-        fixtureDefRayOfFire.shape = edgeShapeOfFire;
-        fixtureDefRayOfFire.isSensor = true;
-
-//        edgeShapeOfFire.set(new Vector2(0 / Application.PPM, 24 / Application.PPM), new Vector2(240 / Application.PPM, 24 / Application.PPM));
-//        b2body.createFixture(fixtureDefRayOfFire).setUserData(this);
-//
-//        edgeShapeOfFire.set(new Vector2(0 / Application.PPM, 24 / Application.PPM), new Vector2(-240 / Application.PPM, 24 / Application.PPM));
-//        b2body.createFixture(fixtureDefRayOfFire).setUserData(this);
-//
-
-
-    }
-
-    private void rayUpdate() {
-        Vector2 end = new Vector2(b2body.getPosition().x - 2, b2body.getPosition().y);
-        Vector2 start = new Vector2(b2body.getPosition());
-
-        RayCastCallback callback = new RayCastCallback() {
-            @Override
-            public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
-
-                if (fixture.getFilterData().categoryBits == Application.BOB_BIT) {
-                    System.out.println("CAN SEE!");
-                    fire();
-                    return 0;
-                }
-                if (fixture.getFilterData().categoryBits == Application.WALL_BIT) {
-//                    System.out.println("CAN SEE WALL!");
-                    return 0;
-                }
-                return -1;
-            }
-        };
-
-        //Ray Real:
-
-
-        FixtureRealRayCast.filter.categoryBits = Application.RAY_BULLET;
-
-        FixtureRealRayCast.shape = edgeShapeRealRayCast;
-        FixtureRealRayCast.isSensor = true;
-
-        world.rayCast(callback, start, end);
-        edgeShapeRealRayCast.set(start, end);
-
-        b2body.createFixture(FixtureRealRayCast).setUserData(this);
     }
 
     @Override
@@ -396,10 +301,6 @@ public class AIYamYam extends Enemy {
 
     public boolean isDestroyed() {
         return destroyed;
-    }
-
-    public void setRayTwoNextToWall(boolean rayTwoNextToWall) {
-        this.rayTwoNextToWall = rayTwoNextToWall;
     }
 
     public void isPlayerAtRangeOfFire(boolean playerAtRangeOfFire) {

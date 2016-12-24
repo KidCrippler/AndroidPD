@@ -215,19 +215,6 @@ public class AiTiw extends Enemy {
         b2body.createFixture(fixtureDefRayOne).setUserData(this);
         rayShapeOne.setPosition(new Vector2(-0.5f, 0 / Application.PPM));
         b2body.createFixture(fixtureDefRayOne).setUserData(this);
-
-        //RAYTwo - (Inner):
-        FixtureDef fixtureDefRayTwo = new FixtureDef();
-        CircleShape rayShapeTwo = new CircleShape();
-        rayShapeTwo.setRadius(6 / Application.PPM);
-        fixtureDefRayTwo.filter.categoryBits = Application.RAY_TWO_INNER;
-
-        fixtureDefRayTwo.shape = rayShapeTwo;
-        fixtureDefRayTwo.isSensor = true;
-        rayShapeTwo.setPosition(new Vector2(0.2f, 0 / Application.PPM));
-        b2body.createFixture(fixtureDefRayTwo).setUserData(this);
-        rayShapeTwo.setPosition(new Vector2(-0.2f, 0 / Application.PPM));
-        b2body.createFixture(fixtureDefRayTwo).setUserData(this);
     }
 
     public void draw(Batch batch) {
