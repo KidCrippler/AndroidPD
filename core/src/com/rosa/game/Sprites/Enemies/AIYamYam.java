@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Bob.Player;
@@ -44,13 +45,17 @@ public class AIYamYam extends Enemy {
     private boolean rayTwoNextToWall;
     private boolean chasing;
     public static boolean playerAtRangeOfFire;
-    private Vector2 startPoint = b2body.getPosition();
-    private Vector2 endPoint = b2body.getPosition();
+    private static Vector2 startPoint;
+    private static Vector2 endPoint;
     private float fraction;
     ShapeRenderer shapeRenderer = new ShapeRenderer();
 
     FixtureDef FixtureRealRayCast = new FixtureDef();
     EdgeShape edgeShapeRealRayCast = new EdgeShape();
+    Vector2 p1 = new Vector2();
+    Vector2 p2 = new Vector2();
+    Vector2 collision = new Vector2();
+    Vector2 normal = new Vector2();
 
 
     public AIYamYam(ScreenPlay screen, float x, float y) {
@@ -90,18 +95,30 @@ public class AIYamYam extends Enemy {
 
         enemyFirePowerLasArray = new Array<EnemyBullet>();
         chasing = true;
+        startPoint = b2body.getPosition();
+        endPoint = b2body.getPosition();
     }
 
     @Override
     public void draw(Batch batch) {
         super.draw(batch);
-        //////////
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+//        //////////
+//        shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
+//        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+//        shapeRenderer.line(startPoint,endPoint);
+//        shapeRenderer.setColor(Color.RED);
+//        shapeRenderer.end();
+//        //////////
+
+//        //////////
         shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
-        shapeRenderer.line(Player.BOB_X_POSITION,Player.BOB_Y_POSITION,1f,1f);
-        shapeRenderer.setColor(Color.RED);
+        shapeRenderer.begin(ShapeType.Line);
+        shapeRenderer.line(p1, p2);
+        shapeRenderer.line(collision, normal);
         shapeRenderer.end();
-        //////////
+//        //////////
+
+
     }
 
 
@@ -121,6 +138,8 @@ public class AIYamYam extends Enemy {
                 setRegion(getFrame(dt));
                 AIBehavior(dt);
 //                rayUpdate();
+
+
             }
         }
         if (yamyamHP <= 0 || b2body.getPosition().y < -1)
@@ -152,6 +171,9 @@ public class AIYamYam extends Enemy {
             runningRight = true;
         }
 
+        p1.set(b2body.getPosition().x, b2body.getPosition().y );
+        p2.set(b2body.getPosition().x - 500, b2body.getPosition().y);
+
 
         RayCastCallback callback = new RayCastCallback() {
             @Override
@@ -162,18 +184,13 @@ public class AIYamYam extends Enemy {
                     return 0;
                 }
                 if (fixture.getFilterData().categoryBits == Application.WALL_BIT) {
-//                    System.out.println("CAN SEE WALL!");
+                    System.out.println("CAN SEE WALL!");
                     return 0;
                 }
                 return -1;
             }
         };
-//        world.rayCast(callback, b2body.getPosition(), new Vector2(b2body.getPosition().x - 500, b2body.getPosition().y));
-
-
-//        edgeShapeRealRayCast.set(new Vector2(0 / Application.PPM, 24 / Application.PPM), new Vector2(-240 / Application.PPM, 24 / Application.PPM));
-
-
+        world.rayCast(callback,p1,p2);
     }
 
     private TextureRegion getFrame(float dt) {
@@ -289,7 +306,7 @@ public class AIYamYam extends Enemy {
 
     }
 
-    private void rayUpdate(){
+    private void rayUpdate() {
         Vector2 end = new Vector2(b2body.getPosition().x - 2, b2body.getPosition().y);
         Vector2 start = new Vector2(b2body.getPosition());
 
