@@ -154,9 +154,10 @@ public class AIYamYam extends Enemy {
         if (Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x)
             b2body.applyLinearImpulse(new Vector2(0.03f, 0), b2body.getWorldCenter(), true);
         //Fire bullets:
-        if (!rayTwoNextToWall && playerAtRangeOfFire) {
+
+//        if (!rayTwoNextToWall && playerAtRangeOfFire) {
 //            fire();
-        }
+//        }
 
         for (EnemyBullet enemyFirePowerLas : enemyFirePowerLasArray) {
             enemyFirePowerLas.update(dt);
@@ -164,15 +165,19 @@ public class AIYamYam extends Enemy {
                 enemyFirePowerLasArray.removeValue(enemyFirePowerLas, true);
             }
         }
+
+        float rayCastDirection = -2;
         //looking at you:
         if (b2body.getLinearVelocity().x < 0) {
             runningRight = false;
+            rayCastDirection = -2f;
         } else if (b2body.getLinearVelocity().x > 0) {
             runningRight = true;
+            rayCastDirection = 2f;
         }
-
-        p1.set(b2body.getPosition().x, b2body.getPosition().y );
-        p2.set(b2body.getPosition().x - 500, b2body.getPosition().y);
+        //RayCast:
+        p1.set(b2body.getPosition().x, b2body.getPosition().y + 0.2f);
+        p2.set(b2body.getPosition().x + rayCastDirection, b2body.getPosition().y + 0.2f);
 
 
         RayCastCallback callback = new RayCastCallback() {
@@ -181,6 +186,7 @@ public class AIYamYam extends Enemy {
 
                 if (fixture.getFilterData().categoryBits == Application.BOB_BIT) {
                     System.out.println("CAN SEE!");
+                    fire();
                     return 0;
                 }
                 if (fixture.getFilterData().categoryBits == Application.WALL_BIT) {
@@ -190,7 +196,7 @@ public class AIYamYam extends Enemy {
                 return -1;
             }
         };
-        world.rayCast(callback,p1,p2);
+        world.rayCast(callback, p1, p2);
     }
 
     private TextureRegion getFrame(float dt) {
