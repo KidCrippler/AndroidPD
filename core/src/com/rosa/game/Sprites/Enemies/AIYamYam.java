@@ -144,17 +144,14 @@ public class AIYamYam extends Enemy {
         } else if (b2body.getLinearVelocity().x > 0) {
             runningRight = true;
             rayCastDirection = 2f;
-//            fractionp = -fractionp - fractionp;
-            fractionp = fractionp + Math.abs(-1);
+            fractionp = -fractionp - fractionp;
+//            fractionp = fractionp + Math.abs(-1);
         }
         //RayCast:
         p1.set(b2body.getPosition().x, b2body.getPosition().y + 0.2f);
         p2.set(b2body.getPosition().x + rayCastDirection, b2body.getPosition().y + 0.2f);
 
         RayCastCallback callback = new RayCastCallback() {
-            public Fixture f;
-            public Vector2 point;
-            public float fraction;
 
             @Override
             public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
@@ -169,15 +166,6 @@ public class AIYamYam extends Enemy {
                     fire();
                     return 0;
                 }
-
-                if (fraction <= this.fraction) {
-                    this.f = fixture;
-                    this.point = point;
-                    this.fraction = fraction;
-                }
-
-                System.out.println( point);
-
                 return -1;
             }
         };
