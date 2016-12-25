@@ -33,7 +33,7 @@ public class AIYamYam extends Enemy {
     private int yamyamHP = 100;
     private SoundPlayer playSound = new SoundPlayer();
     private Array<EnemyBullet> enemyFirePowerLasArray;
-    private static final long FIRE_TIME = 220000000L;
+    private static final long FIRE_TIME = 4000000000L;
     private long lastShot;
     private boolean runningRight;
     private float stateTimer;
@@ -47,6 +47,9 @@ public class AIYamYam extends Enemy {
     float fractionp;
     Vector2 collision = new Vector2();
     Vector2 normal = new Vector2();
+    float fraction;
+    Fixture f;
+    Vector2 point;
 
 
     public AIYamYam(ScreenPlay screen, float x, float y) {
@@ -82,6 +85,7 @@ public class AIYamYam extends Enemy {
         setRegion(yamyamStand);
 
         enemyFirePowerLasArray = new Array<EnemyBullet>();
+        this.fraction = 1f;
     }
 
     @Override
@@ -148,22 +152,32 @@ public class AIYamYam extends Enemy {
         p2.set(b2body.getPosition().x + rayCastDirection, b2body.getPosition().y + 0.2f);
 
         RayCastCallback callback = new RayCastCallback() {
+            public Fixture f;
+            public Vector2 point;
+            public float fraction;
+
             @Override
-            public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fractionp) {
-
-                if (fixture.getFilterData().categoryBits == Application.BOB_BIT && fractionp >= 0.027499318) {
-                    System.out.println("CAN SEE!" + fractionp);
-                    fire();
-                    return 0;
-
-
-                }
+            public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
 
                 if (fixture.getFilterData().categoryBits == Application.WALL_BIT) {
-                    System.out.println("CAN SEE WALL!" + fractionp);
+                    System.out.println("CAN SEE WALL!" + fraction);
                     return 0;
                 }
-                fractionp = fractionp;
+
+                if (fixture.getFilterData().categoryBits == Application.BOB_BIT) {
+                    System.out.println("CAN SEE!" + fraction);
+                    fire();
+                    return 0;
+                }
+
+                if (fraction <= this.fraction) {
+                    this.f = fixture;
+                    this.point = point;
+                    this.fraction = fraction;
+                }
+
+                System.out.println( point);
+
                 return -1;
             }
         };
