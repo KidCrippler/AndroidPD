@@ -151,10 +151,12 @@ public class AIYamYam extends Enemy {
             @Override
             public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fractionp) {
 
-                if (fixture.getFilterData().categoryBits == Application.BOB_BIT && fractionp <= 0.2) {
+                if (fixture.getFilterData().categoryBits == Application.BOB_BIT && fractionp >= 0.027499318) {
                     System.out.println("CAN SEE!" + fractionp);
                     fire();
                     return 0;
+
+
                 }
 
                 if (fixture.getFilterData().categoryBits == Application.WALL_BIT) {
@@ -283,7 +285,6 @@ public class AIYamYam extends Enemy {
             }
         }
     }
-
 
     public void takeShot(int bulletPower) {
         yamyamHP = yamyamHP - bulletPower;
