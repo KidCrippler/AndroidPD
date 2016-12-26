@@ -46,6 +46,8 @@ public class AIYamYam extends Enemy {
     Vector2 p2 = new Vector2();
     Vector2 collision = new Vector2();
     Vector2 normal = new Vector2();
+    float fraction;
+
 
     public AIYamYam(ScreenPlay screen, float x, float y) {
         super(screen, x, y);
@@ -148,38 +150,17 @@ public class AIYamYam extends Enemy {
             @Override
             public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
 
-                if (fixture.getFilterData().categoryBits == Application.BOB_BIT) {
-                    sight = true;
-                }else if (fixture.getFilterData().categoryBits == Application.WALL_BIT){
-                    sight = false;
-                }else if (fixture.getFilterData().categoryBits == 0){
-                    sight = false;
+                    if (fixture.getFilterData().categoryBits == Application.WALL_BIT) {
+                        if (fixture.getFilterData().categoryBits == Application.BOB_BIT) {
+                            System.out.println("1");
+                        }
+                    }
 
-                }
+//                System.out.println(sight);
 
-                    System.out.println(sight);
-
-
-                    return fraction;
-
-
-
-/*                if (fixture.getFilterData().categoryBits == Application.WALL_BIT) {
-                    System.out.println("CAN SEE WALL!" + fraction);
-                    return 0;
-                }
-
-                if (fixture.getFilterData().categoryBits == Application.BOB_BIT) {
-                    System.out.println("CAN SEE!" + fraction);
-                    fire();
-                    return 0;
-                }*/
+                return -1;
             }
         };
-
-        if (rayhit[0] == "player"){
-            System.out.println("can see");
-        }
 
         world.rayCast(callback, p1, p2);
     }
