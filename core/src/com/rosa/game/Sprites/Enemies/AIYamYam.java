@@ -44,7 +44,6 @@ public class AIYamYam extends Enemy {
     ShapeRenderer shapeRenderer = new ShapeRenderer();
     Vector2 p1 = new Vector2();
     Vector2 p2 = new Vector2();
-    float fractionp;
     Vector2 collision = new Vector2();
     Vector2 normal = new Vector2();
 
@@ -139,24 +138,32 @@ public class AIYamYam extends Enemy {
         p1.set(b2body.getPosition().x, b2body.getPosition().y + 0.2f);
         p2.set(b2body.getPosition().x + rayCastDirection, b2body.getPosition().y + 0.2f);
 
+        final String[] rayhit = new String[1];
+
         final RayCastCallback callback = new RayCastCallback() {
+
+
+            boolean sight = false;
 
             @Override
             public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
 
-                if (fixture.getFilterData().categoryBits == Application.WALL_BIT) {
-//                    System.out.println("CAN SEE WALL!");
-                    return fraction;
-                }
-
                 if (fixture.getFilterData().categoryBits == Application.BOB_BIT) {
-//                    System.out.println("CAN SEE!");
-                    fire();
-                    return fraction;
+                    sight = true;
+                }else if (fixture.getFilterData().categoryBits == Application.WALL_BIT){
+                    sight = false;
+                }else if (fixture.getFilterData().categoryBits == 0){
+                    sight = false;
+
                 }
 
+                    System.out.println(sight);
 
-                System.out.println(fraction);
+
+                    return fraction;
+
+
+
 /*                if (fixture.getFilterData().categoryBits == Application.WALL_BIT) {
                     System.out.println("CAN SEE WALL!" + fraction);
                     return 0;
@@ -167,10 +174,12 @@ public class AIYamYam extends Enemy {
                     fire();
                     return 0;
                 }*/
-                return fraction;
             }
         };
 
+        if (rayhit[0] == "player"){
+            System.out.println("can see");
+        }
 
         world.rayCast(callback, p1, p2);
     }
