@@ -47,11 +47,6 @@ public class AIYamYam extends Enemy {
     float fractionp;
     Vector2 collision = new Vector2();
     Vector2 normal = new Vector2();
-    Fixture f;
-    Vector2 point;
-    float closestFraction = 1.0f;
-    private Vector2 collisionPoint = new Vector2();
-
 
     public AIYamYam(ScreenPlay screen, float x, float y) {
         super(screen, x, y);
@@ -95,10 +90,6 @@ public class AIYamYam extends Enemy {
         shapeRenderer.begin(ShapeType.Line);
         shapeRenderer.line(p1, p2);
         shapeRenderer.line(collision, normal);
-        shapeRenderer.setColor(Color.GREEN);
-
-        shapeRenderer.line(new Vector2(p1.x, p1.y + 0.01f), new Vector2(fractionp, p2.y + 0.01f));
-        shapeRenderer.line(collision, normal);
         shapeRenderer.setColor(Color.RED);
         shapeRenderer.end();
     }
@@ -140,23 +131,16 @@ public class AIYamYam extends Enemy {
         if (b2body.getLinearVelocity().x < 0) {
             runningRight = false;
             rayCastDirection = -2f;
-            fractionp = fractionp;
         } else if (b2body.getLinearVelocity().x > 0) {
             runningRight = true;
             rayCastDirection = 2f;
-            fractionp = -fractionp - fractionp;
-//            fractionp = fractionp + Math.abs(-1);
         }
         //RayCast:
         p1.set(b2body.getPosition().x, b2body.getPosition().y + 0.2f);
         p2.set(b2body.getPosition().x + rayCastDirection, b2body.getPosition().y + 0.2f);
 
         final RayCastCallback callback = new RayCastCallback() {
-            float bobfraction, wallfraction;
-            boolean canFire = true;
 
-
-            public float fraction;
             @Override
             public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
 
@@ -173,8 +157,6 @@ public class AIYamYam extends Enemy {
 
 
                 System.out.println(fraction);
-
-
 /*                if (fixture.getFilterData().categoryBits == Application.WALL_BIT) {
                     System.out.println("CAN SEE WALL!" + fraction);
                     return 0;
@@ -185,7 +167,7 @@ public class AIYamYam extends Enemy {
                     fire();
                     return 0;
                 }*/
-                return -1;
+                return fraction;
             }
         };
 
