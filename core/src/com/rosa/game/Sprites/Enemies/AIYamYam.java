@@ -151,17 +151,14 @@ public class AIYamYam extends Enemy {
 
 
                 if (fixture.getFilterData().categoryBits == Application.WALL_BIT) {
-                    return this.fractionWall = fraction;
+                    System.out.println("see wall");
+                    return 0;
+                }else if (fixture.getFilterData().categoryBits != Application.WALL_BIT && fixture.getFilterData().categoryBits == Application.BOB_BIT) {
+                    System.out.println("see bob");
+                    return 0;
                 }
 
-                if (fixture.getFilterData().categoryBits == Application.BOB_BIT) {
-                    if (this.fractionWall < fraction) {
-                        fire();
-                    }
-                    return this.fractionPlayer = fraction;
-                }
-
-                return fraction;
+                return 0;
             }
         };
 
