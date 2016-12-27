@@ -21,7 +21,12 @@ import com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyBullet;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.ScreenPlay;
 
-public class AIYamYam extends Enemy {
+public class AIYamYam extends Enemy implements RayCastCallback{
+
+    @Override
+    public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
+        return 0;
+    }
 
     private enum State {FALLING, JUMPING, STANDING, RUNNING}
 
@@ -47,9 +52,13 @@ public class AIYamYam extends Enemy {
     Vector2 collision = new Vector2();
     Vector2 normal = new Vector2();
     float fraction;
+    public static final int NOTHING = 0;
+    public static final int WALL = 1;
+    public static final int AGENT = 2;
+    public static int type = NOTHING;
 
 
-    public AIYamYam(ScreenPlay screen, float x, float y) {
+    public AIYamYam(ScreenPlay screen, float x, float y)  {
         super(screen, x, y);
         currentState = State.STANDING;
         previousState = State.STANDING;
@@ -140,32 +149,43 @@ public class AIYamYam extends Enemy {
         p1.set(b2body.getPosition().x, b2body.getPosition().y + 0.2f);
         p2.set(b2body.getPosition().x + rayCastDirection, b2body.getPosition().y + 0.2f);
 
+        float fraction1 = 0;
 
-
-        final RayCastCallback callback = new RayCastCallback() {
-
+        final RayCastCallback callbackWall = new RayCastCallback() {
             @Override
             public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
-                float pfraction = 0;
-                float wfraction = 0;
 
-                if (fixture.getFilterData().categoryBits == Application.BOB_BIT) {
-                    return pfraction = fraction + 12121212121212f;
+                if (fixture.getFilterData().categoryBits == Application.BOB_BIT){
+                    System.out.println(fraction);
+                    return fraction;
                 }
-
-                if (fixture.getFilterData().categoryBits == Application.WALL_BIT) {
-                    return wfraction = fraction + 32413412341232122313132133123123213f;
-                }
-
-
-                System.out.println("pfraction: "+ pfraction + "wfraction: " + wfraction);
 
                 return fraction;
             }
         };
 
+         RayCastCallback callbackPlayer = new RayCastCallback() {
+            @Override
+            public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction1) {
 
-        world.rayCast(callback, p1, p2);
+                if (fixture.getFilterData().categoryBits == Application.BOB_BIT){
+                    System.out.println(fraction1);
+                    return fraction1;
+                }
+
+                return fraction1;
+            }
+        };
+
+        System.out.println();
+//        System.out.println("callbackPlayer: " + fraction1);
+//        System.out.println("callbackWall: " + callbackWall);
+
+        world.rayCast(callbackWall, p1, p2);
+        world.rayCast(callbackPlayer, p1, p2);
+
+
+//        System.out.println(AIYamYam.type);
     }
 
     private TextureRegion getFrame(float dt) {
