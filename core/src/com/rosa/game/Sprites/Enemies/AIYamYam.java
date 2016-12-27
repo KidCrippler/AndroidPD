@@ -141,26 +141,29 @@ public class AIYamYam extends Enemy {
         p2.set(b2body.getPosition().x + rayCastDirection, b2body.getPosition().y + 0.2f);
 
 
-        final RayCastCallback callback = new RayCastCallback() {
 
-            float fractionWall;
-            float fractionPlayer;
+        final RayCastCallback callback = new RayCastCallback() {
 
             @Override
             public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
+                float pfraction = 0;
+                float wfraction = 0;
 
-
-                if (fixture.getFilterData().categoryBits == Application.WALL_BIT) {
-                    System.out.println("see wall");
-                    return 0;
-                }else if (fixture.getFilterData().categoryBits != Application.WALL_BIT && fixture.getFilterData().categoryBits == Application.BOB_BIT) {
-                    System.out.println("see bob");
-                    return 0;
+                if (fixture.getFilterData().categoryBits == Application.BOB_BIT) {
+                    return pfraction = fraction + 12121212121212f;
                 }
 
-                return 0;
+                if (fixture.getFilterData().categoryBits == Application.WALL_BIT) {
+                    return wfraction = fraction + 32413412341232122313132133123123213f;
+                }
+
+
+                System.out.println("pfraction: "+ pfraction + "wfraction: " + wfraction);
+
+                return fraction;
             }
         };
+
 
         world.rayCast(callback, p1, p2);
     }
