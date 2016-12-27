@@ -156,6 +156,8 @@ public class AIYamYam extends Enemy {
                         }
                     }
 
+
+
 //                System.out.println(sight);
 
                 return -1;
