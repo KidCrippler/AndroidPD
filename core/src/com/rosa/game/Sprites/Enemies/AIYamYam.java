@@ -151,11 +151,10 @@ public class AIYamYam extends Enemy {
             public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
 
                     if (fixture.getFilterData().categoryBits == Application.WALL_BIT) {
-                        if (fixture.getFilterData().categoryBits == Application.BOB_BIT) {
-                            System.out.println("1");
-                        }
+                        return fraction;
                     }
 
+                            System.out.println(point);
 
 
 //                System.out.println(sight);
