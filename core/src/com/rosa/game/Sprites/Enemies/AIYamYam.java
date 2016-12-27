@@ -33,7 +33,7 @@ public class AIYamYam extends Enemy {
     private int yamyamHP = 100;
     private SoundPlayer playSound = new SoundPlayer();
     private Array<EnemyBullet> enemyFirePowerLasArray;
-    private static final long FIRE_TIME = 400000000L;
+    private static final long FIRE_TIME = 440000000L;
     private long lastShot;
     private boolean runningRight;
     private float stateTimer;
@@ -140,26 +140,28 @@ public class AIYamYam extends Enemy {
         p1.set(b2body.getPosition().x, b2body.getPosition().y + 0.2f);
         p2.set(b2body.getPosition().x + rayCastDirection, b2body.getPosition().y + 0.2f);
 
-        final String[] rayhit = new String[1];
 
         final RayCastCallback callback = new RayCastCallback() {
 
-
-            boolean sight = false;
+            float fractionWall;
+            float fractionPlayer;
 
             @Override
             public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
 
-                    if (fixture.getFilterData().categoryBits == Application.WALL_BIT) {
-                        return fraction;
+
+                if (fixture.getFilterData().categoryBits == Application.WALL_BIT) {
+                    return this.fractionWall = fraction;
+                }
+
+                if (fixture.getFilterData().categoryBits == Application.BOB_BIT) {
+                    if (this.fractionWall < fraction) {
+                        fire();
                     }
+                    return this.fractionPlayer = fraction;
+                }
 
-                            System.out.println(point);
-
-
-//                System.out.println(sight);
-
-                return -1;
+                return fraction;
             }
         };
 
