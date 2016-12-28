@@ -149,40 +149,26 @@ public class AIYamYam extends Enemy implements RayCastCallback{
         p1.set(b2body.getPosition().x, b2body.getPosition().y + 0.2f);
         p2.set(b2body.getPosition().x + rayCastDirection, b2body.getPosition().y + 0.2f);
 
-        float fraction1 = 0;
 
-        final RayCastCallback callbackWall = new RayCastCallback() {
+         RayCastCallback callback= new RayCastCallback() {
             @Override
             public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
 
-                if (fixture.getFilterData().categoryBits == Application.BOB_BIT){
-                    System.out.println(fraction);
+                if (fixture.getFilterData().categoryBits == Application.WALL_BIT){
                     return fraction;
                 }
 
-                return fraction;
-            }
-        };
-
-         RayCastCallback callbackPlayer = new RayCastCallback() {
-            @Override
-            public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction1) {
 
                 if (fixture.getFilterData().categoryBits == Application.BOB_BIT){
-                    System.out.println(fraction1);
-                    return fraction1;
+                    return fraction;
                 }
 
-                return fraction1;
+                return 0;
             }
         };
 
-        System.out.println();
-//        System.out.println("callbackPlayer: " + fraction1);
-//        System.out.println("callbackWall: " + callbackWall);
 
-        world.rayCast(callbackWall, p1, p2);
-        world.rayCast(callbackPlayer, p1, p2);
+        world.rayCast(callback, p1, p2);
 
 
 //        System.out.println(AIYamYam.type);
@@ -303,8 +289,6 @@ public class AIYamYam extends Enemy implements RayCastCallback{
             }
         }
     }
-
-
 
     public void takeShot(int bulletPower) {
         yamyamHP = yamyamHP - bulletPower;
