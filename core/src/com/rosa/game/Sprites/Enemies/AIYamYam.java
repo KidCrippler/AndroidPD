@@ -304,6 +304,8 @@ public class AIYamYam extends Enemy implements RayCastCallback{
         }
     }
 
+
+
     public void takeShot(int bulletPower) {
         yamyamHP = yamyamHP - bulletPower;
         System.out.println("YamYam HP= " + yamyamHP);
