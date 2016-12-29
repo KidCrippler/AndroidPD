@@ -21,12 +21,8 @@ import com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyBullet;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.ScreenPlay;
 
-public class AIYamYam extends Enemy implements RayCastCallback{
+public class AIYamYam extends Enemy implements RayCastCallback {
 
-    @Override
-    public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
-        return 0;
-    }
 
     private enum State {FALLING, JUMPING, STANDING, RUNNING}
 
@@ -51,14 +47,14 @@ public class AIYamYam extends Enemy implements RayCastCallback{
     Vector2 p2 = new Vector2();
     Vector2 collision = new Vector2();
     Vector2 normal = new Vector2();
-    float fraction;
     public static final int NOTHING = 0;
     public static final int WALL = 1;
     public static final int AGENT = 2;
     public static int type = NOTHING;
+    public static boolean shooting;
 
 
-    public AIYamYam(ScreenPlay screen, float x, float y)  {
+    public AIYamYam(ScreenPlay screen, float x, float y) {
         super(screen, x, y);
         currentState = State.STANDING;
         previousState = State.STANDING;
@@ -122,7 +118,38 @@ public class AIYamYam extends Enemy implements RayCastCallback{
             dead();
     }
 
+
+    float fractionWall = 1;
+    float fractionPlayer = 1;
+
+    @Override
+    public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
+
+
+        if (fixture.getFilterData().categoryBits == Application.BOB_BIT){
+            fractionWall = fraction;
+        }else {
+            fraction = 0;
+        }
+
+        if (fixture.getFilterData().categoryBits == Application.WALL_BIT){
+            fractionPlayer = fraction;
+        }else if (fixture.getFilterData().categoryBits != Application.WALL_BIT){
+            fractionPlayer = 0;
+        }
+
+
+        return fraction;
+    }
+
     private void AIBehavior(float dt) {
+
+        if (fractionPlayer > fractionWall) {
+            System.out.println("can see you" + "" + fractionPlayer + ">" + fractionWall);
+        }else{
+            System.out.println("can't see you!!!");
+        }
+
         if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x)
             b2body.applyLinearImpulse(new Vector2(-0.03f, 0), b2body.getWorldCenter(), true);
 
@@ -149,29 +176,14 @@ public class AIYamYam extends Enemy implements RayCastCallback{
         p1.set(b2body.getPosition().x, b2body.getPosition().y + 0.2f);
         p2.set(b2body.getPosition().x + rayCastDirection, b2body.getPosition().y + 0.2f);
 
-
-         RayCastCallback callback= new RayCastCallback() {
-            @Override
-            public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
-
-                if (fixture.getFilterData().categoryBits == Application.WALL_BIT){
-                    return fraction;
-                }
-
-
-                if (fixture.getFilterData().categoryBits == Application.BOB_BIT){
-                    return fraction;
-                }
-
-                return 0;
-            }
-        };
-
-
-        world.rayCast(callback, p1, p2);
+        world.rayCast(this, p1, p2);
 
 
 //        System.out.println(AIYamYam.type);
+/*        if (AIYamYam.shooting = true){
+            fire();
+        }*/
+
     }
 
     private TextureRegion getFrame(float dt) {
@@ -243,17 +255,17 @@ public class AIYamYam extends Enemy implements RayCastCallback{
         b2body.createFixture(fixtureDefOfEnemyBody).setUserData(this);
 
         //RAYOne - (Outer - Jump):
-        FixtureDef fixtureDefRayOfJump = new FixtureDef();
-        CircleShape circleRayOfJump = new CircleShape();
-        circleRayOfJump.setRadius(6 / Application.PPM);
-        fixtureDefRayOfJump.filter.categoryBits = Application.RAY_JUMP;
-
-        fixtureDefRayOfJump.shape = circleRayOfJump;
-        fixtureDefRayOfJump.isSensor = true;
-        circleRayOfJump.setPosition(new Vector2(0.5f, 0 / Application.PPM));
-        b2body.createFixture(fixtureDefRayOfJump).setUserData(this);
-        circleRayOfJump.setPosition(new Vector2(-0.5f, 0 / Application.PPM));
-        b2body.createFixture(fixtureDefRayOfJump).setUserData(this);
+//        FixtureDef fixtureDefRayOfJump = new FixtureDef();
+//        CircleShape circleRayOfJump = new CircleShape();
+//        circleRayOfJump.setRadius(6 / Application.PPM);
+//        fixtureDefRayOfJump.filter.categoryBits = Application.RAY_JUMP;
+//
+//        fixtureDefRayOfJump.shape = circleRayOfJump;
+//        fixtureDefRayOfJump.isSensor = true;
+//        circleRayOfJump.setPosition(new Vector2(0.5f, 0 / Application.PPM));
+//        b2body.createFixture(fixtureDefRayOfJump).setUserData(this);
+//        circleRayOfJump.setPosition(new Vector2(-0.5f, 0 / Application.PPM));
+//        b2body.createFixture(fixtureDefRayOfJump).setUserData(this);
     }
 
     @Override
