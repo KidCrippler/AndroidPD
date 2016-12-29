@@ -99,6 +99,8 @@ public class AIYamYam extends Enemy implements RayCastCallback {
         shapeRenderer.end();
     }
 
+
+
     public void update(float dt) {
         if (setToDestroy && !destroyed) {
             world.destroyBody(b2body);
@@ -144,13 +146,23 @@ public class AIYamYam extends Enemy implements RayCastCallback {
 //        return fraction;
     }
 
+
+
+    float closestFraction = 1;
+
+
     private void AIBehavior(float dt) {
 
-        if (fractionPlayer > fractionWall) {
-            System.out.println("can see you" + "" + fractionPlayer + ">" + fractionWall);
-        }else{
-            System.out.println("can't see you!!!");
-        }
+//        System.out.println(Application.LIST_OF_FIXTURES.get(0));
+//        System.out.println(Application.LIST_OF_FIXTURES.get(1));
+
+
+
+
+
+
+
+
 
         if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x)
             b2body.applyLinearImpulse(new Vector2(-0.03f, 0), b2body.getWorldCenter(), true);
