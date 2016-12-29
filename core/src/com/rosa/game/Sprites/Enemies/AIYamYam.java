@@ -47,6 +47,7 @@ public class AIYamYam extends Enemy implements RayCastCallback {
     private Vector2 point = new Vector2();
     private Vector2 normal = new Vector2();
     private Vector2 tmpD = new Vector2();
+    float fraction;
 
 
 
@@ -145,8 +146,9 @@ public class AIYamYam extends Enemy implements RayCastCallback {
     private void AIBehavior(float dt) {
 
 
-        System.out.println("fractionWall: " + fractionWall + "\nfractionPlayer: " + fractionPlayer);
+//        System.out.println("fractionWall: " + fractionWall + "\nfractionPlayer: " + fractionPlayer);
 
+        System.out.println(fraction);
 
 
 
