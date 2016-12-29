@@ -25,10 +25,9 @@ public class AIYamYam extends Enemy implements RayCastCallback {
 
 
     private enum State {FALLING, JUMPING, STANDING, RUNNING}
-
+    public static boolean playerAtRangeOfFire;
     private State currentState;
     private State previousState;
-    //    private Animation walkAnimation;
     private boolean setToDestroy;
     private boolean destroyed;
     private int yamyamHP = 100;
@@ -41,17 +40,15 @@ public class AIYamYam extends Enemy implements RayCastCallback {
     private Animation yamyamRun;
     private Animation yamyamJump;
     private TextureRegion yamyamStand;
-    public static boolean playerAtRangeOfFire;
-    ShapeRenderer shapeRenderer = new ShapeRenderer();
-    Vector2 p1 = new Vector2();
-    Vector2 p2 = new Vector2();
-    Vector2 collision = new Vector2();
-    Vector2 normal = new Vector2();
-    public static final int NOTHING = 0;
-    public static final int WALL = 1;
-    public static final int AGENT = 2;
-    public static int type = NOTHING;
-    public static boolean shooting;
+    private ShapeRenderer shapeRenderer = new ShapeRenderer();
+    private Vector2 p1 = new Vector2();
+    private Vector2 p2 = new Vector2();
+    private Vector2 collision = new Vector2();
+    private Vector2 point = new Vector2();
+    private Vector2 normal = new Vector2();
+    private Vector2 tmpD = new Vector2();
+
+
 
 
     public AIYamYam(ScreenPlay screen, float x, float y) {
@@ -96,6 +93,8 @@ public class AIYamYam extends Enemy implements RayCastCallback {
         shapeRenderer.begin(ShapeType.Line);
         shapeRenderer.line(p1, p2);
         shapeRenderer.line(collision, normal);
+        shapeRenderer.setColor(Color.GREEN);
+        shapeRenderer.line(point, tmpD.set(point).add(normal));
         shapeRenderer.setColor(Color.RED);
         shapeRenderer.end();
     }
@@ -125,21 +124,24 @@ public class AIYamYam extends Enemy implements RayCastCallback {
     @Override
     public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
 
-
-        if (fixture.getFilterData().categoryBits == Application.BOB_BIT){
-            fractionWall = fraction;
-        }else {
-            fraction = 0;
-        }
-
-        if (fixture.getFilterData().categoryBits == Application.WALL_BIT){
-            fractionPlayer = fraction;
-        }else if (fixture.getFilterData().categoryBits != Application.WALL_BIT){
-            fractionPlayer = 0;
-        }
-
-
+        this.point.set(point);
+        this.normal.set(normal);
         return fraction;
+
+//        if (fixture.getFilterData().categoryBits == Application.BOB_BIT){
+//            fractionWall = fraction;
+//        }else {
+//            fraction = 0;
+//        }
+//
+//        if (fixture.getFilterData().categoryBits == Application.WALL_BIT){
+//            fractionPlayer = fraction;
+//        }else if (fixture.getFilterData().categoryBits != Application.WALL_BIT){
+//            fractionPlayer = 0;
+//        }
+//
+//
+//        return fraction;
     }
 
     private void AIBehavior(float dt) {
