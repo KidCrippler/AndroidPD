@@ -120,43 +120,32 @@ public class AIYamYam extends Enemy implements RayCastCallback {
     }
 
 
-    float fractionWall = 1;
-    float fractionPlayer = 1;
+    float fractionWall = 0;
+    float fractionPlayer = 0;
 
     @Override
     public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
 
         this.point.set(point);
         this.normal.set(normal);
-        return fraction;
 
-//        if (fixture.getFilterData().categoryBits == Application.BOB_BIT){
-//            fractionWall = fraction;
-//        }else {
-//            fraction = 0;
-//        }
-//
-//        if (fixture.getFilterData().categoryBits == Application.WALL_BIT){
-//            fractionPlayer = fraction;
-//        }else if (fixture.getFilterData().categoryBits != Application.WALL_BIT){
-//            fractionPlayer = 0;
-//        }
-//
-//
-//        return fraction;
+
+        if (fixture.getFilterData().categoryBits == Application.BOB_BIT)
+            fractionPlayer = fraction;
+        else if (fixture.getFilterData().categoryBits == Application.WALL_BIT){}
+            fractionWall = fraction;
+
+        return fraction;
     }
 
 
 
     float closestFraction = 1;
 
-
     private void AIBehavior(float dt) {
 
-//        System.out.println(Application.LIST_OF_FIXTURES.get(0));
-//        System.out.println(Application.LIST_OF_FIXTURES.get(1));
 
-
+        System.out.println("fractionWall: " + fractionWall + "\nfractionPlayer: " + fractionPlayer);
 
 
 
