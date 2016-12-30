@@ -98,6 +98,9 @@ public class AIYamYam extends Enemy implements RayCastCallback {
         shapeRenderer.line(point, tmpD.set(point).add(normal));
         shapeRenderer.setColor(Color.RED);
         shapeRenderer.end();
+
+
+
     }
 
 
@@ -121,27 +124,28 @@ public class AIYamYam extends Enemy implements RayCastCallback {
     }
 
 
-    float fractionWall = 0;
-    float fractionPlayer = 0;
-
     @Override
     public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
 
         this.point.set(point);
         this.normal.set(normal);
 
+        if (fixture.getFilterData().categoryBits == Application.WALL_BIT){
+            return 0;
+        }
 
-        if (fixture.getFilterData().categoryBits == Application.BOB_BIT)
-            fractionPlayer = fraction;
-        else if (fixture.getFilterData().categoryBits == Application.WALL_BIT){}
-            fractionWall = fraction;
+        if (fixture.getFilterData().categoryBits == Application.BOB_BIT){
+            return fraction;
+        }
 
         return fraction;
     }
 
 
 
-    float closestFraction = 1;
+
+
+
 
     private void AIBehavior(float dt) {
 
