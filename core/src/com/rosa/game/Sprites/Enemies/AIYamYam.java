@@ -1,5 +1,6 @@
 package com.rosa.game.Sprites.Enemies;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -21,6 +22,8 @@ import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.ScreenPlay;
 
 public class AIYamYam extends Enemy implements RayCastCallback {
+
+    private static final String TAG = "log1: ";
 
     private enum State {FALLING, JUMPING, STANDING, RUNNING}
     public static boolean playerAtRangeOfFire;
@@ -94,7 +97,7 @@ public class AIYamYam extends Enemy implements RayCastCallback {
         shapeRenderer.line(collision, normal);
         shapeRenderer.setColor(Color.GREEN);
 //        shapeRenderer.line(point, tmpD.set(point).add(normal));
-        shapeRenderer.line(point, tmpD.set(point).add(normal).add(2,3));
+        shapeRenderer.line(point, tmpD.set(point).add(normal));
         shapeRenderer.setColor(Color.RED);
         shapeRenderer.end();
     }
@@ -120,24 +123,43 @@ public class AIYamYam extends Enemy implements RayCastCallback {
     }
 
 
+    public static final int NOTHING = 0;
+    public static final int WALL = 1;
+    public static final int AGENT = 2;
+    public int type = NOTHING;
+    public Vector2 position;
+
     @Override
     public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
 
-        this.point.set(point);
-        this.normal.set(normal);
-        boolean wallhit = false;
-        boolean playerhit  = false;
+        if (fixture.getFilterData().categoryBits == Application.WALL_BIT)
+            type = WALL;
+        if (fixture.getFilterData().categoryBits == Application.BOB_BIT)
+            type = AGENT;
 
-        if (fixture.getFilterData().categoryBits == Application.WALL_BIT){
-
-            return 0;
-        }
-
-        if (fixture.getFilterData().categoryBits == Application.BOB_BIT){
-            return fraction;
-        }
+        position = point;
 
         return fraction;
+
+
+//        this.point.set(point);
+//        this.normal.set(normal);
+//        boolean wallhit = false;
+//        boolean playerhit  = false;
+//
+//        if (fixture.getFilterData().categoryBits == Application.WALL_BIT){
+//            System.out.println("wall");
+//            return 0;
+//        }
+//
+//        if (fixture.getFilterData().categoryBits == Application.BOB_BIT){
+//
+//            fire();
+//            System.out.println("bob");
+//            return fraction;
+//        }
+//
+//        return fraction;
     }
 
     private void AIBehavior(float dt) {
@@ -170,7 +192,10 @@ public class AIYamYam extends Enemy implements RayCastCallback {
         p1.set(b2body.getPosition().x, b2body.getPosition().y + 0.2f);
         p2.set(b2body.getPosition().x + rayCastDirection, b2body.getPosition().y + 0.2f);
 
-        world.rayCast(this, p1, p2);
+//        world.rayCast(this, p1, p2);
+
+        world.rayCast(this,p1,p2);
+        Gdx.app.log(TAG, this.type + "");
 
 
 //        System.out.println(AIYamYam.type);
