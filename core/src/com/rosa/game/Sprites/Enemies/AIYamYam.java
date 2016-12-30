@@ -5,14 +5,13 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Bob.Player;
@@ -22,7 +21,6 @@ import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.ScreenPlay;
 
 public class AIYamYam extends Enemy implements RayCastCallback {
-
 
     private enum State {FALLING, JUMPING, STANDING, RUNNING}
     public static boolean playerAtRangeOfFire;
@@ -95,12 +93,10 @@ public class AIYamYam extends Enemy implements RayCastCallback {
         shapeRenderer.line(p1, p2);
         shapeRenderer.line(collision, normal);
         shapeRenderer.setColor(Color.GREEN);
-        shapeRenderer.line(point, tmpD.set(point).add(normal));
+//        shapeRenderer.line(point, tmpD.set(point).add(normal));
+        shapeRenderer.line(point, tmpD.set(point).add(normal).add(2,3));
         shapeRenderer.setColor(Color.RED);
         shapeRenderer.end();
-
-
-
     }
 
 
@@ -129,8 +125,11 @@ public class AIYamYam extends Enemy implements RayCastCallback {
 
         this.point.set(point);
         this.normal.set(normal);
+        boolean wallhit = false;
+        boolean playerhit  = false;
 
         if (fixture.getFilterData().categoryBits == Application.WALL_BIT){
+
             return 0;
         }
 
@@ -141,22 +140,8 @@ public class AIYamYam extends Enemy implements RayCastCallback {
         return fraction;
     }
 
-
-
-
-
-
-
     private void AIBehavior(float dt) {
-
-
 //        System.out.println("fractionWall: " + fractionWall + "\nfractionPlayer: " + fractionPlayer);
-
-        System.out.println(fraction);
-
-
-
-
 
 
         if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x)
