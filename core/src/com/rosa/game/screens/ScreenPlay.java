@@ -3,11 +3,9 @@ package com.rosa.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -17,7 +15,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rosa.game.Application;
-import com.rosa.game.Sprites.Enemies.AIYamYam;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
 import com.rosa.game.Sprites.Bob.Player;
 import com.rosa.game.Tools.BoxWorldCreator;
@@ -39,7 +36,6 @@ public class ScreenPlay implements Screen {
     private World world;
     private Box2DDebugRenderer b2dr;
     private BoxWorldCreator creator;
-    private ShapeRenderer shapeRenderer;
 
     public ScreenPlay(Application game) {
         ScreenGame.FRAME_GAME_STATE = ScreenGame.GAME_RUNNING;
@@ -59,7 +55,6 @@ public class ScreenPlay implements Screen {
         player = new Player(world, this, game);
         world.setContactListener(new WorldCollisionListener());
         controller = new Controller();
-        shapeRenderer = new ShapeRenderer();
     }
 
     public void handleInputController() {
@@ -97,14 +92,10 @@ public class ScreenPlay implements Screen {
 
         handleInput();
         handleInputController();
-
         world.step(1 / 60f, 6, 2);
-
         player.update(dt);
         creator.update(dt);
-
-
-        //Load objects around the points of player:
+        //Load around player:
         for (Enemy enemy : creator.getEnemies()) {
             enemy.update(dt);
 
@@ -120,9 +111,6 @@ public class ScreenPlay implements Screen {
         }
 
         orthographicCamera.update();
-
-
-
         renderer.setView(orthographicCamera);
     }
 

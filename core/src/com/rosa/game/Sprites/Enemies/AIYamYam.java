@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -22,11 +23,8 @@ import com.rosa.game.screens.ScreenPlay;
 
 public class AIYamYam extends Enemy implements RayCastCallback {
 
-    private static final String TAG = "log1: ";
-
     private enum State {FALLING, JUMPING, STANDING, RUNNING}
 
-    public static boolean playerAtRangeOfFire;
     private State currentState;
     private State previousState;
     private boolean setToDestroy;
@@ -50,7 +48,7 @@ public class AIYamYam extends Enemy implements RayCastCallback {
     private Vector2 tmpD = new Vector2();
     private static final int NOTHING = 0;
     private static final int WALL = 1;
-    private static final int AGENT = 2;
+    private static final int PLAYER = 2;
     private int rayCastStatus = NOTHING;
 
     public AIYamYam(ScreenPlay screen, float x, float y) {
@@ -99,22 +97,23 @@ public class AIYamYam extends Enemy implements RayCastCallback {
     }
 
     public void update(float dt) {
+
         if (setToDestroy && !destroyed) {
             world.destroyBody(b2body);
             destroyed = true;
             setRegion(new TextureRegion(screen.getAtlas().findRegion("keen"), 11, 0, 22, 12));
-        } else {
+        } else if (!destroyed && b2body.isActive()) {
             setRegion(getFrame(dt));
-
-            if (!destroyed && b2body.isActive()) {
-                setPosition(b2body.getPosition().x - getWidth() / 2, (float) (b2body.getPosition().y - getHeight() / 300.0));
-                setRegion(getFrame(dt));
-                AIBehavior(dt);
-            }
+            setPosition(b2body.getPosition().x - getWidth() / 2, (float) (b2body.getPosition().y - getHeight() / 300.0));
+            setRegion(getFrame(dt));
+            AIBehavior(dt);
         }
-        if (yamyamHP <= 0 || b2body.getPosition().y < -1)
+
+        if (yamyamHP <= 0 || b2body.getPosition().y < -1){
             dead();
+        }
     }
+
 
     @Override
     public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
@@ -124,7 +123,7 @@ public class AIYamYam extends Enemy implements RayCastCallback {
         }
 
         if (fixture.getFilterData().categoryBits == Application.BOB_BIT) {
-            rayCastStatus = AGENT;
+            rayCastStatus = PLAYER;
         }
 
         this.point.set(point);
@@ -162,11 +161,9 @@ public class AIYamYam extends Enemy implements RayCastCallback {
 
         world.rayCast(this, p1, p2);
 
-        System.out.println(this.rayCastStatus);
         if (rayCastStatus == 2) {
             fire();
         }
-
     }
 
     private TextureRegion getFrame(float dt) {
@@ -238,17 +235,17 @@ public class AIYamYam extends Enemy implements RayCastCallback {
         b2body.createFixture(fixtureDefOfEnemyBody).setUserData(this);
 
         //RAYOne - (Outer - Jump):
-//        FixtureDef fixtureDefRayOfJump = new FixtureDef();
-//        CircleShape circleRayOfJump = new CircleShape();
-//        circleRayOfJump.setRadius(6 / Application.PPM);
-//        fixtureDefRayOfJump.filter.categoryBits = Application.RAY_JUMP;
-//
-//        fixtureDefRayOfJump.shape = circleRayOfJump;
-//        fixtureDefRayOfJump.isSensor = true;
-//        circleRayOfJump.setPosition(new Vector2(0.5f, 0 / Application.PPM));
-//        b2body.createFixture(fixtureDefRayOfJump).setUserData(this);
-//        circleRayOfJump.setPosition(new Vector2(-0.5f, 0 / Application.PPM));
-//        b2body.createFixture(fixtureDefRayOfJump).setUserData(this);
+        FixtureDef fixtureDefRayOfJump = new FixtureDef();
+        CircleShape circleRayOfJump = new CircleShape();
+        circleRayOfJump.setRadius(6 / Application.PPM);
+        fixtureDefRayOfJump.filter.categoryBits = Application.RAY_JUMP;
+
+        fixtureDefRayOfJump.shape = circleRayOfJump;
+        fixtureDefRayOfJump.isSensor = true;
+        circleRayOfJump.setPosition(new Vector2(0.5f, 0 / Application.PPM));
+        b2body.createFixture(fixtureDefRayOfJump).setUserData(this);
+        circleRayOfJump.setPosition(new Vector2(-0.5f, 0 / Application.PPM));
+        b2body.createFixture(fixtureDefRayOfJump).setUserData(this);
     }
 
     @Override
@@ -273,15 +270,14 @@ public class AIYamYam extends Enemy implements RayCastCallback {
             lastShot = System.nanoTime();
             playSound.playSoundRandomYamYamFirePower();
         }
+
     }
 
     public void jump() {
-        if (!destroyed && b2body.isActive()) {
-            if (currentState != State.JUMPING) {
-                b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
-                playSound.playSoundBob(0);
-                currentState = State.JUMPING;
-            }
+        if (currentState != State.JUMPING) {
+            b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
+            playSound.playSoundBob(0);
+            currentState = State.JUMPING;
         }
     }
 
@@ -298,8 +294,8 @@ public class AIYamYam extends Enemy implements RayCastCallback {
     public boolean isDestroyed() {
         return destroyed;
     }
-
-    public void isPlayerAtRangeOfFire(boolean playerAtRangeOfFire) {
-        this.playerAtRangeOfFire = playerAtRangeOfFire;
-    }
 }
+/**
+ * BREAKS IN GAME CAN CAUSE OF:
+ * if (!destroyed && b2body.isActive()) {
+ **/

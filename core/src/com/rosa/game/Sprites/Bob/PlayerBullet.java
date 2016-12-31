@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
 import com.rosa.game.screens.ScreenPlay;
 
-public class Bullet extends Sprite {
+public class PlayerBullet extends Sprite {
 
     public World world;
     public Body b2body;
@@ -21,11 +21,11 @@ public class Bullet extends Sprite {
     boolean destroyed;
     boolean setToDestroy;
     private float stateTime;
-    Animation fireAnimation;
-    Array<TextureRegion> frames;
-    ScreenPlay screen;
+    private Animation fireAnimation;
+    private Array<TextureRegion> frames;
+    private ScreenPlay screen;
 
-    public Bullet(ScreenPlay screen, float x, float y, boolean fireRight) {
+    public PlayerBullet(ScreenPlay screen, float x, float y, boolean fireRight) {
 
         this.fireRight = fireRight;
         this.world = screen.getWorld();
@@ -38,10 +38,10 @@ public class Bullet extends Sprite {
         fireAnimation = new Animation(0.02f, frames);
         setRegion(fireAnimation.getKeyFrame(0));
         setBounds(x, y, 6 / Application.PPM, 6 / Application.PPM);
-        defineBullet();
+        definePlayerBullet();
     }
 
-    public void defineBullet() {
+    public void definePlayerBullet() {
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(fireRight ? getX() + 0.20f / Application.PPM : getX() - 0.20f / Application.PPM, getY());
         bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -54,12 +54,8 @@ public class Bullet extends Sprite {
 
         fixtureDef.filter.categoryBits = Application.BULLET_BIT;
         fixtureDef.filter.maskBits =
-
                         Application.ENEMY_DUMB_BIT |
-                        Application.ENEMY_AI_BIT |
-                        Application.GROUND_BIT |
                         Application.WALL_BIT;
-
         fixtureDef.shape = shape;
         b2body.createFixture(fixtureDef).setUserData(this);
 
@@ -71,12 +67,12 @@ public class Bullet extends Sprite {
     public void update(float dt) {
         stateTime += dt;
 
-        //Bullet anim:
+        //PlayerBullet anim:
         setRegion(fireAnimation.getKeyFrame(stateTime, true));
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
 
         //Remove the bullet after 3 seconds:
-        if ((stateTime > 3 || setToDestroy) && !destroyed) {
+        if ((stateTime > 8 || setToDestroy) && !destroyed) {
             world.destroyBody(b2body);
             destroyed = true;
         }

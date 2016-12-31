@@ -2,7 +2,6 @@ package com.rosa.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.rosa.game.screens.ScreenPlay;
 import com.rosa.game.screens.ScreenSplash;
 
@@ -14,12 +13,6 @@ public class Application extends Game {
     public static final int V_HEIGHT = 208;
     public static final float PPM = 100;
 
-    public static ArrayList LIST_OF_FIXTURES = new ArrayList();
-
-    private void setListOfFixtures(){
-        LIST_OF_FIXTURES.add(BOB_BIT);
-        LIST_OF_FIXTURES.add(WALL_BIT);
-    }
 
     public static final short NOTHING_BIT = 0;
     public static final short BIT = 1;
@@ -32,12 +25,6 @@ public class Application extends Game {
     public static final short RAY_JUMP = 256;
     public static final short WALL_BIT = 1024;
     public static final short GROUND_BIT = 2048;
-    public static final short RAY_BULLET = 4096;
-
-
-
-
-
 
     public static SpriteBatch batch;
     private ScreenSplash splashScreen;
@@ -46,7 +33,6 @@ public class Application extends Game {
 
     @Override
     public void create() {
-        setListOfFixtures();
         batch = new SpriteBatch();
         playScreen = new ScreenPlay(this);
         setScreen(playScreen);

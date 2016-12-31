@@ -6,7 +6,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.rosa.game.Application;
-import com.rosa.game.Sprites.Bob.Bullet;
+import com.rosa.game.Sprites.Bob.PlayerBullet;
 import com.rosa.game.Sprites.Bob.Player;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
 import com.rosa.game.Sprites.Enemies.AIYamYam;
@@ -70,10 +70,10 @@ public class WorldCollisionListener implements ContactListener {
             //Bullets
             case Application.BULLET_BIT | Application.WALL_BIT:
                 if (fixA.getFilterData().categoryBits == Application.BULLET_BIT) {
-                    ((Bullet) fixA.getUserData()).setToDestroy();
+                    ((PlayerBullet) fixA.getUserData()).setToDestroy();
                     soundPlayer.playSoundRandomLaserOneWall();
                 } else {
-                    ((Bullet) fixB.getUserData()).setToDestroy();
+                    ((PlayerBullet) fixB.getUserData()).setToDestroy();
                     soundPlayer.playSoundRandomLaserOneWall();
 
                 }
@@ -89,7 +89,7 @@ public class WorldCollisionListener implements ContactListener {
                 }
                 break;
 
-            //Bullet fire at BOB:
+            //PlayerBullet fire at BOB:
             case Application.ENEMY_BULLET_BIT | Application.BOB_BIT:
                 if (fixA.getFilterData().categoryBits == Application.BOB_BIT)
                     ((Player) fixA.getUserData()).setHpDown(10);
@@ -102,7 +102,7 @@ public class WorldCollisionListener implements ContactListener {
                     ((EnemyBullet) fixB.getUserData()).setToDestroy();
                 break;
 
-            //Bullet fire at Enemy:
+            //PlayerBullet fire at Enemy:
             case Application.BULLET_BIT | Application.ENEMY_DUMB_BIT:
                 //Remove the enemy:
                 if (fixA.getFilterData().categoryBits == Application.ENEMY_DUMB_BIT)
@@ -111,9 +111,9 @@ public class WorldCollisionListener implements ContactListener {
                     ((Enemy) fixB.getUserData()).takeShot(10);
                 //Remove the bullet:
                 if (fixA.getFilterData().categoryBits == Application.BULLET_BIT)
-                    ((Bullet) fixA.getUserData()).setToDestroy();
+                    ((PlayerBullet) fixA.getUserData()).setToDestroy();
                 else
-                    ((Bullet) fixB.getUserData()).setToDestroy();
+                    ((PlayerBullet) fixB.getUserData()).setToDestroy();
                 break;
 
             //Enemy AI:
@@ -125,9 +125,9 @@ public class WorldCollisionListener implements ContactListener {
                     ((Enemy) fixB.getUserData()).takeShot(10);
                 //Remove the bullet:
                 if (fixA.getFilterData().categoryBits == Application.BULLET_BIT)
-                    ((Bullet) fixA.getUserData()).setToDestroy();
+                    ((PlayerBullet) fixA.getUserData()).setToDestroy();
                 else
-                    ((Bullet) fixB.getUserData()).setToDestroy();
+                    ((PlayerBullet) fixB.getUserData()).setToDestroy();
                 break;
 
             //RAY_JUMP:
@@ -136,14 +136,6 @@ public class WorldCollisionListener implements ContactListener {
                     ((AIYamYam) fixA.getUserData()).jump();
                 else
                     ((AIYamYam) fixB.getUserData()).jump();
-                break;
-
-            //RAY_BULLET_FIRE:
-            case Application.RAY_BULLET | Application.BOB_BIT:
-                if (fixA.getFilterData().categoryBits == Application.RAY_BULLET)
-                    ((AIYamYam) fixA.getUserData()).isPlayerAtRangeOfFire(true);
-                else
-                    ((AIYamYam) fixA.getUserData()).isPlayerAtRangeOfFire(false);
                 break;
         }
     }
@@ -157,13 +149,6 @@ public class WorldCollisionListener implements ContactListener {
 
         switch (cDef) {
 
-            //RAY_BULLET_FIRE:
-            case Application.RAY_BULLET | Application.BOB_BIT:
-                if (fixA.getFilterData().categoryBits == Application.RAY_BULLET)
-                    ((AIYamYam) fixA.getUserData()).isPlayerAtRangeOfFire(false);
-                else
-                    ((AIYamYam) fixA.getUserData()).isPlayerAtRangeOfFire(true);
-                break;
         }
     }
 

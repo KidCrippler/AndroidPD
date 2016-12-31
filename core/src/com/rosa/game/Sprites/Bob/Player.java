@@ -38,7 +38,7 @@ public class Player extends Sprite {
     private static final long FIRE_RATE = 100000000L;
     private long lastShot;
     private SoundPlayer soundPlayer = new SoundPlayer();
-    private Array<Bullet> bullets;
+    private Array<PlayerBullet> bullets;
     public static float bob_health;
     public static float BOB_X_POSITION;
     public static float BOB_Y_POSITION;
@@ -73,7 +73,7 @@ public class Player extends Sprite {
         setBounds(0, 0, 23 / Application.PPM, 32 / Application.PPM);
         setRegion(playerStand);
 
-        bullets = new Array<Bullet>();
+        bullets = new Array<PlayerBullet>();
         bob_health = 100;
     }
 
@@ -87,7 +87,7 @@ public class Player extends Sprite {
             dead();
         }
 
-        for (Bullet bullet : bullets) {
+        for (PlayerBullet bullet : bullets) {
             bullet.update(dt);
             if (bullet.isDestroyed()) {
                 bullets.removeValue(bullet, true);
@@ -161,8 +161,7 @@ public class Player extends Sprite {
                 Application.ENEMY_AI_BIT |
                 Application.WALL_BIT |
                 Application.ITEM_BIT |
-                Application.ENEMY_BULLET_BIT |
-                Application.RAY_BULLET;
+                Application.ENEMY_BULLET_BIT;
         fixtureDef.shape = shape;
         b2body.createFixture(fixtureDef).setUserData(this);
     }
@@ -185,7 +184,7 @@ public class Player extends Sprite {
 
     public void fire() {
         if (System.nanoTime() - lastShot >= FIRE_RATE) {
-            bullets.add(new Bullet(screen, (float) (b2body.getPosition().x), (float) (b2body.getPosition().y + 0.2), runningRight));
+            bullets.add(new PlayerBullet(screen,b2body.getPosition().x,(float) (b2body.getPosition().y + 0.2), runningRight));
             lastShot = System.nanoTime();
             soundPlayer.playSoundRandomLazerLaserShootOne();
         }
@@ -193,7 +192,7 @@ public class Player extends Sprite {
 
     public void draw(Batch batch) {
         super.draw(batch);
-        for (Bullet bullet : bullets)
+        for (PlayerBullet bullet : bullets)
             bullet.draw(batch);
     }
 

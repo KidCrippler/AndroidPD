@@ -55,14 +55,11 @@ public class EnemyBullet extends Sprite {
 
         fixtureDef.filter.categoryBits = Application.ENEMY_BULLET_BIT;
         fixtureDef.filter.maskBits =
-                        Application.GROUND_BIT |
                         Application.WALL_BIT |
                         Application.BOB_BIT;
         fixtureDef.shape = shape;
-
         b2body.createFixture(fixtureDef).setUserData(this);
 
-        //FireSpeed:
         b2body.setLinearVelocity(new Vector2(fireRight ? 3 : -3, 0));
         b2body.setBullet(true);
         b2body.setGravityScale(0);
@@ -71,7 +68,7 @@ public class EnemyBullet extends Sprite {
     public void update(float dt) {
         stateTime += dt;
 
-        //Bullet anim:
+        //PlayerBullet anim:
         setRegion(fireAnimation.getKeyFrame(stateTime, true));
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
 
