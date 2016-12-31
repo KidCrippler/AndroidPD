@@ -1,4 +1,4 @@
-package com.rosa.game.Sprites.Bob;
+package com.rosa.game.Sprites.Player;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;

@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rosa.game.Application;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar.ProgressBarStyle;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.rosa.game.Sprites.Bob.Player;
+import com.rosa.game.Sprites.Player.Player;
 
 public class ScreenHud extends Sprite  {
     private Stage stage;

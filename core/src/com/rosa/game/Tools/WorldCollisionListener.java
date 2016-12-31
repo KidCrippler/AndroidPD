@@ -6,8 +6,8 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.rosa.game.Application;
-import com.rosa.game.Sprites.Bob.PlayerBullet;
-import com.rosa.game.Sprites.Bob.Player;
+import com.rosa.game.Sprites.Player.PlayerBullet;
+import com.rosa.game.Sprites.Player.Player;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
 import com.rosa.game.Sprites.Enemies.AIYamYam;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyBullet;
@@ -32,39 +32,47 @@ public class WorldCollisionListener implements ContactListener {
                 else
                     ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
                 break;
+            //TODO
 
             case Application.ENEMY_DUMB_BIT | Application.ENEMY_DUMB_BIT:
                 ((Enemy) fixA.getUserData()).hitByEnemy((Enemy) fixB.getUserData());
                 ((Enemy) fixB.getUserData()).hitByEnemy((Enemy) fixA.getUserData());
                 break;
 
-            case Application.ENEMY_DUMB_BIT | Application.BOB_BIT:
+            case Application.ENEMY_DUMB_BIT | Application.PLAYER_BIT:
                 if (fixA.getFilterData().categoryBits == Application.ENEMY_DUMB_BIT)
                     ((Enemy) fixA.getUserData()).reverseVelocity(true, false);
                 else
                     ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
                 break;
 
+            case Application.ENEMY_AI_BIT | Application.WALL_BIT:
+                if (fixA.getFilterData().categoryBits == Application.ENEMY_AI_BIT)
+                    ((Enemy) fixA.getUserData()).reverseVelocity(true, false);
+                else
+                    ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
+                break;
 
-            //Enemy Ai
+
+/*            //Enemy Ai
             case Application.ENEMY_AI_BIT | Application.ENEMY_AI_BIT:
                 ((Enemy) fixA.getUserData()).hitByEnemy((Enemy) fixB.getUserData());
                 ((Enemy) fixB.getUserData()).hitByEnemy((Enemy) fixA.getUserData());
+                break;*/
+
+            //Player
+            case Application.PLAYER_BIT | Application.GROUND_BIT:
+                if (fixA.getFilterData().categoryBits == Application.PLAYER_BIT)
+                    soundPlayer.playSoundPlayer(1);
+                else
+                    soundPlayer.playSoundPlayer(1);
                 break;
 
-            //Bob
-            case Application.BOB_BIT | Application.GROUND_BIT:
-                if (fixA.getFilterData().categoryBits == Application.BOB_BIT)
-                    soundPlayer.playSoundBob(1);
+            case Application.PLAYER_BIT | Application.WALL_BIT:
+                if (fixA.getFilterData().categoryBits == Application.PLAYER_BIT)
+                    soundPlayer.playSoundPlayer(1);
                 else
-                    soundPlayer.playSoundBob(1);
-                break;
-
-            case Application.BOB_BIT | Application.WALL_BIT:
-                if (fixA.getFilterData().categoryBits == Application.BOB_BIT)
-                    soundPlayer.playSoundBob(1);
-                else
-                    soundPlayer.playSoundBob(1);
+                    soundPlayer.playSoundPlayer(1);
                 break;
 
             //Bullets
@@ -89,9 +97,9 @@ public class WorldCollisionListener implements ContactListener {
                 }
                 break;
 
-            //PlayerBullet fire at BOB:
-            case Application.ENEMY_BULLET_BIT | Application.BOB_BIT:
-                if (fixA.getFilterData().categoryBits == Application.BOB_BIT)
+            //PlayerBullet fire at Player:
+            case Application.ENEMY_BULLET_BIT | Application.PLAYER_BIT:
+                if (fixA.getFilterData().categoryBits == Application.PLAYER_BIT)
                     ((Player) fixA.getUserData()).setHpDown(10);
                 else
                     ((Player) fixB.getUserData()).setHpDown(10);

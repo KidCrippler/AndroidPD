@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.rosa.game.Application;
-import com.rosa.game.Sprites.Bob.Player;
+import com.rosa.game.Sprites.Player.Player;
 import com.rosa.game.screens.ScreenPlay;
 
 public abstract class Item extends Sprite {

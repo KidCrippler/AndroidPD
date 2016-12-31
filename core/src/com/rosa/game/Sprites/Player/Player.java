@@ -1,4 +1,4 @@
-package com.rosa.game.Sprites.Bob;
+package com.rosa.game.Sprites.Player;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -155,7 +155,7 @@ public class Player extends Sprite {
         vector2s[2] = new Vector2(-4, 1).scl(1 / Application.PPM);
         vector2s[3] = new Vector2(4, 1).scl(1 / Application.PPM);
         shape.set(vector2s);
-        fixtureDef.filter.categoryBits = Application.BOB_BIT;
+        fixtureDef.filter.categoryBits = Application.PLAYER_BIT;
         fixtureDef.filter.maskBits = Application.GROUND_BIT |
                 Application.ENEMY_DUMB_BIT |
                 Application.ENEMY_AI_BIT |
@@ -169,7 +169,7 @@ public class Player extends Sprite {
     public void jump() {
         if (currentState != State.JUMPING) {
             b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
-            soundPlayer.playSoundBob(0);
+            soundPlayer.playSoundPlayer(0);
             currentState = State.JUMPING;
         }
     }
@@ -202,7 +202,7 @@ public class Player extends Sprite {
     }
 
     private void dead() {
-        soundPlayer.playSoundBob(2);
+        soundPlayer.playSoundPlayer(2);
         System.out.println("you are dead.");
         currentState = State.DEAD;
         ((Game) Gdx.app.getApplicationListener()).setScreen(new ScreenDead(game));

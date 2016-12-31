@@ -80,7 +80,7 @@ public class DumbBun extends Enemy {
         fixtureDef.filter.maskBits = Application.GROUND_BIT |
                 Application.ENEMY_DUMB_BIT |
                 Application.WALL_BIT |
-                Application.BOB_BIT |
+                Application.PLAYER_BIT |
                 Application.GROUND_BIT |
                 Application.BULLET_BIT;
         fixtureDef.shape = head;

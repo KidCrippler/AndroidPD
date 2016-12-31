@@ -10,7 +10,7 @@ public class SoundPlayer {
 
     float genVolume = 0.50f;
     
-    public void playSoundBob(int soundNumber) {
+    public void playSoundPlayer(int soundNumber) {
         ArrayList<String> soundString = new ArrayList();
         soundString.add(0, "sounds/audio/bob/jump.wav");
         soundString.add(1, "sounds/audio/bob/land.wav");

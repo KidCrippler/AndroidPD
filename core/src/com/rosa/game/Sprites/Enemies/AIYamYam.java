@@ -19,7 +19,7 @@ import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
-import com.rosa.game.Sprites.Bob.Player;
+import com.rosa.game.Sprites.Player.Player;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyBullet;
 import com.rosa.game.Tools.SoundPlayer;
@@ -28,7 +28,6 @@ import com.rosa.game.screens.ScreenPlay;
 public class AIYamYam extends Enemy implements RayCastCallback {
 
     private enum State {FALLING, JUMPING, STANDING, RUNNING}
-
     private State currentState;
     private State previousState;
     private boolean setToDestroy;
@@ -36,7 +35,6 @@ public class AIYamYam extends Enemy implements RayCastCallback {
     private int yamyamHP = 100;
     private SoundPlayer playSound = new SoundPlayer();
     private Array<EnemyBullet> enemyFirePowerLasArray;
-    private static final long FIRE_TIME = 440000000L;
     private long lastShot;
     private boolean runningRight;
     private float stateTimer;
@@ -50,11 +48,12 @@ public class AIYamYam extends Enemy implements RayCastCallback {
     private Vector2 point = new Vector2();
     private Vector2 normal = new Vector2();
     private Vector2 tmpD = new Vector2();
+    private static final long FIRE_TIME = 440000000L;
     private static final int NOTHING = 0;
     private static final int WALL = 1;
     private static final int PLAYER = 2;
     private int rayCastStatus = NOTHING;
-    private boolean chasingAfterPlayer = false;
+    private static boolean chasing = true;
 
     public AIYamYam(ScreenPlay screen, float x, float y) {
         super(screen, x, y);
@@ -119,14 +118,31 @@ public class AIYamYam extends Enemy implements RayCastCallback {
         }
     }
 
+    @Override
+    public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
+
+        if (fixture.getFilterData().categoryBits == Application.WALL_BIT) {
+            rayCastStatus = WALL;
+        }
+
+        if (fixture.getFilterData().categoryBits == Application.PLAYER_BIT) {
+            rayCastStatus = PLAYER;
+        }
+
+        this.point.set(point);
+        this.normal.set(normal);
+
+        return fraction;
+    }
 
     private void AIBehavior(float dt) {
 
-        if (!chasingAfterPlayer) {
-            reverseVelocity(true,false);
+        if (!chasing) {
+            b2body.setLinearVelocity(velocity);
+            reverseVelocity(true, false);
         }
 
-        if (chasingAfterPlayer) {
+        if (chasing) {
             if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x) {
                 b2body.applyLinearImpulse(new Vector2(-0.03f, 0), b2body.getWorldCenter(), true);
             }
@@ -153,9 +169,9 @@ public class AIYamYam extends Enemy implements RayCastCallback {
 
         world.rayCast(this, p1, p2);
 
-//        if (rayCastStatus == 2) {
+        if (rayCastStatus == 2) {
 //            fire();
-//        }
+        }
 
         for (EnemyBullet enemyFirePowerLas : enemyFirePowerLasArray) {
             enemyFirePowerLas.update(dt);
@@ -163,23 +179,6 @@ public class AIYamYam extends Enemy implements RayCastCallback {
                 enemyFirePowerLasArray.removeValue(enemyFirePowerLas, true);
             }
         }
-    }
-
-    @Override
-    public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
-
-        if (fixture.getFilterData().categoryBits == Application.WALL_BIT) {
-            rayCastStatus = WALL;
-        }
-
-        if (fixture.getFilterData().categoryBits == Application.BOB_BIT) {
-            rayCastStatus = PLAYER;
-        }
-
-        this.point.set(point);
-        this.normal.set(normal);
-
-        return fraction;
     }
 
     private TextureRegion getFrame(float dt) {
@@ -244,7 +243,7 @@ public class AIYamYam extends Enemy implements RayCastCallback {
         fixtureDefOfEnemyBody.filter.maskBits = Application.ENEMY_AI_BIT |
                 Application.ENEMY_DUMB_BIT |
                 Application.WALL_BIT |
-                Application.BOB_BIT |
+                Application.PLAYER_BIT |
                 Application.GROUND_BIT |
                 Application.BULLET_BIT;
 
@@ -290,11 +289,11 @@ public class AIYamYam extends Enemy implements RayCastCallback {
     }
 
     public void jump() {
-        if (currentState != State.JUMPING) {
-            b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
-            playSound.playSoundBob(0);
-            currentState = State.JUMPING;
-        }
+            if (currentState != State.JUMPING) {
+                b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
+                playSound.playSoundPlayer(0);
+                currentState = State.JUMPING;
+            }
     }
 
     public void takeShot(int bulletPower) {

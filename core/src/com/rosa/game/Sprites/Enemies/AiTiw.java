@@ -10,7 +10,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
-import com.rosa.game.Sprites.Bob.Player;
+import com.rosa.game.Sprites.Player.Player;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyBullet;
 import com.rosa.game.Tools.SoundPlayer;
@@ -197,7 +197,7 @@ public class AiTiw extends Enemy {
         fixtureDef.filter.maskBits = Application.ENEMY_AI_BIT |
                 Application.ENEMY_DUMB_BIT |
                 Application.WALL_BIT |
-                Application.BOB_BIT |
+                Application.PLAYER_BIT |
                 Application.GROUND_BIT |
                 Application.BULLET_BIT;
 
@@ -253,7 +253,7 @@ public class AiTiw extends Enemy {
         if (!destroyed && b2body.isActive() && chasing) {
             if (currentState != State.JUMPING) {
                 b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
-                playSound.playSoundBob(0);
+                playSound.playSoundPlayer(0);
                 currentState = State.JUMPING;
             }
         }
