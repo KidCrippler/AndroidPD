@@ -1,3 +1,7 @@
+/**
+ * BREAKS IN GAME CAN CAUSE OF:
+ * if (!destroyed && b2body.isActive()) {
+ **/
 package com.rosa.game.Sprites.Enemies;
 
 import com.badlogic.gdx.graphics.Color;
@@ -50,6 +54,7 @@ public class AIYamYam extends Enemy implements RayCastCallback {
     private static final int WALL = 1;
     private static final int PLAYER = 2;
     private int rayCastStatus = NOTHING;
+    private boolean chasingAfterPlayer = false;
 
     public AIYamYam(ScreenPlay screen, float x, float y) {
         super(screen, x, y);
@@ -109,11 +114,56 @@ public class AIYamYam extends Enemy implements RayCastCallback {
             AIBehavior(dt);
         }
 
-        if (yamyamHP <= 0 || b2body.getPosition().y < -1){
+        if (yamyamHP <= 0 || b2body.getPosition().y < -1) {
             dead();
         }
     }
 
+
+    private void AIBehavior(float dt) {
+
+        if (!chasingAfterPlayer) {
+            reverseVelocity(true,false);
+        }
+
+        if (chasingAfterPlayer) {
+            if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x) {
+                b2body.applyLinearImpulse(new Vector2(-0.03f, 0), b2body.getWorldCenter(), true);
+            }
+
+            if (Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x) {
+                b2body.applyLinearImpulse(new Vector2(0.03f, 0), b2body.getWorldCenter(), true);
+            }
+        }
+
+        float rayCastDirection = -2;
+
+        if (b2body.getLinearVelocity().x < 0) {
+            runningRight = false;
+            rayCastDirection = -2f;
+        }
+
+        if (b2body.getLinearVelocity().x > 0) {
+            runningRight = true;
+            rayCastDirection = 2f;
+        }
+
+        p1.set(b2body.getPosition().x, b2body.getPosition().y + 0.2f);
+        p2.set(b2body.getPosition().x + rayCastDirection, b2body.getPosition().y + 0.2f);
+
+        world.rayCast(this, p1, p2);
+
+//        if (rayCastStatus == 2) {
+//            fire();
+//        }
+
+        for (EnemyBullet enemyFirePowerLas : enemyFirePowerLasArray) {
+            enemyFirePowerLas.update(dt);
+            if (enemyFirePowerLas.isDestroyed()) {
+                enemyFirePowerLasArray.removeValue(enemyFirePowerLas, true);
+            }
+        }
+    }
 
     @Override
     public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
@@ -130,40 +180,6 @@ public class AIYamYam extends Enemy implements RayCastCallback {
         this.normal.set(normal);
 
         return fraction;
-    }
-
-    private void AIBehavior(float dt) {
-
-        if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x)
-            b2body.applyLinearImpulse(new Vector2(-0.03f, 0), b2body.getWorldCenter(), true);
-
-        if (Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x)
-            b2body.applyLinearImpulse(new Vector2(0.03f, 0), b2body.getWorldCenter(), true);
-
-        for (EnemyBullet enemyFirePowerLas : enemyFirePowerLasArray) {
-            enemyFirePowerLas.update(dt);
-            if (enemyFirePowerLas.isDestroyed()) {
-                enemyFirePowerLasArray.removeValue(enemyFirePowerLas, true);
-            }
-        }
-
-        float rayCastDirection = -2;
-        //looking at you:
-        if (b2body.getLinearVelocity().x < 0) {
-            runningRight = false;
-            rayCastDirection = -2f;
-        } else if (b2body.getLinearVelocity().x > 0) {
-            runningRight = true;
-            rayCastDirection = 2f;
-        }
-        p1.set(b2body.getPosition().x, b2body.getPosition().y + 0.2f);
-        p2.set(b2body.getPosition().x + rayCastDirection, b2body.getPosition().y + 0.2f);
-
-        world.rayCast(this, p1, p2);
-
-        if (rayCastStatus == 2) {
-            fire();
-        }
     }
 
     private TextureRegion getFrame(float dt) {
@@ -295,7 +311,3 @@ public class AIYamYam extends Enemy implements RayCastCallback {
         return destroyed;
     }
 }
-/**
- * BREAKS IN GAME CAN CAUSE OF:
- * if (!destroyed && b2body.isActive()) {
- **/
