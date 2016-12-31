@@ -28,6 +28,7 @@ import com.rosa.game.screens.ScreenPlay;
 public class AIYamYam extends Enemy implements RayCastCallback {
 
     private enum State {FALLING, JUMPING, STANDING, RUNNING}
+
     private State currentState;
     private State previousState;
     private boolean setToDestroy;
@@ -36,6 +37,7 @@ public class AIYamYam extends Enemy implements RayCastCallback {
     private SoundPlayer playSound = new SoundPlayer();
     private Array<EnemyBullet> enemyFirePowerLasArray;
     private long lastShot;
+    private long lastNoMove;
     private boolean runningRight;
     private float stateTimer;
     private Animation yamyamRun;
@@ -137,7 +139,7 @@ public class AIYamYam extends Enemy implements RayCastCallback {
 
     private void AIBehavior(float dt) {
 
-        if (!chasing) {
+        if (chasing = false) {
             b2body.setLinearVelocity(velocity);
             reverseVelocity(true, false);
         }
@@ -170,6 +172,7 @@ public class AIYamYam extends Enemy implements RayCastCallback {
         world.rayCast(this, p1, p2);
 
         if (rayCastStatus == 2) {
+//            chasing = true;
 //            fire();
         }
 
@@ -179,6 +182,20 @@ public class AIYamYam extends Enemy implements RayCastCallback {
                 enemyFirePowerLasArray.removeValue(enemyFirePowerLas, true);
             }
         }
+        System.out.println(b2body.getLinearVelocity().x);
+
+
+        final long NO_MOVE_TIME = 400000000L;
+
+        if (b2body.getLinearVelocity().x >= 0.01f || b2body.getLinearVelocity().x >= 0.0 || b2body.getLinearVelocity().x >= -0.01f) {
+            if (System.nanoTime() - lastNoMove >= NO_MOVE_TIME) {
+                System.out.println("not move");
+                b2body.setLinearVelocity(velocity);
+                reverseVelocity(true, false);
+                lastNoMove = System.nanoTime();
+            }
+        }
+
     }
 
     private TextureRegion getFrame(float dt) {
@@ -289,11 +306,11 @@ public class AIYamYam extends Enemy implements RayCastCallback {
     }
 
     public void jump() {
-            if (currentState != State.JUMPING) {
-                b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
-                playSound.playSoundPlayer(0);
-                currentState = State.JUMPING;
-            }
+        if (currentState != State.JUMPING) {
+            b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
+            playSound.playSoundPlayer(0);
+            currentState = State.JUMPING;
+        }
     }
 
     public void takeShot(int bulletPower) {
