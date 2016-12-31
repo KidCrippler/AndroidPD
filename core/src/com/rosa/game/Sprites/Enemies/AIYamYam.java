@@ -1,6 +1,5 @@
 package com.rosa.game.Sprites.Enemies;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -48,10 +47,10 @@ public class AIYamYam extends Enemy implements RayCastCallback {
     private Vector2 point = new Vector2();
     private Vector2 normal = new Vector2();
     private Vector2 tmpD = new Vector2();
-    float fraction;
-
-
-
+    private static final int NOTHING = 0;
+    private static final int WALL = 1;
+    private static final int AGENT = 2;
+    private int rayCastStatus = NOTHING;
 
     public AIYamYam(ScreenPlay screen, float x, float y) {
         super(screen, x, y);
@@ -79,9 +78,6 @@ public class AIYamYam extends Enemy implements RayCastCallback {
         for (int i = 0; i < 2; i++)
             frames.add(new TextureRegion(screen.getAtlas().findRegion("keen"), i * 32, 0, 32, 32));
 
-
-//        walkAnimation = new Animation(0.1f, frames);
-
         setBounds(0, 0, 23 / Application.PPM, 32 / Application.PPM);
         setRegion(yamyamStand);
 
@@ -96,13 +92,10 @@ public class AIYamYam extends Enemy implements RayCastCallback {
         shapeRenderer.line(p1, p2);
         shapeRenderer.line(collision, normal);
         shapeRenderer.setColor(Color.GREEN);
-//        shapeRenderer.line(point, tmpD.set(point).add(normal));
         shapeRenderer.line(point, tmpD.set(point).add(normal));
         shapeRenderer.setColor(Color.RED);
         shapeRenderer.end();
     }
-
-
 
     public void update(float dt) {
         if (setToDestroy && !destroyed) {
@@ -122,49 +115,24 @@ public class AIYamYam extends Enemy implements RayCastCallback {
             dead();
     }
 
-
-    public static final int NOTHING = 0;
-    public static final int WALL = 1;
-    public static final int AGENT = 2;
-    public int type = NOTHING;
-    public Vector2 position;
-
     @Override
     public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
 
-        if (fixture.getFilterData().categoryBits == Application.WALL_BIT)
-            type = WALL;
-        if (fixture.getFilterData().categoryBits == Application.BOB_BIT)
-            type = AGENT;
+        if (fixture.getFilterData().categoryBits == Application.WALL_BIT){
+            rayCastStatus = WALL;
+        }
 
-        position = point;
+        if (fixture.getFilterData().categoryBits == Application.BOB_BIT){
+            rayCastStatus = AGENT;
+        }
+
+        this.point.set(point);
+        this.normal.set(normal);
 
         return fraction;
-
-
-//        this.point.set(point);
-//        this.normal.set(normal);
-//        boolean wallhit = false;
-//        boolean playerhit  = false;
-//
-//        if (fixture.getFilterData().categoryBits == Application.WALL_BIT){
-//            System.out.println("wall");
-//            return 0;
-//        }
-//
-//        if (fixture.getFilterData().categoryBits == Application.BOB_BIT){
-//
-//            fire();
-//            System.out.println("bob");
-//            return fraction;
-//        }
-//
-//        return fraction;
     }
 
     private void AIBehavior(float dt) {
-//        System.out.println("fractionWall: " + fractionWall + "\nfractionPlayer: " + fractionPlayer);
-
 
         if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x)
             b2body.applyLinearImpulse(new Vector2(-0.03f, 0), b2body.getWorldCenter(), true);
@@ -188,20 +156,15 @@ public class AIYamYam extends Enemy implements RayCastCallback {
             runningRight = true;
             rayCastDirection = 2f;
         }
-        //RayCast:
         p1.set(b2body.getPosition().x, b2body.getPosition().y + 0.2f);
         p2.set(b2body.getPosition().x + rayCastDirection, b2body.getPosition().y + 0.2f);
 
-//        world.rayCast(this, p1, p2);
+        world.rayCast(this, p1, p2);
 
-        world.rayCast(this,p1,p2);
-        Gdx.app.log(TAG, this.type + "");
-
-
-//        System.out.println(AIYamYam.type);
-/*        if (AIYamYam.shooting = true){
+        System.out.println(this.rayCastStatus);
+        if (rayCastStatus == 2){
             fire();
-        }*/
+        }
 
     }
 
@@ -323,12 +286,10 @@ public class AIYamYam extends Enemy implements RayCastCallback {
 
     public void takeShot(int bulletPower) {
         yamyamHP = yamyamHP - bulletPower;
-        System.out.println("YamYam HP= " + yamyamHP);
     }
 
     private void dead() {
         playSound.playSoundRandomBunHurt();
-        System.out.println("YamYam IS DEAD");
         setToDestroy = true;
         setToDestroy();
     }
