@@ -25,6 +25,7 @@ public class AIYamYam extends Enemy implements RayCastCallback {
     private static final String TAG = "log1: ";
 
     private enum State {FALLING, JUMPING, STANDING, RUNNING}
+
     public static boolean playerAtRangeOfFire;
     private State currentState;
     private State previousState;
@@ -118,11 +119,11 @@ public class AIYamYam extends Enemy implements RayCastCallback {
     @Override
     public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
 
-        if (fixture.getFilterData().categoryBits == Application.WALL_BIT){
+        if (fixture.getFilterData().categoryBits == Application.WALL_BIT) {
             rayCastStatus = WALL;
         }
 
-        if (fixture.getFilterData().categoryBits == Application.BOB_BIT){
+        if (fixture.getFilterData().categoryBits == Application.BOB_BIT) {
             rayCastStatus = AGENT;
         }
 
@@ -162,7 +163,7 @@ public class AIYamYam extends Enemy implements RayCastCallback {
         world.rayCast(this, p1, p2);
 
         System.out.println(this.rayCastStatus);
-        if (rayCastStatus == 2){
+        if (rayCastStatus == 2) {
             fire();
         }
 
