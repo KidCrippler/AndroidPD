@@ -18,6 +18,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.ai.GdxAI;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Player.Player;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
@@ -176,8 +177,6 @@ public class AIYamYam extends Enemy implements RayCastCallback {
 //            fire();
         }
 
-        System.out.println(chasing);
-
         for (EnemyBullet enemyFirePowerLas : enemyFirePowerLasArray) {
             enemyFirePowerLas.update(dt);
             if (enemyFirePowerLas.isDestroyed()) {
@@ -185,18 +184,10 @@ public class AIYamYam extends Enemy implements RayCastCallback {
             }
         }
 
-//        System.out.println(b2body.getLinearVelocity().x);
 
-        final long NO_MOVE_TIME = 30000000;
-        if (System.nanoTime() - lastNoMove >= NO_MOVE_TIME) {
         if (b2body.getLinearVelocity().x >= 0.01f || b2body.getLinearVelocity().x >= 0.0 || b2body.getLinearVelocity().x >= -0.01f) {
-            System.out.println("not move");
-//            b2body.setLinearVelocity(velocity);
-//            reverseVelocity(true, false);
-            lastNoMove = System.nanoTime();
-            }
+            System.out.println("can't move");
         }
-
     }
 
     private TextureRegion getFrame(float dt) {
@@ -284,10 +275,12 @@ public class AIYamYam extends Enemy implements RayCastCallback {
     }
 
     public void reverseVelocity(boolean x, boolean y) {
-        if (x)
+        if (x) {
             velocity.x = -velocity.x;
-        if (y)
+        }
+        if (y) {
             velocity.y = -velocity.y;
+        }
     }
 
     public void setToDestroy() {
@@ -304,7 +297,7 @@ public class AIYamYam extends Enemy implements RayCastCallback {
     }
 
     public void jump() {
-        if (currentState != State.JUMPING) {
+        if (currentState != State.JUMPING && chasing == true) {
             b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
             playSound.playSoundPlayer(0);
             currentState = State.JUMPING;
