@@ -185,10 +185,10 @@ public class AIYamYam extends Enemy implements RayCastCallback {
         System.out.println(b2body.getLinearVelocity().x);
 
 
-        final long NO_MOVE_TIME = 400000000L;
+        final long NO_MOVE_TIME = 300000;
 
-        if (b2body.getLinearVelocity().x >= 0.01f || b2body.getLinearVelocity().x >= 0.0 || b2body.getLinearVelocity().x >= -0.01f) {
-            if (System.nanoTime() - lastNoMove >= NO_MOVE_TIME) {
+        if (System.nanoTime() - lastNoMove >= NO_MOVE_TIME) {
+            if (b2body.getLinearVelocity().x >= 0.01f || b2body.getLinearVelocity().x >= 0.0 || b2body.getLinearVelocity().x >= -0.01f) {
                 System.out.println("not move");
                 b2body.setLinearVelocity(velocity);
                 reverseVelocity(true, false);
@@ -207,10 +207,7 @@ public class AIYamYam extends Enemy implements RayCastCallback {
                 break;
             case RUNNING:
                 region = yamyamRun.getKeyFrame(stateTimer, true);
-
                 break;
-            case FALLING:
-            case STANDING:
             default:
                 region = yamyamStand;
                 break;
