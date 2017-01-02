@@ -171,8 +171,6 @@ public class WorldCollisionListener implements ContactListener {
                 else
                     ((AIYamYam) fixB.getUserData()).isClimbing(false);
                 break;
-
-
         }
     }
 
