@@ -104,7 +104,7 @@ public class AiTiw extends Enemy {
                 //If you are chased behaver:
                 if (chasing) {
 
-                    //RAY_JUMP (AI movement):
+                    //RAY_C_JUMP_BIT (AI movement):
                     if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x)
                         b2body.applyLinearImpulse(new Vector2(-0.02f, 0), b2body.getWorldCenter(), true);
 
@@ -207,7 +207,7 @@ public class AiTiw extends Enemy {
         FixtureDef fixtureDefRayOne = new FixtureDef();
         CircleShape rayShapeOne = new CircleShape();
         rayShapeOne.setRadius(6 / Application.PPM);
-        fixtureDefRayOne.filter.categoryBits = Application.RAY_JUMP;
+        fixtureDefRayOne.filter.categoryBits = Application.RAY_C_JUMP_BIT;
 
         fixtureDefRayOne.shape = rayShapeOne;
         fixtureDefRayOne.isSensor = true;

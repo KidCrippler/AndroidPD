@@ -32,33 +32,32 @@ public class WorldCollisionListener implements ContactListener {
                 else
                     ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
                 break;
-            //TODO
 
             case Application.ENEMY_DUMB_BIT | Application.ENEMY_DUMB_BIT:
                 ((Enemy) fixA.getUserData()).hitByEnemy((Enemy) fixB.getUserData());
                 ((Enemy) fixB.getUserData()).hitByEnemy((Enemy) fixA.getUserData());
                 break;
 
-            case Application.ENEMY_DUMB_BIT | Application.PLAYER_BIT:
-                if (fixA.getFilterData().categoryBits == Application.ENEMY_DUMB_BIT)
-                    ((Enemy) fixA.getUserData()).reverseVelocity(true, false);
-                else
-                    ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
-                break;
-
-            case Application.ENEMY_AI_BIT | Application.WALL_BIT:
-                if (fixA.getFilterData().categoryBits == Application.ENEMY_AI_BIT)
-                    ((Enemy) fixA.getUserData()).reverseVelocity(true, false);
-                else
-                    ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
-                break;
-
-
-/*            //Enemy Ai
-            case Application.ENEMY_AI_BIT | Application.ENEMY_AI_BIT:
-                ((Enemy) fixA.getUserData()).hitByEnemy((Enemy) fixB.getUserData());
-                ((Enemy) fixB.getUserData()).hitByEnemy((Enemy) fixA.getUserData());
-                break;*/
+//            case Application.ENEMY_DUMB_BIT | Application.PLAYER_BIT:
+//                if (fixA.getFilterData().categoryBits == Application.ENEMY_DUMB_BIT)
+//                    ((Enemy) fixA.getUserData()).reverseVelocity(true, false);
+//                else
+//                    ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
+//                break;
+//
+//            case Application.ENEMY_AI_BIT | Application.WALL_BIT:
+//                if (fixA.getFilterData().categoryBits == Application.ENEMY_AI_BIT)
+//                    ((Enemy) fixA.getUserData()).reverseVelocity(true, false);
+//                else
+//                    ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
+//                break;
+//
+//
+//             Enemy Ai
+//            case Application.ENEMY_AI_BIT | Application.ENEMY_AI_BIT:
+//                ((Enemy) fixA.getUserData()).hitByEnemy((Enemy) fixB.getUserData());
+//                ((Enemy) fixB.getUserData()).hitByEnemy((Enemy) fixA.getUserData());
+//                break;
 
             //Player
             case Application.PLAYER_BIT | Application.GROUND_BIT:
@@ -138,14 +137,23 @@ public class WorldCollisionListener implements ContactListener {
                     ((PlayerBullet) fixB.getUserData()).setToDestroy();
                 break;
 
-            //RAY_JUMP:
-            case Application.RAY_JUMP | Application.WALL_BIT:
-                if (fixA.getFilterData().categoryBits == Application.RAY_JUMP)
+            //RAY_C_JUMP_BIT:
+            case Application.RAY_C_JUMP_BIT | Application.WALL_BIT:
+                if (fixA.getFilterData().categoryBits == Application.RAY_C_JUMP_BIT)
                     ((AIYamYam) fixA.getUserData()).jump();
                 else
                     ((AIYamYam) fixB.getUserData()).jump();
                 break;
+
+            //RAY_C_JUMP_BIT:
+            case Application.RAY_C_CLIMB_BIT | Application.WALL_BIT:
+                if (fixA.getFilterData().categoryBits == Application.RAY_C_CLIMB_BIT)
+                    ((AIYamYam) fixA.getUserData()).isClimbing(true);
+                else
+                    ((AIYamYam) fixB.getUserData()).isClimbing(true);
+                break;
         }
+
     }
 
     @Override
@@ -156,6 +164,14 @@ public class WorldCollisionListener implements ContactListener {
         int cDef = fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
 
         switch (cDef) {
+            //RAY_C_JUMP_BIT:
+            case Application.RAY_C_CLIMB_BIT | Application.WALL_BIT:
+                if (fixA.getFilterData().categoryBits == Application.RAY_C_CLIMB_BIT)
+                    ((AIYamYam) fixA.getUserData()).isClimbing(false);
+                else
+                    ((AIYamYam) fixB.getUserData()).isClimbing(false);
+                break;
+
 
         }
     }

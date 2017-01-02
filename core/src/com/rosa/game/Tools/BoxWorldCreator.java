@@ -59,7 +59,8 @@ public class BoxWorldCreator {
                     Application.ENEMY_DUMB_BIT |
                     Application.BULLET_BIT |
                     Application.ENEMY_BULLET_BIT |
-                    Application.RAY_JUMP;
+                    Application.RAY_C_JUMP_BIT |
+                    Application.RAY_C_CLIMB_BIT;
             body.createFixture(fixtureDef);
         }
 

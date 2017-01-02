@@ -18,7 +18,6 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.ai.GdxAI;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Player.Player;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
@@ -34,6 +33,7 @@ public class AIYamYam extends Enemy implements RayCastCallback {
     private State previousState;
     private boolean setToDestroy;
     private boolean destroyed;
+    private boolean climbing;
     private int yamyamHP = 100;
     private SoundPlayer playSound = new SoundPlayer();
     private Array<EnemyBullet> enemyFirePowerLasArray;
@@ -56,7 +56,6 @@ public class AIYamYam extends Enemy implements RayCastCallback {
     private static final int WALL = 1;
     private static final int PLAYER = 2;
     private int rayCastStatus = NOTHING;
-    private static boolean chasing = true;
 
     public AIYamYam(ScreenPlay screen, float x, float y) {
         super(screen, x, y);
@@ -140,20 +139,19 @@ public class AIYamYam extends Enemy implements RayCastCallback {
 
     private void AIBehavior(float dt) {
 
-        if (chasing == false) {
-            b2body.setLinearVelocity(velocity);
-            reverseVelocity(true, false);
+        if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x) {
+            b2body.applyLinearImpulse(new Vector2(-0.03f, 0), b2body.getWorldCenter(), true);
         }
 
-        if (chasing == true) {
-            if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x) {
-                b2body.applyLinearImpulse(new Vector2(-0.03f, 0), b2body.getWorldCenter(), true);
-            }
-
-            if (Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x) {
-                b2body.applyLinearImpulse(new Vector2(0.03f, 0), b2body.getWorldCenter(), true);
-            }
+        if (Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x) {
+            b2body.applyLinearImpulse(new Vector2(0.03f, 0), b2body.getWorldCenter(), true);
         }
+
+        if (climbing) {
+            System.out.println("2");
+            b2body.applyLinearImpulse(new Vector2(0, 0.10f), b2body.getWorldCenter(), true);
+        }
+
 
         float rayCastDirection = -2;
 
@@ -167,26 +165,26 @@ public class AIYamYam extends Enemy implements RayCastCallback {
             rayCastDirection = 2f;
         }
 
+        if (rayCastStatus == 2) {
+//            fire();
+        }
+
+        if (b2body.getLinearVelocity().x == 0){
+            System.out.println("no move");
+        }
+
         p1.set(b2body.getPosition().x, b2body.getPosition().y + 0.2f);
         p2.set(b2body.getPosition().x + rayCastDirection, b2body.getPosition().y + 0.2f);
 
         world.rayCast(this, p1, p2);
 
-        if (rayCastStatus == 2) {
-            chasing = true;
-//            fire();
-        }
+
 
         for (EnemyBullet enemyFirePowerLas : enemyFirePowerLasArray) {
             enemyFirePowerLas.update(dt);
             if (enemyFirePowerLas.isDestroyed()) {
                 enemyFirePowerLasArray.removeValue(enemyFirePowerLas, true);
             }
-        }
-
-
-        if (b2body.getLinearVelocity().x >= 0.01f || b2body.getLinearVelocity().x >= 0.0 || b2body.getLinearVelocity().x >= -0.01f) {
-            System.out.println("can't move");
         }
     }
 
@@ -259,7 +257,7 @@ public class AIYamYam extends Enemy implements RayCastCallback {
         FixtureDef fixtureDefRayOfJump = new FixtureDef();
         CircleShape circleRayOfJump = new CircleShape();
         circleRayOfJump.setRadius(6 / Application.PPM);
-        fixtureDefRayOfJump.filter.categoryBits = Application.RAY_JUMP;
+        fixtureDefRayOfJump.filter.categoryBits = Application.RAY_C_JUMP_BIT;
 
         fixtureDefRayOfJump.shape = circleRayOfJump;
         fixtureDefRayOfJump.isSensor = true;
@@ -267,6 +265,19 @@ public class AIYamYam extends Enemy implements RayCastCallback {
         b2body.createFixture(fixtureDefRayOfJump).setUserData(this);
         circleRayOfJump.setPosition(new Vector2(-0.5f, 0 / Application.PPM));
         b2body.createFixture(fixtureDefRayOfJump).setUserData(this);
+
+        //RAYOne - (Inner - Climb):
+        FixtureDef fixtureDefRayOfClimb = new FixtureDef();
+        CircleShape circleRayOfClimb = new CircleShape();
+        circleRayOfClimb.setRadius(2 / Application.PPM);
+        fixtureDefRayOfClimb.filter.categoryBits = Application.RAY_C_CLIMB_BIT;
+
+        fixtureDefRayOfClimb.shape = circleRayOfClimb;
+        fixtureDefRayOfClimb.isSensor = true;
+        circleRayOfClimb.setPosition(new Vector2(0.08f, 0 / Application.PPM));
+        b2body.createFixture(fixtureDefRayOfClimb).setUserData(this);
+        circleRayOfClimb.setPosition(new Vector2(-0.08f, 0 / Application.PPM));
+        b2body.createFixture(fixtureDefRayOfClimb).setUserData(this);
     }
 
     @Override
@@ -287,7 +298,7 @@ public class AIYamYam extends Enemy implements RayCastCallback {
         isDestroyed();
     }
 
-    private void fire() {
+    public void fire() {
         if (System.nanoTime() - lastShot >= FIRE_TIME) {
             enemyFirePowerLasArray.add(new EnemyBullet(screen, b2body.getPosition().x, (float) (b2body.getPosition().y + 0.2), runningRight));
             lastShot = System.nanoTime();
@@ -297,7 +308,7 @@ public class AIYamYam extends Enemy implements RayCastCallback {
     }
 
     public void jump() {
-        if (currentState != State.JUMPING && chasing == true) {
+        if (currentState != State.JUMPING) {
             b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
             playSound.playSoundPlayer(0);
             currentState = State.JUMPING;
@@ -316,5 +327,9 @@ public class AIYamYam extends Enemy implements RayCastCallback {
 
     public boolean isDestroyed() {
         return destroyed;
+    }
+
+    public boolean isClimbing(boolean climbing) {
+        return this.climbing = climbing;
     }
 }
