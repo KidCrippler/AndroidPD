@@ -18,6 +18,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Player.Player;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
@@ -92,14 +93,14 @@ public class AIYamYam extends Enemy implements RayCastCallback {
     @Override
     public void draw(Batch batch) {
         super.draw(batch);
-        shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
-        shapeRenderer.begin(ShapeType.Line);
-        shapeRenderer.line(p1, p2);
-        shapeRenderer.line(collision, normal);
-        shapeRenderer.setColor(Color.GREEN);
-        shapeRenderer.line(point, tmpD.set(point).add(normal));
-        shapeRenderer.setColor(Color.RED);
-        shapeRenderer.end();
+//        shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
+//        shapeRenderer.begin(ShapeType.Line);
+//        shapeRenderer.line(p1, p2);
+//        shapeRenderer.line(collision, normal);
+//        shapeRenderer.setColor(Color.GREEN);
+//        shapeRenderer.line(point, tmpD.set(point).add(normal));
+//        shapeRenderer.setColor(Color.RED);
+//        shapeRenderer.end();
     }
 
     public void update(float dt) {
@@ -169,15 +170,14 @@ public class AIYamYam extends Enemy implements RayCastCallback {
 //            fire();
         }
 
-        if (b2body.getLinearVelocity().x == 0){
-            System.out.println("no move");
+        if (b2body.getLinearVelocity().x == 0) {
+            b2body.setLinearVelocity(2,b2body.getAngularVelocity());
         }
 
         p1.set(b2body.getPosition().x, b2body.getPosition().y + 0.2f);
         p2.set(b2body.getPosition().x + rayCastDirection, b2body.getPosition().y + 0.2f);
 
         world.rayCast(this, p1, p2);
-
 
 
         for (EnemyBullet enemyFirePowerLas : enemyFirePowerLasArray) {
