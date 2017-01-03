@@ -170,9 +170,9 @@ public class AIYamYam extends Enemy implements RayCastCallback {
 //            fire();
         }
 
-        if (b2body.getLinearVelocity().x == 0) {
-            b2body.setLinearVelocity(2,b2body.getAngularVelocity());
-        }
+//        if (b2body.getLinearVelocity().x == 0) {
+//            b2body.setLinearVelocity(2,b2body.getAngularVelocity());
+//        }
 
         p1.set(b2body.getPosition().x, b2body.getPosition().y + 0.2f);
         p2.set(b2body.getPosition().x + rayCastDirection, b2body.getPosition().y + 0.2f);
@@ -274,9 +274,9 @@ public class AIYamYam extends Enemy implements RayCastCallback {
 
         fixtureDefRayOfClimb.shape = circleRayOfClimb;
         fixtureDefRayOfClimb.isSensor = true;
-        circleRayOfClimb.setPosition(new Vector2(0.08f, 0 / Application.PPM));
+        circleRayOfClimb.setPosition(new Vector2(0.08f, 5 / Application.PPM));
         b2body.createFixture(fixtureDefRayOfClimb).setUserData(this);
-        circleRayOfClimb.setPosition(new Vector2(-0.08f, 0 / Application.PPM));
+        circleRayOfClimb.setPosition(new Vector2(-0.08f, 5 / Application.PPM));
         b2body.createFixture(fixtureDefRayOfClimb).setUserData(this);
     }
 

@@ -55,6 +55,7 @@ public class PlayerBullet extends Sprite {
         fixtureDef.filter.categoryBits = Application.BULLET_BIT;
         fixtureDef.filter.maskBits =
                         Application.ENEMY_DUMB_BIT |
+                        Application.ENEMY_AI_BIT |
                         Application.WALL_BIT;
         fixtureDef.shape = shape;
         b2body.createFixture(fixtureDef).setUserData(this);

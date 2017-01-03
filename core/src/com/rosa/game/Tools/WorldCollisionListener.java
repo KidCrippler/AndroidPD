@@ -38,12 +38,6 @@ public class WorldCollisionListener implements ContactListener {
                 ((Enemy) fixB.getUserData()).hitByEnemy((Enemy) fixA.getUserData());
                 break;
 
-//            case Application.ENEMY_DUMB_BIT | Application.PLAYER_BIT:
-//                if (fixA.getFilterData().categoryBits == Application.ENEMY_DUMB_BIT)
-//                    ((Enemy) fixA.getUserData()).reverseVelocity(true, false);
-//                else
-//                    ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
-//                break;
 //
 //            case Application.ENEMY_AI_BIT | Application.WALL_BIT:
 //                if (fixA.getFilterData().categoryBits == Application.ENEMY_AI_BIT)
@@ -51,13 +45,12 @@ public class WorldCollisionListener implements ContactListener {
 //                else
 //                    ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
 //                break;
-//
-//
+
 //             Enemy Ai
-//            case Application.ENEMY_AI_BIT | Application.ENEMY_AI_BIT:
-//                ((Enemy) fixA.getUserData()).hitByEnemy((Enemy) fixB.getUserData());
-//                ((Enemy) fixB.getUserData()).hitByEnemy((Enemy) fixA.getUserData());
-//                break;
+            case Application.ENEMY_AI_BIT | Application.ENEMY_AI_BIT:
+                ((Enemy) fixA.getUserData()).hitByEnemy((Enemy) fixB.getUserData());
+                ((Enemy) fixB.getUserData()).hitByEnemy((Enemy) fixA.getUserData());
+                break;
 
             //Player
             case Application.PLAYER_BIT | Application.GROUND_BIT:
