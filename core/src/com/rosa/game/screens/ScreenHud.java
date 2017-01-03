@@ -31,12 +31,12 @@ public class ScreenHud extends Sprite  {
         skin = new Skin(Gdx.files.internal("style/ingame/hud/mainmenu.json"), new TextureAtlas("style/ingame/hud/mainmenu.pack"));
         barStyle = new ProgressBarStyle(skin.newDrawable("red_bar", Color.RED),textureBar);
         barStyle.knobBefore = barStyle.knob;
-        bar = new ProgressBar(0, Player.bob_health, 0.5f, false, barStyle);
+        bar = new ProgressBar(0, Player.PLAYER_TOTAL_HEALTH, 0.5f, false, barStyle);
     }
 
     public void show() {
         bar.setPosition(6,197);
-        bar.setSize(Player.bob_health, bar.getPrefHeight());
+        bar.setSize(Player.PLAYER_TOTAL_HEALTH, bar.getPrefHeight());
         bar.setAnimateDuration(2);
         stage.addActor(bar);
     }

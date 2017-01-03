@@ -72,11 +72,12 @@ public class PlayerBullet extends Sprite {
         setRegion(fireAnimation.getKeyFrame(stateTime, true));
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
 
-        //Remove the bullet after 3 seconds:
+        //Remove the bullet after 8 seconds:
         if ((stateTime > 8 || setToDestroy) && !destroyed) {
             world.destroyBody(b2body);
             destroyed = true;
         }
+
         if (b2body.getLinearVelocity().y > 2f)
             b2body.setLinearVelocity(b2body.getLinearVelocity().x, 2f);
     }

@@ -105,10 +105,10 @@ public class AiTiw extends Enemy {
                 if (chasing) {
 
                     //RAY_C_JUMP_BIT (AI movement):
-                    if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x)
+                    if (Player.PLAYER_X_POSITION + 0.4 <= b2body.getPosition().x)
                         b2body.applyLinearImpulse(new Vector2(-0.02f, 0), b2body.getWorldCenter(), true);
 
-                    if (Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x)
+                    if (Player.PLAYER_X_POSITION - 0.4 >= b2body.getPosition().x)
                         b2body.applyLinearImpulse(new Vector2(0.02f, 0), b2body.getWorldCenter(), true);
                     //Fire bullets:
                     fire();

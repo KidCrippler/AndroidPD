@@ -4,12 +4,10 @@
  **/
 package com.rosa.game.Sprites.Enemies;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -18,7 +16,6 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Timer;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Player.Player;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
@@ -140,11 +137,11 @@ public class AIYamYam extends Enemy implements RayCastCallback {
 
     private void AIBehavior(float dt) {
 
-        if (Player.BOB_X_POSITION + 0.4 <= b2body.getPosition().x) {
+        if (Player.PLAYER_X_POSITION + 0.4 <= b2body.getPosition().x) {
             b2body.applyLinearImpulse(new Vector2(-0.03f, 0), b2body.getWorldCenter(), true);
         }
 
-        if (Player.BOB_X_POSITION - 0.4 >= b2body.getPosition().x) {
+        if (Player.PLAYER_X_POSITION - 0.4 >= b2body.getPosition().x) {
             b2body.applyLinearImpulse(new Vector2(0.03f, 0), b2body.getWorldCenter(), true);
         }
 

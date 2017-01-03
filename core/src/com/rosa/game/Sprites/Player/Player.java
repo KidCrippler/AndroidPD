@@ -39,9 +39,9 @@ public class Player extends Sprite {
     private long lastShot;
     private SoundPlayer soundPlayer = new SoundPlayer();
     private Array<PlayerBullet> bullets;
-    public static float bob_health;
-    public static float BOB_X_POSITION;
-    public static float BOB_Y_POSITION;
+    public static float PLAYER_TOTAL_HEALTH;
+    public static float PLAYER_X_POSITION;
+    public static float PLAYER_Y_POSITION;
 
     private Application game;
 
@@ -74,16 +74,16 @@ public class Player extends Sprite {
         setRegion(playerStand);
 
         bullets = new Array<PlayerBullet>();
-        bob_health = 100;
+        PLAYER_TOTAL_HEALTH = 100;
     }
 
     public void update(float dt) {
         setPosition(b2body.getPosition().x - getWidth() / 2, (float) (b2body.getPosition().y - getHeight() / 300.0));
         setRegion(getFrame(dt));
 
-        BOB_X_POSITION = b2body.getPosition().x;
+        PLAYER_X_POSITION = b2body.getPosition().x;
 
-        if (bob_health <= 0 || b2body.getPosition().y < -10) {
+        if (PLAYER_TOTAL_HEALTH <= 0 || b2body.getPosition().y < -10) {
             dead();
         }
 
@@ -197,8 +197,8 @@ public class Player extends Sprite {
     }
 
     public void setHpDown(int hpDown) {
-        bob_health -= hpDown;
-        System.out.println("HP: " + bob_health);
+        PLAYER_TOTAL_HEALTH -= hpDown;
+        System.out.println("HP: " + PLAYER_TOTAL_HEALTH);
     }
 
     private void dead() {
@@ -207,4 +207,8 @@ public class Player extends Sprite {
         currentState = State.DEAD;
         ((Game) Gdx.app.getApplicationListener()).setScreen(new ScreenDead(game));
     }
+
+    public void setKick(){
+        b2body.applyLinearImpulse(new Vector2(5, 5), b2body.getWorldCenter(), true);
+     }
 }
