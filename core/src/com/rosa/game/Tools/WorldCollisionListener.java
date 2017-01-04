@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Enemies.DumbBun;
+import com.rosa.game.Sprites.LevelsCreate.Items.HealthPotion;
 import com.rosa.game.Sprites.Player.PlayerBullet;
 import com.rosa.game.Sprites.Player.Player;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
@@ -68,6 +69,13 @@ public class WorldCollisionListener implements ContactListener {
 //                break;
 
             //Player
+            case Application.POTION_BIT | Application.PLAYER_BIT:
+                if (fixA.getFilterData().categoryBits == Application.POTION_BIT)
+                    ((HealthPotion) fixA.getUserData()).setHealthPoints();
+                else
+                    ((HealthPotion) fixB.getUserData()).setHealthPoints();
+                break;
+
             case Application.PLAYER_BIT | Application.GROUND_BIT:
                 if (fixA.getFilterData().categoryBits == Application.PLAYER_BIT)
                     soundPlayer.playSoundPlayer(1);

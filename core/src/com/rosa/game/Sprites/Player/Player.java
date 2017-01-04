@@ -161,7 +161,8 @@ public class Player extends Sprite {
                 Application.ENEMY_AI_BIT |
                 Application.WALL_BIT |
                 Application.ITEM_BIT |
-                Application.ENEMY_BULLET_BIT;
+                Application.ENEMY_BULLET_BIT |
+                Application.POTION_BIT;
         fixtureDef.shape = shape;
         b2body.createFixture(fixtureDef).setUserData(this);
     }

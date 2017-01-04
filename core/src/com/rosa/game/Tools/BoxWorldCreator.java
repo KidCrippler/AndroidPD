@@ -15,12 +15,14 @@ import com.rosa.game.Application;
 import com.rosa.game.Sprites.Enemies.DumbBun;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
 import com.rosa.game.Sprites.Enemies.AIYamYam;
+import com.rosa.game.Sprites.LevelsCreate.Items.HealthPotion;
 import com.rosa.game.screens.ScreenPlay;
 
 public class BoxWorldCreator {
 
     private Array<DumbBun> buns;
     private Array<AIYamYam> yamYams;
+    private Array<HealthPotion> healthpotions;
     public static TiledMap map;
     private SoundPlayer soundPlayer = new SoundPlayer();
 
@@ -64,6 +66,14 @@ public class BoxWorldCreator {
             body.createFixture(fixtureDef);
         }
 
+        //Create HealthPotion:
+        healthpotions = new Array<HealthPotion>();
+
+        for (MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            healthpotions.add(new HealthPotion(screen, rect.getX() / Application.PPM, rect.getY() / Application.PPM));
+        }
+
         //Create Dumb Bun:
         buns = new Array<DumbBun>();
 
@@ -79,12 +89,15 @@ public class BoxWorldCreator {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             yamYams.add(new AIYamYam(screen, rect.getX() / Application.PPM, rect.getY() / Application.PPM));
         }
+
+
     }
 
     public Array<Enemy> getEnemies() {
         Array<Enemy> enemies = new Array<Enemy>();
         enemies.addAll(buns);
         enemies.addAll(yamYams);
+        enemies.addAll(healthpotions);
         return enemies;
     }
 
@@ -105,6 +118,15 @@ public class BoxWorldCreator {
                 soundPlayer.playSoundRandomBunDead();
             }
         }
+        //Remove yamYams from memory:
+        for (HealthPotion hp : healthpotions) {
+            hp.update(dt);
+            if (hp.isDestroyed()) {
+                healthpotions.removeValue(hp, true);
+                soundPlayer.playSoundRandomBunDead();
+                //TODO add drink sound
+            }
+        }
     }
 
     public void draw(Batch batch) {
@@ -112,5 +134,6 @@ public class BoxWorldCreator {
         for (AIYamYam yam : yamYams) {
             yam.draw(batch);
         }
+        //TODO drawthe rest
     }
 }

@@ -10,14 +10,11 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
-import com.rosa.game.Sprites.Player.Player;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.ScreenPlay;
 
 
 public class DumbBun extends Enemy {
-
-    //TODO: Bun can kick you far away!
 
     private float stateTime;
     private Animation walkAnimation;
