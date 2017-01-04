@@ -209,6 +209,10 @@ public class Player extends Sprite {
     }
 
     public void setKick(){
-        b2body.applyLinearImpulse(new Vector2(5, 5), b2body.getWorldCenter(), true);
-     }
+        b2body.applyLinearImpulse(new Vector2(b2body.getAngularVelocity(), 8), b2body.getWorldCenter(), true);
+        soundPlayer.playSoundPlayer(0);
+        soundPlayer.playSoundPlayer(1);
+        soundPlayer.playSoundRandomBunDead();
+        setHpDown(33);
+    }
 }

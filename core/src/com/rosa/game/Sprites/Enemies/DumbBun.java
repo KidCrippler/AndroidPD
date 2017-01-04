@@ -25,7 +25,7 @@ public class DumbBun extends Enemy {
     private boolean setToDestroy;
     private boolean destroyed;
     private int bunHP = 100;
-    private SoundPlayer playSound = new SoundPlayer();
+    private SoundPlayer soundPlayer = new SoundPlayer();
 
     public DumbBun(ScreenPlay screen, float x, float y) {
         super(screen, x, y);
@@ -38,7 +38,6 @@ public class DumbBun extends Enemy {
         setBounds(getX(), getY(), 16 / Application.PPM, 16 / Application.PPM);
         setToDestroy = false;
         destroyed = false;
-
     }
 
     public void update(float dt) {
@@ -96,7 +95,7 @@ public class DumbBun extends Enemy {
     @Override
     public void hitByEnemy(Enemy enemy) {
         reverseVelocity(true, false);
-        playSound.playSoundRandomBunHurt();
+        soundPlayer.playSoundRandomBunHurt();
     }
 
     public void reverseVelocity(boolean x, boolean y) {
@@ -112,10 +111,16 @@ public class DumbBun extends Enemy {
     }
 
     private void dead(){
-        playSound.playSoundRandomBunHurt();
+        soundPlayer.playSoundRandomBunHurt();
         System.out.println("dead!!!");
         setToDestroy = true;
         setToDestroy();
+    }
+
+    public void setKick(){
+        b2body.applyLinearImpulse(new Vector2(b2body.getAngularVelocity() + 5, 8), b2body.getWorldCenter(), true);
+        soundPlayer.playSoundPlayer(0);
+        soundPlayer.playSoundPlayer(1);
     }
 
     public void setToDestroy() {

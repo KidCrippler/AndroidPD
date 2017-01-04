@@ -39,17 +39,20 @@ public class WorldCollisionListener implements ContactListener {
                 ((Enemy) fixB.getUserData()).hitByEnemy((Enemy) fixA.getUserData());
                 break;
 
+            //Power Kick:
             case Application.ENEMY_DUMB_BIT | Application.PLAYER_BIT:
-                if (fixA.getFilterData().categoryBits == Application.PLAYER_BIT){
+                if (fixA.getFilterData().categoryBits == Application.PLAYER_BIT)
                     ((Player) fixA.getUserData()).setKick();
-                    soundPlayer.playSoundPlayer(3);
-                }
-                else{
+                else
                     ((Player) fixB.getUserData()).setKick();
-                    soundPlayer.playSoundPlayer(3);
-                }
+
+                if (fixA.getFilterData().categoryBits == Application.ENEMY_DUMB_BIT)
+                    ((DumbBun) fixA.getUserData()).setKick();
+                else
+                    ((DumbBun) fixB.getUserData()).setKick();
                 break;
 //
+
 //            case Application.ENEMY_AI_BIT | Application.WALL_BIT:
 //                if (fixA.getFilterData().categoryBits == Application.ENEMY_AI_BIT)
 //                    ((Enemy) fixA.getUserData()).reverseVelocity(true, false);

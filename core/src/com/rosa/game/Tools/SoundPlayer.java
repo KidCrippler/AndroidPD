@@ -8,8 +8,9 @@ import java.util.Random;
 
 public class SoundPlayer {
 
-    float genVolume = 0.50f;
-    
+    float genVolume = 0.03f;
+//    float genVolume = 0.50f;
+
     public void playSoundPlayer(int soundNumber) {
         ArrayList<String> soundString = new ArrayList();
         soundString.add(0, "sounds/audio/bob/jump.wav");
