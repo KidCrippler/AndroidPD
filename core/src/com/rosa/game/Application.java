@@ -5,8 +5,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.rosa.game.screens.ScreenPlay;
 import com.rosa.game.screens.ScreenSplash;
 
-import java.util.ArrayList;
-
 public class Application extends Game {
 
     public static final int V_WIDTH = 400;
@@ -14,7 +12,7 @@ public class Application extends Game {
     public static final float PPM = 100;
 
 
-    public static final short NOTHING_BIT = 0;
+    public static final short DESTROYED_BIT = 0;
     public static final short BIT = 1;
     public static final short ITEM_BIT = 2;
     public static final short PLAYER_BIT = 4;
@@ -26,6 +24,7 @@ public class Application extends Game {
     public static final short WALL_BIT = 1024;
     public static final short GROUND_BIT = 2048;
     public static final short RAY_C_CLIMB_BIT = 4096;
+    public static final short POTION_BIT = 8192;
 
     public static SpriteBatch batch;
     private ScreenSplash splashScreen;
