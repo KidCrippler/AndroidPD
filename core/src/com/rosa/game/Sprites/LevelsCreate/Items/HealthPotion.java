@@ -47,7 +47,10 @@ public class HealthPotion extends Enemy {
         } else if (!destroyed) {
 
             //Move:
-            b2body.setLinearVelocity(0,0);
+            b2body.setLinearVelocity(0, 0);
+
+
+
 
             setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
             setRegion(walkAnimation.getKeyFrame(stateTime, true));
@@ -55,8 +58,8 @@ public class HealthPotion extends Enemy {
     }
 
     @Override
-    public void hitByEnemy(Enemy enemy) {}
-
+    public void hitByEnemy(Enemy enemy) {
+    }
 
     @Override
     protected void defineEnemy() {
@@ -66,12 +69,12 @@ public class HealthPotion extends Enemy {
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bodyDef);
         PolygonShape head = new PolygonShape();
-        Vector2[] vertice = new Vector2[4];
-        vertice[0] = new Vector2(-1, 33).scl(1 / Application.PPM);
-        vertice[1] = new Vector2(1, 33).scl(1 / Application.PPM);
-        vertice[2] = new Vector2(-4, 0).scl(1 / Application.PPM);
-        vertice[3] = new Vector2(4, 0).scl(1 / Application.PPM);
-        head.set(vertice);
+        Vector2[] vector2s = new Vector2[4];
+        vector2s[0] = new Vector2(-1, 33).scl(1 / Application.PPM);
+        vector2s[1] = new Vector2(1, 33).scl(1 / Application.PPM);
+        vector2s[2] = new Vector2(-4, 0).scl(1 / Application.PPM);
+        vector2s[3] = new Vector2(4, 0).scl(1 / Application.PPM);
+        head.set(vector2s);
 
         fixtureDef.filter.categoryBits = Application.POTION_BIT;
 
@@ -97,8 +100,8 @@ public class HealthPotion extends Enemy {
             velocity.y = -velocity.y;
     }
 
-    public void setHealthPoints(){
-        Player.PLAYER_X_POSITION =+ 30;
+    public void setHealthPoints() {
+        Player.PLAYER_X_POSITION = +30;
         System.out.println("YAMI!");
         soundPlayer.playSoundPlayer(0);
         soundPlayer.playSoundPlayer(1);
@@ -112,7 +115,6 @@ public class HealthPotion extends Enemy {
 
     @Override
     public void takeShot(int bulletPowerOne) {
-
     }
 
     public boolean isDestroyed() {
