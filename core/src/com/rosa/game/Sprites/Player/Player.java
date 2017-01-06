@@ -17,6 +17,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
+import com.rosa.game.Sprites.Player.PlayerUtils.PlayerBullet;
 import com.rosa.game.Tools.BoxWorldCreator;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.ScreenDead;
@@ -36,13 +37,17 @@ public class Player extends Sprite {
     private float stateTimer;
     private boolean runningRight;
     private ScreenMainGamePlay screen;
-    private static final long FIRE_RATE = 100000000L;
-    private long lastShot;
     private SoundPlayer soundPlayer = new SoundPlayer();
-    private Array<com.rosa.game.Sprites.Player.PlayerUtils.PlayerBullet> bullets;
+    private Array<PlayerBullet> bullets;
     public static float PLAYER_TOTAL_HEALTH;
     public static float PLAYER_X_POSITION;
     public static float PLAYER_Y_POSITION;
+    private static float lastShot;
+    public static float default_bullet_rate = 100000000L;
+
+    public static float bullet_rate = default_bullet_rate;
+    public static float bullet_size;
+    public static float bullet_hp_down;
 
     private Application game;
 
@@ -186,7 +191,7 @@ public class Player extends Sprite {
     }
 
     public void fire() {
-        if (System.nanoTime() - lastShot >= FIRE_RATE) {
+        if (System.nanoTime() - lastShot >= bullet_rate) {
             bullets.add(new com.rosa.game.Sprites.Player.PlayerUtils.PlayerBullet(screen, b2body.getPosition().x, (float) (b2body.getPosition().y + 0.2), runningRight));
             lastShot = System.nanoTime();
             soundPlayer.playSoundRandomLazerLaserShootOne();

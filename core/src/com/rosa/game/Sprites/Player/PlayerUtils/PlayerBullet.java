@@ -25,6 +25,8 @@ public class PlayerBullet extends Sprite {
     private Array<TextureRegion> frames;
     private ScreenMainGamePlay screen;
 
+
+
     public PlayerBullet(ScreenMainGamePlay screen, float x, float y, boolean fireRight) {
 
         this.fireRight = fireRight;

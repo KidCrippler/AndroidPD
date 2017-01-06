@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.ObjectManager;
+import com.rosa.game.Sprites.Player.Player;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.ScreenMainGamePlay;
 
@@ -92,6 +93,8 @@ public class WeaponBlowzier extends ObjectManager {
     public void setWeaponBlowzier() {
 
         System.out.println("WEAPONUSE");
+
+        Player.bullet_rate = 1000000000L;
 
         soundPlayer.playSoundPlayer(0);
         soundPlayer.playSoundPlayer(1);
