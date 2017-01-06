@@ -13,13 +13,13 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rosa.game.Application;
 
 
-public class Controller {
+public class KeysController {
     Viewport viewport;
     Stage stage;
     boolean upPressed, leftPressed, rightPressed, spacePressed;
     OrthographicCamera cam;
 
-    public Controller() {
+    public KeysController() {
         cam = new OrthographicCamera();
         viewport = new FitViewport(800, 480, cam);
         stage = new Stage(viewport, Application.batch);

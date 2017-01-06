@@ -18,7 +18,7 @@ import com.rosa.game.Application;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.ObjectManager;
 import com.rosa.game.Sprites.Player.Player;
 import com.rosa.game.Tools.BoxWorldCreator;
-import com.rosa.game.Tools.Controller;
+import com.rosa.game.Tools.KeysController;
 import com.rosa.game.Tools.WorldCollisionListener;
 
 public class ScreenMainGamePlay implements Screen {
@@ -32,7 +32,7 @@ public class ScreenMainGamePlay implements Screen {
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
     private Player player;
-    private Controller controller;
+    private KeysController controller;
     private World world;
     private Box2DDebugRenderer b2dr;
     private BoxWorldCreator creator;
@@ -54,7 +54,7 @@ public class ScreenMainGamePlay implements Screen {
         hud = new ScreenHud(game.batch);
         player = new Player(world, this, game);
         world.setContactListener(new WorldCollisionListener());
-        controller = new Controller();
+        controller = new KeysController();
     }
 
     public void handleInputController() {
