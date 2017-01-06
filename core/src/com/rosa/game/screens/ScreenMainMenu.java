@@ -18,7 +18,7 @@ public class ScreenMainMenu implements Screen {
 
     private Skin skin;
     private Stage stage;
-    private ScreenPlay playScreen;
+    private ScreenMainGamePlay playScreen;
     private ScreenMap mapScreen = new ScreenMap(game);
     private ScreenOptions optionsScreen = new ScreenOptions(game,playScreen);
     private Image bg;

@@ -21,7 +21,7 @@ import com.rosa.game.Sprites.Player.Player;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.ObjectManager;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyBullet;
 import com.rosa.game.Tools.SoundPlayer;
-import com.rosa.game.screens.ScreenPlay;
+import com.rosa.game.screens.ScreenMainGamePlay;
 
 //TODO: Create a medium cannon that fire at player
 
@@ -57,7 +57,7 @@ public class TiwCannonMedim extends ObjectManager implements RayCastCallback {
     private static final int PLAYER = 2;
     private int rayCastStatus = NOTHING;
 
-    public TiwCannonMedim(ScreenPlay screen, float x, float y) {
+    public TiwCannonMedim(ScreenMainGamePlay screen, float x, float y) {
         super(screen, x, y);
         currentState = State.STANDING;
         previousState = State.STANDING;

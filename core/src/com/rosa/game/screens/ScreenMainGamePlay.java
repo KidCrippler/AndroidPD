@@ -21,7 +21,7 @@ import com.rosa.game.Tools.BoxWorldCreator;
 import com.rosa.game.Tools.Controller;
 import com.rosa.game.Tools.WorldCollisionListener;
 
-public class ScreenPlay implements Screen {
+public class ScreenMainGamePlay implements Screen {
 
     private Application game;
     private TextureAtlas atlas;
@@ -37,7 +37,7 @@ public class ScreenPlay implements Screen {
     private Box2DDebugRenderer b2dr;
     private BoxWorldCreator creator;
 
-    public ScreenPlay(Application game) {
+    public ScreenMainGamePlay(Application game) {
         ScreenGame.FRAME_GAME_STATE = ScreenGame.GAME_RUNNING;
         this.game = game;
         atlas = new TextureAtlas("style/ingame/figure/bob/bob.pack");

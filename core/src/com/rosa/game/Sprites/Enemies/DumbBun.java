@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.ObjectManager;
 import com.rosa.game.Tools.SoundPlayer;
-import com.rosa.game.screens.ScreenPlay;
+import com.rosa.game.screens.ScreenMainGamePlay;
 
 
 public class DumbBun extends ObjectManager {
@@ -24,7 +24,7 @@ public class DumbBun extends ObjectManager {
     private int bunHP = 100;
     private SoundPlayer soundPlayer = new SoundPlayer();
 
-    public DumbBun(ScreenPlay screen, float x, float y) {
+    public DumbBun(ScreenMainGamePlay screen, float x, float y) {
         super(screen, x, y);
         frames = new Array<TextureRegion>();
         for (int i = 0; i < 2; i++)

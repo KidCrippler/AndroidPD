@@ -30,7 +30,7 @@ public class ScreenMap implements Screen {
         stage = new Stage();
         skin = new Skin(Gdx.files.internal("style/menu/mainmenu.json"), new TextureAtlas("style/menu/mainmenu.pack"));
         final ScreenMainMenu mainMenuScreen = new ScreenMainMenu(game);
-        final ScreenPlay playScreen = new ScreenPlay(game);
+        final ScreenMainGamePlay playScreen = new ScreenMainGamePlay(game);
 
         levelScreen = new Image(skin, "levelscreen");
         backButton = new Button(skin, "backbutton");

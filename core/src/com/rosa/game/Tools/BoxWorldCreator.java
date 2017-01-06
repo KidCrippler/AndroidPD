@@ -15,20 +15,20 @@ import com.rosa.game.Application;
 import com.rosa.game.Sprites.Enemies.DumbBun;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.ObjectManager;
 import com.rosa.game.Sprites.Enemies.AIYamYam;
-import com.rosa.game.Sprites.LevelsCreate.Items.HealthPotion;
-import com.rosa.game.Sprites.LevelsCreate.WeaponStorage.WeaponBlowzier;
-import com.rosa.game.screens.ScreenPlay;
+import com.rosa.game.Sprites.LevelItems.Misc.HealthPotion;
+import com.rosa.game.Sprites.LevelItems.WeaponStorage.WeaponBlowzier;
+import com.rosa.game.screens.ScreenMainGamePlay;
 
 public class BoxWorldCreator {
 
     private Array<DumbBun> buns;
     private Array<AIYamYam> yamYams;
     private Array<HealthPotion> healthPotions;
-    private Array<WeaponBlowzier> weaponBlizzIcer;
+    private Array<WeaponBlowzier> weaponBlizzIcers;
     public static TiledMap map;
     private SoundPlayer soundPlayer = new SoundPlayer();
 
-    public BoxWorldCreator(ScreenPlay screen) {
+    public BoxWorldCreator(ScreenMainGamePlay screen) {
         World world = screen.getWorld();
         map = screen.getMap();
         BodyDef bodyDef = new BodyDef();
@@ -82,12 +82,12 @@ public class BoxWorldCreator {
             healthPotions.add(new HealthPotion(screen, rect.getX() / Application.PPM, rect.getY() / Application.PPM));
         }
 
-        //Create HealthPotion:
-        weaponBlizzIcer = new Array<WeaponBlowzier>();
+        //Create WeaponBlowzier:
+        weaponBlizzIcers = new Array<WeaponBlowzier>();
 
         for (MapObject object : map.getLayers().get(8).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            weaponBlizzIcer.add(new WeaponBlowzier(screen, rect.getX() / Application.PPM, rect.getY() / Application.PPM));
+            weaponBlizzIcers.add(new WeaponBlowzier(screen, rect.getX() / Application.PPM, rect.getY() / Application.PPM));
         }
 
         //Create Dumb Bun:
@@ -114,6 +114,7 @@ public class BoxWorldCreator {
         enemies.addAll(buns);
         enemies.addAll(yamYams);
         enemies.addAll(healthPotions);
+        enemies.addAll(weaponBlizzIcers);
         return enemies;
     }
 
@@ -141,6 +142,16 @@ public class BoxWorldCreator {
                 healthPotions.removeValue(hp, true);
                 soundPlayer.playSoundRandomBunDead();
                 //TODO add drink sound
+            }
+        }
+
+        //Remove yamYams from memory:
+        for (WeaponBlowzier wb : weaponBlizzIcers) {
+            wb.update(dt);
+            if (wb.isDestroyed()) {
+                weaponBlizzIcers.removeValue(wb, true);
+                soundPlayer.playSoundRandomBunDead();
+                //TODO add Weapon change
             }
         }
     }

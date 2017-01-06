@@ -24,7 +24,7 @@ public class ScreenMenuPaused extends Sprite implements Screen {
     private Button resumeButton;
     private Button quitButton;
     private Skin skin;
-    private ScreenPlay playScreen;
+    private ScreenMainGamePlay playScreen;
     private Application game;
 
     public ScreenMenuPaused(SpriteBatch sb) {

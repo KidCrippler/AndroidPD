@@ -1,4 +1,4 @@
-package com.rosa.game.Sprites.LevelsCreate.Items;
+package com.rosa.game.Sprites.LevelItems.WeaponStorage;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -9,11 +9,10 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.ObjectManager;
-import com.rosa.game.Sprites.Player.Player;
 import com.rosa.game.Tools.SoundPlayer;
-import com.rosa.game.screens.ScreenPlay;
+import com.rosa.game.screens.ScreenMainGamePlay;
 
-public class HealthPotion extends ObjectManager {
+public class WeaponBlowzier extends ObjectManager {
 
     private float stateTime;
     private Animation walkAnimation;
@@ -22,7 +21,7 @@ public class HealthPotion extends ObjectManager {
     private boolean destroyed;
     private SoundPlayer soundPlayer = new SoundPlayer();
 
-    public HealthPotion(ScreenPlay screen, float x, float y) {
+    public WeaponBlowzier(ScreenMainGamePlay screen, float x, float y) {
         super(screen, x, y);
         frames = new Array<TextureRegion>();
         for (int i = 0; i < 2; i++)
@@ -73,7 +72,7 @@ public class HealthPotion extends ObjectManager {
         CircleShape circleRayOfClimb = new CircleShape();
         fixtureDefRayOfClimb.shape = circleRayOfClimb;
         circleRayOfClimb.setRadius(4 / Application.PPM);
-        fixtureDefRayOfClimb.filter.categoryBits = Application.POTION_BIT;
+        fixtureDefRayOfClimb.filter.categoryBits = Application.WEAPON_BLOWZIER_BIT;
 
         b2body.createFixture(fixtureDefRayOfClimb).setUserData(this);
     }
@@ -90,14 +89,9 @@ public class HealthPotion extends ObjectManager {
             velocity.y = -velocity.y;
     }
 
-    public void setHealthPoints() {
-        Player.PLAYER_TOTAL_HEALTH += 20;
+    public void setWeaponBlowzier() {
 
-        if (Player.PLAYER_TOTAL_HEALTH >= 100) {
-            Player.PLAYER_TOTAL_HEALTH = 100;
-        }
-
-        System.out.println(Player.PLAYER_TOTAL_HEALTH);
+        System.out.println("WEAPONUSE");
 
         soundPlayer.playSoundPlayer(0);
         soundPlayer.playSoundPlayer(1);

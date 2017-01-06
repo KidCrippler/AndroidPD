@@ -1,4 +1,4 @@
-package com.rosa.game.Sprites.Player;
+package com.rosa.game.Sprites.Player.PlayerUtils;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
-import com.rosa.game.screens.ScreenPlay;
+import com.rosa.game.screens.ScreenMainGamePlay;
 
 public class PlayerBullet extends Sprite {
 
@@ -23,9 +23,9 @@ public class PlayerBullet extends Sprite {
     private float stateTime;
     private Animation fireAnimation;
     private Array<TextureRegion> frames;
-    private ScreenPlay screen;
+    private ScreenMainGamePlay screen;
 
-    public PlayerBullet(ScreenPlay screen, float x, float y, boolean fireRight) {
+    public PlayerBullet(ScreenMainGamePlay screen, float x, float y, boolean fireRight) {
 
         this.fireRight = fireRight;
         this.world = screen.getWorld();

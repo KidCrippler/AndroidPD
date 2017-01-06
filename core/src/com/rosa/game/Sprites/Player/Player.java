@@ -20,7 +20,7 @@ import com.rosa.game.Application;
 import com.rosa.game.Tools.BoxWorldCreator;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.ScreenDead;
-import com.rosa.game.screens.ScreenPlay;
+import com.rosa.game.screens.ScreenMainGamePlay;
 
 public class Player extends Sprite {
 
@@ -35,18 +35,18 @@ public class Player extends Sprite {
     private Animation playerJump;
     private float stateTimer;
     private boolean runningRight;
-    private ScreenPlay screen;
+    private ScreenMainGamePlay screen;
     private static final long FIRE_RATE = 100000000L;
     private long lastShot;
     private SoundPlayer soundPlayer = new SoundPlayer();
-    private Array<PlayerBullet> bullets;
+    private Array<com.rosa.game.Sprites.Player.PlayerUtils.PlayerBullet> bullets;
     public static float PLAYER_TOTAL_HEALTH;
     public static float PLAYER_X_POSITION;
     public static float PLAYER_Y_POSITION;
 
     private Application game;
 
-    public Player(World world, ScreenPlay screen, Application game) {
+    public Player(World world, ScreenMainGamePlay screen, Application game) {
         super(screen.getAtlas().findRegion("keen"));
         this.game = game;
         this.world = world;
@@ -74,7 +74,7 @@ public class Player extends Sprite {
         setBounds(0, 0, 23 / Application.PPM, 32 / Application.PPM);
         setRegion(playerStand);
 
-        bullets = new Array<PlayerBullet>();
+        bullets = new Array<com.rosa.game.Sprites.Player.PlayerUtils.PlayerBullet>();
         PLAYER_TOTAL_HEALTH = 100;
     }
 
@@ -88,7 +88,7 @@ public class Player extends Sprite {
             dead();
         }
 
-        for (PlayerBullet bullet : bullets) {
+        for (com.rosa.game.Sprites.Player.PlayerUtils.PlayerBullet bullet : bullets) {
             bullet.update(dt);
             if (bullet.isDestroyed()) {
                 bullets.removeValue(bullet, true);
@@ -187,7 +187,7 @@ public class Player extends Sprite {
 
     public void fire() {
         if (System.nanoTime() - lastShot >= FIRE_RATE) {
-            bullets.add(new PlayerBullet(screen, b2body.getPosition().x, (float) (b2body.getPosition().y + 0.2), runningRight));
+            bullets.add(new com.rosa.game.Sprites.Player.PlayerUtils.PlayerBullet(screen, b2body.getPosition().x, (float) (b2body.getPosition().y + 0.2), runningRight));
             lastShot = System.nanoTime();
             soundPlayer.playSoundRandomLazerLaserShootOne();
         }
@@ -195,7 +195,7 @@ public class Player extends Sprite {
 
     public void draw(Batch batch) {
         super.draw(batch);
-        for (PlayerBullet bullet : bullets)
+        for (com.rosa.game.Sprites.Player.PlayerUtils.PlayerBullet bullet : bullets)
             bullet.draw(batch);
     }
 

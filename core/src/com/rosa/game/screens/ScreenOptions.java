@@ -16,14 +16,14 @@ import com.rosa.game.Application;
 
 public class ScreenOptions implements Screen {
 
-    ScreenPlay playScreen;
+    ScreenMainGamePlay playScreen;
     private Skin skin;
     private Stage stage;
     private Image optionsScreen;
     private Button backButton;
     private Application game;
 
-    public ScreenOptions(Application game, ScreenPlay playScreen) {
+    public ScreenOptions(Application game, ScreenMainGamePlay playScreen) {
         this.game = game;
         this.playScreen = playScreen;
     }
