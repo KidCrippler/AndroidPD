@@ -34,8 +34,6 @@ public class HealthPotion extends Enemy {
         setBounds(getX(), getY(), 16 / Application.PPM, 16 / Application.PPM);
         setToDestroy = false;
         destroyed = false;
-        System.out.println("1");
-
     }
 
     public void update(float dt) {
@@ -101,8 +99,9 @@ public class HealthPotion extends Enemy {
     }
 
     public void setHealthPoints() {
-        Player.PLAYER_X_POSITION = +30;
+        Player.PLAYER_TOTAL_HEALTH += 20;
         System.out.println("YAMI!");
+        System.out.println(Player.PLAYER_TOTAL_HEALTH);
         soundPlayer.playSoundPlayer(0);
         soundPlayer.playSoundPlayer(1);
         setToDestroy = true;
