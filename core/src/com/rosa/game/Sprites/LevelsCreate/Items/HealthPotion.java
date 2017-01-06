@@ -100,8 +100,13 @@ public class HealthPotion extends Enemy {
 
     public void setHealthPoints() {
         Player.PLAYER_TOTAL_HEALTH += 20;
-        System.out.println("YAMI!");
+
+        if (Player.PLAYER_TOTAL_HEALTH >= 100) {
+            Player.PLAYER_TOTAL_HEALTH = 100;
+        }
+
         System.out.println(Player.PLAYER_TOTAL_HEALTH);
+
         soundPlayer.playSoundPlayer(0);
         soundPlayer.playSoundPlayer(1);
         setToDestroy = true;

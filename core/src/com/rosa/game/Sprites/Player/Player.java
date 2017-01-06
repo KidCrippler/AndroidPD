@@ -25,6 +25,7 @@ import com.rosa.game.screens.ScreenPlay;
 public class Player extends Sprite {
 
     private enum State {FALLING, JUMPING, STANDING, RUNNING, DEAD}
+
     private State currentState;
     private State previousState;
     public World world;
@@ -80,12 +81,9 @@ public class Player extends Sprite {
     public void update(float dt) {
         setPosition(b2body.getPosition().x - getWidth() / 2, (float) (b2body.getPosition().y - getHeight() / 300.0));
         setRegion(getFrame(dt));
+        healthStatus(dt);
 
         PLAYER_X_POSITION = b2body.getPosition().x;
-
-        if (PLAYER_TOTAL_HEALTH <= 0 || b2body.getPosition().y < -10) {
-            dead();
-        }
 
         for (PlayerBullet bullet : bullets) {
             bullet.update(dt);
@@ -93,6 +91,16 @@ public class Player extends Sprite {
                 bullets.removeValue(bullet, true);
             }
         }
+    }
+
+    private void healthStatus(float dt) {
+
+        if (PLAYER_TOTAL_HEALTH <= 0 || b2body.getPosition().y < -10) {
+            dead();
+        }
+
+
+
     }
 
     private TextureRegion getFrame(float dt) {
@@ -185,7 +193,7 @@ public class Player extends Sprite {
 
     public void fire() {
         if (System.nanoTime() - lastShot >= FIRE_RATE) {
-            bullets.add(new PlayerBullet(screen,b2body.getPosition().x,(float) (b2body.getPosition().y + 0.2), runningRight));
+            bullets.add(new PlayerBullet(screen, b2body.getPosition().x, (float) (b2body.getPosition().y + 0.2), runningRight));
             lastShot = System.nanoTime();
             soundPlayer.playSoundRandomLazerLaserShootOne();
         }
@@ -209,7 +217,7 @@ public class Player extends Sprite {
         ((Game) Gdx.app.getApplicationListener()).setScreen(new ScreenDead(game));
     }
 
-    public void setKick(){
+    public void setKick() {
         b2body.applyLinearImpulse(new Vector2(b2body.getAngularVelocity(), 8), b2body.getWorldCenter(), true);
         soundPlayer.playSoundPlayer(0);
         soundPlayer.playSoundPlayer(1);

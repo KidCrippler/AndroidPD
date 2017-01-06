@@ -138,6 +138,6 @@ public class BoxWorldCreator {
         for (AIYamYam yam : yamYams) {
             yam.draw(batch);
         }
-        //TODO drawthe rest
+        //TODO draw the rest
     }
 }
