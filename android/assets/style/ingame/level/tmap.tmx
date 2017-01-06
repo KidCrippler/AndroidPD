@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="240" height="13" tilewidth="16" tileheight="16" nextobjectid="207">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="240" height="13" tilewidth="16" tileheight="16" nextobjectid="209">
  <tileset firstgid="1" name="tileset_gutter" tilewidth="16" tileheight="16" spacing="2" margin="1" tilecount="924" columns="33">
   <image source="design/tileset_gutter.png" width="594" height="504"/>
  </tileset>
@@ -20,9 +20,8 @@
   <object id="66" x="0" y="0" height="192"/>
   <object id="76" x="0" y="192" width="304" height="16"/>
   <object id="79" x="352" y="192" width="384" height="16"/>
-  <object id="82" x="1040" y="192" width="2800" height="16"/>
+  <object id="82" x="736" y="192" width="3104" height="16"/>
   <object id="83" x="3840" y="0" height="192"/>
-  <object id="170" x="736" y="192" width="304" height="16"/>
  </objectgroup>
  <objectgroup name="Walls">
   <object id="85" x="0" y="176" width="16" height="16"/>
@@ -38,9 +37,9 @@
   <object id="202" x="752" y="128" width="16" height="16"/>
  </objectgroup>
  <objectgroup name="Player">
-  <object id="206" x="32" y="0" width="16" height="16"/>
+  <object id="207" x="144" y="96" width="16" height="16"/>
  </objectgroup>
  <objectgroup name="HealthPotion">
-  <object id="204" x="80" y="128" width="16" height="16"/>
+  <object id="208" x="96" y="16" width="16" height="16"/>
  </objectgroup>
 </map>

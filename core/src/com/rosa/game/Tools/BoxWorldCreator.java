@@ -22,7 +22,7 @@ public class BoxWorldCreator {
 
     private Array<DumbBun> buns;
     private Array<AIYamYam> yamYams;
-    private Array<HealthPotion> healthpotions;
+    private Array<HealthPotion> healthPotions;
     public static TiledMap map;
     private SoundPlayer soundPlayer = new SoundPlayer();
 
@@ -42,7 +42,10 @@ public class BoxWorldCreator {
             body = world.createBody(bodyDef);
             shape.setAsBox(rect.getWidth() / 2 / Application.PPM, rect.getHeight() / 2 / Application.PPM);
             fixtureDef.filter.categoryBits = Application.GROUND_BIT;
-            fixtureDef.filter.maskBits = Application.PLAYER_BIT | Application.ENEMY_AI_BIT | Application.ENEMY_DUMB_BIT;
+            fixtureDef.filter.maskBits = Application.PLAYER_BIT |
+                    Application.ENEMY_AI_BIT |
+                    Application.ENEMY_DUMB_BIT |
+                    Application.POTION_BIT ;
             fixtureDef.shape = shape;
             body.createFixture(fixtureDef);
         }
@@ -62,16 +65,17 @@ public class BoxWorldCreator {
                     Application.BULLET_BIT |
                     Application.ENEMY_BULLET_BIT |
                     Application.RAY_C_JUMP_BIT |
-                    Application.RAY_C_CLIMB_BIT;
+                    Application.RAY_C_CLIMB_BIT |
+                    Application.POTION_BIT ;
             body.createFixture(fixtureDef);
         }
 
         //Create HealthPotion:
-        healthpotions = new Array<HealthPotion>();
+        healthPotions = new Array<HealthPotion>();
 
-        for (MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
+        for (MapObject object : map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            healthpotions.add(new HealthPotion(screen, rect.getX() / Application.PPM, rect.getY() / Application.PPM));
+            healthPotions.add(new HealthPotion(screen, rect.getX() / Application.PPM, rect.getY() / Application.PPM));
         }
 
         //Create Dumb Bun:
@@ -97,7 +101,7 @@ public class BoxWorldCreator {
         Array<Enemy> enemies = new Array<Enemy>();
         enemies.addAll(buns);
         enemies.addAll(yamYams);
-        enemies.addAll(healthpotions);
+        enemies.addAll(healthPotions);
         return enemies;
     }
 
@@ -119,10 +123,10 @@ public class BoxWorldCreator {
             }
         }
         //Remove yamYams from memory:
-        for (HealthPotion hp : healthpotions) {
+        for (HealthPotion hp : healthPotions) {
             hp.update(dt);
             if (hp.isDestroyed()) {
-                healthpotions.removeValue(hp, true);
+                healthPotions.removeValue(hp, true);
                 soundPlayer.playSoundRandomBunDead();
                 //TODO add drink sound
             }

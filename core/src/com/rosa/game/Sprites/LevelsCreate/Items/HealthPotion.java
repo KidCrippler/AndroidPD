@@ -34,6 +34,8 @@ public class HealthPotion extends Enemy {
         setBounds(getX(), getY(), 16 / Application.PPM, 16 / Application.PPM);
         setToDestroy = false;
         destroyed = false;
+        System.out.println("1");
+
     }
 
     public void update(float dt) {
@@ -47,10 +49,8 @@ public class HealthPotion extends Enemy {
         } else if (!destroyed) {
 
             //Move:
-            b2body.setLinearVelocity(0, 0);
-
-
-
+//            b2body.setLinearVelocity(0, 0);
+//            b2body.setLinearVelocity(velocity);
 
             setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
             setRegion(walkAnimation.getKeyFrame(stateTime, true));
