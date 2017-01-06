@@ -9,12 +9,12 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
-import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
+import com.rosa.game.Sprites.Enemies.EnemyUtils.ObjectManager;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.ScreenPlay;
 
 
-public class DumbBun extends Enemy {
+public class DumbBun extends ObjectManager {
 
     private float stateTime;
     private Animation walkAnimation;
@@ -58,7 +58,7 @@ public class DumbBun extends Enemy {
 
 
     @Override
-    protected void defineEnemy() {
+    protected void defineSpriteObject() {
         FixtureDef fixtureDef = new FixtureDef();
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(getX(), getY());
@@ -90,7 +90,7 @@ public class DumbBun extends Enemy {
     }
 
     @Override
-    public void hitByEnemy(Enemy enemy) {
+    public void hitByObject(ObjectManager enemy) {
         reverseVelocity(true, false);
         soundPlayer.playSoundRandomBunHurt();
     }

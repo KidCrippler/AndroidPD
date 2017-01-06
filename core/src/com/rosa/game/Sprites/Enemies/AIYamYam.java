@@ -18,12 +18,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Player.Player;
-import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
+import com.rosa.game.Sprites.Enemies.EnemyUtils.ObjectManager;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyBullet;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.ScreenPlay;
 
-public class AIYamYam extends Enemy implements RayCastCallback {
+public class AIYamYam extends ObjectManager implements RayCastCallback {
 
     private enum State {FALLING, JUMPING, STANDING, RUNNING}
 
@@ -225,7 +225,7 @@ public class AIYamYam extends Enemy implements RayCastCallback {
     }
 
     @Override
-    protected void defineEnemy() {
+    protected void defineSpriteObject() {
         FixtureDef fixtureDefOfEnemyBody = new FixtureDef();
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(getX(), getY());
@@ -278,7 +278,7 @@ public class AIYamYam extends Enemy implements RayCastCallback {
     }
 
     @Override
-    public void hitByEnemy(Enemy enemy) {
+    public void hitByObject(ObjectManager enemy) {
         playSound.playSoundRandomBunHurt();
     }
 

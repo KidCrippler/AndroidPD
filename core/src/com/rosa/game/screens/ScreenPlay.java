@@ -15,7 +15,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rosa.game.Application;
-import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
+import com.rosa.game.Sprites.Enemies.EnemyUtils.ObjectManager;
 import com.rosa.game.Sprites.Player.Player;
 import com.rosa.game.Tools.BoxWorldCreator;
 import com.rosa.game.Tools.Controller;
@@ -96,7 +96,7 @@ public class ScreenPlay implements Screen {
         player.update(dt);
         creator.update(dt);
         //Load around player:
-        for (Enemy enemy : creator.getEnemies()) {
+        for (ObjectManager enemy : creator.getEnemies()) {
             enemy.update(dt);
 
             if (((player.getX() - (380 / Application.PPM)) <= enemy.getX()) && ((player.getX() + (380 / Application.PPM)) >= enemy.getX())) {

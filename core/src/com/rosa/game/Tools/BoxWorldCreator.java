@@ -13,7 +13,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Enemies.DumbBun;
-import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
+import com.rosa.game.Sprites.Enemies.EnemyUtils.ObjectManager;
 import com.rosa.game.Sprites.Enemies.AIYamYam;
 import com.rosa.game.Sprites.LevelsCreate.Items.HealthPotion;
 import com.rosa.game.screens.ScreenPlay;
@@ -97,8 +97,8 @@ public class BoxWorldCreator {
 
     }
 
-    public Array<Enemy> getEnemies() {
-        Array<Enemy> enemies = new Array<Enemy>();
+    public Array<ObjectManager> getEnemies() {
+        Array<ObjectManager> enemies = new Array<ObjectManager>();
         enemies.addAll(buns);
         enemies.addAll(yamYams);
         enemies.addAll(healthPotions);

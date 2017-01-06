@@ -3,18 +3,17 @@ package com.rosa.game.Sprites.LevelsCreate.Items;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
-import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
+import com.rosa.game.Sprites.Enemies.EnemyUtils.ObjectManager;
 import com.rosa.game.Sprites.Player.Player;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.ScreenPlay;
 
-public class HealthPotion extends Enemy {
+public class HealthPotion extends ObjectManager {
 
     private float stateTime;
     private Animation walkAnimation;
@@ -47,43 +46,36 @@ public class HealthPotion extends Enemy {
         } else if (!destroyed) {
 
             //Move:
-//            b2body.setLinearVelocity(0, 0);
-//            b2body.setLinearVelocity(velocity);
-
+            potionRun(false);
             setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
             setRegion(walkAnimation.getKeyFrame(stateTime, true));
         }
     }
 
-    @Override
-    public void hitByEnemy(Enemy enemy) {
+    private void potionRun(boolean potionRun) {
+        if (potionRun) {
+            b2body.setLinearVelocity(velocity);
+        }
     }
 
     @Override
-    protected void defineEnemy() {
-        FixtureDef fixtureDef = new FixtureDef();
+    public void hitByObject(ObjectManager Health) {
+    }
+
+    @Override
+    protected void defineSpriteObject() {
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(getX(), getY());
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bodyDef);
-        PolygonShape head = new PolygonShape();
-        Vector2[] vector2s = new Vector2[4];
-        vector2s[0] = new Vector2(-1, 33).scl(1 / Application.PPM);
-        vector2s[1] = new Vector2(1, 33).scl(1 / Application.PPM);
-        vector2s[2] = new Vector2(-4, 0).scl(1 / Application.PPM);
-        vector2s[3] = new Vector2(4, 0).scl(1 / Application.PPM);
-        head.set(vector2s);
 
-        fixtureDef.filter.categoryBits = Application.POTION_BIT;
+        FixtureDef fixtureDefRayOfClimb = new FixtureDef();
+        CircleShape circleRayOfClimb = new CircleShape();
+        fixtureDefRayOfClimb.shape = circleRayOfClimb;
+        circleRayOfClimb.setRadius(4 / Application.PPM);
+        fixtureDefRayOfClimb.filter.categoryBits = Application.POTION_BIT;
 
-        fixtureDef.filter.maskBits = Application.GROUND_BIT |
-                Application.ENEMY_DUMB_BIT |
-                Application.WALL_BIT |
-                Application.PLAYER_BIT |
-                Application.GROUND_BIT |
-                Application.BULLET_BIT;
-        fixtureDef.shape = head;
-        b2body.createFixture(fixtureDef).setUserData(this);
+        b2body.createFixture(fixtureDefRayOfClimb).setUserData(this);
     }
 
     public void draw(Batch batch) {

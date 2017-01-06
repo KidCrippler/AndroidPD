@@ -6,25 +6,25 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.rosa.game.screens.ScreenPlay;
 
-public abstract class Enemy extends Sprite {
+public abstract class ObjectManager extends Sprite {
 
     protected World world;
     protected ScreenPlay screen;
     public Body b2body;
     public Vector2 velocity;
 
-    public Enemy(ScreenPlay screen, float x, float y) {
+    public ObjectManager(ScreenPlay screen, float x, float y) {
         this.world = screen.getWorld();
         this.screen = screen;
         setPosition(x, y);
-        defineEnemy();
+        defineSpriteObject();
         velocity = new Vector2(-1, -2);
         b2body.setActive(false);
     }
 
-    protected abstract void defineEnemy();
+    protected abstract void defineSpriteObject();
     public abstract void update(float dt);
-    public abstract void hitByEnemy(Enemy enemy);
+    public abstract void hitByObject(ObjectManager objectManager);
     public abstract void setToDestroy();
     public abstract void takeShot(int bulletPowerOne);
     public abstract void reverseVelocity (boolean x, boolean y);

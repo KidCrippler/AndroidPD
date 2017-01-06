@@ -7,10 +7,10 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Enemies.DumbBun;
+import com.rosa.game.Sprites.Enemies.EnemyUtils.ObjectManager;
 import com.rosa.game.Sprites.LevelsCreate.Items.HealthPotion;
 import com.rosa.game.Sprites.Player.PlayerBullet;
 import com.rosa.game.Sprites.Player.Player;
-import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
 import com.rosa.game.Sprites.Enemies.AIYamYam;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyBullet;
 
@@ -27,17 +27,17 @@ public class WorldCollisionListener implements ContactListener {
 
         switch (cDef) {
 
-            //Enemy Dumb
+            //ObjectManager Dumb
             case Application.ENEMY_DUMB_BIT | Application.WALL_BIT:
                 if (fixA.getFilterData().categoryBits == Application.ENEMY_DUMB_BIT)
-                    ((Enemy) fixA.getUserData()).reverseVelocity(true, false);
+                    ((ObjectManager) fixA.getUserData()).reverseVelocity(true, false);
                 else
-                    ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
+                    ((ObjectManager) fixB.getUserData()).reverseVelocity(true, false);
                 break;
 
             case Application.ENEMY_DUMB_BIT | Application.ENEMY_DUMB_BIT:
-                ((Enemy) fixA.getUserData()).hitByEnemy((Enemy) fixB.getUserData());
-                ((Enemy) fixB.getUserData()).hitByEnemy((Enemy) fixA.getUserData());
+                ((ObjectManager) fixA.getUserData()).hitByObject((ObjectManager) fixB.getUserData());
+                ((ObjectManager) fixB.getUserData()).hitByObject((ObjectManager) fixA.getUserData());
                 break;
 
             //Power Kick:
@@ -56,16 +56,16 @@ public class WorldCollisionListener implements ContactListener {
 
 //            case Application.ENEMY_AI_BIT | Application.WALL_BIT:
 //                if (fixA.getFilterData().categoryBits == Application.ENEMY_AI_BIT)
-//                    ((Enemy) fixA.getUserData()).reverseVelocity(true, false);
+//                    ((ObjectManager) fixA.getUserData()).reverseVelocity(true, false);
 //                else
-//                    ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
+//                    ((ObjectManager) fixB.getUserData()).reverseVelocity(true, false);
 //                break;
 //
 //
-//             Enemy Ai
+//             ObjectManager Ai
 //            case Application.ENEMY_AI_BIT | Application.ENEMY_AI_BIT:
-//                ((Enemy) fixA.getUserData()).hitByEnemy((Enemy) fixB.getUserData());
-//                ((Enemy) fixB.getUserData()).hitByEnemy((Enemy) fixA.getUserData());
+//                ((ObjectManager) fixA.getUserData()).hitByObject((ObjectManager) fixB.getUserData());
+//                ((ObjectManager) fixB.getUserData()).hitByObject((ObjectManager) fixA.getUserData());
 //                break;
 
             //Player
@@ -125,13 +125,13 @@ public class WorldCollisionListener implements ContactListener {
                     ((EnemyBullet) fixB.getUserData()).setToDestroy();
                 break;
 
-            //PlayerBullet fire at Enemy:
+            //PlayerBullet fire at ObjectManager:
             case Application.BULLET_BIT | Application.ENEMY_DUMB_BIT:
                 //Remove the enemy:
                 if (fixA.getFilterData().categoryBits == Application.ENEMY_DUMB_BIT)
-                    ((Enemy) fixA.getUserData()).takeShot(10);
+                    ((ObjectManager) fixA.getUserData()).takeShot(10);
                 else
-                    ((Enemy) fixB.getUserData()).takeShot(10);
+                    ((ObjectManager) fixB.getUserData()).takeShot(10);
                 //Remove the bullet:
                 if (fixA.getFilterData().categoryBits == Application.BULLET_BIT)
                     ((PlayerBullet) fixA.getUserData()).setToDestroy();
@@ -139,13 +139,13 @@ public class WorldCollisionListener implements ContactListener {
                     ((PlayerBullet) fixB.getUserData()).setToDestroy();
                 break;
 
-            //Enemy AI:
+            //ObjectManager AI:
             case Application.BULLET_BIT | Application.ENEMY_AI_BIT:
                 //Remove the enemy:
                 if (fixA.getFilterData().categoryBits == Application.ENEMY_AI_BIT)
-                    ((Enemy) fixA.getUserData()).takeShot(10);
+                    ((ObjectManager) fixA.getUserData()).takeShot(10);
                 else
-                    ((Enemy) fixB.getUserData()).takeShot(10);
+                    ((ObjectManager) fixB.getUserData()).takeShot(10);
                 //Remove the bullet:
                 if (fixA.getFilterData().categoryBits == Application.BULLET_BIT)
                     ((PlayerBullet) fixA.getUserData()).setToDestroy();

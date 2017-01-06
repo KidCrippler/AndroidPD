@@ -10,13 +10,13 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
+import com.rosa.game.Sprites.Enemies.EnemyUtils.ObjectManager;
 import com.rosa.game.Sprites.Player.Player;
-import com.rosa.game.Sprites.Enemies.EnemyUtils.Enemy;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.EnemyBullet;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.ScreenPlay;
 
-public class AiTiw extends Enemy {
+public class AiTiw extends ObjectManager {
 
     private enum State {FALLING, JUMPING, STANDING, RUNNING}
 
@@ -178,7 +178,7 @@ public class AiTiw extends Enemy {
     }
 
     @Override
-    protected void defineEnemy() {
+    protected void defineSpriteObject() {
         FixtureDef fixtureDef = new FixtureDef();
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(getX(), getY());
@@ -223,7 +223,7 @@ public class AiTiw extends Enemy {
     }
 
     @Override
-    public void hitByEnemy(Enemy enemy) {
+    public void hitByObject(ObjectManager enemy) {
         playSound.playSoundRandomBunHurt();
 
     }

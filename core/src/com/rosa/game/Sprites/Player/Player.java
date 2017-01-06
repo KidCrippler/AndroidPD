@@ -81,9 +81,12 @@ public class Player extends Sprite {
     public void update(float dt) {
         setPosition(b2body.getPosition().x - getWidth() / 2, (float) (b2body.getPosition().y - getHeight() / 300.0));
         setRegion(getFrame(dt));
-        healthStatus(dt);
 
         PLAYER_X_POSITION = b2body.getPosition().x;
+
+        if (PLAYER_TOTAL_HEALTH <= 0 || b2body.getPosition().y <= -5) {
+            dead();
+        }
 
         for (PlayerBullet bullet : bullets) {
             bullet.update(dt);
@@ -91,16 +94,6 @@ public class Player extends Sprite {
                 bullets.removeValue(bullet, true);
             }
         }
-    }
-
-    private void healthStatus(float dt) {
-
-        if (PLAYER_TOTAL_HEALTH <= 0 || b2body.getPosition().y < -10) {
-            dead();
-        }
-
-
-
     }
 
     private TextureRegion getFrame(float dt) {
