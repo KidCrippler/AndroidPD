@@ -16,6 +16,7 @@ import com.rosa.game.Sprites.Enemies.DumbBun;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.ObjectManager;
 import com.rosa.game.Sprites.Enemies.AIYamYam;
 import com.rosa.game.Sprites.LevelsCreate.Items.HealthPotion;
+import com.rosa.game.Sprites.LevelsCreate.WeaponStorage.WeaponBlowzier;
 import com.rosa.game.screens.ScreenPlay;
 
 public class BoxWorldCreator {
@@ -23,6 +24,7 @@ public class BoxWorldCreator {
     private Array<DumbBun> buns;
     private Array<AIYamYam> yamYams;
     private Array<HealthPotion> healthPotions;
+    private Array<WeaponBlowzier> weaponBlizzIcer;
     public static TiledMap map;
     private SoundPlayer soundPlayer = new SoundPlayer();
 
@@ -45,7 +47,8 @@ public class BoxWorldCreator {
             fixtureDef.filter.maskBits = Application.PLAYER_BIT |
                     Application.ENEMY_AI_BIT |
                     Application.ENEMY_DUMB_BIT |
-                    Application.POTION_BIT ;
+                    Application.POTION_BIT |
+                    Application.WEAPON_BLOWZIER_BIT;
             fixtureDef.shape = shape;
             body.createFixture(fixtureDef);
         }
@@ -66,7 +69,8 @@ public class BoxWorldCreator {
                     Application.ENEMY_BULLET_BIT |
                     Application.RAY_C_JUMP_BIT |
                     Application.RAY_C_CLIMB_BIT |
-                    Application.POTION_BIT ;
+                    Application.POTION_BIT |
+                    Application.WEAPON_BLOWZIER_BIT;
             body.createFixture(fixtureDef);
         }
 
@@ -76,6 +80,14 @@ public class BoxWorldCreator {
         for (MapObject object : map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             healthPotions.add(new HealthPotion(screen, rect.getX() / Application.PPM, rect.getY() / Application.PPM));
+        }
+
+        //Create HealthPotion:
+        weaponBlizzIcer = new Array<WeaponBlowzier>();
+
+        for (MapObject object : map.getLayers().get(8).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            weaponBlizzIcer.add(new WeaponBlowzier(screen, rect.getX() / Application.PPM, rect.getY() / Application.PPM));
         }
 
         //Create Dumb Bun:

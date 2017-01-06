@@ -9,6 +9,7 @@ import com.rosa.game.Application;
 import com.rosa.game.Sprites.Enemies.DumbBun;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.ObjectManager;
 import com.rosa.game.Sprites.LevelsCreate.Items.HealthPotion;
+import com.rosa.game.Sprites.LevelsCreate.WeaponStorage.WeaponBlowzier;
 import com.rosa.game.Sprites.Player.PlayerBullet;
 import com.rosa.game.Sprites.Player.Player;
 import com.rosa.game.Sprites.Enemies.AIYamYam;
@@ -68,7 +69,8 @@ public class WorldCollisionListener implements ContactListener {
 //                ((ObjectManager) fixB.getUserData()).hitByObject((ObjectManager) fixA.getUserData());
 //                break;
 
-            //Player
+
+            //Item collect:
             case Application.POTION_BIT | Application.PLAYER_BIT:
                 if (fixA.getFilterData().categoryBits == Application.POTION_BIT)
                     ((HealthPotion) fixA.getUserData()).setHealthPoints();
@@ -76,6 +78,14 @@ public class WorldCollisionListener implements ContactListener {
                     ((HealthPotion) fixB.getUserData()).setHealthPoints();
                 break;
 
+            case Application.WEAPON_BLOWZIER_BIT | Application.PLAYER_BIT:
+                if (fixA.getFilterData().categoryBits == Application.WEAPON_BLOWZIER_BIT)
+                    ((WeaponBlowzier) fixA.getUserData()).setWeaponBlowzier();
+                else
+                    ((WeaponBlowzier) fixB.getUserData()).setWeaponBlowzier();
+                break;
+
+            //Player
             case Application.PLAYER_BIT | Application.GROUND_BIT:
                 if (fixA.getFilterData().categoryBits == Application.PLAYER_BIT)
                     soundPlayer.playSoundPlayer(1);

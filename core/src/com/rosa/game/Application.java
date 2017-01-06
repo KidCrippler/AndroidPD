@@ -22,6 +22,7 @@ public class Application extends Game {
     public static final short GROUND_BIT = 2048;
     public static final short RAY_C_CLIMB_BIT = 4096;
     public static final short POTION_BIT = 8192;
+    public static final short WEAPON_BLOWZIER_BIT = 16384;
 
     public static SpriteBatch batch;
     private ScreenSplash splashScreen;
