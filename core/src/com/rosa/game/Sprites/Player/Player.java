@@ -43,11 +43,16 @@ public class Player extends Sprite {
     public static float PLAYER_X_POSITION;
     public static float PLAYER_Y_POSITION;
     private static float lastShot;
-    public static float default_bullet_rate = 100000000L;
+
+    public static float default_bullet_rate = 200000000L;
+    public static float default_bullet_hp_down = 10;
+    public static float default_bullet_speed = 6;
+    public static float default_bullet_size = 2;
 
     public static float bullet_rate = default_bullet_rate;
-    public static float bullet_size;
-    public static float bullet_hp_down;
+    public static float bullet_hp_down = default_bullet_hp_down;
+    public static float bullet_speed = default_bullet_speed;
+    public static float bullet_size = default_bullet_size;
 
     private Application game;
 
@@ -79,7 +84,7 @@ public class Player extends Sprite {
         setBounds(0, 0, 23 / Application.PPM, 32 / Application.PPM);
         setRegion(playerStand);
 
-        bullets = new Array<com.rosa.game.Sprites.Player.PlayerUtils.PlayerBullet>();
+        bullets = new Array<PlayerBullet>();
         PLAYER_TOTAL_HEALTH = 100;
     }
 
@@ -93,7 +98,7 @@ public class Player extends Sprite {
             dead();
         }
 
-        for (com.rosa.game.Sprites.Player.PlayerUtils.PlayerBullet bullet : bullets) {
+        for (PlayerBullet bullet : bullets) {
             bullet.update(dt);
             if (bullet.isDestroyed()) {
                 bullets.removeValue(bullet, true);
@@ -192,7 +197,7 @@ public class Player extends Sprite {
 
     public void fire() {
         if (System.nanoTime() - lastShot >= bullet_rate) {
-            bullets.add(new com.rosa.game.Sprites.Player.PlayerUtils.PlayerBullet(screen, b2body.getPosition().x, (float) (b2body.getPosition().y + 0.2), runningRight));
+            bullets.add(new PlayerBullet(screen, b2body.getPosition().x, (float) (b2body.getPosition().y + 0.2), runningRight));
             lastShot = System.nanoTime();
             soundPlayer.playSoundRandomLazerLaserShootOne();
         }
@@ -200,11 +205,11 @@ public class Player extends Sprite {
 
     public void draw(Batch batch) {
         super.draw(batch);
-        for (com.rosa.game.Sprites.Player.PlayerUtils.PlayerBullet bullet : bullets)
+        for (PlayerBullet bullet : bullets)
             bullet.draw(batch);
     }
 
-    public void setHpDown(int hpDown) {
+    public void setHpDown(float hpDown) {
         PLAYER_TOTAL_HEALTH -= hpDown;
         System.out.println("HP: " + PLAYER_TOTAL_HEALTH);
     }

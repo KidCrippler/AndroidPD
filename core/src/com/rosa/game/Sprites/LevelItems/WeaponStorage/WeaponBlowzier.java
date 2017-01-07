@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.ObjectManager;
 import com.rosa.game.Sprites.Player.Player;
@@ -92,14 +93,32 @@ public class WeaponBlowzier extends ObjectManager {
 
     public void setWeaponBlowzier() {
 
-        System.out.println("WEAPONUSE");
-
-        Player.bullet_rate = 1000000000L;
-
+        System.out.println("WEAPONUSE: WeponBlowzier");
         soundPlayer.playSoundPlayer(0);
         soundPlayer.playSoundPlayer(1);
+        Player.bullet_rate = 1000000000L;
+        Player.bullet_hp_down = 100;
+        Player.bullet_speed = 1;
+        Player.bullet_size = 10;
         setToDestroy = true;
         setToDestroy();
+
+        //Weapon change back:
+        float delay = 10;
+
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                System.out.println("WEAPONUSE: Default");
+                soundPlayer.playSoundPlayer(1);
+                Player.bullet_rate = Player.default_bullet_rate;
+                Player.bullet_hp_down = Player.default_bullet_hp_down;
+                Player.bullet_speed = Player.default_bullet_speed;
+                Player.bullet_size = Player.default_bullet_size;
+
+            }
+        }, delay);
+
     }
 
     public void setToDestroy() {
@@ -107,7 +126,7 @@ public class WeaponBlowzier extends ObjectManager {
     }
 
     @Override
-    public void takeShot(int bulletPowerOne) {
+    public void takeShot(float bulletPowerOne) {
     }
 
     public boolean isDestroyed() {

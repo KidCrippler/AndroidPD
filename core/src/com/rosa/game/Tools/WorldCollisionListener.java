@@ -125,9 +125,9 @@ public class WorldCollisionListener implements ContactListener {
             //PlayerBullet fire at Player:
             case Application.ENEMY_BULLET_BIT | Application.PLAYER_BIT:
                 if (fixA.getFilterData().categoryBits == Application.PLAYER_BIT)
-                    ((Player) fixA.getUserData()).setHpDown(10);
+                    ((Player) fixA.getUserData()).setHpDown(10); //TODO: this float should be change with the power of the enemey gun.
                 else
-                    ((Player) fixB.getUserData()).setHpDown(10);
+                    ((Player) fixB.getUserData()).setHpDown(10); //TODO: this float should be change with the power of the enemey gun.
                 //Remove the bullet:
                 if (fixA.getFilterData().categoryBits == Application.ENEMY_BULLET_BIT)
                     ((EnemyBullet) fixA.getUserData()).setToDestroy();
@@ -135,13 +135,13 @@ public class WorldCollisionListener implements ContactListener {
                     ((EnemyBullet) fixB.getUserData()).setToDestroy();
                 break;
 
-            //PlayerBullet fire at ObjectManager:
+            //PlayerBullet fire at ObjectManager (ENEMY abstract):
             case Application.BULLET_BIT | Application.ENEMY_DUMB_BIT:
                 //Remove the enemy:
                 if (fixA.getFilterData().categoryBits == Application.ENEMY_DUMB_BIT)
-                    ((ObjectManager) fixA.getUserData()).takeShot(10);
+                    ((ObjectManager) fixA.getUserData()).takeShot(Player.bullet_hp_down);
                 else
-                    ((ObjectManager) fixB.getUserData()).takeShot(10);
+                    ((ObjectManager) fixB.getUserData()).takeShot(Player.bullet_hp_down);
                 //Remove the bullet:
                 if (fixA.getFilterData().categoryBits == Application.BULLET_BIT)
                     ((PlayerBullet) fixA.getUserData()).setToDestroy();
@@ -153,9 +153,9 @@ public class WorldCollisionListener implements ContactListener {
             case Application.BULLET_BIT | Application.ENEMY_AI_BIT:
                 //Remove the enemy:
                 if (fixA.getFilterData().categoryBits == Application.ENEMY_AI_BIT)
-                    ((ObjectManager) fixA.getUserData()).takeShot(10);
+                    ((ObjectManager) fixA.getUserData()).takeShot(Player.bullet_hp_down);
                 else
-                    ((ObjectManager) fixB.getUserData()).takeShot(10);
+                    ((ObjectManager) fixB.getUserData()).takeShot(Player.bullet_hp_down);
                 //Remove the bullet:
                 if (fixA.getFilterData().categoryBits == Application.BULLET_BIT)
                     ((PlayerBullet) fixA.getUserData()).setToDestroy();

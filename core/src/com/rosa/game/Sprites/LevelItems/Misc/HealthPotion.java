@@ -110,7 +110,7 @@ public class HealthPotion extends ObjectManager {
     }
 
     @Override
-    public void takeShot(int bulletPowerOne) {
+    public void takeShot(float bulletPowerOne) {
     }
 
     public boolean isDestroyed() {

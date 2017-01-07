@@ -26,6 +26,6 @@ public abstract class ObjectManager extends Sprite {
     public abstract void update(float dt);
     public abstract void hitByObject(ObjectManager objectManager);
     public abstract void setToDestroy();
-    public abstract void takeShot(int bulletPowerOne);
+    public abstract void takeShot(float bulletPowerOne);
     public abstract void reverseVelocity (boolean x, boolean y);
 }

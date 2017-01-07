@@ -34,7 +34,7 @@ public class TiwCannonMedim extends ObjectManager implements RayCastCallback {
     private boolean setToDestroy;
     private boolean destroyed;
     private boolean climbing;
-    private int yamyamHP = 100;
+    private float yamyamHP = 100;
     private SoundPlayer playSound = new SoundPlayer();
     private Array<EnemyBullet> enemyFirePowerLasArray;
     private long lastShot;
@@ -148,7 +148,6 @@ public class TiwCannonMedim extends ObjectManager implements RayCastCallback {
         }
 
         if (climbing) {
-            System.out.println("2");
             b2body.applyLinearImpulse(new Vector2(0, 0.10f), b2body.getWorldCenter(), true);
         }
 
@@ -314,7 +313,9 @@ public class TiwCannonMedim extends ObjectManager implements RayCastCallback {
         }
     }
 
-    public void takeShot(int bulletPower) {
+
+    @Override
+    public void takeShot(float bulletPower) {
         yamyamHP = yamyamHP - bulletPower;
     }
 

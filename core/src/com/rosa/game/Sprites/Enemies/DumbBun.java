@@ -21,7 +21,7 @@ public class DumbBun extends ObjectManager {
     private Array<TextureRegion> frames;
     private boolean setToDestroy;
     private boolean destroyed;
-    private int bunHP = 100;
+    private float bunHP = 100;
     private SoundPlayer soundPlayer = new SoundPlayer();
 
     public DumbBun(ScreenMainGamePlay screen, float x, float y) {
@@ -102,7 +102,8 @@ public class DumbBun extends ObjectManager {
             velocity.y = -velocity.y;
     }
 
-    public void takeShot(int bulletPower) {
+    @Override
+    public void takeShot(float bulletPower) {
         bunHP = bunHP - bulletPower;
         System.out.println(bunHP);
     }

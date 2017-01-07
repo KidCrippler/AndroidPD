@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
+import com.rosa.game.Sprites.Player.Player;
 import com.rosa.game.screens.ScreenMainGamePlay;
 
 public class PlayerBullet extends Sprite {
@@ -23,15 +24,13 @@ public class PlayerBullet extends Sprite {
     private float stateTime;
     private Animation fireAnimation;
     private Array<TextureRegion> frames;
-    private ScreenMainGamePlay screen;
-
-
+//    private ScreenMainGamePlay screen;
 
     public PlayerBullet(ScreenMainGamePlay screen, float x, float y, boolean fireRight) {
 
         this.fireRight = fireRight;
         this.world = screen.getWorld();
-        this.screen = screen;
+//        this.screen = screen;
 
         frames = new Array<TextureRegion>();
         for (int i = 0; i < 4; i++) {
@@ -52,7 +51,7 @@ public class PlayerBullet extends Sprite {
 
         FixtureDef fixtureDef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(2 / Application.PPM);
+        shape.setRadius(Player.bullet_size / Application.PPM);
 
         fixtureDef.filter.categoryBits = Application.BULLET_BIT;
         fixtureDef.filter.maskBits =
@@ -62,7 +61,7 @@ public class PlayerBullet extends Sprite {
         fixtureDef.shape = shape;
         b2body.createFixture(fixtureDef).setUserData(this);
 
-        b2body.setLinearVelocity(new Vector2(fireRight ? 6 : -6, 0));
+        b2body.setLinearVelocity(new Vector2(fireRight ? Player.bullet_speed : -Player.bullet_speed, 0));
         b2body.setBullet(true);
         b2body.setGravityScale(0);
     }

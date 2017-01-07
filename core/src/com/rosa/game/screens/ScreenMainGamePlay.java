@@ -59,18 +59,6 @@ public class ScreenMainGamePlay implements Screen {
 
     public void handleInputController() {
 
-        if (controller.isUpPressed()) {
-            player.jump();
-        } else if (controller.isRightPressed()) {
-            player.goRight();
-        } else if (controller.isLeftPressed()) {
-            player.goLeft();
-        } else if (controller.isSpacePressed()) {
-            player.fire();
-        }
-    }
-
-    public void handleInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
             player.jump();
 
@@ -80,17 +68,49 @@ public class ScreenMainGamePlay implements Screen {
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2)
             player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
 
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE))
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
             player.fire();
 
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             ScreenGame.FRAME_GAME_STATE = ScreenGame.GAME_PAUSED;
         }
+
+
+//
+//        if (controller.isUpPressed()) {
+//            player.jump();
+//        } else if (controller.isRightPressed()) {
+//            player.goRight();
+//        } else if (controller.isLeftPressed()) {
+//            player.goLeft();
+//        } else if (controller.isSpacePressed()) {
+//                player.fire();
+//        }
+//
+//        }
     }
 
-    public void update(float dt) {
+//    public void handleInput() {
+//        if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
+//            player.jump();
+//
+//        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2)
+//            player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
+//
+//        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2)
+//            player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
+//
+//        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
+//            player.fire();
+//
+//        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+//            ScreenGame.FRAME_GAME_STATE = ScreenGame.GAME_PAUSED;
+//        }
+//    }
 
-        handleInput();
+    public void update(float dt) {
+//
+//        handleInput();
         handleInputController();
         world.step(1 / 60f, 6, 2);
         player.update(dt);
