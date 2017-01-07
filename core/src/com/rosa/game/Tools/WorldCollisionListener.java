@@ -175,6 +175,7 @@ public class WorldCollisionListener implements ContactListener {
         int cDef = fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
 
         switch (cDef) {
+
             //RAY_C_JUMP_BIT:
             case Application.RAY_C_CLIMB_BIT | Application.WALL_BIT:
                 if (fixA.getFilterData().categoryBits == Application.RAY_C_CLIMB_BIT)
