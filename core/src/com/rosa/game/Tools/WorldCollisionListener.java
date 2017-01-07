@@ -53,22 +53,6 @@ public class WorldCollisionListener implements ContactListener {
                 else
                     ((DumbBun) fixB.getUserData()).setKick();
                 break;
-//
-
-//            case Application.ENEMY_AI_BIT | Application.WALL_BIT:
-//                if (fixA.getFilterData().categoryBits == Application.ENEMY_AI_BIT)
-//                    ((ObjectManager) fixA.getUserData()).reverseVelocity(true, false);
-//                else
-//                    ((ObjectManager) fixB.getUserData()).reverseVelocity(true, false);
-//                break;
-//
-//
-//             ObjectManager Ai
-//            case Application.ENEMY_AI_BIT | Application.ENEMY_AI_BIT:
-//                ((ObjectManager) fixA.getUserData()).hitByObject((ObjectManager) fixB.getUserData());
-//                ((ObjectManager) fixB.getUserData()).hitByObject((ObjectManager) fixA.getUserData());
-//                break;
-
 
             //Item collect:
             case Application.POTION_BIT | Application.PLAYER_BIT:
@@ -125,12 +109,13 @@ public class WorldCollisionListener implements ContactListener {
             //PlayerBullet fire at Player:
             case Application.ENEMY_BULLET_BIT | Application.PLAYER_BIT:
                 if (fixA.getFilterData().categoryBits == Application.PLAYER_BIT)
-                    ((Player) fixA.getUserData()).setHpDown(10); //TODO: this float should be change with the power of the enemey gun.
+                    ((Player) fixA.getUserData()).setHpDown(EnemyBullet.enemey_bullet_hp);
                 else
-                    ((Player) fixB.getUserData()).setHpDown(10); //TODO: this float should be change with the power of the enemey gun.
+                    ((Player) fixB.getUserData()).setHpDown(EnemyBullet.enemey_bullet_hp);
+
                 //Remove the bullet:
                 if (fixA.getFilterData().categoryBits == Application.ENEMY_BULLET_BIT)
-                    ((EnemyBullet) fixA.getUserData()).setToDestroy();
+                    ((EnemyBullet) fixA.getUserData()).setToDestroy(); //TODO: Maybe this is what that break the game with the bug of C after the bullet is gone?
                 else
                     ((EnemyBullet) fixB.getUserData()).setToDestroy();
                 break;
@@ -139,9 +124,9 @@ public class WorldCollisionListener implements ContactListener {
             case Application.BULLET_BIT | Application.ENEMY_DUMB_BIT:
                 //Remove the enemy:
                 if (fixA.getFilterData().categoryBits == Application.ENEMY_DUMB_BIT)
-                    ((ObjectManager) fixA.getUserData()).takeShot(Player.bullet_hp_down);
+                    ((ObjectManager) fixA.getUserData()).takeShot(PlayerBullet.bullet_hp_down);
                 else
-                    ((ObjectManager) fixB.getUserData()).takeShot(Player.bullet_hp_down);
+                    ((ObjectManager) fixB.getUserData()).takeShot(PlayerBullet.bullet_hp_down);
                 //Remove the bullet:
                 if (fixA.getFilterData().categoryBits == Application.BULLET_BIT)
                     ((PlayerBullet) fixA.getUserData()).setToDestroy();
@@ -153,9 +138,9 @@ public class WorldCollisionListener implements ContactListener {
             case Application.BULLET_BIT | Application.ENEMY_AI_BIT:
                 //Remove the enemy:
                 if (fixA.getFilterData().categoryBits == Application.ENEMY_AI_BIT)
-                    ((ObjectManager) fixA.getUserData()).takeShot(Player.bullet_hp_down);
+                    ((ObjectManager) fixA.getUserData()).takeShot(PlayerBullet.bullet_hp_down);
                 else
-                    ((ObjectManager) fixB.getUserData()).takeShot(Player.bullet_hp_down);
+                    ((ObjectManager) fixB.getUserData()).takeShot(PlayerBullet.bullet_hp_down);
                 //Remove the bullet:
                 if (fixA.getFilterData().categoryBits == Application.BULLET_BIT)
                     ((PlayerBullet) fixA.getUserData()).setToDestroy();

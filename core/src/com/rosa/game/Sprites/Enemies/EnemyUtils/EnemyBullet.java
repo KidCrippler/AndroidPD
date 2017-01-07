@@ -13,7 +13,6 @@ import com.badlogic.gdx.utils.Array;
 import com.rosa.game.Application;
 import com.rosa.game.screens.ScreenMainGamePlay;
 
-
 public class EnemyBullet extends Sprite {
 
     private World world;
@@ -24,13 +23,13 @@ public class EnemyBullet extends Sprite {
     private float stateTime;
     private Animation fireAnimation;
     private Array<TextureRegion> frames;
-    private ScreenMainGamePlay screen;
+
+    public static float enemey_bullet_hp = 10;
 
     public EnemyBullet(ScreenMainGamePlay screen, float x, float y, boolean fireRight) {
 
         this.fireRight = fireRight;
         this.world = screen.getWorld();
-        this.screen = screen;
 
         frames = new Array<TextureRegion>();
         for (int i = 0; i < 4; i++) {
@@ -54,9 +53,7 @@ public class EnemyBullet extends Sprite {
         shape.setRadius(2 / Application.PPM);
 
         fixtureDef.filter.categoryBits = Application.ENEMY_BULLET_BIT;
-        fixtureDef.filter.maskBits =
-                        Application.WALL_BIT |
-                        Application.PLAYER_BIT;
+        fixtureDef.filter.maskBits = Application.WALL_BIT | Application.PLAYER_BIT;
         fixtureDef.shape = shape;
         b2body.createFixture(fixtureDef).setUserData(this);
 
@@ -68,15 +65,14 @@ public class EnemyBullet extends Sprite {
     public void update(float dt) {
         stateTime += dt;
 
-        //PlayerBullet anim:
         setRegion(fireAnimation.getKeyFrame(stateTime, true));
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
 
-        //Remove the bullet after 3 seconds:
         if ((stateTime > 8 || setToDestroy) && !destroyed) {
             world.destroyBody(b2body);
             destroyed = true;
         }
+
         if (b2body.getLinearVelocity().y > 2f)
             b2body.setLinearVelocity(b2body.getLinearVelocity().x, 2f);
     }

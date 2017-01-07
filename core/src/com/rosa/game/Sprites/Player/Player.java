@@ -45,14 +45,10 @@ public class Player extends Sprite {
     private static float lastShot;
 
     public static float default_bullet_rate = 200000000L;
-    public static float default_bullet_hp_down = 10;
-    public static float default_bullet_speed = 6;
-    public static float default_bullet_size = 2;
-
     public static float bullet_rate = default_bullet_rate;
-    public static float bullet_hp_down = default_bullet_hp_down;
-    public static float bullet_speed = default_bullet_speed;
-    public static float bullet_size = default_bullet_size;
+
+
+
 
     private Application game;
 
@@ -187,13 +183,13 @@ public class Player extends Sprite {
         }
     }
 
-    public void goRight() {
-        b2body.applyLinearImpulse(new Vector2(0.1f, 0), b2body.getWorldCenter(), true);
-    }
-
-    public void goLeft() {
-        b2body.applyLinearImpulse(new Vector2(-0.1f, 0), b2body.getWorldCenter(), true);
-    }
+//    public void goRight() {
+//        b2body.applyLinearImpulse(new Vector2(0.1f, 0), b2body.getWorldCenter(), true);
+//    }
+//
+//    public void goLeft() {
+//        b2body.applyLinearImpulse(new Vector2(-0.1f, 0), b2body.getWorldCenter(), true);
+//    }
 
     public void fire() {
         if (System.nanoTime() - lastShot >= bullet_rate) {

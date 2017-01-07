@@ -1,7 +1,3 @@
-/**
- * BREAKS IN GAME CAN CAUSE OF:
- * if (!destroyed && b2body.isActive()) {
- **/
 package com.rosa.game.Sprites.Enemies;
 
 import com.badlogic.gdx.graphics.g2d.Animation;

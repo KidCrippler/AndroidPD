@@ -299,6 +299,7 @@ public class TiwCannonMedim extends ObjectManager implements RayCastCallback {
     public void fire() {
         if (System.nanoTime() - lastShot >= FIRE_TIME) {
             enemyFirePowerLasArray.add(new EnemyBullet(screen, b2body.getPosition().x, (float) (b2body.getPosition().y + 0.2), runningRight));
+            enemyFirePowerLasArray.add(new EnemyBullet(screen, b2body.getPosition().x, (float) (b2body.getPosition().y + 0.2), runningRight));
             lastShot = System.nanoTime();
             playSound.playSoundRandomYamYamFirePower();
         }

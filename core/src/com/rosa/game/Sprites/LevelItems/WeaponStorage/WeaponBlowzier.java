@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.rosa.game.Application;
 import com.rosa.game.Sprites.Enemies.EnemyUtils.ObjectManager;
 import com.rosa.game.Sprites.Player.Player;
+import com.rosa.game.Sprites.Player.PlayerUtils.PlayerBullet;
 import com.rosa.game.Tools.SoundPlayer;
 import com.rosa.game.screens.ScreenMainGamePlay;
 
@@ -93,13 +94,13 @@ public class WeaponBlowzier extends ObjectManager {
 
     public void setWeaponBlowzier() {
 
-        System.out.println("WEAPONUSE: WeponBlowzier");
+        System.out.println("Weapon in use: WeaponBlowzier");
         soundPlayer.playSoundPlayer(0);
         soundPlayer.playSoundPlayer(1);
         Player.bullet_rate = 1000000000L;
-        Player.bullet_hp_down = 100;
-        Player.bullet_speed = 1;
-        Player.bullet_size = 10;
+        PlayerBullet.bullet_hp_down = 100;
+        PlayerBullet.bullet_speed = 1;
+        PlayerBullet.bullet_size = 10;
         setToDestroy = true;
         setToDestroy();
 
@@ -109,12 +110,12 @@ public class WeaponBlowzier extends ObjectManager {
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
-                System.out.println("WEAPONUSE: Default");
+                System.out.println("Weapon in use: Default");
                 soundPlayer.playSoundPlayer(1);
                 Player.bullet_rate = Player.default_bullet_rate;
-                Player.bullet_hp_down = Player.default_bullet_hp_down;
-                Player.bullet_speed = Player.default_bullet_speed;
-                Player.bullet_size = Player.default_bullet_size;
+                PlayerBullet.bullet_hp_down = PlayerBullet.default_bullet_hp_down;
+                PlayerBullet.bullet_speed = PlayerBullet.default_bullet_speed;
+                PlayerBullet.bullet_size = PlayerBullet.default_bullet_size;
 
             }
         }, delay);
